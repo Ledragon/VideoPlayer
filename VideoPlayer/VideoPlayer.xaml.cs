@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
+using Path = System.IO.Path;
 
 namespace VideoPlayer
 {
@@ -22,6 +23,7 @@ namespace VideoPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<Video> _videos = new List<Video>();
         public MainWindow()
         {
             InitializeComponent();
@@ -29,16 +31,17 @@ namespace VideoPlayer
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Video video = new Video();
-            video.Directory = "directory";
-            video.FileName = "filename";
-            video.Length = new TimeSpan(0, 10, 30);
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(Video));
-            using (StreamWriter wr = new StreamWriter("library.xml"))
-            {
-                xmlSerializer.Serialize(wr, video);
-            }
 
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            String[] args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                Video myVideo = new Video(args[1]);
+                this._videos.Add(myVideo);
+            }
         }
     }
 }

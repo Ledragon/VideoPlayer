@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.Xml.Serialization;
 using Path = System.IO.Path;
 using Classes;
+using System.Collections.ObjectModel;
+using Controlers;
 
 namespace VideoPlayer
 {
@@ -24,25 +26,31 @@ namespace VideoPlayer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<Video> _videos = new List<Video>();
+        private ObservableCollection<Video> _videos = new ObservableCollection<Video>();
+        Controler controler = new Controler();
+
         public MainWindow()
         {
             InitializeComponent();
+            FilesList.ItemsSource = this._videos;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            String[] args = Environment.GetCommandLineArgs();
-            if (args.Length > 1)
+            foreach (String file in this.controler.GetVideoFiles(this._uiDirectoryTextBox.Text))
             {
-                Video myVideo = new Video(args[1]);
-                this._videos.Add(myVideo);
+                Video video = new Video(file);
+                this._videos.Add(video);
             }
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            ObjectsWrapper wrapper = new ObjectsWrapper();
+            wrapper.Videos = this._videos;
+            this.controler.Save(filePath, wrapper);
+            this.Close();
         }
     }
 }

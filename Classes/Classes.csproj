@@ -44,6 +44,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Directory.cs" />
     <Compile Include="ObjectsWrapper.cs" />
     <Compile Include="Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

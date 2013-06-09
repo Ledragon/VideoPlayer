@@ -101,6 +101,10 @@
       <Project>{ffb9c128-ca7e-40bb-bbcd-7b28707c6719}</Project>
       <Name>Classes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Controler\Controlers.csproj">
+      <Project>{0856c528-64cf-413d-95cb-0de13d4da228}</Project>
+      <Name>Controlers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

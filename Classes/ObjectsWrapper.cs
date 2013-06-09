@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,6 @@ namespace Classes
     {
         [XmlArray("Videos")]
         [XmlArrayItem("Video")]
-        public List<Video> Videos { get; set; }
+        public ObservableCollection<Video> Videos { get; set; }
     }
 }

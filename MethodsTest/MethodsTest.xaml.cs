@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Controlers;
+using System.Collections.ObjectModel;
 //using VideoPlayer;
 
 namespace MethodsTest
@@ -35,7 +36,7 @@ namespace MethodsTest
             InitializeComponent();            
         }
 
-        private List<Video> _videos = new List<Video>();
+        private ObservableCollection<Video> _videos = new ObservableCollection<Video>();
         
         private void InfoViewer_Loaded(object sender, RoutedEventArgs e)
         {

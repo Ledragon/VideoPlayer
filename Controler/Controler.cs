@@ -12,6 +12,8 @@ namespace Controlers
 {
     public class Controler
     {
+        private String[] VideoExtensions = { ".avi", ".mpg", ".mpeg", ".wmv" };
+
         public void Save(String filePath, ObjectsWrapper wrapper)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObjectsWrapper));
@@ -26,9 +28,9 @@ namespace Controlers
             try 
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(directory);
-                foreach (FileInfo fileInfo in directoryInfo.GetFiles())
+                foreach (FileInfo fileInfo in directoryInfo.GetFiles("*", SearchOption.AllDirectories))
                 {
-                    if (fileInfo.Extension.ToLowerInvariant() == ".avi")
+                    if (Array.IndexOf(this.VideoExtensions, fileInfo.Extension.ToLowerInvariant()) != -1)
                     {
                         videoFiles.Add(fileInfo.FullName);
                     }

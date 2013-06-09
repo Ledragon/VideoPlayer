@@ -23,9 +23,16 @@ namespace MethodsTest
     /// </summary>
     public partial class MainWindow : Window
     {
+        private String _videosCount;
+        public String VideosCount 
+        {
+            get { return this._videos.Count.ToString(); }
+            set { this._videosCount = value;} 
+        }
+            Controler controler = new Controler();
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
         private List<Video> _videos = new List<Video>();
@@ -35,11 +42,15 @@ namespace MethodsTest
             String[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
-                Video myVideo = new Video(args[1]);
-                this._videos.Add(myVideo);
-                this.DataContext = myVideo;
-            }
 
+                foreach (String fil in this.controler.GetVideoFiles(args[1]))
+                {
+                    Video video = new Video(fil);
+                    this._videos.Add(video);
+                    this.FilesList.Items.Add(video.FileName);
+                    this._uiVideosCount.Text = this._videos.Count.ToString();
+                }
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -47,8 +58,7 @@ namespace MethodsTest
             String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             ObjectsWrapper wrapper = new ObjectsWrapper();
             wrapper.Videos = this._videos;
-            Controler controler = new Controler();
-            controler.Save(filePath, wrapper);
+            this.controler.Save(filePath, wrapper);
         }
     }
 }

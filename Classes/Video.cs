@@ -18,15 +18,15 @@ namespace VideoPlayer
 
         public Video(String videoPath)
         {
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.Open(new Uri(videoPath));
+            //MediaPlayer mediaPlayer = new MediaPlayer();
+            //mediaPlayer.Open(new Uri(videoPath));
             this.Directory = System.IO.Path.GetDirectoryName(videoPath);
             this.FileName = Path.GetFileNameWithoutExtension(videoPath);
-            this.Length = mediaPlayer.NaturalDuration.TimeSpan;
+            //this.Length = mediaPlayer.NaturalDuration.TimeSpan;
             this.Title = this.FileName;
             this.NumberOfViews = 0;
             this.Rating = 0;
-            mediaPlayer.Close();
+            //mediaPlayer.Close();
         }
 
         [XmlAttribute("FileName")]

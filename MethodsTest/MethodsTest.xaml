@@ -1,0 +1,14 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:MethodsTest" x:Class="MethodsTest.MainWindow"
+        Title="MainWindow" Height="480" Width="640">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox FontSize="24" Text="Test environment" Background="Yellow"/>
+        <local:VideoInfoViewer x:Name="InfoViewer" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Loaded="InfoViewer_Loaded"/>
+    </Grid>
+</Window>

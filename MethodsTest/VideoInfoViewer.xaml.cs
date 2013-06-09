@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace MethodsTest
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for VideoInfoViewer.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class VideoInfoViewer : UserControl
     {
-        public MainWindow()
+        public VideoInfoViewer()
         {
             InitializeComponent();
         }

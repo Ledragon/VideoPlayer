@@ -9,6 +9,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBox FontSize="24" Text="Test environment" Background="Yellow"/>
-        <local:VideoInfoViewer x:Name="InfoViewer" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Loaded="InfoViewer_Loaded"/>
+        <local:VideoInfoViewer x:Name="InfoViewer" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Top" Loaded="InfoViewer_Loaded"/>
+        <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" Grid.Row="1" Click="Button_Click"/>
     </Grid>
 </Window>

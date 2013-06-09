@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using VideoPlayer;
+using Controlers;
+//using VideoPlayer;
 
 namespace MethodsTest
 {
@@ -38,6 +40,15 @@ namespace MethodsTest
                 this.DataContext = myVideo;
             }
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            ObjectsWrapper wrapper = new ObjectsWrapper();
+            wrapper.Videos = this._videos;
+            Controler controler = new Controler();
+            controler.Save(filePath, wrapper);
         }
     }
 }

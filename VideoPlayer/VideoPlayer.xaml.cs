@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
 using Path = System.IO.Path;
+using Classes;
 
 namespace VideoPlayer
 {

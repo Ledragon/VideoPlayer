@@ -32,17 +32,28 @@ namespace VideoPlayer
         public MainWindow()
         {
             InitializeComponent();
-            FilesList.ItemsSource = this._videos;
-        }
 
-        private void LoadButton_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (String file in this.controler.GetVideoFiles(this._uiDirectoryTextBox.Text))
+            //TODO supprimer le code du constructeur
+            //FilesList.ItemsSource = this._videos;
+            //this.MainGrid.ColumnDefinitions[0].Width = new GridLength(0);
+            foreach (String file in this.controler.GetVideoFiles(@"D:\Users\Hugues\_Telechargements"))
             {
                 Video video = new Video(file);
                 this._videos.Add(video);
             }
+            this._videos.OrderBy(i => i.FileName);
+            this.MainGrid.DataContext = this._videos;
         }
+
+        //private void LoadButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    foreach (String file in this.controler.GetVideoFiles(this._uiDirectoryTextBox.Text))
+        //    {
+        //        Video video = new Video(file);
+        //        this._videos.Add(video);
+        //    }
+        //    this._videos.OrderBy(i => i.FileName);
+        //}
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
@@ -51,6 +62,38 @@ namespace VideoPlayer
             wrapper.Videos = this._videos;
             this.controler.Save(filePath, wrapper);
             this.Close();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+            }
+            else if (e.Key == Key.Back)
+            {
+                this.MainGrid.RowDefinitions[1].Height = new GridLength(100);
+                this.MainGrid.RowDefinitions[2].Height = new GridLength(80);
+                this._uiVideosView.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void _uiSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.ConfigureInterface();
+
+        }
+
+        private void _uiVideosButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.ConfigureInterface();
+            this._uiVideosView.Visibility = Visibility.Visible;
+        }
+
+        private void ConfigureInterface()
+        {
+            this.MainGrid.RowDefinitions[1].Height = new GridLength(0);
+            this.MainGrid.RowDefinitions[2].Height = new GridLength(0);
         }
     }
 }

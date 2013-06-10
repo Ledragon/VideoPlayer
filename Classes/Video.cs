@@ -19,12 +19,14 @@ namespace Classes
 
         public Video(String videoPath)
         {
-            //MediaPlayer mediaPlayer = new MediaPlayer();
-            //mediaPlayer.Open(new Uri(videoPath));
-            //Thread.Sleep(500);
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.Open(new Uri(videoPath));
             this.Directory = System.IO.Path.GetDirectoryName(videoPath);
             this.FileName = Path.GetFileNameWithoutExtension(videoPath);
-            //this.Length = mediaPlayer.NaturalDuration.TimeSpan;
+            if (mediaPlayer.NaturalDuration.HasTimeSpan)
+            {
+                this.Length = mediaPlayer.NaturalDuration.TimeSpan;
+            }
             this.Title = this.FileName;
             this.NumberOfViews = 0;
             this.Rating = 0;
@@ -32,7 +34,7 @@ namespace Classes
         }
 
         [XmlAttribute("FileName")]
-        public String  FileName { get; set; }
+        public String FileName { get; set; }
 
         [XmlAttribute("Title")]
         public String Title { get; set; }
@@ -51,7 +53,7 @@ namespace Classes
         [XmlArrayItem("Tag")]
         public List<String> Tags { get; set; }
 
-        [XmlAttribute("Directory")]        
+        [XmlAttribute("Directory")]
         public String Directory { get; set; }
 
         [XmlAttribute("Preview")]
@@ -62,5 +64,9 @@ namespace Classes
 
         [XmlAttribute("Rating")]
         public Int32 Rating { get; set; }
+
+        public DateTime DateAdded { get; set; }
+
+        public DateTime LastPlayed { get; set; }
     }
 }

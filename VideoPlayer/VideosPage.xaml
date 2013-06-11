@@ -5,19 +5,54 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VideoPlayer" x:Class="VideoPlayer.VideosPage" 
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="600">
+             d:DesignHeight="768" d:DesignWidth="1024">
+    <UserControl.Resources>
+        <Style TargetType="Label" x:Key="Label">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="Label" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="0,5,0,5"/>
+            <Setter Property="BorderThickness" Value="0.2"/>
+            <Setter Property="BorderBrush" Value="AliceBlue"/>
+            <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <ListBox x:Name="FilesList" Grid.Column="0" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="FileName">
-            <!--<ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding (FileName)}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0"/>
+
+            <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="80,0,20,0" Content="{Binding Path=Title}"/>
+            <Label Style="{StaticResource Label}" Grid.Column="1" Content="Duration:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0"/>
+            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,25,20,0" Content="{Binding Path=LengthString}"/>
+            <Label Style="{StaticResource Label}" Grid.Column="1" Content="Rating:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,50,0,0"/>
+            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,50,20,0" Content="{Binding Path=Rating}"/>
+            <Label Style="{StaticResource Label}" Grid.Column="1" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,75,0,0"/>
+            <MediaElement Name="_uiMediaElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LoadedBehavior="Manual"/>
+            <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="10,268,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        </Grid>
+
+        <ListBox x:Name="FilesList" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Title">
+            <ListBox.Style>
+                <Style>
+                    <Setter Property="ListBox.Background" Value="Transparent"/>
+                    <Setter Property="ListBox.BorderThickness" Value="0"/>
+                </Style>
+            </ListBox.Style>
         </ListBox>
-        <local:VideoInfoViewer Grid.Column="1"/>
     </Grid>
 </UserControl>

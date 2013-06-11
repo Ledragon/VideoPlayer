@@ -22,15 +22,21 @@ namespace Classes
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer.Open(new Uri(videoPath));
             this.Directory = System.IO.Path.GetDirectoryName(videoPath);
-            this.FileName = Path.GetFileNameWithoutExtension(videoPath);
+            this.FileName = videoPath;
+            Int32 iterCount = 0;
+            while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 1)
+            {
+                //Thread.Sleep(100);
+                iterCount++;
+            }
             if (mediaPlayer.NaturalDuration.HasTimeSpan)
             {
                 this.Length = mediaPlayer.NaturalDuration.TimeSpan;
             }
-            this.Title = this.FileName;
+            this.Title = Path.GetFileNameWithoutExtension(videoPath);
             this.NumberOfViews = 0;
             this.Rating = 0;
-            //mediaPlayer.Close();
+            mediaPlayer.Close();
         }
 
         [XmlAttribute("FileName")]
@@ -46,7 +52,7 @@ namespace Classes
         public String LengthString
         {
             get { return this.Length.ToString("hh\\:mm\\:ss"); }
-            set { value = this.Length.ToString(); }
+            set { this.LengthString = this.Length.ToString(); }
         }
 
         [XmlArray("Tags")]
@@ -65,8 +71,17 @@ namespace Classes
         [XmlAttribute("Rating")]
         public Int32 Rating { get; set; }
 
+        [XmlAttribute("DateAdded")]
         public DateTime DateAdded { get; set; }
 
+        [XmlAttribute("LastPlayed")]
         public DateTime LastPlayed { get; set; }
+
+        [XmlIgnore]
+        public Uri FileUri
+        {
+            get { return new Uri(this.FileName); }
+            set { this.FileUri = new Uri(this.FileName); }
+        }
     }
 }

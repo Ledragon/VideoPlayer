@@ -56,19 +56,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="VideoInfoViewer.xaml.cs">
-      <DependentUpon>VideoInfoViewer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VideosPage.xaml.cs">
       <DependentUpon>VideosPage.xaml</DependentUpon>
     </Compile>
     <Page Include="SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="VideoInfoViewer.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="VideoPlayer.xaml">
       <Generator>MSBuild:Compile</Generator>

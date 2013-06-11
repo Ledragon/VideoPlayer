@@ -52,6 +52,7 @@ namespace MethodsTest
                     this._uiVideosCount.Text = this._videos.Count.ToString();
                 }
             }
+            this._me.LoadedBehavior = MediaState.Manual;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -60,6 +61,18 @@ namespace MethodsTest
             ObjectsWrapper wrapper = new ObjectsWrapper();
             wrapper.Videos = this._videos;
             this.controler.Save(filePath, wrapper);
+        }
+
+        private void _uiPlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            this._me.Source = new Uri(@"D:\Users\Hugues\My Videos\MVI_1687.avi");
+            this._me.Play();
+        }
+
+        private void _me_MediaFailed(object sender, ExceptionRoutedEventArgs e)
+        {
+            string s = e.ErrorException.Message;
+            MessageBox.Show(s);
         }
     }
 }

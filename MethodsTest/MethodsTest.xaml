@@ -13,12 +13,14 @@
         <local:VideoInfoViewer x:Name="InfoViewer" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Top" Loaded="InfoViewer_Loaded"/>
         <Button Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,120,0,0" Grid.Row="1" Click="Button_Click"/>
         <ListBox HorizontalAlignment="Stretch" Margin="0,180,0,0" Grid.Row="1" VerticalAlignment="Top" Name="FilesList"/>
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <TextBox Name="_uiVideosCount"/>
         </Grid>
-        </Grid>
+        <MediaElement Name="_me" HorizontalAlignment="Left" Height="176" Margin="385,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="237" MediaFailed="_me_MediaFailed"/>
+        <Button Name="_uiPlayButton" Content="Play" HorizontalAlignment="Left" Margin="305,153,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="_uiPlayButton_Click"/>
+    </Grid>
 </Window>

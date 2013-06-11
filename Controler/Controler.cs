@@ -7,6 +7,7 @@ using Classes;
 using System.Xml.Serialization;
 using System.IO;
 using System.Windows.Media;
+using System.Collections.ObjectModel;
 
 namespace Controlers
 {
@@ -20,6 +21,24 @@ namespace Controlers
             StreamWriter streamWriter = new StreamWriter(Path.Combine(filePath, "Library.xml"));
             xmlSerializer.Serialize(streamWriter, wrapper);
             streamWriter.Close();
+        }
+
+        public ObservableCollection<Video> GetVideoFiles()
+        {
+            ObservableCollection<Video> videoFiles = new ObservableCollection<Video>();
+            try
+            {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObjectsWrapper));
+                StreamReader streamReader = new StreamReader(Path.Combine(System.Environment.SpecialFolder.MyDocuments.ToString(), "Library.xml"));
+                ObjectsWrapper wrapper = xmlSerializer.Deserialize(streamReader) as ObjectsWrapper;
+                streamReader.Close();
+                videoFiles = wrapper.Videos;
+            }
+            catch
+            {
+                //TODO logger les erreurs
+            }
+            return videoFiles;
         }
 
         public List<String> GetVideoFiles(String directory)

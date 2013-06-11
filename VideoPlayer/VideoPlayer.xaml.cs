@@ -18,6 +18,7 @@ using Path = System.IO.Path;
 using Classes;
 using System.Collections.ObjectModel;
 using Controlers;
+using System.ComponentModel;
 
 namespace VideoPlayer
 {
@@ -27,22 +28,12 @@ namespace VideoPlayer
     public partial class MainWindow : Window
     {
         private ObservableCollection<Video> _videos = new ObservableCollection<Video>();
-        Controler controler = new Controler();
+        private ObservableCollection<Classes.Directory> _directories = new ObservableCollection<Classes.Directory>();
+        Controler _controler = new Controler();
 
         public MainWindow()
         {
             InitializeComponent();
-
-            //TODO supprimer le code du constructeur
-            //FilesList.ItemsSource = this._videos;
-            //this.MainGrid.ColumnDefinitions[0].Width = new GridLength(0);
-            foreach (String file in this.controler.GetVideoFiles(@"D:\Users\Hugues\_Telechargements"))
-            {
-                Video video = new Video(file);
-                this._videos.Add(video);
-            }
-            this._videos.OrderBy(i => i.FileName);
-            this.MainGrid.DataContext = this._videos;
         }
 
         //private void LoadButton_Click(object sender, RoutedEventArgs e)
@@ -54,16 +45,7 @@ namespace VideoPlayer
         //    }
         //    this._videos.OrderBy(i => i.FileName);
         //}
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            ObjectsWrapper wrapper = new ObjectsWrapper();
-            wrapper.Videos = this._videos;
-            this.controler.Save(filePath, wrapper);
-            this.Close();
-        }
-
+        
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -76,6 +58,10 @@ namespace VideoPlayer
                 this.MainGrid.RowDefinitions[2].Height = new GridLength(80);
                 this._uiVideosView.Visibility = Visibility.Hidden;
             }
+            //else if (e.Key == Key.S)
+            //{
+            //    this.Close();
+            //}
         }
 
         private void _uiSettingsButton_Click(object sender, RoutedEventArgs e)
@@ -94,6 +80,37 @@ namespace VideoPlayer
         {
             this.MainGrid.RowDefinitions[1].Height = new GridLength(0);
             this.MainGrid.RowDefinitions[2].Height = new GridLength(0);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += this.backgroundWorker_DoWork;
+            backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
+            backgroundWorker.RunWorkerAsync();
+        }
+
+        void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.MainGrid.DataContext = this._videos;
+        }
+
+        void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            //this._videos = this._controler.GetVideoFiles();
+            foreach (String file in this._controler.GetVideoFiles(@"D:\Users\Hugues\_Telechargements"))
+            {
+                Video video = new Video(file);
+                this._videos.Add(video);
+            }
+        }
+
+        private void _uiSaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            ObjectsWrapper wrapper = new ObjectsWrapper();
+            wrapper.Videos = this._videos;
+            this._controler.Save(filePath, wrapper);
         }
     }
 }

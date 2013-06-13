@@ -15,44 +15,45 @@ namespace Controlers
     {
         private String[] VideoExtensions = { ".avi", ".mpg", ".mpeg", ".wmv" };
 
+
+        public void Save(ObjectsWrapper wrapper)
+        {
+            this.Save(this.GetDefaultFileName(), wrapper);
+        }
+
         public void Save(String filePath, ObjectsWrapper wrapper)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObjectsWrapper));
-            StreamWriter streamWriter = new StreamWriter(Path.Combine(filePath, "Library.xml"));
+            StreamWriter streamWriter = new StreamWriter(filePath);
             xmlSerializer.Serialize(streamWriter, wrapper);
             streamWriter.Close();
         }
 
-        public ObservableCollection<Video> GetVideos()
+        public ObjectsWrapper GetObjectsFromFile(String filePath)
         {
-            ObservableCollection<Video> videoFiles = new ObservableCollection<Video>();
+
+            ObjectsWrapper wrapper = null;
             try
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObjectsWrapper));
-                String libraryFile = Path.Combine(System.Environment.SpecialFolder.MyDocuments.ToString(), "Library.xml");
-                StreamReader streamReader = new StreamReader(libraryFile);
-                if (File.Exists(libraryFile))
+                if (File.Exists(filePath))
                 {
-                    ObjectsWrapper wrapper = xmlSerializer.Deserialize(streamReader) as ObjectsWrapper;
+                    StreamReader streamReader = new StreamReader(filePath);
+                    wrapper = xmlSerializer.Deserialize(streamReader) as ObjectsWrapper;
                     streamReader.Close();
-                    videoFiles = wrapper.Videos;
                 }
             }
             catch
             {
                 //TODO logger les erreurs
             }
-            return videoFiles;
+            return wrapper;
         }
 
-        public ObservableCollection<Video> GetVideos(List<String> videoFiles)
+
+        public ObjectsWrapper GetObjectsFromFile()
         {
-            ObservableCollection<Video> videos = new ObservableCollection<Video>();
-            foreach (String videoFile in videoFiles)
-            {
-                videos.Add(new Video(videoFile));
-            }
-            return videos;
+            return this.GetObjectsFromFile(this.GetDefaultFileName());
         }
 
         public List<String> GetVideoFiles(String directory)
@@ -74,6 +75,43 @@ namespace Controlers
                 //TODO logger les erreurs
             }
             return videoFiles;
+        }
+
+        public List<String> GetVideoFiles(Classes.Directory directory)
+        {
+            List<String> videoFiles = new List<String>();
+            try
+            {
+                DirectoryInfo directoryInfo = new DirectoryInfo(directory.DirectoryPath);
+                SearchOption searchOption;
+                if (directory.IsIncludeSubdirectories)
+                {
+                    searchOption = SearchOption.AllDirectories;
+                }
+                else 
+                {
+                    searchOption = SearchOption.TopDirectoryOnly;
+                }
+                foreach (FileInfo fileInfo in directoryInfo.GetFiles("*", searchOption))
+                {
+                    if (Array.IndexOf(this.VideoExtensions, fileInfo.Extension.ToLowerInvariant()) != -1)
+                    {
+                        videoFiles.Add(fileInfo.FullName);
+                    }
+                }
+            }
+            catch
+            {
+                //TODO logger les erreurs
+            }
+            return videoFiles;
+        }
+
+        public String GetDefaultFileName()
+        {
+            String myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            String libraryPath = Path.Combine(myDocumentsPath, "Library.xml");
+            return libraryPath;
         }
     }
 }

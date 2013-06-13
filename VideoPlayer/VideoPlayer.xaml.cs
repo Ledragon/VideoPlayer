@@ -112,13 +112,12 @@ namespace VideoPlayer
 
         void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //this._videos = this._controler.GetVideos();
-            foreach (String file in this._controler.GetVideoFiles(@"D:\Users\Hugues\_Telechargements"))
+            ObjectsWrapper wrapper = this._controler.GetObjectsFromFile();
+            if (wrapper != null)
             {
-                Video video = new Video(file);
-                this._videos.Add(video);
+                this._videos = wrapper.Videos;
+                this._directories = wrapper.Directories;
             }
-            this._videos.OrderBy(i => i.FileName);
         }
 
         private void _uiSaveButton_Click(object sender, RoutedEventArgs e)
@@ -126,16 +125,21 @@ namespace VideoPlayer
             String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             ObjectsWrapper wrapper = new ObjectsWrapper();
             wrapper.Videos = this._videos;
-            this._controler.Save(filePath, wrapper);
+            wrapper.Directories = this._directories;
+            this._controler.Save(wrapper);
         }
 
         private void _uiLoadButton_Click(object sender, RoutedEventArgs e)
         {
-            //this._videos.Clear();
-            //foreach (Classes.Directory directory in this._directories)
-            //{
-            //    this._videos = this._controler.GetVideos(this._controler.GetVideoFiles(directory.DirectoryPath));
-            //}
+            this._videos.Clear();
+            foreach (Classes.Directory directory in this._directories)
+            {
+                List<String> files = this._controler.GetVideoFiles(directory);
+                foreach (String videoFile in files)
+                {
+                    this._videos.Add(new Video(videoFile));
+                }
+            }
         }
     }
 }

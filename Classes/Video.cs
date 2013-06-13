@@ -48,11 +48,14 @@ namespace Classes
         [XmlIgnore]
         public TimeSpan Length { get; set; }
 
+        [XmlIgnore]
+        private String _lengthString;
+        
         [XmlAttribute("Length")]
         public String LengthString
         {
             get { return this.Length.ToString("hh\\:mm\\:ss"); }
-            set { this.LengthString = this.Length.ToString(); }
+            set { this._lengthString = this.Length.ToString(); }
         }
 
         [XmlArray("Tags")]
@@ -78,10 +81,13 @@ namespace Classes
         public DateTime LastPlayed { get; set; }
 
         [XmlIgnore]
+        private Uri _fileUri;
+
+        [XmlIgnore]
         public Uri FileUri
         {
             get { return new Uri(this.FileName); }
-            set { this.FileUri = new Uri(this.FileName); }
+            set { this._fileUri = new Uri(this.FileName); }
         }
     }
 }

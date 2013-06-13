@@ -49,29 +49,6 @@ namespace VideoPlayer
                 this._uiVideosView.Visibility = Visibility.Hidden;
                 this._uiSettingsView.Visibility = Visibility.Hidden;
             }
-            else
-            {
-                if (this._uiVideosView.IsVisible)
-                {
-                    if (e.Key == Key.X)
-                    {
-                        this._uiVideosView._uiMediaElement.Stop();
-                        e.Handled = true;
-                    }
-                    else if (e.Key == Key.Space)
-                    {
-                        if (this._uiVideosView._uiMediaElement.CanPause)
-                        {
-                            this._uiVideosView._uiMediaElement.Pause();
-                        }
-                        else
-                        {
-                            this._uiVideosView._uiMediaElement.Play();
-
-                        }
-                    }
-                }
-            }
         }
 
         private void _uiSettingsButton_Click(object sender, RoutedEventArgs e)

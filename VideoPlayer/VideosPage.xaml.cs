@@ -30,14 +30,56 @@ namespace VideoPlayer
 
         private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Video video = this._uiFilesListBox.SelectedItem as Video;
-            this._uiMediaElement.Source = video.FileUri;
-            this._uiMediaElement.Play();
+            this.PlaySelectedVideo();
         }
 
         private void _uiMuteButton_Click(object sender, RoutedEventArgs e)
         {
             this._uiMediaElement.IsMuted = !this._uiMediaElement.IsMuted;
+        }
+
+        private void UserControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.X)
+            {
+                this._uiMediaElement.Stop();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Space)
+            {
+                if (this._uiMediaElement.CanPause)
+                {
+                    this._uiMediaElement.Pause();
+                }
+                else
+                {
+                    this._uiMediaElement.Play();
+
+                }
+                e.Handled = true;
+            }
+        }
+
+        private void _uiStopButton_Click(object sender, RoutedEventArgs e)
+        {
+            this._uiMediaElement.Stop();
+        }
+
+        private void _uiPauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this._uiMediaElement.Pause();
+        }
+
+        private void _uiPlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.PlaySelectedVideo();
+        }
+
+        private void PlaySelectedVideo()
+        {
+            Video video = this._uiFilesListBox.SelectedItem as Video;
+            this._uiMediaElement.Source = video.FileUri;
+            this._uiMediaElement.Play();
         }
     }
 }

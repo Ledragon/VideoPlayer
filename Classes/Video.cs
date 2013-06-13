@@ -7,6 +7,9 @@ using System.Xml.Serialization;
 using System.Windows.Media;
 using System.IO;
 using System.Threading;
+using System.ComponentModel;
+using System.Windows.Media.Imaging;
+using System.Windows;
 
 namespace Classes
 {
@@ -19,23 +22,48 @@ namespace Classes
 
         public Video(String videoPath)
         {
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.Open(new Uri(videoPath));
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += backgroundWorker_DoWork;
+            backgroundWorker.RunWorkerAsync(videoPath);
+
             this.Directory = System.IO.Path.GetDirectoryName(videoPath);
-            this.FileName = videoPath;
+            this.FileName = videoPath;           
+            this.Title = Path.GetFileNameWithoutExtension(videoPath);
+            this.NumberOfViews = 0;
+            this.Rating = 0;
+        }
+
+        void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.Open(new Uri((String)e.Argument));
             Int32 iterCount = 0;
-            while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 1)
+            while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 30)
             {
-                //Thread.Sleep(100);
+                Thread.Sleep(1000);
                 iterCount++;
             }
             if (mediaPlayer.NaturalDuration.HasTimeSpan)
             {
                 this.Length = mediaPlayer.NaturalDuration.TimeSpan;
             }
-            this.Title = Path.GetFileNameWithoutExtension(videoPath);
-            this.NumberOfViews = 0;
-            this.Rating = 0;
+
+            //mediaPlayer.Pause();
+            //mediaPlayer.Position = TimeSpan.FromSeconds(10);
+            //RenderTargetBitmap rtb = new RenderTargetBitmap(60, 60, 72, 72, PixelFormats.Prgba64);
+            //DrawingVisual dv = new DrawingVisual();
+            //using (DrawingContext dc = dv.RenderOpen())
+            //{
+            //    dc.DrawVideo(mediaPlayer,new Rect(0,0,60,60));
+            //}
+            //rtb.Render(dv);
+            
+            //BitmapFrame frame = BitmapFrame.Create(rtb).GetCurrentValueAsFrozen() as BitmapFrame;
+            //BitmapEncoder encoder = new JpegBitmapEncoder();
+            //encoder.Frames.Add(frame as BitmapFrame);
+            //MemoryStream memoryStream = new MemoryStream();
+            //encoder.Save(memoryStream);
+
             mediaPlayer.Close();
         }
 
@@ -89,5 +117,8 @@ namespace Classes
             get { return new Uri(this.FileName); }
             set { this._fileUri = new Uri(this.FileName); }
         }
+
+        [XmlIgnore]
+        public ImageSource Source { get; set; }
     }
 }

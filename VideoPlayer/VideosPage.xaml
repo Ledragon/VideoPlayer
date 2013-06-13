@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VideoPlayer" x:Class="VideoPlayer.VideosPage" 
              mc:Ignorable="d" 
-             d:DesignHeight="768" d:DesignWidth="1024">
+             d:DesignHeight="768" d:DesignWidth="1024" KeyDown="UserControl_KeyDown">
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="Label">
             <Setter Property="Foreground" Value="White"/>
@@ -33,17 +33,29 @@
                 <ColumnDefinition Width="400"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0"/>
+            <Image Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="_uiImage" Source="{Binding Source}"/>
+            <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <MediaElement x:Name="_uiMediaElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LoadedBehavior="Manual"/>
+                <Button Content="Mute" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" x:Name="_uiMuteButton" Click="_uiMuteButton_Click" Grid.Row="1"/>
+                <Button Content="Play" Grid.Row="1" Width="75" Margin="5,0,315,0" HorizontalAlignment="Left" Name="_uiPlayButton" Click="_uiPlayButton_Click"/>
+                <Button Content="Pause" Grid.Row="1" Width="75" Margin="85,0,0,0" HorizontalAlignment="Left" Name="_uiPauseButton" Click="_uiPauseButton_Click"/>
+                <Button Content="Stop" Grid.Row="1" Width="75" Margin="165,0,0,0" HorizontalAlignment="Left" Name="_uiStopButton" Click="_uiStopButton_Click"/>
+                <Slider HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,243,0,0"/>
+            </Grid>
 
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="80,0,20,0" Content="{Binding Path=Title}"/>
+            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="80,0,20,0" Content="{Binding Title}"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Duration:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0"/>
-            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,25,20,0" Content="{Binding Path=LengthString}"/>
+            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,25,20,0" Content="{Binding LengthString}"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Rating:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,50,0,0"/>
-            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,50,20,0" Content="{Binding Path=Rating}"/>
-            <Label Style="{StaticResource Label}" Grid.Column="1" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,75,0,0"/>
-            <MediaElement Name="_uiMediaElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LoadedBehavior="Manual"/>
-            <Button Content="Mute" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Name="_uiMuteButton" Click="_uiMuteButton_Click"/>
+            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,50,20,0" Content="{Binding Rating}"/>
+            <Label Style="{StaticResource Label}" Grid.Column="1" Content="Views:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,75,0,0"/>
+            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,75,20,0" Content="{Binding NumberOfViews}"/>
+            <Label Style="{StaticResource Label}" Grid.Column="1" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,100,0,0"/>
         </Grid>
 
         <ListBox x:Name="_uiFilesListBox" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Title">

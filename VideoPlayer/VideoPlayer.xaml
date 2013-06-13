@@ -26,7 +26,9 @@
             <Button Content="Settings" Style="{StaticResource ToolbarStyle}" Click="_uiSettingsButton_Click" x:Name="_uiSettingsButton"/>
             <Button Content="Videos" Style="{StaticResource ToolbarStyle}" x:Name="_uiVideosButton" Click="_uiVideosButton_Click"/>
             <Button Content="Save" Style="{StaticResource ToolbarStyle}" x:Name="_uiSaveButton" Click="_uiSaveButton_Click"/>
+            <Button Content="Load" Style="{StaticResource ToolbarStyle}" x:Name="_uiLoadButton" Click="_uiLoadButton_Click"/>
         </StackPanel>
         <local:VideosPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" x:Name="_uiVideosView"/>
+        <local:SettingsPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" x:Name="_uiSettingsView"/>
     </Grid>
 </Window>

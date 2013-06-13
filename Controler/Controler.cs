@@ -23,16 +23,20 @@ namespace Controlers
             streamWriter.Close();
         }
 
-        public ObservableCollection<Video> GetVideoFiles()
+        public ObservableCollection<Video> GetVideos()
         {
             ObservableCollection<Video> videoFiles = new ObservableCollection<Video>();
             try
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObjectsWrapper));
-                StreamReader streamReader = new StreamReader(Path.Combine(System.Environment.SpecialFolder.MyDocuments.ToString(), "Library.xml"));
-                ObjectsWrapper wrapper = xmlSerializer.Deserialize(streamReader) as ObjectsWrapper;
-                streamReader.Close();
-                videoFiles = wrapper.Videos;
+                String libraryFile = Path.Combine(System.Environment.SpecialFolder.MyDocuments.ToString(), "Library.xml");
+                StreamReader streamReader = new StreamReader(libraryFile);
+                if (File.Exists(libraryFile))
+                {
+                    ObjectsWrapper wrapper = xmlSerializer.Deserialize(streamReader) as ObjectsWrapper;
+                    streamReader.Close();
+                    videoFiles = wrapper.Videos;
+                }
             }
             catch
             {
@@ -41,10 +45,20 @@ namespace Controlers
             return videoFiles;
         }
 
+        public ObservableCollection<Video> GetVideos(List<String> videoFiles)
+        {
+            ObservableCollection<Video> videos = new ObservableCollection<Video>();
+            foreach (String videoFile in videoFiles)
+            {
+                videos.Add(new Video(videoFile));
+            }
+            return videos;
+        }
+
         public List<String> GetVideoFiles(String directory)
         {
             List<String> videoFiles = new List<String>();
-            try 
+            try
             {
                 DirectoryInfo directoryInfo = new DirectoryInfo(directory);
                 foreach (FileInfo fileInfo in directoryInfo.GetFiles("*", SearchOption.AllDirectories))
@@ -55,7 +69,7 @@ namespace Controlers
                     }
                 }
             }
-            catch 
+            catch
             {
                 //TODO logger les erreurs
             }

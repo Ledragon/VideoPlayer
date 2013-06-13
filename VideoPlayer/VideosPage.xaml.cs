@@ -1,6 +1,7 @@
 ﻿using Classes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,11 +25,12 @@ namespace VideoPlayer
         public VideosPage()
         {
             InitializeComponent();
+            this._uiFilesListBox.Items.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
         }
 
         private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Video video = this.FilesList.SelectedItem as Video;
+            Video video = this._uiFilesListBox.SelectedItem as Video;
             this._uiMediaElement.Source = video.FileUri;
             this._uiMediaElement.Play();
         }
@@ -36,7 +38,7 @@ namespace VideoPlayer
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             
-            Video video = this.FilesList.SelectedItem as Video;
+            Video video = this._uiFilesListBox.SelectedItem as Video;
             this._uiMediaElement.Source = new Uri(video.FileName);
             //if (this._uiMediaElement.Source != null)
             //{

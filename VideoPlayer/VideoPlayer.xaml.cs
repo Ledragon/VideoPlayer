@@ -36,16 +36,6 @@ namespace VideoPlayer
             InitializeComponent();
         }
 
-        //private void LoadButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    foreach (String file in this.controler.GetVideoFiles(this._uiDirectoryTextBox.Text))
-        //    {
-        //        Video video = new Video(file);
-        //        this._videos.Add(video);
-        //    }
-        //    this._videos.OrderBy(i => i.FileName);
-        //}
-        
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -57,22 +47,45 @@ namespace VideoPlayer
                 this.MainGrid.RowDefinitions[1].Height = new GridLength(100);
                 this.MainGrid.RowDefinitions[2].Height = new GridLength(80);
                 this._uiVideosView.Visibility = Visibility.Hidden;
+                this._uiSettingsView.Visibility = Visibility.Hidden;
             }
-            //else if (e.Key == Key.S)
-            //{
-            //    this.Close();
-            //}
+            else
+            {
+                if (this._uiVideosView.IsVisible)
+                {
+                    if (e.Key == Key.X)
+                    {
+                        this._uiVideosView._uiMediaElement.Stop();
+                        e.Handled = true;
+                    }
+                    else if (e.Key == Key.Space)
+                    {
+                        if (this._uiVideosView._uiMediaElement.CanPause)
+                        {
+                            this._uiVideosView._uiMediaElement.Pause();
+                        }
+                        else
+                        {
+                            this._uiVideosView._uiMediaElement.Play();
+
+                        }
+                    }
+                }
+            }
         }
 
         private void _uiSettingsButton_Click(object sender, RoutedEventArgs e)
         {
             this.ConfigureInterface();
+            this._uiSettingsView.Visibility = System.Windows.Visibility.Visible;
+            this._uiVideosView.Visibility = System.Windows.Visibility.Hidden;
 
         }
 
         private void _uiVideosButton_Click(object sender, RoutedEventArgs e)
         {
             this.ConfigureInterface();
+            this._uiSettingsView.Visibility = System.Windows.Visibility.Hidden;
             this._uiVideosView.Visibility = Visibility.Visible;
         }
 
@@ -92,17 +105,20 @@ namespace VideoPlayer
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.MainGrid.DataContext = this._videos;
+            this._uiVideosView.DataContext = this._videos;
+            this._uiSettingsView.Directories = this._directories;
+            this._uiSettingsView.DataContext = this._directories;
         }
 
         void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //this._videos = this._controler.GetVideoFiles();
+            //this._videos = this._controler.GetVideos();
             foreach (String file in this._controler.GetVideoFiles(@"D:\Users\Hugues\_Telechargements"))
             {
                 Video video = new Video(file);
                 this._videos.Add(video);
             }
+            this._videos.OrderBy(i => i.FileName);
         }
 
         private void _uiSaveButton_Click(object sender, RoutedEventArgs e)
@@ -111,6 +127,15 @@ namespace VideoPlayer
             ObjectsWrapper wrapper = new ObjectsWrapper();
             wrapper.Videos = this._videos;
             this._controler.Save(filePath, wrapper);
+        }
+
+        private void _uiLoadButton_Click(object sender, RoutedEventArgs e)
+        {
+            //this._videos.Clear();
+            //foreach (Classes.Directory directory in this._directories)
+            //{
+            //    this._videos = this._controler.GetVideos(this._controler.GetVideoFiles(directory.DirectoryPath));
+            //}
         }
     }
 }

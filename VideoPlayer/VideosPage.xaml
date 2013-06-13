@@ -19,7 +19,7 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Padding" Value="0,5,0,5"/>
             <Setter Property="BorderThickness" Value="0.2"/>
-            <Setter Property="BorderBrush" Value="AliceBlue"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
             <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
         </Style>
     </UserControl.Resources>
@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="400"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0"/>
@@ -43,10 +43,9 @@
             <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,50,20,0" Content="{Binding Path=Rating}"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,75,0,0"/>
             <MediaElement Name="_uiMediaElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LoadedBehavior="Manual"/>
-            <Button Content="Button" Grid.Column="1" HorizontalAlignment="Left" Margin="10,268,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         </Grid>
 
-        <ListBox x:Name="FilesList" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Title">
+        <ListBox x:Name="_uiFilesListBox" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Title">
             <ListBox.Style>
                 <Style>
                     <Setter Property="ListBox.Background" Value="Transparent"/>

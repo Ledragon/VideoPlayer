@@ -5,15 +5,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="0,5,0,5"/>
+            <Setter Property="BorderThickness" Value="0.2"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+        </Style>    
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel>
-            <Button Content="Add folder"/>
-            <Button Content="Delete folder"/>
-            
+            <Button Content="Add Directory" Name="_uiAddDirectoryButton" Click="_uiAddDirectoryButton_Click"/>
+            <Button Content="Delete directory" Name="_uiDeleteDirectoryButton"/>
         </StackPanel>
+        <ListBox Grid.Column="1" Name="_uiDirectoriesListBox" Background="Transparent" ItemsSource="{Binding}" DisplayMemberPath="DirectoryPath">
+            
+        </ListBox>           
     </Grid>
 </UserControl>

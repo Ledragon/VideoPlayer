@@ -37,5 +37,14 @@ namespace VideoPlayer
                 this.Directories.Add(directoryBrowser._directory);
             }
         }
+
+        private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DirectoryBrowser directoryBrowser = new DirectoryBrowser(this._uiDirectoriesListBox.SelectedItem as Classes.Directory);
+            directoryBrowser.ShowDialog();
+            //if (!(Boolean)directoryBrowser.ShowDialog())
+            //{
+            //}
+        }
     }
 }

@@ -77,7 +77,9 @@ namespace VideoPlayer
             BackgroundWorker backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += this.backgroundWorker_DoWork;
             backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
+            this._uiCurrentOperationStatusBarItem.Content = "Loading library";
             backgroundWorker.RunWorkerAsync();
+            this._uiNumberOfVideosStatusBarItem.DataContext = this._videos;
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -85,6 +87,8 @@ namespace VideoPlayer
             this._uiVideosView.DataContext = this._videos;
             this._uiSettingsView.Directories = this._directories;
             this._uiSettingsView.DataContext = this._directories;
+            this._uiCurrentOperationStatusBarItem.Content = "Ready";
+
         }
 
         void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -99,7 +103,11 @@ namespace VideoPlayer
 
         private void _uiSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            this.Save();
+        }
+
+        private void Save()
+        {
             ObjectsWrapper wrapper = new ObjectsWrapper();
             wrapper.Videos = this._videos;
             wrapper.Directories = this._directories;
@@ -109,14 +117,47 @@ namespace VideoPlayer
         private void _uiLoadButton_Click(object sender, RoutedEventArgs e)
         {
             this._videos.Clear();
+            this._uiCurrentOperationStatusBarItem.Content = "Loading files from directories";
             foreach (Classes.Directory directory in this._directories)
             {
                 List<String> files = this._controler.GetVideoFiles(directory);
                 foreach (String videoFile in files)
                 {
-                    this._videos.Add(new Video(videoFile));
+                    Video newVideo = new Video(videoFile);
+                    this._videos.Add(newVideo);
+                    newVideo.DateAdded = DateTime.Now;
                 }
             }
+            //BackgroundWorker backgroundWorkerLoad = new BackgroundWorker();
+            //backgroundWorkerLoad.DoWork += this.backgroundWorkerLoad_DoWork;
+            //backgroundWorkerLoad.RunWorkerCompleted += backgroundWorkerLoad_RunWorkerCompleted;
+            //backgroundWorkerLoad.RunWorkerAsync();
+            this._uiCurrentOperationStatusBarItem.Content = "Ready";
+        }
+
+        private void backgroundWorkerLoad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this._uiCurrentOperationStatusBarItem.Content = "Ready";
+        }
+
+        private void backgroundWorkerLoad_DoWork(object sender, DoWorkEventArgs e)
+        {
+            foreach (Classes.Directory directory in this._directories)
+            {
+                List<String> files = this._controler.GetVideoFiles(directory);
+                foreach (String videoFile in files)
+                {
+                    Video newVideo = new Video(videoFile);
+                    // cross-thread
+                    this._videos.Add(newVideo);
+                    newVideo.DateAdded = DateTime.Now;
+                }
+            }
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            this.Save();
         }
     }
 }

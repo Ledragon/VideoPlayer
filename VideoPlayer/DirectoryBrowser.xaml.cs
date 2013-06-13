@@ -27,6 +27,15 @@ namespace VideoPlayer
             InitializeComponent();
         }
 
+        public DirectoryBrowser(Classes.Directory directory)
+        {
+            InitializeComponent();
+            this._directory = directory;
+            this._uiNameTextBox.Text = this._directory.DirectoryName;
+            this._uiPathText.Text = this._directory.DirectoryPath;
+            this._uiSubFoldersCheckBox.IsChecked = this._directory.IsIncludeSubdirectories;
+        }
+
         private void _uiDirectoriesTree_Loaded(object sender, RoutedEventArgs e)
         {
             foreach (String folderName in Directory.GetLogicalDrives())

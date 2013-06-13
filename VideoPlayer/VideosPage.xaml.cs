@@ -22,6 +22,9 @@ namespace VideoPlayer
     /// </summary>
     public partial class VideosPage : UserControl
     {
+        private Boolean IsFullScreenVideo = false;
+        private PlayState State;
+
         public VideosPage()
         {
             InitializeComponent();
@@ -43,6 +46,7 @@ namespace VideoPlayer
             if (e.Key == Key.X)
             {
                 this._uiMediaElement.Stop();
+                this.State = PlayState.Stopped;
                 e.Handled = true;
             }
             else if (e.Key == Key.Space)
@@ -50,10 +54,12 @@ namespace VideoPlayer
                 if (this._uiMediaElement.CanPause)
                 {
                     this._uiMediaElement.Pause();
+                    this.State = PlayState.Paused;
                 }
                 else
                 {
                     this._uiMediaElement.Play();
+                    this.State = PlayState.Playing;
 
                 }
                 e.Handled = true;
@@ -63,23 +69,52 @@ namespace VideoPlayer
         private void _uiStopButton_Click(object sender, RoutedEventArgs e)
         {
             this._uiMediaElement.Stop();
+            this.State = PlayState.Stopped;
         }
 
         private void _uiPauseButton_Click(object sender, RoutedEventArgs e)
         {
             this._uiMediaElement.Pause();
+            this.State = PlayState.Paused;
         }
 
         private void _uiPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            this.PlaySelectedVideo();
+            if (this.State == PlayState.Paused)
+            {
+                this._uiMediaElement.Play();
+                this.State = PlayState.Playing;
+            }
+            else
+            {
+                this.PlaySelectedVideo();
+            }
         }
 
         private void PlaySelectedVideo()
-        {
+        {            
             Video video = this._uiFilesListBox.SelectedItem as Video;
             this._uiMediaElement.Source = video.FileUri;
             this._uiMediaElement.Play();
+            this.State = PlayState.Playing;
+        }
+
+        private void _uiFullScreenButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!this.IsFullScreenVideo)
+            {
+                this._uiVideosListRow.Height = new GridLength(0);
+                this._uiVideoInfosRow.Height = new GridLength(100, GridUnitType.Star);
+                this._uiVideoPropertiesColumn.Width = new GridLength(0);
+                this._uiMediaElementColumn.Width = new GridLength(100, GridUnitType.Star);
+            }
+        }
+
+        private enum PlayState
+        {
+            Playing,
+            Stopped,
+            Paused
         }
     }
 }

@@ -22,10 +22,7 @@ namespace Classes
 
         public Video(String videoPath)
         {
-            BackgroundWorker backgroundWorker = new BackgroundWorker();
-            backgroundWorker.DoWork += backgroundWorker_DoWork;
-            backgroundWorker.RunWorkerAsync(videoPath);
-
+            GetVideoInfo(videoPath);
             this.Directory = System.IO.Path.GetDirectoryName(videoPath);
             this.FileName = videoPath;           
             this.Title = Path.GetFileNameWithoutExtension(videoPath);
@@ -33,14 +30,14 @@ namespace Classes
             this.Rating = 0;
         }
 
-        void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void GetVideoInfo(String videoPath)
         {
             MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.Open(new Uri((String)e.Argument));
+            mediaPlayer.Open(new Uri(videoPath));
             Int32 iterCount = 0;
             while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 30)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(1);
                 iterCount++;
             }
             if (mediaPlayer.NaturalDuration.HasTimeSpan)
@@ -57,7 +54,7 @@ namespace Classes
             //    dc.DrawVideo(mediaPlayer,new Rect(0,0,60,60));
             //}
             //rtb.Render(dv);
-            
+
             //BitmapFrame frame = BitmapFrame.Create(rtb).GetCurrentValueAsFrozen() as BitmapFrame;
             //BitmapEncoder encoder = new JpegBitmapEncoder();
             //encoder.Frames.Add(frame as BitmapFrame);
@@ -76,14 +73,12 @@ namespace Classes
         [XmlIgnore]
         public TimeSpan Length { get; set; }
 
-        [XmlIgnore]
-        private String _lengthString;
         
         [XmlAttribute("Length")]
         public String LengthString
         {
             get { return this.Length.ToString("hh\\:mm\\:ss"); }
-            set { this._lengthString = this.Length.ToString(); }
+            set { this.Length = TimeSpan.Parse(value); }
         }
 
         [XmlArray("Tags")]

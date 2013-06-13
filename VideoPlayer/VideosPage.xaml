@@ -43,6 +43,7 @@
             <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,50,20,0" Content="{Binding Path=Rating}"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,75,0,0"/>
             <MediaElement Name="_uiMediaElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LoadedBehavior="Manual"/>
+            <Button Content="Mute" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Name="_uiMuteButton" Click="_uiMuteButton_Click"/>
         </Grid>
 
         <ListBox x:Name="_uiFilesListBox" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Title">

@@ -35,15 +35,9 @@ namespace VideoPlayer
             this._uiMediaElement.Play();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void _uiMuteButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            Video video = this._uiFilesListBox.SelectedItem as Video;
-            this._uiMediaElement.Source = new Uri(video.FileName);
-            //if (this._uiMediaElement.Source != null)
-            //{
-            //    this._uiMediaElement.Play();
-            //}
+            this._uiMediaElement.IsMuted = !this._uiMediaElement.IsMuted;
         }
     }
 }

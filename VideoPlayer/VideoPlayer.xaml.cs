@@ -49,6 +49,10 @@ namespace VideoPlayer
                 this._uiVideosView.Visibility = Visibility.Hidden;
                 this._uiSettingsView.Visibility = Visibility.Hidden;
             }
+            else if (e.Key == Key.Return && Keyboard.Modifiers == ModifierKeys.Alt)
+            {
+                this.WindowStyle = System.Windows.WindowStyle.None;
+            }
         }
 
         private void _uiSettingsButton_Click(object sender, RoutedEventArgs e)
@@ -142,7 +146,7 @@ namespace VideoPlayer
 
         private void backgroundWorkerLoad_DoWork(object sender, DoWorkEventArgs e)
         {
-            Action<Video> addMethod = (video)=>this._videos.Add(video);
+            Action<Video> addMethod = (video) => this._videos.Add(video);
             foreach (Classes.Directory directory in this._directories)
             {
                 List<String> files = this._controler.GetVideoFiles(directory);
@@ -160,6 +164,34 @@ namespace VideoPlayer
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             this.Save();
+        }
+
+        private void _uiCloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Save();
+            this.Close();
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Back)
+            {
+                this.MainGrid.RowDefinitions[1].Height = new GridLength(100);
+                this.MainGrid.RowDefinitions[2].Height = new GridLength(80);
+                this._uiVideosView.Visibility = Visibility.Hidden;
+                this._uiSettingsView.Visibility = Visibility.Hidden;
+            }
+            else if (e.SystemKey == Key.Return && Keyboard.Modifiers == ModifierKeys.Alt)
+            {
+                if (this.WindowStyle == System.Windows.WindowStyle.None)
+                {
+                    this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+                }
+                else
+                {
+                    this.WindowStyle = System.Windows.WindowStyle.None;
+                }
+            }
         }
     }
 }

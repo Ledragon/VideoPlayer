@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Background="#CC000000">
     <UserControl.Resources>
         <Style TargetType="ListBoxItem">
             <Setter Property="Foreground" Value="White"/>
@@ -12,7 +12,7 @@
             <Setter Property="BorderThickness" Value="0.2"/>
             <Setter Property="BorderBrush" Value="Gray"/>
             <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
-        </Style>    
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -24,7 +24,7 @@
             <Button Content="Delete directory" Name="_uiDeleteDirectoryButton"/>
         </StackPanel>
         <ListBox Grid.Column="1" Name="_uiDirectoriesListBox" Background="Transparent" ItemsSource="{Binding}" DisplayMemberPath="DirectoryPath">
-            
-        </ListBox>           
+
+        </ListBox>
     </Grid>
 </UserControl>

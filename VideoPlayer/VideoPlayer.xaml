@@ -34,13 +34,21 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="StatusBar">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style TargetType="StatusBarItem">
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
     </Window.Resources>
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="80"/>
-            <RowDefinition Height="30"/>
+            <!--<RowDefinition Height="30"/>-->
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Settings" Style="{StaticResource ToolbarStyle}" Click="_uiSettingsButton_Click" x:Name="_uiSettingsButton"/>
@@ -50,9 +58,9 @@
         </StackPanel>
         <local:VideosPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" x:Name="_uiVideosView"/>
         <local:SettingsPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Hidden" x:Name="_uiSettingsView"/>
-        <StatusBar HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch">
+        <!--<StatusBar HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch">
             <StatusBarItem Name="_uiCurrentOperationStatusBarItem" Content="Ready" Width="200"/>
             <StatusBarItem Name="_uiNumberOfVideosStatusBarItem" Content="{Binding Path=Count}"/>
-        </StatusBar>
+        </StatusBar>-->
     </Grid>
 </Window>

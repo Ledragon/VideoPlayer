@@ -35,9 +35,9 @@ namespace Classes
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer.Open(new Uri(videoPath));
             Int32 iterCount = 0;
-            while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 30)
+            while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 10)
             {
-                Thread.Sleep(1);
+                //Thread.Sleep(100);
                 iterCount++;
             }
             if (mediaPlayer.NaturalDuration.HasTimeSpan)
@@ -72,7 +72,6 @@ namespace Classes
 
         [XmlIgnore]
         public TimeSpan Length { get; set; }
-
         
         [XmlAttribute("Length")]
         public String LengthString
@@ -97,8 +96,15 @@ namespace Classes
         [XmlAttribute("Rating")]
         public Int32 Rating { get; set; }
 
-        [XmlAttribute("DateAdded")]
+        [XmlIgnore]
         public DateTime DateAdded { get; set; }
+
+        [XmlAttribute("DateAdded")]
+        public String DateAddedString
+        {
+            get { return this.DateAdded.ToString("yyyyMMdd_HHmmss"); }
+            set { this.DateAdded = DateTime.ParseExact(value, "yyyyMMdd_HHmmss",null); }
+        }
 
         [XmlAttribute("LastPlayed")]
         public DateTime LastPlayed { get; set; }

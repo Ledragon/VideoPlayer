@@ -77,9 +77,9 @@ namespace VideoPlayer
             BackgroundWorker backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += this.backgroundWorker_DoWork;
             backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
-            this._uiCurrentOperationStatusBarItem.Content = "Loading library";
+            //this._uiCurrentOperationStatusBarItem.Content = "Loading library";
             backgroundWorker.RunWorkerAsync();
-            this._uiNumberOfVideosStatusBarItem.DataContext = this._videos;
+            //this._uiNumberOfVideosStatusBarItem.DataContext = this._videos;
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -87,7 +87,7 @@ namespace VideoPlayer
             this._uiVideosView.DataContext = this._videos;
             this._uiSettingsView.Directories = this._directories;
             this._uiSettingsView.DataContext = this._directories;
-            this._uiCurrentOperationStatusBarItem.Content = "Ready";
+            //this._uiCurrentOperationStatusBarItem.Content = "Ready";
 
         }
 
@@ -117,31 +117,32 @@ namespace VideoPlayer
         private void _uiLoadButton_Click(object sender, RoutedEventArgs e)
         {
             this._videos.Clear();
-            this._uiCurrentOperationStatusBarItem.Content = "Loading files from directories";
-            foreach (Classes.Directory directory in this._directories)
-            {
-                List<String> files = this._controler.GetVideoFiles(directory);
-                foreach (String videoFile in files)
-                {
-                    Video newVideo = new Video(videoFile);
-                    this._videos.Add(newVideo);
-                    newVideo.DateAdded = DateTime.Now;
-                }
-            }
-            //BackgroundWorker backgroundWorkerLoad = new BackgroundWorker();
-            //backgroundWorkerLoad.DoWork += this.backgroundWorkerLoad_DoWork;
-            //backgroundWorkerLoad.RunWorkerCompleted += backgroundWorkerLoad_RunWorkerCompleted;
-            //backgroundWorkerLoad.RunWorkerAsync();
-            this._uiCurrentOperationStatusBarItem.Content = "Ready";
+            //this._uiCurrentOperationStatusBarItem.Content = "Loading files from directories";
+            //foreach (Classes.Directory directory in this._directories)
+            //{
+            //    List<String> files = this._controler.GetVideoFiles(directory);
+            //    foreach (String videoFile in files)
+            //    {
+            //        Video newVideo = new Video(videoFile);
+            //        this._videos.Add(newVideo);
+            //        newVideo.DateAdded = DateTime.Now;
+            //    }
+            //}
+            BackgroundWorker backgroundWorkerLoad = new BackgroundWorker();
+            backgroundWorkerLoad.DoWork += this.backgroundWorkerLoad_DoWork;
+            backgroundWorkerLoad.RunWorkerCompleted += backgroundWorkerLoad_RunWorkerCompleted;
+            backgroundWorkerLoad.RunWorkerAsync();
+            //this._uiCurrentOperationStatusBarItem.Content = "Ready";
         }
 
         private void backgroundWorkerLoad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this._uiCurrentOperationStatusBarItem.Content = "Ready";
+            //this._uiCurrentOperationStatusBarItem.Content = "Ready";
         }
 
         private void backgroundWorkerLoad_DoWork(object sender, DoWorkEventArgs e)
         {
+            Action<Video> addMethod = (video)=>this._videos.Add(video);
             foreach (Classes.Directory directory in this._directories)
             {
                 List<String> files = this._controler.GetVideoFiles(directory);
@@ -149,7 +150,8 @@ namespace VideoPlayer
                 {
                     Video newVideo = new Video(videoFile);
                     // cross-thread
-                    this._videos.Add(newVideo);
+                    this.Dispatcher.BeginInvoke(addMethod, newVideo);
+                    //this._videos.Add(newVideo);
                     newVideo.DateAdded = DateTime.Now;
                 }
             }

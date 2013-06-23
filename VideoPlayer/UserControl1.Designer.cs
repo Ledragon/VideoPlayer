@@ -1,6 +1,6 @@
 ﻿namespace VideoPlayer
 {
-    partial class vlcTest
+    partial class UserControl1
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,40 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(vlcTest));
-            this.axVLCPlugin1 = new AxAXVLC.AxVLCPlugin();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserControl1));
             this.axVLCPlugin21 = new AxAXVLC.AxVLCPlugin2();
-            ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).BeginInit();
             this.SuspendLayout();
             // 
-            // axVLCPlugin1
-            // 
-            this.axVLCPlugin1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axVLCPlugin1.Enabled = true;
-            this.axVLCPlugin1.Location = new System.Drawing.Point(0, 0);
-            this.axVLCPlugin1.Name = "axVLCPlugin1";
-            this.axVLCPlugin1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axVLCPlugin1.OcxState")));
-            this.axVLCPlugin1.Size = new System.Drawing.Size(150, 150);
-            this.axVLCPlugin1.TabIndex = 0;
-            // 
             // axVLCPlugin21
             // 
+            this.axVLCPlugin21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axVLCPlugin21.Enabled = true;
-            this.axVLCPlugin21.Location = new System.Drawing.Point(8, 8);
+            this.axVLCPlugin21.Location = new System.Drawing.Point(0, 0);
             this.axVLCPlugin21.Name = "axVLCPlugin21";
             this.axVLCPlugin21.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axVLCPlugin21.OcxState")));
-            this.axVLCPlugin21.Size = new System.Drawing.Size(320, 240);
-            this.axVLCPlugin21.TabIndex = 1;
+            this.axVLCPlugin21.Size = new System.Drawing.Size(440, 309);
+            this.axVLCPlugin21.TabIndex = 0;
             // 
-            // vlcTest
+            // UserControl1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.axVLCPlugin21);
-            this.Controls.Add(this.axVLCPlugin1);
-            this.Name = "vlcTest";
-            ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin1)).EndInit();
+            this.Name = "UserControl1";
+            this.Size = new System.Drawing.Size(440, 309);
             ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).EndInit();
             this.ResumeLayout(false);
 
@@ -69,7 +57,6 @@
 
         #endregion
 
-        private AxAXVLC.AxVLCPlugin axVLCPlugin1;
         private AxAXVLC.AxVLCPlugin2 axVLCPlugin21;
     }
 }

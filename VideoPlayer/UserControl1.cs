@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace VideoPlayer
 {
-    public partial class vlcTest : UserControl
+    public partial class UserControl1 : UserControl
     {
-        public vlcTest()
+        public UserControl1()
         {
             InitializeComponent();
         }

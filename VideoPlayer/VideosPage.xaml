@@ -40,7 +40,6 @@
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
-                <MediaElement x:Name="_uiMediaElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LoadedBehavior="Manual" MediaOpened="_uiMediaElement_MediaOpened" ScrubbingEnabled="True"/>
                 <Button Grid.Row="2" Content="Play" Width="75" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiPlayButton" Click="_uiPlayButton_Click"/>
                 <Button Grid.Row="2" Content="Pause" Width="75" Margin="85,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiPauseButton" Click="_uiPauseButton_Click"/>
                 <Button Grid.Row="2" Content="Stop"  Width="75" Margin="165,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiStopButton" Click="_uiStopButton_Click"/>
@@ -49,7 +48,7 @@
                 <Button Grid.Row="1" Content="+" Width="25" Margin=" 0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="_uiFasterButton" Click="_uiFasterButton_Click"/>
                 <Button Grid.Row="1" Content="-" Width="25" Margin=" 0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiSlowerButton" Click="_uiSlowerButton_Click"/>
                 <Slider Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Name="_uiSlider" Margin="30,0,30,0"/>
-                <WindowsFormsHost HorizontalAlignment="Left" Height="138" Margin="405,160,-163,0" Grid.RowSpan="3" VerticalAlignment="Top" Width="158" Name="windowsFormHost"/>
+                <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="windowsFormHost"/>
             </Grid>
 
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>

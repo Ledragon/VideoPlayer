@@ -43,14 +43,14 @@ namespace VideoPlayer
         private void _uiMuteButton_Click(object sender, RoutedEventArgs e)
         {
             this._vlc.audio.toggleMute();
-            //if (this._vlc.
-            //{
-            //    this._uiMuteButton.Content = "Unmute";
-            //}
-            //else
-            //{
-            //    this._uiMuteButton.Content = "Mute";
-            //}
+            if (this._vlc.audio.mute)
+            {
+                this._uiMuteButton.Content = "Unmute";
+            }
+            else
+            {
+                this._uiMuteButton.Content = "Mute";
+            }
         }
 
         private void UserControl_KeyDown(object sender, KeyEventArgs e)
@@ -59,16 +59,6 @@ namespace VideoPlayer
             {
                 this._vlc.playlist.stop();
                 e.Handled = true;
-            }
-            else if (e.Key == Key.Escape && this.IsFullScreenVideo)
-            {
-                this.SetViewWindowed();
-                e.Handled = true;
-            }
-            else if (e.Key == Key.F)
-            {
-                this.SetViewFullScreen();
-                e.Handled = true; 
             }
         }
 
@@ -111,34 +101,22 @@ namespace VideoPlayer
         private void _uiFullScreenButton_Click(object sender, RoutedEventArgs e)
         {
             this._vlc.video.toggleFullscreen();
-            this._vlc.Toolbar = true;
+            //this._vlc.Toolbar = true;
         }
 
-        private void SetViewFullScreen()
+        void VideosPage_MouseMove(object sender, MouseEventArgs e)
         {
-            //Save original settings
-            this._originalVideosListRow = new GridLength(this._uiVideosListRow.Height.Value, this._uiVideosListRow.Height.GridUnitType);
-            this._videoInfosRow = new GridLength(this._uiVideoInfosRow.Height.Value, this._uiVideoInfosRow.Height.GridUnitType);
-            this._videoPropertiesColumn = new GridLength(this._uiVideoPropertiesColumn.Width.Value, this._uiVideoPropertiesColumn.Width.GridUnitType);
-            this._mediaElementColumn = new GridLength(this._uiMediaElementColumn.Width.Value, this._uiMediaElementColumn.Width.GridUnitType);
+            if (this._vlc.video.fullscreen)
+            {
+                Rectangle r = new Rectangle();
+                //this._uiTestRectangle.Visibility = System.Windows.Visibility.Visible;
+            }
+            else 
+            {
+                this.MouseMove -= VideosPage_MouseMove;
+                //this._uiTestRectangle.Visibility = System.Windows.Visibility.Hidden;
 
-            this._uiVideosListRow.Height = new GridLength(0);
-            this._uiVideoInfosRow.Height = new GridLength(100, GridUnitType.Star);
-            this._uiVideoPropertiesColumn.Width = new GridLength(0);
-            this._uiMediaElementColumn.Width = new GridLength(100, GridUnitType.Star);
-
-            this._uiFullScreenButton.Content = "Windowed";
-            this.IsFullScreenVideo = true;
-        }
-
-        private void SetViewWindowed()
-        {
-            this._uiVideosListRow.Height = this._originalVideosListRow;
-            this._uiVideoInfosRow.Height = this._videoInfosRow;
-            this._uiVideoPropertiesColumn.Width = this._videoPropertiesColumn;
-            this._uiMediaElementColumn.Width = this._mediaElementColumn;
-            this._uiFullScreenButton.Content = "Full";
-            this.IsFullScreenVideo = false;
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -146,7 +124,8 @@ namespace VideoPlayer
             this._uiFilesListBox.Items.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
             this._vlc = new AxVLCPlugin2();
             this.windowsFormHost.Child = this._vlc;
-            this._vlc.Toolbar = false;
+            this.MouseMove += VideosPage_MouseMove;
+            //this._vlc.Toolbar = false;
         }
 
         private void _uiFasterButton_Click(object sender, RoutedEventArgs e)

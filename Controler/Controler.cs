@@ -13,7 +13,7 @@ namespace Controlers
 {
     public class Controler
     {
-        private String[] VideoExtensions = { ".avi", ".mpg", ".mpeg", ".wmv" , ".mp4", ".flv"};
+        private String[] VideoExtensions = { ".3gp", ".avi", ".divx", ".flv", ".mp4",  ".mpeg", ".mpg",".wmv" };
 
 
         public void Save(ObjectsWrapper wrapper)

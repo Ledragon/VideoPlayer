@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+//using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AxAXVLC;
 
 namespace VideoPlayer
 {
@@ -22,6 +23,7 @@ namespace VideoPlayer
     /// </summary>
     public partial class VideosPage : UserControl
     {
+        AxVLCPlugin2 _vlc;
         private Boolean IsFullScreenVideo = false;
         private PlayState State;
         private GridLength _originalVideosListRow;
@@ -121,10 +123,12 @@ namespace VideoPlayer
         private void PlaySelectedVideo()
         {
             Video video = this._uiFilesListBox.SelectedItem as Video;
-            this._uiMediaElement.Source = video.FileUri;
-            this._uiMediaElement.Play();
-            this._timer.Start();
-            this.State = PlayState.Playing;
+            //this._uiMediaElement.Source = video.FileUri;
+            //this._uiMediaElement.Play();
+            //this._timer.Start();
+            //this.State = PlayState.Playing;
+            this._vlc.playlist.add("file:///"+video.FileName, System.IO.Path.GetFileName(video.FileName), null);
+            this._vlc.playlist.play();
         }
 
         private void _uiFullScreenButton_Click(object sender, RoutedEventArgs e)
@@ -180,7 +184,7 @@ namespace VideoPlayer
             if (this._uiMediaElement.NaturalDuration.HasTimeSpan)
             {
                 this._uiSlider.ValueChanged -= _uiSlider_ValueChanged;
-                this._uiSlider.Value = this._uiMediaElement.Position.TotalSeconds;
+                this._uiSlider.Value = this._uiMediaElement.Position.TotalMilliseconds;
                 this._uiSlider.ValueChanged += _uiSlider_ValueChanged;
             }
         }
@@ -189,26 +193,26 @@ namespace VideoPlayer
         {
             if (this._uiMediaElement.NaturalDuration.HasTimeSpan)
             {
-                this._uiSlider.Maximum = this._uiMediaElement.NaturalDuration.TimeSpan.TotalSeconds;
+                this._uiSlider.Maximum = this._uiMediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
             }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this._uiFilesListBox.Items.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
-            this._timer.Interval = 1000;
+            this._timer.Interval = 1;
             this._timer.Tick += _timer_Tick;
             this._uiSlider.ValueChanged += _uiSlider_ValueChanged;
+            this._vlc = new AxVLCPlugin2();
+            this.windowsFormHost.Child = this._vlc;
         }
 
         void _uiSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this._uiMediaElement.Position = TimeSpan.FromSeconds(this._uiSlider.Value);
-        }
-
-        private void _uiSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            this._uiMediaElement.Position = TimeSpan.FromSeconds(this._uiSlider.Value);
+            //if (Mouse.LeftButton != MouseButtonState.Pressed)
+            //{
+                this._uiMediaElement.Position = TimeSpan.FromMilliseconds(this._uiSlider.Value);
+            //}
         }
 
         private void _uiFasterButton_Click(object sender, RoutedEventArgs e)
@@ -219,11 +223,6 @@ namespace VideoPlayer
         private void _uiSlowerButton_Click(object sender, RoutedEventArgs e)
         {
             this._uiMediaElement.SpeedRatio /= 2;
-        }
-
-        private void _uiSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            this._uiMediaElement.Position = TimeSpan.FromSeconds(this._uiSlider.Value);
         }
     }
 }

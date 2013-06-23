@@ -108,7 +108,6 @@ namespace VideoPlayer
         {
             if (this._vlc.video.fullscreen)
             {
-                Rectangle r = new Rectangle();
                 //this._uiTestRectangle.Visibility = System.Windows.Visibility.Visible;
             }
             else 

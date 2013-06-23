@@ -85,24 +85,24 @@ namespace VideoPlayer
 
         private void _uiPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (this.State == PlayState.Paused)
-            //{
-            //    this._uiMediaElement.Play();
-            //    this.State = PlayState.Playing;
-            //}
-            //else
-            //{
-            //    this.PlaySelectedVideo();
-            //}
+            // State 4: Paused
+            if (this._vlc.input.state == 4)
+            {
+                this._vlc.playlist.play();
+            }
+            else
+            {
+                this.PlaySelectedVideo();
+            }
         }
 
         private void PlaySelectedVideo()
         {
             Video video = this._uiFilesListBox.SelectedItem as Video;
+                this._vlc.playlist.items.clear();
             if (this._vlc.input.state == 3)
             {
                 this._vlc.playlist.stop();
-                this._vlc.playlist.items.clear();
             }
             this._vlc.playlist.add("file:///" + video.FileName, System.IO.Path.GetFileName(video.FileName), null);
             this._vlc.playlist.play();
@@ -110,15 +110,8 @@ namespace VideoPlayer
 
         private void _uiFullScreenButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!this.IsFullScreenVideo)
-            {
-                this.SetViewFullScreen();
-            }
-            else 
-            {
-                this.SetViewWindowed();
-            }
-
+            this._vlc.video.toggleFullscreen();
+            this._vlc.Toolbar = true;
         }
 
         private void SetViewFullScreen()
@@ -153,6 +146,7 @@ namespace VideoPlayer
             this._uiFilesListBox.Items.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
             this._vlc = new AxVLCPlugin2();
             this.windowsFormHost.Child = this._vlc;
+            this._vlc.Toolbar = false;
         }
 
         private void _uiFasterButton_Click(object sender, RoutedEventArgs e)

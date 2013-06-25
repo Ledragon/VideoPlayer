@@ -94,7 +94,7 @@ namespace VideoPlayer
             {
                 this._vlc.playlist.stop();
             }
-            this._vlc.playlist.add("file:///" + video.FileName, System.IO.Path.GetFileName(video.FileName), null);
+            this._vlc.playlist.add("file:///" + video.FileName, System.IO.Path.GetFileNameWithoutExtension(video.FileName), null);
             this._vlc.playlist.play();
         }
 
@@ -124,6 +124,7 @@ namespace VideoPlayer
             this._vlc = new AxVLCPlugin2();
             this.windowsFormHost.Child = this._vlc;
             this.MouseMove += VideosPage_MouseMove;
+            this._vlc.audio.toggleMute();
             //this._vlc.Toolbar = false;
         }
 

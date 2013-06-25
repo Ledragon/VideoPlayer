@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VideoPlayer" x:Class="VideoPlayer.VideosPage" 
+    xmlns:VLC="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf" 
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024" KeyDown="UserControl_KeyDown" Background="#CC000000" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -48,9 +49,18 @@
                 <Button Grid.Row="1" Content="+" Width="25" Margin=" 0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="_uiFasterButton" Click="_uiFasterButton_Click"/>
                 <Button Grid.Row="1" Content="-" Width="25" Margin=" 0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiSlowerButton" Click="_uiSlowerButton_Click"/>
                 <Slider Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Name="_uiSlider" Margin="30,0,30,0"/>
-                <WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="windowsFormHost"/>
+                <!--<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="windowsFormHost"/>-->
+                <Grid Grid.Row="0" Name="_uiVLCGrid">
+                    <VLC:VlcControl x:Name="_uiVLC"/>
+                    <Grid.Background>
+                        <VisualBrush Stretch="Uniform">
+                            <VisualBrush.Visual>
+                                <Image Source="{Binding ElementName=_uiVLC, Path=VideoSource}" />
+                            </VisualBrush.Visual>
+                        </VisualBrush >
+                    </Grid.Background>
+                </Grid>
             </Grid>
-
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="80,0,20,0" Content="{Binding Title}"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Duration:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0"/>

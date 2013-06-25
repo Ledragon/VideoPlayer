@@ -15,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AxAXVLC;
+using Vlc.DotNet.Core;
+using Path = System.IO.Path;
+using Vlc.DotNet.Core.Medias;
 
 namespace VideoPlayer
 {
@@ -31,7 +34,37 @@ namespace VideoPlayer
         private GridLength _mediaElementColumn;
 
         public VideosPage()
-        {
+        {   
+            // Set libvlc.dll and libvlccore.dll directory path
+            String programFilesPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles);
+            VlcContext.LibVlcDllsPath = System.IO.Path.Combine(programFilesPath, @"VideoLan\VLC");
+
+            // Set the vlc plugins directory path
+            VlcContext.LibVlcPluginsPath = Path.Combine(VlcContext.LibVlcDllsPath,"plugins");
+
+            /* Setting up the configuration of the VLC instance.
+             * You can use any available command-line option using the AddOption function (see last two options). 
+             * A list of options is available at 
+             *     http://wiki.videolan.org/VLC_command-line_help
+             * for example. */
+
+            // Ignore the VLC configuration file
+            VlcContext.StartupOptions.IgnoreConfig = true;
+
+            // Enable file based logging
+            //VlcContext.StartupOptions.LogOptions.LogInFile = true;
+
+            // Set the log level for the VLC instance
+            //VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Debug;
+
+            // Disable showing the movie file name as an overlay
+            //VlcContext.StartupOptions.AddOption("--no-video-title-show");
+
+            // Pauses the playback of a movie on the last frame
+            //VlcContext.StartupOptions.AddOption("--play-and-pause");
+
+            // Initialize the VlcContext
+            VlcContext.Initialize();
             InitializeComponent();
         }
 
@@ -89,13 +122,15 @@ namespace VideoPlayer
         private void PlaySelectedVideo()
         {
             Video video = this._uiFilesListBox.SelectedItem as Video;
-                this._vlc.playlist.items.clear();
+            this._vlc.playlist.items.clear();
             if (this._vlc.input.state == 3)
             {
                 this._vlc.playlist.stop();
             }
             this._vlc.playlist.add("file:///" + video.FileName, System.IO.Path.GetFileNameWithoutExtension(video.FileName), null);
             this._vlc.playlist.play();
+            this._uiVLC.Media = new PathMedia(video.FileName);
+            this._uiVLC.Play();
         }
 
         private void _uiFullScreenButton_Click(object sender, RoutedEventArgs e)
@@ -122,7 +157,7 @@ namespace VideoPlayer
         {
             this._uiFilesListBox.Items.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
             this._vlc = new AxVLCPlugin2();
-            this.windowsFormHost.Child = this._vlc;
+            //this.windowsFormHost.Child = this._vlc;
             this.MouseMove += VideosPage_MouseMove;
             this._vlc.audio.toggleMute();
             //this._vlc.Toolbar = false;

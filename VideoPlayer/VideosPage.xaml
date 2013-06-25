@@ -24,7 +24,8 @@
             <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
         </Style>
     </UserControl.Resources>
-    <Grid>
+
+    <Grid Name="_uiMainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="300" Name="_uiVideoInfosRow"/>
             <RowDefinition Height="*" Name="_uiVideosListRow"/>
@@ -82,5 +83,16 @@
                 </Style>
             </ListBox.Style>
         </ListBox>
+        <Grid Visibility="Hidden" Grid.ColumnSpan="10" Grid.RowSpan="10" Name="_uiVLCFullScrenGrid" Background="Black" IsVisibleChanged="_uiVLCFullScrenGrid_IsVisibleChanged">
+            <Grid>
+                <Grid.Background>
+                    <VisualBrush Stretch="Uniform">
+                        <VisualBrush.Visual>
+                            <Image Source="{Binding ElementName=_uiVLC, Path=VideoSource}" />
+                        </VisualBrush.Visual>
+                    </VisualBrush >
+                </Grid.Background>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

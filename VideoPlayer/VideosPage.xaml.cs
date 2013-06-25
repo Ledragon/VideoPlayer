@@ -14,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AxAXVLC;
 using Vlc.DotNet.Core;
 using Path = System.IO.Path;
 using Vlc.DotNet.Core.Medias;
@@ -26,12 +25,9 @@ namespace VideoPlayer
     /// </summary>
     public partial class VideosPage : UserControl
     {
-        AxVLCPlugin2 _vlc;
         private Boolean IsFullScreenVideo = false;
-        private GridLength _originalVideosListRow;
-        private GridLength _videoInfosRow;
-        private GridLength _videoPropertiesColumn;
-        private GridLength _mediaElementColumn;
+        private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        private DateTime mouseLastMouveDateTime = DateTime.Now;
 
         public VideosPage()
         {   
@@ -41,12 +37,6 @@ namespace VideoPlayer
 
             // Set the vlc plugins directory path
             VlcContext.LibVlcPluginsPath = Path.Combine(VlcContext.LibVlcDllsPath,"plugins");
-
-            /* Setting up the configuration of the VLC instance.
-             * You can use any available command-line option using the AddOption function (see last two options). 
-             * A list of options is available at 
-             *     http://wiki.videolan.org/VLC_command-line_help
-             * for example. */
 
             // Ignore the VLC configuration file
             VlcContext.StartupOptions.IgnoreConfig = true;
@@ -75,8 +65,8 @@ namespace VideoPlayer
 
         private void _uiMuteButton_Click(object sender, RoutedEventArgs e)
         {
-            this._vlc.audio.toggleMute();
-            if (this._vlc.audio.mute)
+            this._uiVLC.AudioProperties.IsMute = !this._uiVLC.AudioProperties.IsMute;
+            if (this._uiVLC.AudioProperties.IsMute)
             {
                 this._uiMuteButton.Content = "Unmute";
             }
@@ -90,28 +80,43 @@ namespace VideoPlayer
         {
             if (e.Key == Key.X)
             {
-                this._vlc.playlist.stop();
+                this._uiVLC.Stop();
                 e.Handled = true;
+            }
+            else if (e.Key == Key.Escape)
+            {
+                if (this.IsFullScreenVideo)
+                {
+                    this.IsFullScreenVideo = false;
+                    this._uiVLCFullScrenGrid.Visibility = System.Windows.Visibility.Hidden;
+                    this.timer.Stop();
+                    e.Handled = true;
+                }
             }
         }
 
         private void _uiStopButton_Click(object sender, RoutedEventArgs e)
         {
-            this._vlc.playlist.stop();
+            this._uiVLC.Stop();
         }
 
         private void _uiPauseButton_Click(object sender, RoutedEventArgs e)
         {
-            this._vlc.playlist.togglePause();
-        
+            if (this._uiVLC.IsPaused)
+            {
+                this._uiVLC.Play();
+            }
+            else
+            {
+                this._uiVLC.Pause();
+            }
         }
 
         private void _uiPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            // State 4: Paused
-            if (this._vlc.input.state == 4)
+            if (this._uiVLC.IsPaused)
             {
-                this._vlc.playlist.play();
+                this._uiVLC.Play();
             }
             else
             {
@@ -122,55 +127,61 @@ namespace VideoPlayer
         private void PlaySelectedVideo()
         {
             Video video = this._uiFilesListBox.SelectedItem as Video;
-            this._vlc.playlist.items.clear();
-            if (this._vlc.input.state == 3)
+            if (this._uiVLC.IsPlaying)
             {
-                this._vlc.playlist.stop();
+                this._uiVLC.Stop();
             }
-            this._vlc.playlist.add("file:///" + video.FileName, System.IO.Path.GetFileNameWithoutExtension(video.FileName), null);
-            this._vlc.playlist.play();
             this._uiVLC.Media = new PathMedia(video.FileName);
             this._uiVLC.Play();
         }
 
         private void _uiFullScreenButton_Click(object sender, RoutedEventArgs e)
         {
-            this._vlc.video.toggleFullscreen();
-            //this._vlc.Toolbar = true;
-        }
-
-        void VideosPage_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (this._vlc.video.fullscreen)
-            {
-                //this._uiTestRectangle.Visibility = System.Windows.Visibility.Visible;
-            }
-            else 
-            {
-                this.MouseMove -= VideosPage_MouseMove;
-                //this._uiTestRectangle.Visibility = System.Windows.Visibility.Hidden;
-
-            }
+            this._uiVLCFullScrenGrid.Visibility = System.Windows.Visibility.Visible;
+            this.IsFullScreenVideo = true;
+            this.timer.Start();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this._uiFilesListBox.Items.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
-            this._vlc = new AxVLCPlugin2();
-            //this.windowsFormHost.Child = this._vlc;
-            this.MouseMove += VideosPage_MouseMove;
-            this._vlc.audio.toggleMute();
-            //this._vlc.Toolbar = false;
+            this.timer.Interval = 1000;
+            this.timer.Tick += timer_Tick;
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            if (DateTime.Now - this.mouseLastMouveDateTime > new TimeSpan(0, 0, 3))
+            {
+                //TODO implement the controls toolbar to display (see how to use the controls already available)
+            }
         }
 
         private void _uiFasterButton_Click(object sender, RoutedEventArgs e)
         {
-            this._vlc.input.rate *= 2;
+            //this._vlc.input.rate *= 2;
         }
 
         private void _uiSlowerButton_Click(object sender, RoutedEventArgs e)
         {
-            this._vlc.input.rate /= 2; ;
+            //this._vlc.input.rate /= 2; ;
+        }
+
+        private void _uiVLCFullScrenGrid_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (this._uiVLCFullScrenGrid.IsVisible)
+            {
+                this._uiVLCFullScrenGrid.MouseMove += _uiVLCFullScrenGrid_MouseMove;
+            }
+            else
+            {
+                this._uiVLCFullScrenGrid.MouseMove -= _uiVLCFullScrenGrid_MouseMove;
+            }
+        }
+
+        void _uiVLCFullScrenGrid_MouseMove(object sender, MouseEventArgs e)
+        {
+            this.mouseLastMouveDateTime = DateTime.Now;
         }
     }
 }

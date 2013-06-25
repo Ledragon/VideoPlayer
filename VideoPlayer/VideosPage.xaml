@@ -49,7 +49,7 @@
                 <Button Grid.Row="2" Content="Mute" Width="75" Margin=" 325,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiMuteButton" Click="_uiMuteButton_Click"/>
                 <Button Grid.Row="1" Content="+" Width="25" Margin=" 0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="_uiFasterButton" Click="_uiFasterButton_Click"/>
                 <Button Grid.Row="1" Content="-" Width="25" Margin=" 0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiSlowerButton" Click="_uiSlowerButton_Click"/>
-                <Slider Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Name="_uiSlider" Margin="30,0,30,0"/>
+                <Slider Grid.Row="1" HorizontalAlignment="Stretch" Maximum="1" VerticalAlignment="Bottom" Name="_uiSlider" Margin="30,0,30,0"/>
                 <!--<WindowsFormsHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="windowsFormHost"/>-->
                 <Grid Grid.Row="0" Name="_uiVLCGrid">
                     <VLC:VlcControl x:Name="_uiVLC"/>

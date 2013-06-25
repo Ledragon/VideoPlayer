@@ -10,6 +10,9 @@ using System.Threading;
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
 using System.Windows;
+using Vlc.DotNet.Core;
+using Vlc.DotNet.Wpf;
+using Vlc.DotNet.Core.Medias;
 
 namespace Classes
 {
@@ -22,7 +25,8 @@ namespace Classes
 
         public Video(String videoPath)
         {
-            GetVideoInfo(videoPath);
+
+            this.GetVideoInfo(videoPath);
             this.Directory = System.IO.Path.GetDirectoryName(videoPath);
             this.FileName = videoPath;           
             this.Title = Path.GetFileNameWithoutExtension(videoPath);
@@ -32,36 +36,15 @@ namespace Classes
 
         private void GetVideoInfo(String videoPath)
         {
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.Open(new Uri(videoPath));
-            Int32 iterCount = 0;
-            while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 10)
-            {
-                //Thread.Sleep(100);
-                iterCount++;
-            }
-            if (mediaPlayer.NaturalDuration.HasTimeSpan)
-            {
-                this.Length = mediaPlayer.NaturalDuration.TimeSpan;
-            }
-
-            //mediaPlayer.Pause();
-            //mediaPlayer.Position = TimeSpan.FromSeconds(10);
-            //RenderTargetBitmap rtb = new RenderTargetBitmap(60, 60, 72, 72, PixelFormats.Prgba64);
-            //DrawingVisual dv = new DrawingVisual();
-            //using (DrawingContext dc = dv.RenderOpen())
-            //{
-            //    dc.DrawVideo(mediaPlayer,new Rect(0,0,60,60));
-            //}
-            //rtb.Render(dv);
-
-            //BitmapFrame frame = BitmapFrame.Create(rtb).GetCurrentValueAsFrozen() as BitmapFrame;
-            //BitmapEncoder encoder = new JpegBitmapEncoder();
-            //encoder.Frames.Add(frame as BitmapFrame);
-            //MemoryStream memoryStream = new MemoryStream();
-            //encoder.Save(memoryStream);
-
-            mediaPlayer.Close();
+            //String programFilesPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles);
+            //VlcContext.LibVlcDllsPath = System.IO.Path.Combine(programFilesPath, @"VideoLan\VLC");
+            //VlcContext.LibVlcPluginsPath = Path.Combine(VlcContext.LibVlcDllsPath, "plugins");
+            //VlcContext.StartupOptions.IgnoreConfig = true;
+            //VlcContext.Initialize();
+            //VlcControl vlc = new VlcControl();
+            //vlc.Media = new PathMedia(videoPath);
+            //this.Length = vlc.Media.Duration;
+            //VlcContext.CloseAll();
         }
 
         [XmlAttribute("FileName")]

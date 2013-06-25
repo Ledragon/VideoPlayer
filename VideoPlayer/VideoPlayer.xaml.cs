@@ -121,17 +121,7 @@ namespace VideoPlayer
         private void _uiLoadButton_Click(object sender, RoutedEventArgs e)
         {
             this._videos.Clear();
-            //this._uiCurrentOperationStatusBarItem.Content = "Loading files from directories";
-            //foreach (Classes.Directory directory in this._directories)
-            //{
-            //    List<String> files = this._controler.GetVideoFiles(directory);
-            //    foreach (String videoFile in files)
-            //    {
-            //        Video newVideo = new Video(videoFile);
-            //        this._videos.Add(newVideo);
-            //        newVideo.DateAdded = DateTime.Now;
-            //    }
-            //}
+
             BackgroundWorker backgroundWorkerLoad = new BackgroundWorker();
             backgroundWorkerLoad.DoWork += this.backgroundWorkerLoad_DoWork;
             backgroundWorkerLoad.RunWorkerCompleted += backgroundWorkerLoad_RunWorkerCompleted;

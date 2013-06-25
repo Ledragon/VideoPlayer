@@ -48,7 +48,7 @@ namespace VideoPlayer
             //VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Debug;
 
             // Disable showing the movie file name as an overlay
-            //VlcContext.StartupOptions.AddOption("--no-video-title-show");
+            VlcContext.StartupOptions.AddOption("--no-video-title-show");
 
             // Pauses the playback of a movie on the last frame
             //VlcContext.StartupOptions.AddOption("--play-and-pause");
@@ -90,6 +90,7 @@ namespace VideoPlayer
                     this.IsFullScreenVideo = false;
                     this._uiVLCFullScrenGrid.Visibility = System.Windows.Visibility.Hidden;
                     this.timer.Stop();
+                    
                     e.Handled = true;
                 }
             }
@@ -147,12 +148,21 @@ namespace VideoPlayer
             this._uiFilesListBox.Items.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
             this.timer.Interval = 1000;
             this.timer.Tick += timer_Tick;
+            this._uiVLC.PositionChanged += _uiVLC_PositionChanged;
+            //TODO duplicate buttons in an appropriate control to show the during full screen play
+            String test = System.Windows.Markup.XamlWriter.Save(this._uiSlider);
+        }
+
+        void _uiVLC_PositionChanged(Vlc.DotNet.Wpf.VlcControl sender, VlcEventArgs<float> e)
+        {
+            this._uiSlider.Value = e.Data;
         }
 
         void timer_Tick(object sender, EventArgs e)
         {
-            if (DateTime.Now - this.mouseLastMouveDateTime > new TimeSpan(0, 0, 3))
+            if (DateTime.Now - this.mouseLastMouveDateTime > new TimeSpan(0, 0, 2))
             {
+                this.Cursor = Cursors.None;
                 //TODO implement the controls toolbar to display (see how to use the controls already available)
             }
         }
@@ -182,6 +192,7 @@ namespace VideoPlayer
         void _uiVLCFullScrenGrid_MouseMove(object sender, MouseEventArgs e)
         {
             this.mouseLastMouveDateTime = DateTime.Now;
+            this.Cursor = Cursors.Arrow;            
         }
     }
 }

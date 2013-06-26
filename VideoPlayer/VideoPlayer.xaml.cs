@@ -53,6 +53,10 @@ namespace VideoPlayer
             {
                 this.WindowStyle = System.Windows.WindowStyle.None;
             }
+            else if (e.Key == Key.S)
+            {
+                this.Close();
+            }
         }
 
         private void _uiSettingsButton_Click(object sender, RoutedEventArgs e)
@@ -131,6 +135,7 @@ namespace VideoPlayer
 
         private void backgroundWorkerLoad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            MessageBox.Show("Finished loading");
             //this._uiCurrentOperationStatusBarItem.Content = "Ready";
         }
 

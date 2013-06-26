@@ -18,6 +18,9 @@ namespace Classes
 {
     public class Video
     {
+        [XmlIgnore]
+        public VlcControl vlc { get; set; }
+
         public Video()
         {
 
@@ -42,9 +45,39 @@ namespace Classes
             //VlcContext.StartupOptions.IgnoreConfig = true;
             //VlcContext.Initialize();
             //VlcControl vlc = new VlcControl();
-            //vlc.Media = new PathMedia(videoPath);
+            //this.vlc.Media = new PathMedia(videoPath);
             //this.Length = vlc.Media.Duration;
             //VlcContext.CloseAll();
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.Open(new Uri(videoPath));
+            Int32 iterCount = 0;
+            while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 50)
+            {
+                //Thread.Sleep(10);
+                iterCount++;
+            }
+            if (mediaPlayer.NaturalDuration.HasTimeSpan)
+            {
+                this.Length = mediaPlayer.NaturalDuration.TimeSpan;
+            }
+
+            //mediaPlayer.Pause();
+            //mediaPlayer.Position = TimeSpan.FromSeconds(10);
+            //RenderTargetBitmap rtb = new RenderTargetBitmap(60, 60, 72, 72, PixelFormats.Prgba64);
+            //DrawingVisual dv = new DrawingVisual();
+            //using (DrawingContext dc = dv.RenderOpen())
+            //{
+            //    dc.DrawVideo(mediaPlayer,new Rect(0,0,60,60));
+            //}
+            //rtb.Render(dv);
+
+            //BitmapFrame frame = BitmapFrame.Create(rtb).GetCurrentValueAsFrozen() as BitmapFrame;
+            //BitmapEncoder encoder = new JpegBitmapEncoder();
+            //encoder.Frames.Add(frame as BitmapFrame);
+            //MemoryStream memoryStream = new MemoryStream();
+            //encoder.Save(memoryStream);
+
+            mediaPlayer.Close();
         }
 
         [XmlAttribute("FileName")]

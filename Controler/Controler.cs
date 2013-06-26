@@ -45,7 +45,7 @@ namespace Controlers
             }
             catch
             {
-                //TODO logger les erreurs
+                // TODO logger les erreurs
             }
             return wrapper;
         }
@@ -72,7 +72,7 @@ namespace Controlers
             }
             catch
             {
-                //TODO logger les erreurs
+                // TODO logger les erreurs
             }
             return videoFiles;
         }
@@ -102,7 +102,7 @@ namespace Controlers
             }
             catch
             {
-                //TODO logger les erreurs
+                // TODO logger les erreurs
             }
             return videoFiles;
         }

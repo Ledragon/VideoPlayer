@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Vlc.DotNet.Wpf;
 
 namespace VideoPlayer
 {
@@ -20,31 +22,32 @@ namespace VideoPlayer
     /// </summary>
     public partial class PlayerControls : UserControl
     {
-        private MediaElement _mediaElement;
+        private VlcControl _vlc;
+        public Video currentVideo { get; set; }
 
         public PlayerControls()
         {
             InitializeComponent();
         }
 
-        public PlayerControls(MediaElement mediaElement):this()
+        public PlayerControls(VlcControl vlc):this()
         {
-            this._mediaElement = mediaElement;
+            this._vlc = vlc;
         }
 
         private void _uiPlayButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this._vlc.Play();            
         }
 
         private void _uiPauseButton_Click(object sender, RoutedEventArgs e)
         {
-            this._mediaElement.Pause();
+            this._vlc.Pause();
         }
 
         private void _uiStopButton_Click(object sender, RoutedEventArgs e)
         {
-            this._mediaElement.Stop();
+            this._vlc.Stop();
         }
 
         private void _uiFullScreenButton_Click(object sender, RoutedEventArgs e)
@@ -54,7 +57,15 @@ namespace VideoPlayer
 
         private void _uiMuteButton_Click(object sender, RoutedEventArgs e)
         {
-            this._mediaElement.IsMuted = !this._mediaElement.IsMuted;
+            this._vlc.AudioProperties.IsMute = !this._vlc.AudioProperties.IsMute;
+            if (this._vlc.AudioProperties.IsMute)
+            {
+                this._uiMuteButton.Content = "Unmute";
+            }
+            else
+            {
+                this._uiMuteButton.Content = "Mute";
+            }
         }
     }
 }

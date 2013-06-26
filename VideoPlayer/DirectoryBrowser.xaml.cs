@@ -51,7 +51,7 @@ namespace VideoPlayer
                 }
                 catch (Exception exc)
                 {
-                    //TODO logger les erreurs
+                    // TODO logger les erreurs
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace VideoPlayer
                 }
                 catch (Exception exc)
                 {
-                    //TODO logger les erreurs
+                    // TODO logger les erreurs
                 }
             }
         }

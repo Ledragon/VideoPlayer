@@ -87,15 +87,15 @@
                     <Button Grid.Row="1" Content="Mute" Width="75" Margin=" 325,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiMuteButton" Click="_uiMuteButton_Click"/>
                 </Grid>
                 <Grid Grid.Row="0" Name="_uiVLCGrid">
-                    <VLC:VlcControl x:Name="_uiVLC"/>
-                    <Grid.Background>
+                    <!--<VLC:VlcControl x:Name="_uiVLC"/>-->
+                    <!--<Grid.Background>
                         <VisualBrush Stretch="Uniform">
                             <VisualBrush.Visual>
                                 <Image Source="{Binding ElementName=_uiVLC, Path=VideoSource}" />
                             </VisualBrush.Visual>
                         </VisualBrush >
-                        <!--<SolidColorBrush Color="Transparent"/>-->
-                    </Grid.Background>
+                    </Grid.Background>-->
+                    <WindowsFormsHost Name="tmp"/>
                 </Grid>
             </Grid>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
@@ -120,14 +120,15 @@
             </ListBox.Style>
         </ListBox>
         <Grid Visibility="Visible" Grid.ColumnSpan="10" Grid.RowSpan="10" Name="_uiVLCFullScrenGrid" Background="Black" IsVisibleChanged="_uiVLCFullScrenGrid_IsVisibleChanged">
-            <Grid>
-                <Grid.Background>
+           <Grid>
+                <!--<Grid.Background>
                     <VisualBrush Stretch="Uniform">
                         <VisualBrush.Visual>
                             <Image Source="{Binding ElementName=_uiVLC, Path=VideoSource}" />
                         </VisualBrush.Visual>
                     </VisualBrush >
-                </Grid.Background>
+                </Grid.Background>-->
+                <WindowsFormsHost x:Name="_uiVlcHost" Background="pink" MouseMove="_uiVlcHost_MouseMove"/>
             </Grid>
             <Grid Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#B23E3E3E" Width="600" Height="50">
                 <Grid.RowDefinitions>
@@ -135,35 +136,36 @@
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Button Style="{StaticResource MediaControl}" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenPlayButton" Click="_uiPlayButton_Click">
-                    <Image Source="Icons\control_play.png"/>
-                </Button>
-                <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenPauseButton" Click="_uiPauseButton_Click">
-                    <Image Source="Icons\control_pause.png"/>
-                </Button>
-                <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenStopButton" Click="_uiStopButton_Click">
-                    <Image Source="Icons\control_stop.png"/>
-                </Button>
-                <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiWindowedButton" Click="_uiWindowedButton_Click">
+                    <Button Style="{StaticResource MediaControl}" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenPlayButton" Click="_uiPlayButton_Click">
+                        <Image Source="Icons\control_play.png"/>
+                    </Button>
+                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenPauseButton" Click="_uiPauseButton_Click">
+                        <Image Source="Icons\control_pause.png"/>
+                    </Button>
+                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenStopButton" Click="_uiStopButton_Click">
+                        <Image Source="Icons\control_stop.png"/>
+                    </Button>
+                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiWindowedButton" Click="_uiWindowedButton_Click">
                         <Image Source="Icons\application_side_expand.png"/>
                     </Button>
                     <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenMuteButton" Click="_uiMuteButton_Click">
-                    <Image Source="Icons\sound_none.png"/>
-                </Button>
-                <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiSnapshotButton" Click="_uiSnapshotButton_Click">
-                    <Image Source="Icons\camera_small.png"/>
-                </Button>
+                        <Image Source="Icons\sound_none.png"/>
+                    </Button>
+                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiSnapshotButton" Click="_uiSnapshotButton_Click">
+                        <Image Source="Icons\camera_small.png"/>
+                    </Button>
                 </StackPanel>
                 <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="_uiFullScreenFasterButton" Click="_uiFasterButton_Click">
                     <Image Source="Icons\control_fastforward.png"/>
                 </Button>
-                <Button Style="{StaticResource MediaControl}" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenSlowerButton" Click="_uiSlowerButton_Click">
+                <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenSlowerButton" Click="_uiSlowerButton_Click">
                     <Image Source="Icons\control_rewind.png"/>
                 </Button>
                 <Slider HorizontalAlignment="Stretch" Maximum="1" VerticalAlignment="Bottom" Name="_uiFullScreenSlider" Margin="30,0,30,0" PreviewMouseLeftButtonDown="_uiFullScreenSlider_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="_uiFullScreenSlider_PreviewMouseLeftButtonUp" LargeChange="0.05" SmallChange="0.01" ValueChanged="_uiFullScreenSlider_ValueChanged"/>
                 <TextBlock Name="_uiPosition" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Path=Position}" Margin="0,0,55,0"/>
                 <TextBlock Name="_uiDuration" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Path=Duration, StringFormat=hh\\:mm\\:ss}"/>
             </Grid>
+
         </Grid>
     </Grid>
 </UserControl>

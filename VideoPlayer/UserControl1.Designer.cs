@@ -28,35 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserControl1));
-            this.axVLCPlugin21 = new AxAXVLC.AxVLCPlugin2();
-            ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // axVLCPlugin21
-            // 
-            this.axVLCPlugin21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.axVLCPlugin21.Enabled = true;
-            this.axVLCPlugin21.Location = new System.Drawing.Point(0, 0);
-            this.axVLCPlugin21.Name = "axVLCPlugin21";
-            this.axVLCPlugin21.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axVLCPlugin21.OcxState")));
-            this.axVLCPlugin21.Size = new System.Drawing.Size(440, 309);
-            this.axVLCPlugin21.TabIndex = 0;
-            // 
-            // UserControl1
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.axVLCPlugin21);
-            this.Name = "UserControl1";
-            this.Size = new System.Drawing.Size(440, 309);
-            ((System.ComponentModel.ISupportInitialize)(this.axVLCPlugin21)).EndInit();
-            this.ResumeLayout(false);
-
         }
 
         #endregion
-
-        private AxAXVLC.AxVLCPlugin2 axVLCPlugin21;
     }
 }

@@ -56,6 +56,8 @@ namespace VideoPlayer
             // Pauses the playback of a movie on the last frame
             //VlcContext.StartupOptions.AddOption("--play-and-pause");
 
+            VlcContext.StartupOptions.ScreenSaverEnabled = false;
+
             // Initialize the VlcContext
             VlcContext.Initialize();
             InitializeComponent();

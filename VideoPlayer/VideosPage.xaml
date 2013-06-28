@@ -87,15 +87,15 @@
                     <Button Grid.Row="1" Content="Mute" Width="75" Margin=" 325,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiMuteButton" Click="_uiMuteButton_Click"/>
                 </Grid>
                 <Grid Grid.Row="0" Name="_uiVLCGrid">
-                    <!--<VLC:VlcControl x:Name="_uiVLC"/>-->
-                    <!--<Grid.Background>
+                    <VLC:VlcControl x:Name="_uiVLC"/>
+                    <Grid.Background>
                         <VisualBrush Stretch="Uniform">
                             <VisualBrush.Visual>
                                 <Image Source="{Binding ElementName=_uiVLC, Path=VideoSource}" />
                             </VisualBrush.Visual>
                         </VisualBrush >
-                    </Grid.Background>-->
-                    <WindowsFormsHost Name="tmp"/>
+                    </Grid.Background>
+                    <!--<WindowsFormsHost Name="tmp"/>-->
                 </Grid>
             </Grid>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
@@ -121,14 +121,14 @@
         </ListBox>
         <Grid Visibility="Hidden" Grid.ColumnSpan="10" Grid.RowSpan="10" Name="_uiVLCFullScrenGrid" Background="Black" IsVisibleChanged="_uiVLCFullScrenGrid_IsVisibleChanged">
            <Grid>
-                <!--<Grid.Background>
+                <Grid.Background>
                     <VisualBrush Stretch="Uniform">
                         <VisualBrush.Visual>
                             <Image Source="{Binding ElementName=_uiVLC, Path=VideoSource}" />
                         </VisualBrush.Visual>
                     </VisualBrush >
-                </Grid.Background>-->
-                <WindowsFormsHost x:Name="_uiVlcHost" Background="pink" MouseMove="_uiVlcHost_MouseMove"/>
+                </Grid.Background>
+                <!--<WindowsFormsHost x:Name="_uiVlcHost" Background="pink" MouseMove="_uiVlcHost_MouseMove"/>-->
             </Grid>
             <Grid Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#B23E3E3E" Width="600" Height="50">
                 <Grid.RowDefinitions>

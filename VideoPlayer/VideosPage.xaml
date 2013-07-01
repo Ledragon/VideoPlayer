@@ -54,17 +54,24 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Stretch" Value="None"/>
         </Style>
+        <Image x:Key="Muted" Source="Icons\sound_none.png"/>
+        <Image x:Key="Unmuted" Source="Icons\sound.png"/>
     </UserControl.Resources>
 
     <Grid Name="_uiMainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="300" Name="_uiVideoInfosRow"/>
             <RowDefinition Height="*" Name="_uiVideosListRow"/>
+            <RowDefinition Height="25" Name="_uiInfosRow"/>
         </Grid.RowDefinitions>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Background="#33D3D3D3">
+            <TextBlock VerticalAlignment="Center" x:Name="_uiNumberOfVideos" Text="{Binding Count, Mode=OneWay, StringFormat='Number of videos: 0'}" TextAlignment="Left" Foreground="White" Margin="5,0,10,0"/>
+            <TextBlock VerticalAlignment="Center" Name="_uiNowPlaying" Foreground="White" Margin="5,0,10,0" Text="Now Playing: "/>
+        </StackPanel>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400" Name="_uiMediaElementColumn"/>
-                <ColumnDefinition Width="*" Name="_uiVideoPropertiesColumn"/>
+                <ColumnDefinition Width="400" x:Name="_uiMediaElementColumn"/>
+                <ColumnDefinition Width="*" x:Name="_uiVideoPropertiesColumn"/>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="_uiImage" Source="{Binding Source}"/>
             <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -72,7 +79,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="1" Name="_uiPlayerControls">
+                <!--<Grid Grid.Row="1" Name="_uiPlayerControls">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="25"/>
                         <RowDefinition Height="25"/>
@@ -85,16 +92,15 @@
                     <Button Grid.Row="1" Content="Stop"  Width="75" Margin="165,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiStopButton" Click="_uiStopButton_Click"/>
                     <Button Grid.Row="1" Content="Full" Width="75" Margin="245,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenButton" Click="_uiFullScreenButton_Click"/>
                     <Button Grid.Row="1" Content="Mute" Width="75" Margin=" 325,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiMuteButton" Click="_uiMuteButton_Click"/>
-                </Grid>
-                <Grid Grid.Row="0" Name="_uiVLCGrid">
-                    <VLC:VlcControl x:Name="_uiVLC"/>
-                    <Grid.Background>
+                </Grid>-->
+                <Grid Grid.Row="0" x:Name="_uiVLCGrid">
+                    <!--<Grid.Background>
                         <VisualBrush Stretch="Uniform">
                             <VisualBrush.Visual>
                                 <Image Source="{Binding ElementName=_uiVLC, Path=VideoSource}" />
                             </VisualBrush.Visual>
                         </VisualBrush >
-                    </Grid.Background>
+                    </Grid.Background>-->
                     <!--<WindowsFormsHost Name="tmp"/>-->
                 </Grid>
             </Grid>
@@ -114,43 +120,43 @@
         <ListBox x:Name="_uiFilesListBox" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Title">
             <ListBox.Style>
                 <Style>
-                    <Setter Property="ListBox.Background" Value="Transparent"/>
-                    <Setter Property="ListBox.BorderThickness" Value="0"/>
+                    <Setter Property="Control.Background" Value="Transparent"/>
+                    <Setter Property="Control.BorderThickness" Value="0"/>
                 </Style>
             </ListBox.Style>
         </ListBox>
-        <Grid Visibility="Hidden" Grid.ColumnSpan="10" Grid.RowSpan="10" Name="_uiVLCFullScrenGrid" Background="Black" IsVisibleChanged="_uiVLCFullScrenGrid_IsVisibleChanged">
-           <Grid>
+        <Grid Grid.Row="0" Visibility="Hidden" Grid.ColumnSpan="10" Grid.RowSpan="10" x:Name="_uiVLCFullScrenGrid" Background="Black" IsVisibleChanged="_uiVLCFullScrenGrid_IsVisibleChanged">
+            <Grid>
+                <!--<WindowsFormsHost x:Name="_uiVlcHost" Background="pink" MouseMove="_uiVlcHost_MouseMove"/>-->
                 <Grid.Background>
                     <VisualBrush Stretch="Uniform">
                         <VisualBrush.Visual>
-                            <Image Source="{Binding ElementName=_uiVLC, Path=VideoSource}" />
+                            <Image Source="{Binding VideoSource, ElementName=_uiVLC}" />
                         </VisualBrush.Visual>
-                    </VisualBrush >
+                    </VisualBrush>
                 </Grid.Background>
-                <!--<WindowsFormsHost x:Name="_uiVlcHost" Background="pink" MouseMove="_uiVlcHost_MouseMove"/>-->
             </Grid>
-            <Grid Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#B23E3E3E" Width="600" Height="50">
+
+            <VLC:VlcControl x:Name="_uiVLC"/>
+            <Grid x:Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#B23E3E3E" Width="600" Height="50">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <Button Style="{StaticResource MediaControl}" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenPlayButton" Click="_uiPlayButton_Click">
+                    <Button Style="{StaticResource MediaControl}" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenPlayButton" Click="_uiPlayButton_Click">
                         <Image Source="Icons\control_play.png"/>
                     </Button>
-                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenPauseButton" Click="_uiPauseButton_Click">
+                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenPauseButton" Click="_uiPauseButton_Click">
                         <Image Source="Icons\control_pause.png"/>
                     </Button>
-                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenStopButton" Click="_uiStopButton_Click">
+                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenStopButton" Click="_uiStopButton_Click">
                         <Image Source="Icons\control_stop.png"/>
                     </Button>
-                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiWindowedButton" Click="_uiWindowedButton_Click">
+                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiWindowedButton" Click="_uiWindowedButton_Click">
                         <Image Source="Icons\application_side_expand.png"/>
                     </Button>
-                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenMuteButton" Click="_uiMuteButton_Click">
-                        <Image Source="Icons\sound_none.png"/>
-                    </Button>
+                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenMuteButton" Click="_uiMuteButton_Click" Content="{DynamicResource Unmuted}"/>
                     <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiSnapshotButton" Click="_uiSnapshotButton_Click">
                         <Image Source="Icons\camera_small.png"/>
                     </Button>
@@ -161,9 +167,9 @@
                 <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenSlowerButton" Click="_uiSlowerButton_Click">
                     <Image Source="Icons\control_rewind.png"/>
                 </Button>
-                <Slider HorizontalAlignment="Stretch" Maximum="1" VerticalAlignment="Bottom" Name="_uiFullScreenSlider" Margin="30,0,30,0" PreviewMouseLeftButtonDown="_uiFullScreenSlider_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="_uiFullScreenSlider_PreviewMouseLeftButtonUp" LargeChange="0.05" SmallChange="0.01" ValueChanged="_uiFullScreenSlider_ValueChanged"/>
-                <TextBlock Name="_uiPosition" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Path=Position}" Margin="0,0,55,0"/>
-                <TextBlock Name="_uiDuration" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Path=Duration, StringFormat=hh\\:mm\\:ss}"/>
+                <Slider HorizontalAlignment="Stretch" Maximum="1" VerticalAlignment="Bottom" x:Name="_uiFullScreenSlider" Margin="30,0,30,0" PreviewMouseLeftButtonDown="_uiFullScreenSlider_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="_uiFullScreenSlider_PreviewMouseLeftButtonUp" LargeChange="0.05" SmallChange="0.01" ValueChanged="_uiFullScreenSlider_ValueChanged"/>
+                <TextBlock x:Name="_uiPosition" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Position}" Margin="0,0,55,0"/>
+                <TextBlock x:Name="_uiDuration" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Duration, StringFormat=hh\\:mm\\:ss}"/>
             </Grid>
 
         </Grid>

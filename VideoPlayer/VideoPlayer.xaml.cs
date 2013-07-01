@@ -40,7 +40,8 @@ namespace VideoPlayer
         {
             if (e.Key == Key.Escape)
             {
-                this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+                //this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+                e.Handled = true;
             }
             else if (e.Key == Key.Back)
             {
@@ -48,14 +49,20 @@ namespace VideoPlayer
                 this.MainGrid.RowDefinitions[2].Height = new GridLength(80);
                 this._uiVideosView.Visibility = Visibility.Hidden;
                 this._uiSettingsView.Visibility = Visibility.Hidden;
+                e.Handled = true;
+
             }
             else if (e.Key == Key.Return && Keyboard.Modifiers == ModifierKeys.Alt)
             {
                 this.WindowStyle = System.Windows.WindowStyle.None;
+                e.Handled = true;
+
             }
             else if (e.Key == Key.S)
             {
                 this.Close();
+                e.Handled = true;
+
             }
         }
 
@@ -88,6 +95,7 @@ namespace VideoPlayer
             //this._uiCurrentOperationStatusBarItem.Content = "Loading library";
             backgroundWorker.RunWorkerAsync();
             //this._uiNumberOfVideosStatusBarItem.DataContext = this._videos;
+            this._uiVideosView.DataContext = this._videos;
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -124,7 +132,7 @@ namespace VideoPlayer
 
         private void _uiLoadButton_Click(object sender, RoutedEventArgs e)
         {
-            this._videos.Clear();
+            //this._videos.Clear();
 
             BackgroundWorker backgroundWorkerLoad = new BackgroundWorker();
             backgroundWorkerLoad.DoWork += this.backgroundWorkerLoad_DoWork;
@@ -142,16 +150,23 @@ namespace VideoPlayer
         private void backgroundWorkerLoad_DoWork(object sender, DoWorkEventArgs e)
         {
             Action<Video> addMethod = (video) => this._videos.Add(video);
+            Video[] tmpList = this._videos.ToArray();
             foreach (Classes.Directory directory in this._directories)
             {
                 List<String> files = this._controler.GetVideoFiles(directory);
                 foreach (String videoFile in files)
                 {
-                    Video newVideo = new Video(videoFile);
-                    // cross-thread
-                    this.Dispatcher.BeginInvoke(addMethod, newVideo);
-                    //this._videos.Add(newVideo);
-                    newVideo.DateAdded = DateTime.Now;
+                    if (!tmpList.Any(s => s.FileName == videoFile))
+                    {
+                        //var i = from video in this._videos where video.FileName != videoFile select video;
+                        //if (i != null)
+                        //{
+                            Video newVideo = new Video(videoFile);
+                            // cross-thread
+                            this.Dispatcher.BeginInvoke(addMethod, newVideo);
+                            newVideo.DateAdded = DateTime.Now;
+                        //}
+                    }
                 }
             }
         }

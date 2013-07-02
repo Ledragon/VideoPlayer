@@ -31,7 +31,6 @@ namespace VideoPlayer
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         private DateTime mouseLastMouveDateTime = DateTime.Now;
         private Boolean IsPositionChanging = false;
-        private Video _playingVideo;
 
         public VideosPage()
         {   
@@ -49,21 +48,25 @@ namespace VideoPlayer
             VlcContext.StartupOptions.AddOption("--no-snapshot-preview");
             VlcContext.StartupOptions.AddOption("--no-mouse-events");
             VlcContext.StartupOptions.AddOption("--no-keyboard-events");
-            VlcContext.StartupOptions.AddOption("--no-skip-frames");
-            VlcContext.StartupOptions.AddOption("--vmem-width=768");
-            VlcContext.StartupOptions.AddOption("--vmem-width=1024");
-            VlcContext.StartupOptions.AddOption("--vmem-pitch=256000");
-            VlcContext.StartupOptions.AddOption("--directx-hw-yuv");
-            VlcContext.StartupOptions.AddOption("--directx-3buffering");
+            //VlcContext.StartupOptions.AddOption("--no-skip-frames");
+            //VlcContext.StartupOptions.AddOption("--directx-hw-yuv");
+            //VlcContext.StartupOptions.AddOption("--directx-3buffering");
             VlcContext.StartupOptions.AddOption("--ffmpeg-skiploopfilter=4");
+            //VlcContext.StartupOptions.AddOption("--ffmpeg-hw");
+            //VlcContext.StartupOptions.AddOption("--vout=directx");
+            
 
-            VlcContext.StartupOptions.ShowLoggerConsole = false;
-            VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Debug;
-            VlcContext.StartupOptions.LogOptions.LogInFile = false;
-            VlcContext.StartupOptions.LogOptions.LogInFilePath = @"D:\videoplayer_vlc.log";
+            //VlcContext.StartupOptions.ShowLoggerConsole = false;
+            //VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Debug;
+            //VlcContext.StartupOptions.LogOptions.LogInFile = false;
+            //VlcContext.StartupOptions.LogOptions.LogInFilePath = @"D:\videoplayer_vlc.log";
             
             // Initialize the VlcContext
             VlcContext.Initialize();
+            //System.Windows.Media.Animation.Timeline.DesiredFrameRateProperty.OverrideMetadata(
+            //    typeof(System.Windows.Media.Animation.Timeline),
+            //    new FrameworkPropertyMetadata { DefaultValue = 30 }
+            //    );
             InitializeComponent();
         }
 
@@ -160,11 +163,9 @@ namespace VideoPlayer
         private void PlaySelectedVideo()
         {
             Video video = this._uiFilesListBox.SelectedItem as Video;
-            //this._playingVideo = video;
             if (this._uiVLC.IsPlaying)
             {
                 this._uiVLC.Stop();
-                //this._uiSlider.Value = 0;
                 this._uiFullScreenSlider.Value = 0;
             }
             if(this._uiVLC.Media!=null)
@@ -201,7 +202,6 @@ namespace VideoPlayer
             this.timer.Interval = 1000;
             this.timer.Tick += timer_Tick;
             this._uiVLC.PositionChanged += _uiVLC_PositionChanged;
-            this._uiNowPlaying.DataContext = this._playingVideo;
         }
 
         void Media_ParsedChanged(MediaBase sender, VlcEventArgs<int> e)
@@ -218,7 +218,6 @@ namespace VideoPlayer
         {
             if (!this.IsPositionChanging)
             {
-                //this._uiSlider.Value = e.Data;
                 this._uiFullScreenSlider.Value = e.Data;
             }
         }
@@ -292,6 +291,24 @@ namespace VideoPlayer
         private void _uiSnapshotButton_Click(object sender, RoutedEventArgs e)
         {
             this._uiVLC.TakeSnapshot(@"D:\Users\Hugues\test.png", uint.Parse(this._uiVLC.VideoSource.Width.ToString("0")), uint.Parse(this._uiVLC.VideoSource.Height.ToString("0")));
+        }
+
+        private void _uiFullScreenSlider_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            this._uiVLC.PositionChanged -= _uiVLC_PositionChanged;
+            this.IsPositionChanging = true;
+
+            if (e.Delta < 0)
+            {
+                this._uiFullScreenSlider.Value -= this._uiFullScreenSlider.SmallChange;
+            }
+            else
+            {
+                this._uiFullScreenSlider.Value += this._uiFullScreenSlider.SmallChange;
+            }
+
+            this._uiVLC.PositionChanged += _uiVLC_PositionChanged;
+            this.IsPositionChanging = false;
         }
     }
 }

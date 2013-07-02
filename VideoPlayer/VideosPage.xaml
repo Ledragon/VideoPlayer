@@ -79,29 +79,9 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <!--<Grid Grid.Row="1" Name="_uiPlayerControls">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="25"/>
-                        <RowDefinition Height="25"/>
-                    </Grid.RowDefinitions>
-                    <Button Grid.Row="0" Content="+" Width="25" Margin=" 0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="_uiFasterButton" Click="_uiFasterButton_Click"/>
-                    <Button Grid.Row="0" Content="-" Width="25" Margin=" 0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiSlowerButton" Click="_uiSlowerButton_Click"/>
-                    <Slider Grid.Row="0" HorizontalAlignment="Stretch" Maximum="1" VerticalAlignment="Bottom" Name="_uiSlider" Margin="30,0,30,0"/>
-                    <Button Grid.Row="1" Content="Play" Width="75" Margin="5,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiPlayButton" Click="_uiPlayButton_Click"/>
-                    <Button Grid.Row="1" Content="Pause" Width="75" Margin="85,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiPauseButton" Click="_uiPauseButton_Click"/>
-                    <Button Grid.Row="1" Content="Stop"  Width="75" Margin="165,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiStopButton" Click="_uiStopButton_Click"/>
-                    <Button Grid.Row="1" Content="Full" Width="75" Margin="245,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="_uiFullScreenButton" Click="_uiFullScreenButton_Click"/>
-                    <Button Grid.Row="1" Content="Mute" Width="75" Margin=" 325,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiMuteButton" Click="_uiMuteButton_Click"/>
-                </Grid>-->
+
                 <Grid Grid.Row="0" x:Name="_uiVLCGrid">
-                    <!--<Grid.Background>
-                        <VisualBrush Stretch="Uniform">
-                            <VisualBrush.Visual>
-                                <Image Source="{Binding ElementName=_uiVLC, Path=VideoSource}" />
-                            </VisualBrush.Visual>
-                        </VisualBrush >
-                    </Grid.Background>-->
-                    <!--<WindowsFormsHost Name="tmp"/>-->
+
                 </Grid>
             </Grid>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
@@ -126,18 +106,8 @@
             </ListBox.Style>
         </ListBox>
         <Grid Grid.Row="0" Visibility="Hidden" Grid.ColumnSpan="10" Grid.RowSpan="10" x:Name="_uiVLCFullScrenGrid" Background="Black" IsVisibleChanged="_uiVLCFullScrenGrid_IsVisibleChanged">
-            <Grid>
-                <!--<WindowsFormsHost x:Name="_uiVlcHost" Background="pink" MouseMove="_uiVlcHost_MouseMove"/>-->
-                <Grid.Background>
-                    <VisualBrush Stretch="Uniform">
-                        <VisualBrush.Visual>
-                            <Image Source="{Binding VideoSource, ElementName=_uiVLC}" />
-                        </VisualBrush.Visual>
-                    </VisualBrush>
-                </Grid.Background>
-            </Grid>
-
             <VLC:VlcControl x:Name="_uiVLC"/>
+            <Image Source="{Binding VideoSource, ElementName=_uiVLC}" Stretch="Uniform"/>
             <Grid x:Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#B23E3E3E" Width="600" Height="50">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25"/>
@@ -167,7 +137,7 @@
                 <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenSlowerButton" Click="_uiSlowerButton_Click">
                     <Image Source="Icons\control_rewind.png"/>
                 </Button>
-                <Slider HorizontalAlignment="Stretch" Maximum="1" VerticalAlignment="Bottom" x:Name="_uiFullScreenSlider" Margin="30,0,30,0" PreviewMouseLeftButtonDown="_uiFullScreenSlider_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="_uiFullScreenSlider_PreviewMouseLeftButtonUp" LargeChange="0.05" SmallChange="0.01" ValueChanged="_uiFullScreenSlider_ValueChanged"/>
+                <Slider HorizontalAlignment="Stretch" Maximum="1" VerticalAlignment="Bottom" x:Name="_uiFullScreenSlider" Margin="30,0,30,0" PreviewMouseLeftButtonDown="_uiFullScreenSlider_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="_uiFullScreenSlider_PreviewMouseLeftButtonUp" LargeChange="0.05" SmallChange="0.01" ValueChanged="_uiFullScreenSlider_ValueChanged" PreviewMouseWheel="_uiFullScreenSlider_PreviewMouseWheel"/>
                 <TextBlock x:Name="_uiPosition" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Position}" Margin="0,0,55,0"/>
                 <TextBlock x:Name="_uiDuration" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Duration, StringFormat=hh\\:mm\\:ss}"/>
             </Grid>

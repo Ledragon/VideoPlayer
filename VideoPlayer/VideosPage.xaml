@@ -73,17 +73,8 @@
                 <ColumnDefinition Width="400" x:Name="_uiMediaElementColumn"/>
                 <ColumnDefinition Width="*" x:Name="_uiVideoPropertiesColumn"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="_uiImage" Source="{Binding Source}"/>
-            <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="50"/>
-                </Grid.RowDefinitions>
+            <Image Source="{Binding Path=ImagePath}" Stretch="UniformToFill" Name="_uiPreviewImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
-                <Grid Grid.Row="0" x:Name="_uiVLCGrid">
-
-                </Grid>
-            </Grid>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="80,0,20,0" Content="{Binding Title}"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Duration:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0"/>
@@ -97,7 +88,7 @@
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,125,0,0"/>
         </Grid>
 
-        <ListBox x:Name="_uiFilesListBox" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Title">
+        <ListBox x:Name="_uiFilesListBox" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Title" IsHitTestVisible="True" IsTextSearchEnabled="False">
             <ListBox.Style>
                 <Style>
                     <Setter Property="Control.Background" Value="Transparent"/>
@@ -106,9 +97,14 @@
             </ListBox.Style>
         </ListBox>
         <Grid Grid.Row="0" Visibility="Hidden" Grid.ColumnSpan="10" Grid.RowSpan="10" x:Name="_uiVLCFullScrenGrid" Background="Black" IsVisibleChanged="_uiVLCFullScrenGrid_IsVisibleChanged">
-            <VLC:VlcControl x:Name="_uiVLC"/>
-            <Image Source="{Binding VideoSource, ElementName=_uiVLC, Mode=OneWay}" Stretch="Uniform"/>
-            <Grid x:Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#B23E3E3E" Width="600" Height="50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <!--<VLC:VlcControl x:Name="_uiVLC"/>
+            <Image Source="{Binding VideoSource, ElementName=_uiVLC, Mode=OneWay}" Stretch="Uniform"/>-->
+            <WindowsFormsHost Grid.Row="0" Name="_uiVlcHost"/>
+            <Grid Grid.Row="1" x:Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#B23E3E3E" Width="600" Height="50">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
@@ -124,7 +120,7 @@
                         <Image Source="Icons\control_stop.png"/>
                     </Button>
                     <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiWindowedButton" Click="_uiWindowedButton_Click">
-                        <Image Source="Icons\application_side_expand.png"/>
+                        <Image Source="Icons\arrow_in.png"/>
                     </Button>
                     <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenMuteButton" Click="_uiMuteButton_Click" Content="{DynamicResource Unmuted}"/>
                     <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiSnapshotButton" Click="_uiSnapshotButton_Click">

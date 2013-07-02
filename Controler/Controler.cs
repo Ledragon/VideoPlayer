@@ -13,7 +13,7 @@ namespace Controlers
 {
     public class Controler
     {
-        private String[] VideoExtensions = { ".3gp", ".avi", ".divx", ".flv", ".mp4",  ".mpeg", ".mpg",".wmv" };
+        private String[] VideoExtensions = { ".3gp", ".avi", ".divx", ".flv", ".mp4", ".mpeg", ".mpg", ".wmv" };
 
 
         public void Save(ObjectsWrapper wrapper)
@@ -31,7 +31,6 @@ namespace Controlers
 
         public ObjectsWrapper GetObjectsFromFile(String filePath)
         {
-
             ObjectsWrapper wrapper = null;
             try
             {
@@ -88,7 +87,7 @@ namespace Controlers
                 {
                     searchOption = SearchOption.AllDirectories;
                 }
-                else 
+                else
                 {
                     searchOption = SearchOption.TopDirectoryOnly;
                 }
@@ -109,9 +108,15 @@ namespace Controlers
 
         public String GetDefaultFileName()
         {
-            String myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            String libraryPath = Path.Combine(myDocumentsPath, "Library.xml");
+            String defaultFolder = this.GetDefaultFolder();
+            String libraryPath = Path.Combine(defaultFolder, "Library.xml");
             return libraryPath;
+        }
+
+        public String GetDefaultFolder()
+        {
+            String myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            return Path.Combine(myDocumentsPath, "VideoPlayer");
         }
     }
 }

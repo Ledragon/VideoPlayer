@@ -10,16 +10,11 @@ using System.Threading;
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
 using System.Windows;
-using Vlc.DotNet.Core;
-using Vlc.DotNet.Wpf;
-using Vlc.DotNet.Core.Medias;
 
 namespace Classes
 {
     public class Video
     {
-        [XmlIgnore]
-        public VlcControl vlc { get; set; }
 
         public Video()
         {
@@ -28,10 +23,9 @@ namespace Classes
 
         public Video(String videoPath)
         {
-
             this.GetVideoInfo(videoPath);
             this.Directory = System.IO.Path.GetDirectoryName(videoPath);
-            this.FileName = videoPath;           
+            this.FileName = videoPath;
             this.Title = Path.GetFileNameWithoutExtension(videoPath);
             this.NumberOfViews = 0;
             this.Rating = 0;
@@ -39,23 +33,14 @@ namespace Classes
 
         private void GetVideoInfo(String videoPath)
         {
-            //String programFilesPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles);
-            //VlcContext.LibVlcDllsPath = System.IO.Path.Combine(programFilesPath, @"VideoLan\VLC");
-            //VlcContext.LibVlcPluginsPath = Path.Combine(VlcContext.LibVlcDllsPath, "plugins");
-            //VlcContext.StartupOptions.IgnoreConfig = true;
-            //VlcContext.Initialize();
-            //VlcControl vlc = new VlcControl();
-            //this.vlc.Media = new PathMedia(videoPath);
-            //this.Length = vlc.Media.Duration;
-            //VlcContext.CloseAll();
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer.Open(new Uri(videoPath));
-            Int32 iterCount = 0;
-            while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 50)
-            {
-                //Thread.Sleep(10);
-                iterCount++;
-            }
+            //Int32 iterCount = 0;
+            //while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 10)
+            //{
+            //Thread.Sleep(1000);
+            //    iterCount++;
+            //}
             if (mediaPlayer.NaturalDuration.HasTimeSpan)
             {
                 this.Length = mediaPlayer.NaturalDuration.TimeSpan;
@@ -88,7 +73,7 @@ namespace Classes
 
         [XmlIgnore]
         public TimeSpan Length { get; set; }
-        
+
         [XmlAttribute("Length")]
         public String LengthString
         {
@@ -119,7 +104,7 @@ namespace Classes
         public String DateAddedString
         {
             get { return this.DateAdded.ToString("yyyyMMdd_HHmmss"); }
-            set { this.DateAdded = DateTime.ParseExact(value, "yyyyMMdd_HHmmss",null); }
+            set { this.DateAdded = DateTime.ParseExact(value, "yyyyMMdd_HHmmss", null); }
         }
 
         [XmlAttribute("LastPlayed")]
@@ -137,5 +122,23 @@ namespace Classes
 
         [XmlIgnore]
         public ImageSource Source { get; set; }
+
+        [XmlIgnore]
+        private String _imagePath;
+
+        [XmlIgnore]
+        public String ImagePath
+        {
+            get 
+            {
+                String myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                String videoPlayerPath = Path.Combine(myDocumentsPath, "VideoPlayer");
+                return Path.Combine(videoPlayerPath, "Pictures", this.Title + ".jpg"); 
+            } 
+            set
+            {
+                this._imagePath = value;
+            } 
+        }
     }
 }

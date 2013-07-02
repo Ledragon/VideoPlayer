@@ -40,7 +40,7 @@ namespace VideoPlayer
         {
             if (e.Key == Key.Escape)
             {
-                //this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
+                this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
                 e.Handled = true;
             }
             else if (e.Key == Key.Back)
@@ -120,6 +120,7 @@ namespace VideoPlayer
         private void _uiSaveButton_Click(object sender, RoutedEventArgs e)
         {
             this.Save();
+            //Vlc.DotNet.Core.VlcContext.CloseAll();
         }
 
         private void Save()
@@ -132,8 +133,6 @@ namespace VideoPlayer
 
         private void _uiLoadButton_Click(object sender, RoutedEventArgs e)
         {
-            //this._videos.Clear();
-
             BackgroundWorker backgroundWorkerLoad = new BackgroundWorker();
             backgroundWorkerLoad.DoWork += this.backgroundWorkerLoad_DoWork;
             backgroundWorkerLoad.RunWorkerCompleted += backgroundWorkerLoad_RunWorkerCompleted;
@@ -158,14 +157,10 @@ namespace VideoPlayer
                 {
                     if (!tmpList.Any(s => s.FileName == videoFile))
                     {
-                        //var i = from video in this._videos where video.FileName != videoFile select video;
-                        //if (i != null)
-                        //{
-                            Video newVideo = new Video(videoFile);
-                            // cross-thread
-                            this.Dispatcher.BeginInvoke(addMethod, newVideo);
-                            newVideo.DateAdded = DateTime.Now;
-                        //}
+                        Video newVideo = new Video(videoFile);
+                        // cross-thread
+                        this.Dispatcher.BeginInvoke(addMethod, newVideo);
+                        newVideo.DateAdded = DateTime.Now;
                     }
                 }
             }
@@ -174,7 +169,6 @@ namespace VideoPlayer
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             this.Save();
-            Vlc.DotNet.Core.VlcContext.CloseAll();
         }
 
         private void _uiCloseButton_Click(object sender, RoutedEventArgs e)
@@ -201,6 +195,33 @@ namespace VideoPlayer
                 else
                 {
                     this.WindowStyle = System.Windows.WindowStyle.None;
+                }
+            }
+        }
+
+        private void _uiCleanButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<String> existingFiles = new List<String>();
+            foreach (Classes.Directory directory in this._directories)
+            {
+                List<String> files = this._controler.GetVideoFiles(directory);
+                foreach (String file in files)
+                {
+                    existingFiles.Add(file);
+                }
+            }
+            var i = from t in this._videos select t.FileName;
+            List<String> l = i.ToList<String>();
+            List<String> videosToRemove = l.Except(existingFiles).ToList<String>();
+            foreach (String file in videosToRemove)
+            {
+                foreach (var video in this._videos)
+                {
+                    if (video.FileName == file)
+                    {
+                        this._videos.Remove(video);
+                        break;
+                    }
                 }
             }
         }

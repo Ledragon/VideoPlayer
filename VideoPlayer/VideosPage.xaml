@@ -107,7 +107,7 @@
         </ListBox>
         <Grid Grid.Row="0" Visibility="Hidden" Grid.ColumnSpan="10" Grid.RowSpan="10" x:Name="_uiVLCFullScrenGrid" Background="Black" IsVisibleChanged="_uiVLCFullScrenGrid_IsVisibleChanged">
             <VLC:VlcControl x:Name="_uiVLC"/>
-            <Image Source="{Binding VideoSource, ElementName=_uiVLC}" Stretch="Uniform"/>
+            <Image Source="{Binding VideoSource, ElementName=_uiVLC, Mode=OneWay}" Stretch="Uniform"/>
             <Grid x:Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#B23E3E3E" Width="600" Height="50">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25"/>

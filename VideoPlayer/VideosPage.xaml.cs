@@ -19,6 +19,8 @@ using Path = System.IO.Path;
 using Vlc.DotNet.Core.Medias;
 using System.Windows.Markup;
 using System.Xml;
+using Vlc.DotNet.Wpf;
+
 
 namespace VideoPlayer
 {
@@ -63,11 +65,9 @@ namespace VideoPlayer
             
             // Initialize the VlcContext
             VlcContext.Initialize();
-            //System.Windows.Media.Animation.Timeline.DesiredFrameRateProperty.OverrideMetadata(
-            //    typeof(System.Windows.Media.Animation.Timeline),
-            //    new FrameworkPropertyMetadata { DefaultValue = 30 }
-            //    );
             InitializeComponent();
+            VlcControl control = new VlcControl();
+            
         }
 
         private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)

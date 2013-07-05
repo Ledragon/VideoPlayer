@@ -94,9 +94,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\VideoLan DotNet for WinForm, WPF, SL5 - 2011.11.29\Vlc.DotNet.Core.Interops.dll</HintPath>
     </Reference>
-    <Reference Include="Vlc.DotNet.Forms">
-      <HintPath>..\..\VideoLan DotNet for WinForm, WPF, SL5 - 2011.11.29\Vlc.DotNet.Forms.dll</HintPath>
-    </Reference>
     <Reference Include="Vlc.DotNet.Wpf, Version=1.2.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\VideoLan DotNet for WinForm, WPF, SL5 - 2011.11.29\Vlc.DotNet.Wpf.dll</HintPath>

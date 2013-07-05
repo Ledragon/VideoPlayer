@@ -57,7 +57,7 @@
             <!--<RowDefinition Height="30"/>-->
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="1" Fill="#CC000000" />
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <Button Content="Settings" Style="{StaticResource ToolbarStyle}" Click="_uiSettingsButton_Click" x:Name="_uiSettingsButton" TabIndex="0"/>
             <Button Content="Videos" Style="{StaticResource ToolbarStyle}" x:Name="_uiVideosButton" Click="_uiVideosButton_Click" TabIndex="1"/>
             <!--<Button Content="Save" Style="{StaticResource ToolbarStyle}" x:Name="_uiSaveButton" Click="_uiSaveButton_Click" TabIndex="2"/>-->

@@ -86,6 +86,7 @@
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Date added:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,100,0,0"/>
             <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,100,20,0" Content="{Binding DateAdded}" ContentStringFormat="dd/MM/yyy HH:mm"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,125,0,0"/>
+            <WindowsFormsHost x:Name="smallhost" HorizontalAlignment="Left" Height="100" Margin="96,125,0,0" VerticalAlignment="Top" Width="100"/>
         </Grid>
 
         <ListBox x:Name="_uiFilesListBox" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Title" IsHitTestVisible="True" IsTextSearchEnabled="False">

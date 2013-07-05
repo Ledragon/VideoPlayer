@@ -38,6 +38,7 @@ namespace VideoPlayer
         private AxVLCPlugin2 _vlcActiveX;
         private Controlers.Controler controler = new Controlers.Controler();
         private Video nowPlaying;
+        VlcControl control = new VlcControl();
 
         public VideosPage()
         {   
@@ -178,12 +179,14 @@ namespace VideoPlayer
             Video video = this._uiFilesListBox.SelectedItem as Video;
             
             this._vlcActiveX.playlist.items.clear();
-            this._vlcActiveX.playlist.add("file:///" + video.FileName, video.Title, @"--snapshot-path=file:///d:\Users\");
+            this._vlcActiveX.playlist.add("file:///" + video.FileName, "", ":no-snapshot-preview");//\":no-overlay\" 
             this._vlcActiveX.Toolbar = false;
             this._uiNowPlaying.Text = "Now playing: " + video.Title;
             this.SwitchToFullScreen();
             this._vlcActiveX.playlist.play();
             this.nowPlaying = video;
+            
+            control.Media = new PathMedia(this.nowPlaying.FileName);
         }
 
         private void _uiFullScreenButton_Click(object sender, RoutedEventArgs e)
@@ -210,6 +213,8 @@ namespace VideoPlayer
             this.timer.Tick += timer_Tick;
             this._vlcActiveX = new AxVLCPlugin2();
             this._uiVlcHost.Child = this._vlcActiveX;
+            //VlcContext.Initialize();
+            //Vlc.DotNet.Forms.VlcControl control = new Vlc.DotNet.Forms.VlcControl();
             this._vlcActiveX.MediaPlayerPositionChanged += _vlcActiveX_MediaPlayerPositionChanged;
             this._vlcActiveX.MediaPlayerPlaying += _vlcActiveX_MediaPlayerPlaying;
             this._vlcActiveX.Toolbar = false;
@@ -283,7 +288,7 @@ namespace VideoPlayer
         private void _uiFullScreenSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this._vlcActiveX.input.Position = this._uiFullScreenSlider.Value;
-            this._vlcActiveX.MediaPlayerPositionChanged -= _vlcActiveX_MediaPlayerPositionChanged;     
+            this._vlcActiveX.MediaPlayerPositionChanged += _vlcActiveX_MediaPlayerPositionChanged;     
             this.IsPositionChanging = false;
         }
 
@@ -309,6 +314,8 @@ namespace VideoPlayer
             string imgPath = Path.Combine(tempPath, this.nowPlaying.Title + ".jpg");
             if (!System.IO.File.Exists(imgPath))
             {
+                this._vlcActiveX.playlist.pause();
+                System.Threading.Thread.Sleep(100);
                 System.IO.File.Delete(imgPath);
                 Bitmap bmpScreenshot = new Bitmap(this._vlcActiveX.ClientRectangle.Width,
                     this._vlcActiveX.ClientRectangle.Height);
@@ -317,9 +324,26 @@ namespace VideoPlayer
                     this._vlcActiveX.ClientRectangle.Width,
                     this._vlcActiveX.ClientRectangle.Height);
                 System.Windows.Point ps = PointToScreen(new System.Windows.Point(this._vlcActiveX.Bounds.X, this._vlcActiveX.Bounds.Y));
-                gfxScreenshot.CopyFromScreen((int)ps.X, (int)ps.Y, 0, 0, imgSize, CopyPixelOperation.SourceCopy);
+                CopyPixelOperation cpo = CopyPixelOperation.SourceCopy;
+                System.OperatingSystem osInfo = System.Environment.OSVersion;
+                //if (osInfo.Version.Major > 5)
+                //{
+                //    cpo = CopyPixelOperation.SourceCopy;
+                //}
+                gfxScreenshot.CopyFromScreen((int)ps.X, (int)ps.Y, 0, 0, imgSize, cpo);
                 bmpScreenshot.Save(imgPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                this._vlcActiveX.playlist.play();
+
             }
+            //this._vlcActiveX.video.takeSnapshot();
+
+            //VlcContext.Initialize();
+
+            //control.Play();
+            //control.Pause();
+            
+            //VlcContext.CloseAll();
+ 
         }
 
         private void _uiFullScreenSlider_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

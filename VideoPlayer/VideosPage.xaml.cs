@@ -38,7 +38,7 @@ namespace VideoPlayer
         private AxVLCPlugin2 _vlcActiveX;
         private Controlers.Controler controler = new Controlers.Controler();
         private Video nowPlaying;
-        VlcControl _VLCcontrol = new VlcControl();
+        VlcControl _VLCcontrol;
 
         public VideosPage()
         {   
@@ -104,6 +104,16 @@ namespace VideoPlayer
                 this.PlaySelectedVideo();
                 e.Handled = true;
             }
+            else if (e.Key == Key.A)
+            {
+                this._vlcActiveX.playlist.add("file:///"+(this._uiFilesListBox.SelectedItem as Video).FileName, null, null);
+                e.Handled = true;
+            }
+            else if(e.Key==Key.P)
+            {
+                this.PlaySelectedVideo(false);
+                e.Handled = true;
+            }
         }
 
         private void StopVideoPlaying()
@@ -167,7 +177,7 @@ namespace VideoPlayer
             }
         }
 
-        private void PlaySelectedVideo()
+        private void PlaySelectedVideo(Boolean IsNewPlaylist)
         {
             // State 3: playing
             if (this._vlcActiveX.input.state == 3)
@@ -177,21 +187,30 @@ namespace VideoPlayer
             }
 
             Video video = this._uiFilesListBox.SelectedItem as Video;
-            
-            this._vlcActiveX.playlist.items.clear();
-            this._vlcActiveX.playlist.add("file:///" + video.FileName, "", ":no-snapshot-preview");//\":no-overlay\" 
+            if (IsNewPlaylist)
+            {
+                this._vlcActiveX.playlist.items.clear();
+                this._vlcActiveX.playlist.add("file:///" + video.FileName, "", ":no-snapshot-preview");//\":no-overlay\" 
+            }
             this._vlcActiveX.Toolbar = false;
             this._uiNowPlaying.Text = "Now playing: " + video.Title;
             this.SwitchToFullScreen();
             this._vlcActiveX.playlist.play();
             this.nowPlaying = video;
-            
+
             // used for screenshots
+            this._VLCcontrol = new VlcControl();
+            this._VLCcontrol.AudioProperties.IsMute = true;
             this._VLCcontrol.Media = new PathMedia(this.nowPlaying.FileName);
             this._VLCcontrol.Playing += _VLCcontrol_Playing;
         }
 
-        void _VLCcontrol_Playing(VlcControl sender, VlcEventArgs<EventArgs> e)
+        private void PlaySelectedVideo()
+        {
+            this.PlaySelectedVideo(true);
+        }
+
+        private void _VLCcontrol_Playing(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
             this._VLCcontrol.Pause();
         }
@@ -224,7 +243,6 @@ namespace VideoPlayer
             this._vlcActiveX.MediaPlayerPlaying += _vlcActiveX_MediaPlayerPlaying;
             this._vlcActiveX.Toolbar = false;
             this._vlcActiveX.FullscreenEnabled = false;
-            this._VLCcontrol.AudioProperties.IsMute = true;
         }
 
         void _vlcActiveX_MediaPlayerPlaying(object sender, EventArgs e)
@@ -324,13 +342,15 @@ namespace VideoPlayer
                 this._vlcActiveX.playlist.pause();
                 System.Threading.Thread.Sleep(100);
                 System.IO.File.Delete(imgPath);
-                this._VLCcontrol.Position =(float) this._vlcActiveX.input.Position;
+                this._VLCcontrol.Position = (float)this._vlcActiveX.input.Position;
                 this._VLCcontrol.Play();
-                this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoSource.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoSource.Height.ToString("0")));
+                //this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoSource.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoSource.Height.ToString("0")));
+                this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoProperties.Size.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoProperties.Size.Height.ToString("0")));
                 this._VLCcontrol.Pause();
+                this._VLCcontrol.Dispose();
                 if (!IsPaused)
                 {
-                this._vlcActiveX.playlist.play();
+                    this._vlcActiveX.playlist.play();
                 }
             }
         }
@@ -350,6 +370,16 @@ namespace VideoPlayer
             }
             this._vlcActiveX.MediaPlayerPositionChanged += _vlcActiveX_MediaPlayerPositionChanged;     
             this.IsPositionChanging = false;
+        }
+
+        private void _uiFullScreenNextButton_Click(object sender, RoutedEventArgs e)
+        {
+            this._vlcActiveX.playlist.next();
+        }
+
+        private void _uiFullScreenPreviousButton_Click(object sender, RoutedEventArgs e)
+        {
+            this._vlcActiveX.playlist.prev();
         }
     }
 }

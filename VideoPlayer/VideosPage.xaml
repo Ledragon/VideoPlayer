@@ -73,7 +73,6 @@
                 <ColumnDefinition Width="*" x:Name="_uiVideoPropertiesColumn"/>
             </Grid.ColumnDefinitions>
             <Image Source="{Binding Path=ImagePath}" Stretch="UniformToFill" Name="_uiPreviewImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="80,0,20,0" Content="{Binding Title}"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Duration:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0"/>
@@ -122,6 +121,12 @@
                     <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenMuteButton" Click="_uiMuteButton_Click" Content="{DynamicResource Unmuted}"/>
                     <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiSnapshotButton" Click="_uiSnapshotButton_Click">
                         <Image Source="Icons\camera_small.png"/>
+                    </Button>
+                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenPreviousButton" Click="_uiFullScreenPreviousButton_Click">
+                        <Image Source="Icons\control_start.png"/>
+                    </Button>
+                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center" x:Name="_uiFullScreenNextButton" Click="_uiFullScreenNextButton_Click">
+                        <Image Source="Icons\control_end.png"/>
                     </Button>
                 </StackPanel>
                 <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Right" VerticalAlignment="Center" x:Name="_uiFullScreenFasterButton" Click="_uiFasterButton_Click">

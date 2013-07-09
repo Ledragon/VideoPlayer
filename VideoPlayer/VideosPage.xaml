@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VideoPlayer" x:Class="VideoPlayer.VideosPage" 
+    xmlns:med="clr-namespace:System.Windows.Media"
              mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024" KeyDown="UserControl_KeyDown" Background="#CC000000" Loaded="UserControl_Loaded">
     <UserControl.Resources>
@@ -55,6 +56,7 @@
         </Style>
         <Image x:Key="Muted" Source="Icons\sound_none.png"/>
         <Image x:Key="Unmuted" Source="Icons\sound.png"/>
+        <med:ImageConverter x:Key="imageConverter" />
     </UserControl.Resources>
 
     <Grid Name="_uiMainGrid">
@@ -72,7 +74,12 @@
                 <ColumnDefinition Width="400" x:Name="_uiMediaElementColumn"/>
                 <ColumnDefinition Width="*" x:Name="_uiVideoPropertiesColumn"/>
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Path=ImagePath}" Stretch="UniformToFill" Name="_uiPreviewImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <!--<Rectangle  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Rectangle.Fill>
+                    <ImageBrush ImageSource="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}"></ImageBrush>
+                </Rectangle.Fill>
+            </Rectangle>-->
+            <Image Source="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}" Stretch="UniformToFill" Name="_uiPreviewImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="80,0,20,0" Content="{Binding Title}"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Duration:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0"/>

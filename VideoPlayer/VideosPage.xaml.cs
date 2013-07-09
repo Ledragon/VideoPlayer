@@ -22,6 +22,7 @@ using System.Xml;
 using Vlc.DotNet.Wpf;
 using AxAXVLC;
 using System.Drawing;
+using ToolLib;
 
 
 namespace VideoPlayer
@@ -336,23 +337,46 @@ namespace VideoPlayer
                 System.IO.Directory.CreateDirectory(tempPath);
             }
             string imgPath = Path.Combine(tempPath, this.nowPlaying.Title + ".jpg");
-            if (!System.IO.File.Exists(imgPath))
-            {
+            //if (!System.IO.File.Exists(imgPath))
+            //{
                 Boolean IsPaused = (this._vlcActiveX.input.state == 4);
                 this._vlcActiveX.playlist.pause();
                 System.Threading.Thread.Sleep(100);
-                System.IO.File.Delete(imgPath);
+                //System.IO.File.Delete(imgPath);
                 this._VLCcontrol.Position = (float)this._vlcActiveX.input.Position;
                 this._VLCcontrol.Play();
                 //this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoSource.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoSource.Height.ToString("0")));
                 this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoProperties.Size.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoProperties.Size.Height.ToString("0")));
+                this._VLCcontrol.SnapshotTaken += _VLCcontrol_SnapshotTaken;
+                //System.Drawing.Image img = new Bitmap(imgPath);
+                //this.nowPlaying.PreviewImage = img;
+                //System.IO.File.Delete(imgPath);
+                
                 this._VLCcontrol.Pause();
-                this._VLCcontrol.Dispose();
+                //this._VLCcontrol.Dispose();
                 if (!IsPaused)
                 {
                     this._vlcActiveX.playlist.play();
                 }
+            //}
+        }
+
+        void _VLCcontrol_SnapshotTaken(VlcControl sender, VlcEventArgs<string> e)
+        {            
+            String tempPath = Path.Combine(controler.GetDefaultFolder(), "Pictures");
+            if (!System.IO.Directory.Exists(tempPath))
+            {
+                System.IO.Directory.CreateDirectory(tempPath);
             }
+            string imgPath = Path.Combine(tempPath, this.nowPlaying.Title + ".jpg");
+            if (System.IO.File.Exists(imgPath))
+            {
+                System.Drawing.Image img = new Bitmap(imgPath);
+                this.nowPlaying.PreviewImage = img;
+                img.Dispose();
+                System.IO.File.Delete(imgPath);
+            }
+            this._VLCcontrol.SnapshotTaken -= _VLCcontrol_SnapshotTaken;
         }
 
         private void _uiFullScreenSlider_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

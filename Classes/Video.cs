@@ -10,6 +10,7 @@ using System.Threading;
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
 using System.Windows;
+using ToolLib;
 
 namespace Classes
 {
@@ -139,6 +140,24 @@ namespace Classes
             {
                 this._imagePath = value;
             } 
+        }
+
+        [XmlAttribute("SerializedImage")]
+        public String SerializedImage { get; set; }
+
+        [XmlIgnore]
+        public System.Drawing.Image PreviewImage
+        {
+            get
+            {
+                ImageModifier modifier = new ImageModifier();
+                return modifier.DeserializeFromBase64String(this.SerializedImage);
+            }
+            set
+            {
+                ImageModifier modifier = new ImageModifier();
+                this.SerializedImage = modifier.SerializeToBase64String(value);
+            }
         }
     }
 }

@@ -54,6 +54,12 @@
     <Compile Include="Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CSharp\ToolLib\ToolLib.csproj">
+      <Project>{9e0eae63-b58b-4e6d-b556-9ded50cd798d}</Project>
+      <Name>ToolLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

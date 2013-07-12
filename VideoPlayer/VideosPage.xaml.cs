@@ -250,14 +250,15 @@ namespace VideoPlayer
         void _vlcActiveX_MediaPlayerPlaying(object sender, EventArgs e)
         {
             Video video = this._uiFilesListBox.SelectedItem as Video;
-            int it = 0;
-            while (TimeSpan.Compare(video.Length, TimeSpan.Zero) == 0&&it<10)
+            Int32 seconds = 0;
+            Int32 iteration = 0;
+            while (seconds == 0 && iteration < 1000)
             {
-                Int32 seconds = Int32.Parse((this._vlcActiveX.input.Length / 1000).ToString("0"));
-                TimeSpan duration = new TimeSpan(0, 0, seconds);
-                video.Length = duration;
-                it++;
+                seconds = Int32.Parse((this._vlcActiveX.input.Length / 1000).ToString("0"));
+                iteration++;
             }
+            TimeSpan duration = new TimeSpan(0, 0, seconds);
+            video.Length = duration;
             this._uiDuration.Text = video.Length.ToString("hh\\:mm\\:ss");
         }
 
@@ -336,14 +337,17 @@ namespace VideoPlayer
         {
             String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.nowPlaying.Title + ".jpg");
             Boolean IsPaused = (this._vlcActiveX.input.state == 4);
-            this._vlcActiveX.playlist.pause();
-            System.Threading.Thread.Sleep(100);
             try
             {
-                this._VLCcontrol.Position = (float)this._vlcActiveX.input.Position;
-                this._VLCcontrol.Play();
-                this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoProperties.Size.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoProperties.Size.Height.ToString("0")));
-                this._VLCcontrol.SnapshotTaken += _VLCcontrol_SnapshotTaken;
+                if (this.nowPlaying.Length != TimeSpan.Zero)
+                {
+                    this._vlcActiveX.playlist.pause();
+                    System.Threading.Thread.Sleep(100);
+                    this._VLCcontrol.Position = (float)this._vlcActiveX.input.Position;
+                    this._VLCcontrol.Play();
+                    this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoProperties.Size.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoProperties.Size.Height.ToString("0")));
+                    this._VLCcontrol.SnapshotTaken += _VLCcontrol_SnapshotTaken;
+                }
             }
             catch 
             {

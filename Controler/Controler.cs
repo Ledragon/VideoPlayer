@@ -24,9 +24,23 @@ namespace Controlers
         public void Save(String filePath, ObjectsWrapper wrapper)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObjectsWrapper));
-            StreamWriter streamWriter = new StreamWriter(filePath);
-            xmlSerializer.Serialize(streamWriter, wrapper);
-            streamWriter.Close();
+            StreamWriter streamWriter = null;
+            try
+            {
+                streamWriter = new StreamWriter(filePath);
+                xmlSerializer.Serialize(streamWriter, wrapper);
+            }
+            catch
+            {
+                // TODO logger les erreurs
+            }
+            finally
+            {
+                if (streamWriter != null)
+                {
+                    streamWriter.Close();
+                }
+            }
         }
 
         public ObjectsWrapper GetObjectsFromFile(String filePath)
@@ -116,7 +130,12 @@ namespace Controlers
         public String GetDefaultFolder()
         {
             String myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            return Path.Combine(myDocumentsPath, "VideoPlayer");
+            String videoPlayerPath = Path.Combine(myDocumentsPath, "VideoPlayer");
+            if (!System.IO.Directory.Exists(videoPlayerPath))
+            {
+                System.IO.Directory.CreateDirectory(videoPlayerPath);
+            }
+            return videoPlayerPath;
         }
     }
 }

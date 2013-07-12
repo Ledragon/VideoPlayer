@@ -11,11 +11,21 @@ using System.ComponentModel;
 using System.Windows.Media.Imaging;
 using System.Windows;
 using ToolLib;
+using System.Drawing;
 
 namespace Classes
 {
-    public class Video
+    public class Video:DependencyObject
     {
+
+        //public static readonly DependencyProperty PreviewImageProperty;
+
+        //static Video()
+        //{
+        //    FrameworkPropertyMetadata md = new FrameworkPropertyMetadata();
+        //    md.PropertyChangedCallback = PreviewImagePropertyChanged;
+        //    Video.PreviewImageProperty = DependencyProperty.Register("PreviewImage", typeof(System.Drawing.Image), typeof(Video), md);
+        //}
 
         public Video()
         {
@@ -111,36 +121,36 @@ namespace Classes
         [XmlAttribute("LastPlayed")]
         public DateTime LastPlayed { get; set; }
 
-        [XmlIgnore]
-        private Uri _fileUri;
+        //[XmlIgnore]
+        //private Uri _fileUri;
 
-        [XmlIgnore]
-        public Uri FileUri
-        {
-            get { return new Uri(this.FileName); }
-            set { this._fileUri = new Uri(this.FileName); }
-        }
+        //[XmlIgnore]
+        //public Uri FileUri
+        //{
+        //    get { return new Uri(this.FileName); }
+        //    set { this._fileUri = new Uri(this.FileName); }
+        //}
 
-        [XmlIgnore]
-        public ImageSource Source { get; set; }
+        //[XmlIgnore]
+        //public ImageSource Source { get; set; }
 
-        [XmlIgnore]
-        private String _imagePath;
+        //[XmlIgnore]
+        //private String _imagePath;
 
-        [XmlIgnore]
-        public String ImagePath
-        {
-            get 
-            {
-                String myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                String videoPlayerPath = Path.Combine(myDocumentsPath, "VideoPlayer");
-                return Path.Combine(videoPlayerPath, "Pictures", this.Title + ".jpg"); 
-            } 
-            set
-            {
-                this._imagePath = value;
-            } 
-        }
+        //[XmlIgnore]
+        //public String ImagePath
+        //{
+        //    get 
+        //    {
+        //        String myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        //        String videoPlayerPath = Path.Combine(myDocumentsPath, "VideoPlayer");
+        //        return Path.Combine(videoPlayerPath, "Pictures", this.Title + ".jpg"); 
+        //    } 
+        //    set
+        //    {
+        //        this._imagePath = value;
+        //    } 
+        //}
 
         [XmlAttribute("SerializedImage")]
         public String SerializedImage { get; set; }
@@ -152,6 +162,7 @@ namespace Classes
             {
                 ImageModifier modifier = new ImageModifier();
                 return modifier.DeserializeFromBase64String(this.SerializedImage);
+                //return GetValue(PreviewImageProperty) as System.Drawing.Image;
             }
             set
             {

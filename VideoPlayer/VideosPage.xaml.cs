@@ -39,10 +39,11 @@ namespace VideoPlayer
         private AxVLCPlugin2 _vlcActiveX;
         private Controlers.Controler controler = new Controlers.Controler();
         private Video nowPlaying;
-        VlcControl _VLCcontrol;
+        //VlcControl _VLCcontrol;
+        Int32 playlistPosition = 0;
 
         public VideosPage()
-        {   
+        {
             //// Set libvlc.dll and libvlccore.dll directory path
             //String programFilesPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ProgramFiles);
             //VlcContext.LibVlcDllsPath = System.IO.Path.Combine(programFilesPath, @"VideoLan\VLC");
@@ -62,8 +63,8 @@ namespace VideoPlayer
             ////VlcContext.StartupOptions.AddOption("--directx-3buffering");
             //VlcContext.StartupOptions.AddOption("--ffmpeg-skiploopfilter=4");
             ////VlcContext.StartupOptions.AddOption("--ffmpeg-hw");
-            ////VlcContext.StartupOptions.AddOption("--vout=directx");
-            
+            VlcContext.StartupOptions.AddOption("--vout=directx");
+
 
             ////VlcContext.StartupOptions.ShowLoggerConsole = false;
             ////VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Debug;
@@ -71,7 +72,7 @@ namespace VideoPlayer
             ////VlcContext.StartupOptions.LogOptions.LogInFilePath = @"D:\videoplayer_vlc.log";
             //// Initialize the VlcContext
             //VlcContext.Initialize();
-           
+
             InitializeComponent();
         }
 
@@ -107,12 +108,13 @@ namespace VideoPlayer
             }
             else if (e.Key == Key.A)
             {
-                this._vlcActiveX.playlist.add("file:///"+(this._uiFilesListBox.SelectedItem as Video).FileName, null, null);
+                this._vlcActiveX.playlist.add("file:///" + (this._uiFilesListBox.SelectedItem as Video).FileName, null, null);
                 e.Handled = true;
             }
-            else if(e.Key==Key.P)
+            else if (e.Key == Key.P)
             {
                 this.PlaySelectedVideo(false);
+                this.playlistPosition = 0;
                 e.Handled = true;
             }
         }
@@ -134,7 +136,7 @@ namespace VideoPlayer
             this.Cursor = Cursors.Arrow;
         }
 
-       private void _uiMuteButton_Click(object sender, RoutedEventArgs e)
+        private void _uiMuteButton_Click(object sender, RoutedEventArgs e)
         {
             this._vlcActiveX.audio.mute = !this._vlcActiveX.audio.mute;
             if (this._vlcActiveX.audio.mute)
@@ -200,7 +202,6 @@ namespace VideoPlayer
             this.nowPlaying = video;
 
             // used for screenshots
-            this._VLCcontrol = new VlcControl();
             this._VLCcontrol.AudioProperties.IsMute = true;
             this._VLCcontrol.Media = new PathMedia(this.nowPlaying.FileName);
             this._VLCcontrol.Playing += _VLCcontrol_Playing;
@@ -248,14 +249,16 @@ namespace VideoPlayer
 
         void _vlcActiveX_MediaPlayerPlaying(object sender, EventArgs e)
         {
-            Int32 seconds = Int32.Parse((this._vlcActiveX.input.Length / 1000).ToString("0"));
-            TimeSpan duration = new TimeSpan(0, 0, seconds);
-            this._uiDuration.Text = duration.ToString("hh\\:mm\\:ss");
             Video video = this._uiFilesListBox.SelectedItem as Video;
-            if (TimeSpan.Compare(video.Length, TimeSpan.Zero) == 0)
+            int it = 0;
+            while (TimeSpan.Compare(video.Length, TimeSpan.Zero) == 0&&it<10)
             {
+                Int32 seconds = Int32.Parse((this._vlcActiveX.input.Length / 1000).ToString("0"));
+                TimeSpan duration = new TimeSpan(0, 0, seconds);
                 video.Length = duration;
+                it++;
             }
+            this._uiDuration.Text = video.Length.ToString("hh\\:mm\\:ss");
         }
 
         void _vlcActiveX_MediaPlayerPositionChanged(object sender, DVLCEvents_MediaPlayerPositionChangedEvent e)
@@ -306,14 +309,14 @@ namespace VideoPlayer
 
         private void _uiFullScreenSlider_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this._vlcActiveX.MediaPlayerPositionChanged -= _vlcActiveX_MediaPlayerPositionChanged;     
+            this._vlcActiveX.MediaPlayerPositionChanged -= _vlcActiveX_MediaPlayerPositionChanged;
             this.IsPositionChanging = true;
         }
 
         private void _uiFullScreenSlider_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             this._vlcActiveX.input.Position = this._uiFullScreenSlider.Value;
-            this._vlcActiveX.MediaPlayerPositionChanged += _vlcActiveX_MediaPlayerPositionChanged;     
+            this._vlcActiveX.MediaPlayerPositionChanged += _vlcActiveX_MediaPlayerPositionChanged;
             this.IsPositionChanging = false;
         }
 
@@ -331,44 +334,31 @@ namespace VideoPlayer
 
         private void _uiSnapshotButton_Click(object sender, RoutedEventArgs e)
         {
-            String tempPath = Path.Combine(controler.GetDefaultFolder(), "Pictures");
-            if (!System.IO.Directory.Exists(tempPath))
+            String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.nowPlaying.Title + ".jpg");
+            Boolean IsPaused = (this._vlcActiveX.input.state == 4);
+            this._vlcActiveX.playlist.pause();
+            System.Threading.Thread.Sleep(100);
+            try
             {
-                System.IO.Directory.CreateDirectory(tempPath);
-            }
-            string imgPath = Path.Combine(tempPath, this.nowPlaying.Title + ".jpg");
-            //if (!System.IO.File.Exists(imgPath))
-            //{
-                Boolean IsPaused = (this._vlcActiveX.input.state == 4);
-                this._vlcActiveX.playlist.pause();
-                System.Threading.Thread.Sleep(100);
-                //System.IO.File.Delete(imgPath);
                 this._VLCcontrol.Position = (float)this._vlcActiveX.input.Position;
                 this._VLCcontrol.Play();
-                //this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoSource.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoSource.Height.ToString("0")));
                 this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoProperties.Size.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoProperties.Size.Height.ToString("0")));
                 this._VLCcontrol.SnapshotTaken += _VLCcontrol_SnapshotTaken;
-                //System.Drawing.Image img = new Bitmap(imgPath);
-                //this.nowPlaying.PreviewImage = img;
-                //System.IO.File.Delete(imgPath);
-                
-                this._VLCcontrol.Pause();
-                //this._VLCcontrol.Dispose();
-                if (!IsPaused)
-                {
-                    this._vlcActiveX.playlist.play();
-                }
-            //}
+            }
+            catch 
+            {
+                //TODO logger les erreurs
+            }
+            this._VLCcontrol.Pause();
+            if (!IsPaused)
+            {
+                this._vlcActiveX.playlist.play();
+            }
         }
 
         void _VLCcontrol_SnapshotTaken(VlcControl sender, VlcEventArgs<string> e)
-        {            
-            String tempPath = Path.Combine(controler.GetDefaultFolder(), "Pictures");
-            if (!System.IO.Directory.Exists(tempPath))
-            {
-                System.IO.Directory.CreateDirectory(tempPath);
-            }
-            string imgPath = Path.Combine(tempPath, this.nowPlaying.Title + ".jpg");
+        {
+            String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.nowPlaying.Title + ".jpg");
             if (System.IO.File.Exists(imgPath))
             {
                 System.Drawing.Image img = new Bitmap(imgPath);
@@ -381,7 +371,7 @@ namespace VideoPlayer
 
         private void _uiFullScreenSlider_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            this._vlcActiveX.MediaPlayerPositionChanged -= _vlcActiveX_MediaPlayerPositionChanged;     
+            this._vlcActiveX.MediaPlayerPositionChanged -= _vlcActiveX_MediaPlayerPositionChanged;
             this.IsPositionChanging = true;
 
             if (e.Delta < 0)
@@ -392,13 +382,14 @@ namespace VideoPlayer
             {
                 this._uiFullScreenSlider.Value += this._uiFullScreenSlider.SmallChange;
             }
-            this._vlcActiveX.MediaPlayerPositionChanged += _vlcActiveX_MediaPlayerPositionChanged;     
+            this._vlcActiveX.MediaPlayerPositionChanged += _vlcActiveX_MediaPlayerPositionChanged;
             this.IsPositionChanging = false;
         }
 
         private void _uiFullScreenNextButton_Click(object sender, RoutedEventArgs e)
         {
             this._vlcActiveX.playlist.next();
+            this.playlistPosition++;
         }
 
         private void _uiFullScreenPreviousButton_Click(object sender, RoutedEventArgs e)

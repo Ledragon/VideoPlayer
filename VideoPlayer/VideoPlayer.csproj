@@ -26,7 +26,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <DisallowUrlActivation>true</DisallowUrlActivation>
-    <ApplicationRevision>29</ApplicationRevision>
+    <ApplicationRevision>31</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
@@ -111,7 +111,9 @@
     <Compile Include="DirectoryBrowser.xaml.cs">
       <DependentUpon>DirectoryBrowser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ImageConverter.cs" />
+    <Compile Include="ImageConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlayerControls.xaml.cs">
       <DependentUpon>PlayerControls.xaml</DependentUpon>
     </Compile>

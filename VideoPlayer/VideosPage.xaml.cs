@@ -36,7 +36,7 @@ namespace VideoPlayer
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         private DateTime mouseLastMouveDateTime = DateTime.Now;
         private Boolean IsPositionChanging = false;
-        private AxVLCPlugin2 _vlcActiveX;
+        //private AxVLCPlugin2 _vlcActiveX;
         private Controlers.Controler controler = new Controlers.Controler();
         private Video nowPlaying;
         //VlcControl _VLCcontrol;
@@ -52,18 +52,18 @@ namespace VideoPlayer
             //VlcContext.LibVlcPluginsPath = Path.Combine(VlcContext.LibVlcDllsPath,"plugins");
 
             //// refer to http://wiki.videolan.org/VLC_command-line_help for more information
-            //VlcContext.StartupOptions.IgnoreConfig = true;
-            //VlcContext.StartupOptions.AddOption("--no-video-title-show");
+            VlcContext.StartupOptions.IgnoreConfig = true;
+            VlcContext.StartupOptions.AddOption("--no-video-title-show");
             //VlcContext.StartupOptions.ScreenSaverEnabled = false;
-            //VlcContext.StartupOptions.AddOption("--no-snapshot-preview");
-            //VlcContext.StartupOptions.AddOption("--no-mouse-events");
-            //VlcContext.StartupOptions.AddOption("--no-keyboard-events");
+            VlcContext.StartupOptions.AddOption("--no-snapshot-preview");
+            VlcContext.StartupOptions.AddOption("--no-mouse-events");
+            VlcContext.StartupOptions.AddOption("--no-keyboard-events");
             ////VlcContext.StartupOptions.AddOption("--no-skip-frames");
             ////VlcContext.StartupOptions.AddOption("--directx-hw-yuv");
             ////VlcContext.StartupOptions.AddOption("--directx-3buffering");
             //VlcContext.StartupOptions.AddOption("--ffmpeg-skiploopfilter=4");
             ////VlcContext.StartupOptions.AddOption("--ffmpeg-hw");
-            VlcContext.StartupOptions.AddOption("--vout=directx");
+            //VlcContext.StartupOptions.AddOption("--vout=directx");
 
 
             ////VlcContext.StartupOptions.ShowLoggerConsole = false;
@@ -71,7 +71,7 @@ namespace VideoPlayer
             ////VlcContext.StartupOptions.LogOptions.LogInFile = false;
             ////VlcContext.StartupOptions.LogOptions.LogInFilePath = @"D:\videoplayer_vlc.log";
             //// Initialize the VlcContext
-            //VlcContext.Initialize();
+            VlcContext.Initialize();
 
             InitializeComponent();
         }
@@ -121,7 +121,8 @@ namespace VideoPlayer
 
         private void StopVideoPlaying()
         {
-            this._vlcActiveX.playlist.stop();
+            //this._vlcActiveX.playlist.stop();
+            this._VLCcontrol.Stop();
             this._uiFullScreenSlider.Value = 0;
             this._uiNowPlaying.Text = "Now playing: ";
             this.WindowMode();

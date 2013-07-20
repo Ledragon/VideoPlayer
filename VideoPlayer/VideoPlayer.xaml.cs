@@ -19,6 +19,7 @@ using Classes;
 using System.Collections.ObjectModel;
 using Controlers;
 using System.ComponentModel;
+using Vlc.DotNet.Core;
 
 namespace VideoPlayer
 {
@@ -174,6 +175,7 @@ namespace VideoPlayer
         private void _uiCloseButton_Click(object sender, RoutedEventArgs e)
         {
             this.Save();
+            VlcContext.CloseAll();
             this.Close();
         }
 

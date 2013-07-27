@@ -37,11 +37,8 @@ namespace VideoPlayer
         private System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         private DateTime mouseLastMouveDateTime = DateTime.Now;
         private Boolean IsPositionChanging = false;
-        //private AxVLCPlugin2 _vlcActiveX;
         private Controlers.Controler controler = new Controlers.Controler();
         private Video nowPlaying;
-        //VlcControl _VLCcontrol;
-        Int32 playlistPosition = 0;
         private ObservableCollection<Video> _currentPlayList = new ObservableCollection<Video>();
 
         public VideosPage()
@@ -117,7 +114,7 @@ namespace VideoPlayer
             else if (e.Key == Key.P)
             {
                 this.PlaySelectedVideo(false);
-                this.playlistPosition = 0;
+                //this.playlistPosition = 0;
                 e.Handled = true;
             }
             else if (e.Key == Key.C)
@@ -146,7 +143,7 @@ namespace VideoPlayer
         {
             this.IsFullScreenVideo = false;
             this._uiVLCFullScrenGrid.Visibility = System.Windows.Visibility.Hidden;
-            this._uiFilesListBox.Focus();
+            this._uiFilesListBox.SelectedItem = this.nowPlaying;
             this.timer.Stop();
             this.Cursor = Cursors.Arrow;
         }
@@ -279,7 +276,7 @@ namespace VideoPlayer
         private void _uiFasterButton_Click(object sender, RoutedEventArgs e)
         {
             this._VLCcontrol.Rate *= 2;
-            this._uiRate.Text = "Rate: "+this._VLCcontrol.Rate.ToString();
+            this._uiRate.Text = "Rate: " + this._VLCcontrol.Rate.ToString();
         }
 
         private void _uiSlowerButton_Click(object sender, RoutedEventArgs e)
@@ -336,16 +333,14 @@ namespace VideoPlayer
             String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.nowPlaying.Title + ".jpg");
             Boolean IsPaused = this._VLCcontrol.IsPaused;
             try
-            {
-                if (this.nowPlaying.Length != TimeSpan.Zero)
-                {
-                    this._VLCcontrol.Pause();
-                    System.Threading.Thread.Sleep(100);
-                    this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoProperties.Size.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoProperties.Size.Height.ToString("0")));
-                    this._VLCcontrol.SnapshotTaken += _VLCcontrol_SnapshotTaken;
-                }
+            {                
+                this._VLCcontrol.Pause();
+                System.Threading.Thread.Sleep(100);
+                this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoProperties.Size.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoProperties.Size.Height.ToString("0")));
+                this._VLCcontrol.SnapshotTaken += _VLCcontrol_SnapshotTaken;
+
             }
-            catch 
+            catch
             {
                 //TODO logger les erreurs
             }
@@ -388,7 +383,6 @@ namespace VideoPlayer
         private void _uiFullScreenNextButton_Click(object sender, RoutedEventArgs e)
         {
             this._VLCcontrol.Next();
-            this.playlistPosition++;
         }
 
         private void _uiFullScreenPreviousButton_Click(object sender, RoutedEventArgs e)

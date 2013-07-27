@@ -40,8 +40,18 @@ namespace VideoPlayer
         private DateTime mouseLastMouveDateTime = DateTime.Now;
         private Boolean IsPositionChanging = false;
         private Controlers.Controler controler = new Controlers.Controler();
-        private Video nowPlaying;
+        ObservableCollection<Video> videos;
         private ObservableCollection<Video> _currentPlayList = new ObservableCollection<Video>();
+
+        private Video NowPlaying
+        {
+            get
+            {
+                videos = this.DataContext as ObservableCollection<Video>;
+                String path = new Uri(this._VLCcontrol.Media.MRL).LocalPath;
+                return this.videos.FirstOrDefault(v => v.FileName == path);
+            }
+        }
 
         #endregion
 
@@ -141,7 +151,7 @@ namespace VideoPlayer
             }
             else if (e.Key == Key.I)
             {
-                this.ParseAllMedia();
+                //this.ParseAllMedia();
                 e.Handled = true;
             }
         }
@@ -216,16 +226,18 @@ namespace VideoPlayer
         private void _uiFullScreenNextButton_Click(object sender, RoutedEventArgs e)
         {
             this._VLCcontrol.Next();
+            this.UpdateInfos();
         }
 
         private void _uiFullScreenPreviousButton_Click(object sender, RoutedEventArgs e)
         {
             this._VLCcontrol.Previous();
+            this.UpdateInfos();
         }
 
         private void _uiSnapshotButton_Click(object sender, RoutedEventArgs e)
         {
-            String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.nowPlaying.Title + ".jpg");
+            String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.NowPlaying.Title + ".jpg");
             Boolean IsPaused = this._VLCcontrol.IsPaused;
             try
             {
@@ -233,7 +245,6 @@ namespace VideoPlayer
                 System.Threading.Thread.Sleep(100);
                 this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoProperties.Size.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoProperties.Size.Height.ToString("0")));
                 this._VLCcontrol.SnapshotTaken += _VLCcontrol_SnapshotTaken;
-
             }
             catch
             {
@@ -315,11 +326,11 @@ namespace VideoPlayer
 
         void _VLCcontrol_SnapshotTaken(VlcControl sender, VlcEventArgs<string> e)
         {
-            String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.nowPlaying.Title + ".jpg");
+            String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.NowPlaying.Title + ".jpg");
             if (System.IO.File.Exists(imgPath))
             {
                 System.Drawing.Image img = new Bitmap(imgPath);
-                this.nowPlaying.PreviewImage = img;
+                this.NowPlaying.PreviewImage = img;
                 img.Dispose();
                 System.IO.File.Delete(imgPath);
             }
@@ -337,30 +348,12 @@ namespace VideoPlayer
 
         void Media_DurationChanged(MediaBase sender, VlcEventArgs<long> e)
         {
-            // TODO synchroniser avec une playlist
-            Video video = this._uiFilesListBox.SelectedItem as Video;
-            if (video.Length.TotalSeconds == 0)
+            if (this.NowPlaying.Length.TotalSeconds == 0)
             {
-                Int32 seconds = 0;
-                seconds = Int32.Parse((this._VLCcontrol.Duration.TotalSeconds).ToString("0"));
-                TimeSpan duration = new TimeSpan(0, 0, seconds);
-                video.Length = duration;
+                this.NowPlaying.Length = this._VLCcontrol.Duration;
             }
-            this._uiDuration.Text = video.Length.ToString("hh\\:mm\\:ss");
+            this._uiDuration.Text = this.NowPlaying.Length.ToString("hh\\:mm\\:ss");
         }
-
-        //void Media_ParsedChanged(MediaBase sender, VlcEventArgs<int> e)
-        //{
-        //    Video video = this._uiFilesListBox.SelectedItem as Video;
-        //    if (video.Length.TotalSeconds == 0)
-        //    {
-        //        Int32 seconds = 0;
-        //        seconds = Int32.Parse((this._VLCcontrol.Duration.TotalSeconds).ToString("0"));
-        //        TimeSpan duration = new TimeSpan(0, 0, seconds);
-        //        video.Length = duration;
-        //    }
-        //    this._uiDuration.Text = video.Length.ToString("hh\\:mm\\:ss");
-        //}
 
         void timer_Tick(object sender, EventArgs e)
         {
@@ -407,19 +400,17 @@ namespace VideoPlayer
             if (IsNewPlaylist)
             {
                 this._VLCcontrol.Media = new PathMedia(video.FileName);
+                this._currentPlayList.Clear();
+                this._currentPlayList.Add(video);
                 this._VLCcontrol.EndReached += _VLCcontrol_EndReached;
-                this.nowPlaying = video;
-                this._uiDuration.Text = video.Length.ToString("hh\\:mm\\:ss");
-                this._uiNowPlaying.Text = "Now playing: " + video.Title;
+                this._VLCcontrol.Media.DurationChanged += Media_DurationChanged;
             }
             else
             {
-                //this.nowPlaying = this._VLCcontrol.Media.MRL;
             }
-            this.SwitchToFullScreen();
             this._VLCcontrol.Play();
-            //this._VLCcontrol.Media.ParsedChanged += Media_ParsedChanged;
-            this._VLCcontrol.Media.DurationChanged += Media_DurationChanged;
+            this.UpdateInfos();
+            this.SwitchToFullScreen();
         }
 
         private void PlaySelectedVideo()
@@ -439,29 +430,35 @@ namespace VideoPlayer
             this.IsFullScreenVideo = false;
             this._uiVLCFullScrenGrid.Visibility = System.Windows.Visibility.Hidden;
             //this._uiFilesListBox.Focus();
-            this._uiFilesListBox.SelectedItem = this.nowPlaying;
+            this._uiFilesListBox.SelectedItem = this.NowPlaying;
             this.timer.Stop();
             this.Cursor = Cursors.Arrow;
+        }
+
+        private void UpdateInfos()
+        {
+            this._uiDuration.Text = this.NowPlaying.Length.ToString("hh\\:mm\\:ss");
+            this._uiNowPlaying.Text = "Now playing: " + this.NowPlaying.Title;
+            this._uiPlaylist.SelectedItem = this.NowPlaying;
         }
 
         private void ParseAllMedia()
         {
             Boolean IsMute = this._VLCcontrol.AudioProperties.IsMute;
             this._VLCcontrol.AudioProperties.IsMute = true;
-            ObservableCollection<Video> videos = this._uiFilesListBox.DataContext as ObservableCollection<Video>;
-            
+
             foreach (Video video in videos)
             {
                 if (video.Length == TimeSpan.Zero)
                 {
                     this._VLCcontrol.Media = new PathMedia(video.FileName);
                     this._VLCcontrol.Play();
+                    System.Threading.Thread.Sleep(100);
                     video.Length = this._VLCcontrol.Media.Duration;
                     this._VLCcontrol.Stop();
                 }
             }
             this._VLCcontrol.AudioProperties.IsMute = IsMute;
-
         }
 
         #endregion

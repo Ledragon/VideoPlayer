@@ -101,7 +101,7 @@ namespace VideoPlayer
             {
                 if (this.IsFullScreenVideo)
                 {
-                    this.WindowMode();
+                    this.SwitchToWindowMode();
                 }
                 else
                 {
@@ -137,6 +137,11 @@ namespace VideoPlayer
                 {
                     this._uiPlaylist.Visibility = System.Windows.Visibility.Visible;
                 }
+                e.Handled = true;
+            }
+            else if (e.Key == Key.I)
+            {
+                this.ParseAllMedia();
                 e.Handled = true;
             }
         }
@@ -193,7 +198,7 @@ namespace VideoPlayer
 
         private void _uiWindowedButton_Click(object sender, RoutedEventArgs e)
         {
-            this.WindowMode();
+            this.SwitchToWindowMode();
         }
 
         private void _uiFasterButton_Click(object sender, RoutedEventArgs e)
@@ -302,7 +307,25 @@ namespace VideoPlayer
                 this._uiFullScreenSlider.Value = (Double)this._VLCcontrol.Position;
             }
         }
+        
+        void _VLCcontrol_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
+        {
+            this.StopVideoPlaying();
+        }
 
+        void _VLCcontrol_SnapshotTaken(VlcControl sender, VlcEventArgs<string> e)
+        {
+            String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.nowPlaying.Title + ".jpg");
+            if (System.IO.File.Exists(imgPath))
+            {
+                System.Drawing.Image img = new Bitmap(imgPath);
+                this.nowPlaying.PreviewImage = img;
+                img.Dispose();
+                System.IO.File.Delete(imgPath);
+            }
+            this._VLCcontrol.SnapshotTaken -= _VLCcontrol_SnapshotTaken;
+        }
+        
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this._uiFilesListBox.Items.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
@@ -312,8 +335,9 @@ namespace VideoPlayer
             this._uiPlaylist.DataContext = this._currentPlayList;
         }
 
-        void Media_ParsedChanged(MediaBase sender, VlcEventArgs<int> e)
+        void Media_DurationChanged(MediaBase sender, VlcEventArgs<long> e)
         {
+            // TODO synchroniser avec une playlist
             Video video = this._uiFilesListBox.SelectedItem as Video;
             if (video.Length.TotalSeconds == 0)
             {
@@ -324,6 +348,19 @@ namespace VideoPlayer
             }
             this._uiDuration.Text = video.Length.ToString("hh\\:mm\\:ss");
         }
+
+        //void Media_ParsedChanged(MediaBase sender, VlcEventArgs<int> e)
+        //{
+        //    Video video = this._uiFilesListBox.SelectedItem as Video;
+        //    if (video.Length.TotalSeconds == 0)
+        //    {
+        //        Int32 seconds = 0;
+        //        seconds = Int32.Parse((this._VLCcontrol.Duration.TotalSeconds).ToString("0"));
+        //        TimeSpan duration = new TimeSpan(0, 0, seconds);
+        //        video.Length = duration;
+        //    }
+        //    this._uiDuration.Text = video.Length.ToString("hh\\:mm\\:ss");
+        //}
 
         void timer_Tick(object sender, EventArgs e)
         {
@@ -346,38 +383,16 @@ namespace VideoPlayer
             }
         }
 
-        void _VLCcontrol_SnapshotTaken(VlcControl sender, VlcEventArgs<string> e)
-        {
-            String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.nowPlaying.Title + ".jpg");
-            if (System.IO.File.Exists(imgPath))
-            {
-                System.Drawing.Image img = new Bitmap(imgPath);
-                this.nowPlaying.PreviewImage = img;
-                img.Dispose();
-                System.IO.File.Delete(imgPath);
-            }
-            this._VLCcontrol.SnapshotTaken -= _VLCcontrol_SnapshotTaken;
-        }
-
         #endregion
 
         #region Methods
-
-        private void WindowMode()
-        {
-            this.IsFullScreenVideo = false;
-            this._uiVLCFullScrenGrid.Visibility = System.Windows.Visibility.Hidden;
-            this._uiFilesListBox.SelectedItem = this.nowPlaying;
-            this.timer.Stop();
-            this.Cursor = Cursors.Arrow;
-        }
 
         private void StopVideoPlaying()
         {
             this._VLCcontrol.Stop();
             this._uiFullScreenSlider.Value = 0;
             this._uiNowPlaying.Text = "Now playing: ";
-            this.WindowMode();
+            this.SwitchToWindowMode();
         }
 
         private void PlaySelectedVideo(Boolean IsNewPlaylist)
@@ -392,13 +407,19 @@ namespace VideoPlayer
             if (IsNewPlaylist)
             {
                 this._VLCcontrol.Media = new PathMedia(video.FileName);
+                this._VLCcontrol.EndReached += _VLCcontrol_EndReached;
+                this.nowPlaying = video;
+                this._uiDuration.Text = video.Length.ToString("hh\\:mm\\:ss");
+                this._uiNowPlaying.Text = "Now playing: " + video.Title;
             }
-            this._uiNowPlaying.Text = "Now playing: " + video.Title;
+            else
+            {
+                //this.nowPlaying = this._VLCcontrol.Media.MRL;
+            }
             this.SwitchToFullScreen();
             this._VLCcontrol.Play();
-            this._VLCcontrol.Media.ParsedChanged += Media_ParsedChanged;
-            this.nowPlaying = video;
-            this._uiDuration.Text = video.Length.ToString("hh\\:mm\\:ss");
+            //this._VLCcontrol.Media.ParsedChanged += Media_ParsedChanged;
+            this._VLCcontrol.Media.DurationChanged += Media_DurationChanged;
         }
 
         private void PlaySelectedVideo()
@@ -411,7 +432,38 @@ namespace VideoPlayer
             this.IsFullScreenVideo = true;
             this._uiVLCFullScrenGrid.Visibility = System.Windows.Visibility.Visible;
             this.timer.Start();
-        } 
+        }
+
+        private void SwitchToWindowMode()
+        {
+            this.IsFullScreenVideo = false;
+            this._uiVLCFullScrenGrid.Visibility = System.Windows.Visibility.Hidden;
+            //this._uiFilesListBox.Focus();
+            this._uiFilesListBox.SelectedItem = this.nowPlaying;
+            this.timer.Stop();
+            this.Cursor = Cursors.Arrow;
+        }
+
+        private void ParseAllMedia()
+        {
+            Boolean IsMute = this._VLCcontrol.AudioProperties.IsMute;
+            this._VLCcontrol.AudioProperties.IsMute = true;
+            ObservableCollection<Video> videos = this._uiFilesListBox.DataContext as ObservableCollection<Video>;
+            
+            foreach (Video video in videos)
+            {
+                if (video.Length == TimeSpan.Zero)
+                {
+                    this._VLCcontrol.Media = new PathMedia(video.FileName);
+                    this._VLCcontrol.Play();
+                    video.Length = this._VLCcontrol.Media.Duration;
+                    this._VLCcontrol.Stop();
+                }
+            }
+            this._VLCcontrol.AudioProperties.IsMute = IsMute;
+
+        }
+
         #endregion
     }
 }

@@ -63,7 +63,6 @@ namespace Controlers
             return wrapper;
         }
 
-
         public ObjectsWrapper GetObjectsFromFile()
         {
             return this.GetObjectsFromFile(this.GetDefaultFileName());

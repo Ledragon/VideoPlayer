@@ -61,7 +61,11 @@ namespace VideoPlayer
             }
             else if (e.Key == Key.S)
             {
-                this.Close();
+                MessageBoxResult mbr =  MessageBox.Show("Do you really want to exit?", "Exit?", MessageBoxButton.YesNo);
+                if (mbr == MessageBoxResult.Yes)
+                {
+                    this.Close();
+                }
                 e.Handled = true;
 
             }

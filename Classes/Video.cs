@@ -19,13 +19,14 @@ namespace Classes
     {
 
         //public static readonly DependencyProperty PreviewImageProperty;
+        public static readonly DependencyProperty TitleProperty;
 
-        //static Video()
-        //{
-        //    FrameworkPropertyMetadata md = new FrameworkPropertyMetadata();
-        //    md.PropertyChangedCallback = PreviewImagePropertyChanged;
-        //    Video.PreviewImageProperty = DependencyProperty.Register("PreviewImage", typeof(System.Drawing.Image), typeof(Video), md);
-        //}
+        static Video()
+        {
+            FrameworkPropertyMetadata md = new FrameworkPropertyMetadata();
+            //md.PropertyChangedCallback = PreviewImagePropertyChanged;
+            Video.TitleProperty = DependencyProperty.Register("Title", typeof(String), typeof(Video), md);
+        }
 
         public Video()
         {

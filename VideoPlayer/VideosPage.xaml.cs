@@ -40,16 +40,15 @@ namespace VideoPlayer
         private DateTime mouseLastMouveDateTime = DateTime.Now;
         private Boolean IsPositionChanging = false;
         private Controlers.Controler controler = new Controlers.Controler();
-        ObservableCollection<Video> videos;
         private ObservableCollection<Video> _currentPlayList = new ObservableCollection<Video>();
 
         private Video NowPlaying
         {
             get
             {
-                videos = this.DataContext as ObservableCollection<Video>;
+                ObservableCollection<Video> videos = this.DataContext as ObservableCollection<Video>;
                 String path = new Uri(this._VLCcontrol.Media.MRL).LocalPath;
-                return this.videos.FirstOrDefault(v => v.FileName == path);
+                return videos.FirstOrDefault(v => v.FileName == path);
             }
         }
 
@@ -74,7 +73,7 @@ namespace VideoPlayer
             VlcContext.StartupOptions.AddOption("--no-mouse-events");
             VlcContext.StartupOptions.AddOption("--no-keyboard-events");
             ////VlcContext.StartupOptions.AddOption("--no-skip-frames");
-            ////VlcContext.StartupOptions.AddOption("--directx-hw-yuv");
+            VlcContext.StartupOptions.AddOption("--directx-hw-yuv");
             ////VlcContext.StartupOptions.AddOption("--directx-3buffering");
             //VlcContext.StartupOptions.AddOption("--ffmpeg-skiploopfilter=4");
             ////VlcContext.StartupOptions.AddOption("--ffmpeg-hw");
@@ -151,7 +150,7 @@ namespace VideoPlayer
             }
             else if (e.Key == Key.I)
             {
-                //this.ParseAllMedia();
+                
                 e.Handled = true;
             }
         }
@@ -185,7 +184,7 @@ namespace VideoPlayer
             }
             else
             {
-                this._VLCcontrol.Play();
+                this._VLCcontrol.Pause();
             }
         }
 
@@ -437,6 +436,7 @@ namespace VideoPlayer
 
         private void UpdateInfos()
         {
+            //TODO enlever la methode ci-dessous et faire du binding correct
             this._uiDuration.Text = this.NowPlaying.Length.ToString("hh\\:mm\\:ss");
             this._uiNowPlaying.Text = "Now playing: " + this.NowPlaying.Title;
             this._uiPlaylist.SelectedItem = this.NowPlaying;
@@ -447,6 +447,7 @@ namespace VideoPlayer
             Boolean IsMute = this._VLCcontrol.AudioProperties.IsMute;
             this._VLCcontrol.AudioProperties.IsMute = true;
 
+            List<Video> videos = this.DataContext as List<Video>;
             foreach (Video video in videos)
             {
                 if (video.Length == TimeSpan.Zero)

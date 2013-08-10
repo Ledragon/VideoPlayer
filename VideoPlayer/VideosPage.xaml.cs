@@ -24,6 +24,8 @@ using AxAXVLC;
 using System.Drawing;
 using ToolLib;
 using System.Collections.ObjectModel;
+using Log;
+using System.IO;
 
 
 namespace VideoPlayer
@@ -73,7 +75,7 @@ namespace VideoPlayer
             VlcContext.StartupOptions.AddOption("--no-mouse-events");
             VlcContext.StartupOptions.AddOption("--no-keyboard-events");
             ////VlcContext.StartupOptions.AddOption("--no-skip-frames");
-            VlcContext.StartupOptions.AddOption("--directx-hw-yuv");
+            //VlcContext.StartupOptions.AddOption("--directx-hw-yuv");
             ////VlcContext.StartupOptions.AddOption("--directx-3buffering");
             //VlcContext.StartupOptions.AddOption("--ffmpeg-skiploopfilter=4");
             ////VlcContext.StartupOptions.AddOption("--ffmpeg-hw");
@@ -87,6 +89,7 @@ namespace VideoPlayer
             //// Initialize the VlcContext
             VlcContext.Initialize();
 
+            Logger.Write("Program files: " + programFilesPath);
             InitializeComponent();
         }
 
@@ -245,9 +248,10 @@ namespace VideoPlayer
                 this._VLCcontrol.TakeSnapshot(imgPath, uint.Parse(_VLCcontrol.VideoProperties.Size.Width.ToString("0")), uint.Parse(_VLCcontrol.VideoProperties.Size.Height.ToString("0")));
                 this._VLCcontrol.SnapshotTaken += _VLCcontrol_SnapshotTaken;
             }
-            catch
+            catch (Exception exc)
             {
-                //TODO logger les erreurs
+                Logger.Write(exc.Message);
+                Logger.Write(exc.Source);
             }
             if (!IsPaused)
             {
@@ -344,19 +348,16 @@ namespace VideoPlayer
             this.timer.Tick += timer_Tick;
             this._VLCcontrol.PositionChanged += _VLCcontrol_PositionChanged;
             this._uiPlaylist.DataContext = this._currentPlayList;
-            if (_uiFilesListBox.HasItems)
-            {
-                this._uiFilesListBox.SelectedIndex = 0;
-            }
-            this._uiFilesListBox.SelectedIndex = -1;
+            //if (_uiFilesListBox.HasItems)
+            //{
+            //    this._uiFilesListBox.SelectedIndex = 0;
+            //}
+            //this._uiFilesListBox.SelectedIndex = -1;
         }
 
         void Media_DurationChanged(MediaBase sender, VlcEventArgs<long> e)
         {
-            if (this.NowPlaying.Length.TotalSeconds == 0)
-            {
-                this.NowPlaying.Length = this._VLCcontrol.Duration;
-            }
+            this.NowPlaying.Length = this._VLCcontrol.Duration;
             this._uiDuration.Text = this.NowPlaying.Length.ToString("hh\\:mm\\:ss");
         }
 
@@ -402,20 +403,35 @@ namespace VideoPlayer
             }
 
             Video video = this._uiFilesListBox.SelectedItem as Video;
-            if (IsNewPlaylist)
+            if (File.Exists(video.FileName))
             {
-                this._VLCcontrol.Media = new PathMedia(video.FileName);
-                this._currentPlayList.Clear();
-                this._currentPlayList.Add(video);
-                this._VLCcontrol.EndReached += _VLCcontrol_EndReached;
-                this._VLCcontrol.Media.DurationChanged += Media_DurationChanged;
+                if (IsNewPlaylist)
+                {
+                    Logger.Write("Enqueued " + video.Title);
+                    this._VLCcontrol.Media = new PathMedia(video.FileName);
+                    Logger.Write("Added as media " + video.Title);
+                    this._currentPlayList.Clear();
+                    this._currentPlayList.Add(video);
+                    this._VLCcontrol.EndReached += _VLCcontrol_EndReached;
+                    if (this._VLCcontrol.Media.Duration == TimeSpan.Zero)
+                    {
+                        this._VLCcontrol.Media.DurationChanged += Media_DurationChanged;
+                    }
+                }
+                else
+                {
+                }
+                Logger.Write("Before Play method " + video.Title);
+                this._VLCcontrol.Play();
+                Logger.Write("After Play method " + video.Title);
+                this.UpdateInfos();
+                this.SwitchToFullScreen();
             }
             else
             {
+                MessageBox.Show("File not found");
+                Logger.Write("Could not find file " + video.FileName);
             }
-            this._VLCcontrol.Play();
-            this.UpdateInfos();
-            this.SwitchToFullScreen();
         }
 
         private void PlaySelectedVideo()
@@ -434,7 +450,7 @@ namespace VideoPlayer
         {
             this.IsFullScreenVideo = false;
             this._uiVLCFullScrenGrid.Visibility = System.Windows.Visibility.Hidden;
-            //this._uiFilesListBox.Focus();
+            this._uiFilesListBox.Focus();
             this._uiFilesListBox.SelectedItem = this.NowPlaying;
             this.timer.Stop();
             this.Cursor = Cursors.Arrow;

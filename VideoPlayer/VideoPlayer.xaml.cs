@@ -174,6 +174,7 @@ namespace VideoPlayer
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             this.Save();
+            Log.Logger.Close();
         }
 
         private void _uiCloseButton_Click(object sender, RoutedEventArgs e)

@@ -148,9 +148,9 @@ namespace VideoPlayer
                 }
                 e.Handled = true;
             }
-            else if (e.Key == Key.I)
+            else if (e.Key == Key.E)
             {
-                
+                //TODO create video edit view
                 e.Handled = true;
             }
         }
@@ -320,7 +320,8 @@ namespace VideoPlayer
         
         void _VLCcontrol_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-            this.StopVideoPlaying();
+            // TODO gerer la fin d'une video selon qu'on est en playlist ou pas
+            //this.StopVideoPlaying();
         }
 
         void _VLCcontrol_SnapshotTaken(VlcControl sender, VlcEventArgs<string> e)
@@ -343,6 +344,11 @@ namespace VideoPlayer
             this.timer.Tick += timer_Tick;
             this._VLCcontrol.PositionChanged += _VLCcontrol_PositionChanged;
             this._uiPlaylist.DataContext = this._currentPlayList;
+            if (_uiFilesListBox.HasItems)
+            {
+                this._uiFilesListBox.SelectedIndex = 0;
+            }
+            this._uiFilesListBox.SelectedIndex = -1;
         }
 
         void Media_DurationChanged(MediaBase sender, VlcEventArgs<long> e)

@@ -7,7 +7,7 @@
              xmlns:med="clr-namespace:System.Windows.Media"
     xmlns:VLC="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf" 
              mc:Ignorable="d" 
-             d:DesignHeight="768" d:DesignWidth="1024" KeyDown="UserControl_KeyDown" Background="#CC000000" Loaded="UserControl_Loaded">
+             d:DesignHeight="768" d:DesignWidth="1024" KeyDown="UserControl_KeyDown" Loaded="UserControl_Loaded" Background="#00000000">
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="Label">
             <Setter Property="Foreground" Value="White"/>
@@ -66,26 +66,26 @@
 
     <Grid Name="_uiMainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="300" Name="_uiVideoInfosRow"/>
-            <RowDefinition Height="*" Name="_uiVideosListRow"/>
+            <RowDefinition Height="*" Name="_uiVideoInfosRow"/>
+            <RowDefinition Height="350" Name="_uiVideosListRow"/>
             <RowDefinition Height="25" Name="_uiInfosRow"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Background="#33D3D3D3">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Background="#33D3D3D3" Name="_uiStatusBar">
             <TextBlock VerticalAlignment="Center" x:Name="_uiNumberOfVideos" Text="{Binding Count, Mode=OneWay, StringFormat='Number of videos: 0'}" TextAlignment="Left" Foreground="White" Margin="5,0,10,0"/>
             <TextBlock VerticalAlignment="Center" Name="_uiNowPlaying" Foreground="White" Margin="5,0,10,0" Text="Now Playing: "/>
         </StackPanel>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" Margin="30"  Background="#CC000000">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="400" x:Name="_uiMediaElementColumn"/>
+                <ColumnDefinition Width="600" x:Name="_uiMediaElementColumn"/>
                 <ColumnDefinition Width="*" x:Name="_uiVideoPropertiesColumn"/>
             </Grid.ColumnDefinitions>
-            <Image Source="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}" Stretch="UniformToFill" Name="_uiPreviewImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <Image Source="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}" Stretch="Uniform" Name="_uiPreviewImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,20,20,20"/>
             <VLC:VlcControl Name="_VLCcontrol"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
             <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="80,0,20,0" Content="{Binding Title}"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Duration:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0"/>
-            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,25,20,0" Content="{Binding LengthString}"/>
+            <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,25,20,0" Content="{Binding Length}" ContentStringFormat="HH:mm:ss"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Rating:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,50,0,0"/>
             <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,50,20,0" Content="{Binding Rating}"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Views:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,75,0,0"/>
@@ -94,7 +94,20 @@
             <Label Style="{StaticResource ValueLabel}" Grid.Column="1"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,100,20,0" Content="{Binding DateAdded}" ContentStringFormat="dd/MM/yyy HH:mm"/>
             <Label Style="{StaticResource Label}" Grid.Column="1" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,125,0,0"/>
         </Grid>
-        <ListBox x:Name="_uiFilesListBox" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" DisplayMemberPath="Title" IsHitTestVisible="True" IsTextSearchEnabled="False">
+        <ListBox x:Name="_uiFilesListBox" Grid.Row="1" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" IsHitTestVisible="True" IsTextSearchEnabled="False"  Background="#CC000000">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" Margin="10,0,10,0">
+                        <Image Source="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}" Height="300" Width="300"/>
+                        <TextBlock Text="{Binding Path=Title}" VerticalAlignment="Center" Width="300" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontSize="15"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <Grid Grid.Row="0" Visibility="Hidden" Grid.ColumnSpan="10" Grid.RowSpan="10" x:Name="_uiVLCFullScrenGrid" Background="Black" IsVisibleChanged="_uiVLCFullScrenGrid_IsVisibleChanged">
             <Image Source="{Binding VideoSource, ElementName=_VLCcontrol}" Stretch="Uniform"/>
@@ -135,7 +148,7 @@
                 </Button>
                 <Slider HorizontalAlignment="Stretch" Maximum="1" VerticalAlignment="Bottom" x:Name="_uiFullScreenSlider" Margin="30,0,30,0" PreviewMouseLeftButtonDown="_uiFullScreenSlider_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="_uiFullScreenSlider_PreviewMouseLeftButtonUp" LargeChange="0.05" SmallChange="0.01" ValueChanged="_uiFullScreenSlider_ValueChanged" PreviewMouseWheel="_uiFullScreenSlider_PreviewMouseWheel"/>
                 <TextBlock x:Name="_uiPosition" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,55,0" Text=""/>
-                <TextBlock x:Name="_uiDuration" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text=""/>
+                <TextBlock x:Name="_uiDuration" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text="{Binding Length, StringFormat=HH:mm:ss}"/>
                 <TextBlock x:Name="_uiRate" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right" VerticalAlignment="Center" Text="Rate: 1" Margin="0,0,110,0"/>
             </Grid>
 

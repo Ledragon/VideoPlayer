@@ -100,7 +100,7 @@ namespace VideoPlayer
             //this._uiCurrentOperationStatusBarItem.Content = "Loading library";
             backgroundWorker.RunWorkerAsync();
             //this._uiNumberOfVideosStatusBarItem.DataContext = this._videos;
-            this._uiVideosView.DataContext = this._videos;
+            //this._uiVideosView.DataContext = this._videos;
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

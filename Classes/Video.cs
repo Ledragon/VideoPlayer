@@ -15,19 +15,8 @@ using System.Drawing;
 
 namespace Classes
 {
-    public class Video:DependencyObject
+    public class Video:INotifyPropertyChanged
     {
-
-        //public static readonly DependencyProperty PreviewImageProperty;
-        public static readonly DependencyProperty TitleProperty;
-
-        static Video()
-        {
-            FrameworkPropertyMetadata md = new FrameworkPropertyMetadata();
-            //md.PropertyChangedCallback = PreviewImagePropertyChanged;
-            Video.TitleProperty = DependencyProperty.Register("Title", typeof(String), typeof(Video), md);
-        }
-
         public Video()
         {
 
@@ -79,18 +68,48 @@ namespace Classes
 
         [XmlAttribute("FileName")]
         public String FileName { get; set; }
-
+        
+        private String _title;
         [XmlAttribute("Title")]
-        public String Title { get; set; }
+        public String Title 
+        {
+            get 
+            { 
+                return this._title; 
+            }
+            set
+            {
+                this._title = value;
+                this.NotifyPropertyChanged("Title");
+            }
+        }
 
+        private TimeSpan _length;
         [XmlIgnore]
-        public TimeSpan Length { get; set; }
+        public TimeSpan Length
+        {
+            get
+            {
+                return this._length;
+            }
+            set
+            {
+                this._length = value;
+                this.NotifyPropertyChanged("Length");
+            }
+        }
 
         [XmlAttribute("Length")]
         public String LengthString
         {
-            get { return this.Length.ToString("hh\\:mm\\:ss"); }
-            set { this.Length = TimeSpan.Parse(value); }
+            get
+            {
+                return this.Length.ToString("hh\\:mm\\:ss");
+            }
+            set
+            {
+                this.Length = TimeSpan.Parse(value);
+            }
         }
 
         [XmlArray("Tags")]
@@ -103,11 +122,35 @@ namespace Classes
         [XmlAttribute("Preview")]
         public String Preview { get; set; }
 
+        private Int32 _numberOfViews;
         [XmlAttribute("NumberOfViews")]
-        public Int32 NumberOfViews { get; set; }
+        public Int32 NumberOfViews 
+        {
+            get
+            {
+                return this._numberOfViews;
+            }
+            set
+            {
+                this._numberOfViews = value;
+                this.NotifyPropertyChanged("NumberOfViews");
+            }
+        }
 
+        private Int32 _rating;
         [XmlAttribute("Rating")]
-        public Int32 Rating { get; set; }
+        public Int32 Rating
+        {
+            get
+            {
+                return this._rating;
+            }
+            set
+            {
+                this._rating = value;
+                this.NotifyPropertyChanged("Rating");
+            }
+        }
 
         [XmlIgnore]
         public DateTime DateAdded { get; set; }
@@ -119,40 +162,21 @@ namespace Classes
             set { this.DateAdded = DateTime.ParseExact(value, "yyyyMMdd_HHmmss", null); }
         }
 
+        private DateTime _lastPlayed;
         [XmlAttribute("LastPlayed")]
-        public DateTime LastPlayed { get; set; }
-
-        //[XmlIgnore]
-        //private Uri _fileUri;
-
-        //[XmlIgnore]
-        //public Uri FileUri
-        //{
-        //    get { return new Uri(this.FileName); }
-        //    set { this._fileUri = new Uri(this.FileName); }
-        //}
-
-        //[XmlIgnore]
-        //public ImageSource Source { get; set; }
-
-        //[XmlIgnore]
-        //private String _imagePath;
-
-        //[XmlIgnore]
-        //public String ImagePath
-        //{
-        //    get 
-        //    {
-        //        String myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-        //        String videoPlayerPath = Path.Combine(myDocumentsPath, "VideoPlayer");
-        //        return Path.Combine(videoPlayerPath, "Pictures", this.Title + ".jpg"); 
-        //    } 
-        //    set
-        //    {
-        //        this._imagePath = value;
-        //    } 
-        //}
-
+        public DateTime LastPlayed
+        {
+            get
+            {
+                return this._lastPlayed;
+            }
+            set
+            {
+                this._lastPlayed = value;
+                this.NotifyPropertyChanged("LastPlayed");
+            }
+        }
+        
         [XmlAttribute("SerializedImage")]
         public String SerializedImage { get; set; }
 
@@ -169,6 +193,17 @@ namespace Classes
             {
                 ImageModifier modifier = new ImageModifier();
                 this.SerializedImage = modifier.SerializeToBase64String(value);
+                this.NotifyPropertyChanged("PreviewImage");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged(String propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

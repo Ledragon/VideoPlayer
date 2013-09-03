@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using Controlers;
 using System.ComponentModel;
 using Vlc.DotNet.Core;
+using Log;
 
 namespace VideoPlayer
 {
@@ -101,6 +102,7 @@ namespace VideoPlayer
             backgroundWorker.RunWorkerAsync();
             //this._uiNumberOfVideosStatusBarItem.DataContext = this._videos;
             //this._uiVideosView.DataContext = this._videos;
+            Logger.SetPath(Path.Combine(this._controler.GetDefaultFolder(), "Log.txt"));
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

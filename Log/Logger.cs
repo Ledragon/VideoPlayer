@@ -9,7 +9,11 @@ namespace Log
 {
     public static class Logger
     {
-        private static StreamWriter writer = new StreamWriter(@"D:\Log.txt");
+        private static StreamWriter writer;
+        public static void SetPath(String path)
+        {
+            writer = new StreamWriter(path);
+        }
         //public static Logger()
         //{
         //    //writer = new StreamWriter(@"D:\Log.txt");

@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.ObjectModel;
 //using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Windows.Media;
 using System.IO;
-using System.Threading;
 using System.ComponentModel;
-using System.Windows.Media.Imaging;
-using System.Windows;
 using ToolLib;
-using System.Drawing;
 
 namespace Classes
 {
@@ -25,7 +19,7 @@ namespace Classes
         public Video(String videoPath)
         {
             this.GetVideoInfo(videoPath);
-            this.Directory = System.IO.Path.GetDirectoryName(videoPath);
+            this.Directory = Path.GetDirectoryName(videoPath);
             this.FileName = videoPath;
             this.Title = Path.GetFileNameWithoutExtension(videoPath);
             this.NumberOfViews = 0;
@@ -114,7 +108,7 @@ namespace Classes
 
         [XmlArray("Tags")]
         [XmlArrayItem("Tag")]
-        public List<String> Tags { get; set; }
+        public ObservableCollection<String> Tags { get; set; }
 
         [XmlAttribute("Directory")]
         public String Directory { get; set; }

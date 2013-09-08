@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-//using System.Threading.Tasks;
 using Classes;
 using System.Xml.Serialization;
 using System.IO;
-using System.Windows.Media;
-using System.Collections.ObjectModel;
+using Log;
 
 namespace Controlers
 {
     public class Controler
     {
-        private String[] VideoExtensions = { ".3gp", ".avi", ".divx", ".flv", ".mp4", ".mpeg", ".mpg", ".wmv" };
+        private String[] VideoExtensions = { ".3gp", ".avi", ".divx", ".flv", ".m4v", ".mp4", ".mpeg", ".mpg", ".wmv" };
 
 
         public void Save(ObjectsWrapper wrapper)
@@ -30,9 +26,10 @@ namespace Controlers
                 streamWriter = new StreamWriter(filePath);
                 xmlSerializer.Serialize(streamWriter, wrapper);
             }
-            catch
+            catch(Exception e)
             {
-                // TODO logger les erreurs
+                Logger.Write(e.Message);
+                Logger.Write(e.Source);
             }
             finally
             {

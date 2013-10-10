@@ -24,6 +24,7 @@ namespace VideoPlayer
         public MainWindow()
         {
             InitializeComponent();
+            //log4net.Config.XmlConfigurator.Configure();
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -54,7 +55,7 @@ namespace VideoPlayer
             backgroundWorker.DoWork += this.backgroundWorker_DoWork;
             backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
             backgroundWorker.RunWorkerAsync();
-            Logger.SetPath(Path.Combine(this._controller.GetDefaultFolder(), "Log.txt"));
+            new LoggingSystemManager().SetPath(Path.Combine(this._controller.GetDefaultFolder(), "Log.txt"));
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -93,7 +94,7 @@ namespace VideoPlayer
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             this.Save();
-            Logger.Close();
+            LoggingSystemManager.Close();
         }
         
         private void _uiHomePage_VideoClick(object sender, RoutedEventArgs e)

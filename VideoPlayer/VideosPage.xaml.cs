@@ -77,7 +77,7 @@ namespace VideoPlayer
             //// Initialize the VlcContext
             VlcContext.Initialize();
 
-            Logger.Write("Program files: " + programFilesPath);
+            LoggingSystemManager.Write("Program files: " + programFilesPath);
             InitializeComponent();
         }
 
@@ -274,8 +274,8 @@ namespace VideoPlayer
             }
             catch (Exception exc)
             {
-                Logger.Write(exc.Message);
-                Logger.Write(exc.Source);
+                LoggingSystemManager.Write(exc.Message);
+                LoggingSystemManager.Write(exc.Source);
             }
             if (!isPaused)
             {
@@ -430,9 +430,9 @@ namespace VideoPlayer
             {
                 if (isNewPlaylist)
                 {
-                    Logger.Write("Enqueued " + video.Title);
+                    LoggingSystemManager.Write("Enqueued " + video.Title);
                     this._VLCcontrol.Media = new PathMedia(video.FileName);
-                    Logger.Write("Added as media " + video.Title);
+                    LoggingSystemManager.Write("Added as media " + video.Title);
                     this._currentPlayList.Clear();
                     this._currentPlayList.Add(video);
                     this._VLCcontrol.EndReached += _VLCcontrol_EndReached;
@@ -444,16 +444,16 @@ namespace VideoPlayer
                 else
                 {
                 }
-                Logger.Write("Before Play method " + video.Title);
+                LoggingSystemManager.Write("Before Play method " + video.Title);
                 this._VLCcontrol.Play();
-                Logger.Write("After Play method " + video.Title);
+                LoggingSystemManager.Write("After Play method " + video.Title);
                 this.UpdateInfos();
                 this.SwitchToFullScreen();
             }
             else
             {
                 MessageBox.Show("File not found");
-                Logger.Write("Could not find file " + video.FileName);
+                LoggingSystemManager.Write("Could not find file " + video.FileName);
             }
         }
 

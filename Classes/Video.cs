@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-//using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Windows.Media;
 using System.IO;

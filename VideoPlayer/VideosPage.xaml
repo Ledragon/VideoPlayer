@@ -57,8 +57,8 @@
             <Setter Property="Stretch" Value="None"/>
         </Style>
         <Style TargetType="ListBox">
-            <Setter Property="Control.Background" Value="Transparent"/>
-            <Setter Property="Control.BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
         </Style>
         <Image x:Key="Muted" Source="Icons\sound_none.png"/>
         <Image x:Key="Unmuted" Source="Icons\sound.png"/>

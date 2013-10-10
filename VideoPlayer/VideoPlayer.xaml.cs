@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using VideoPlayer.Properties;
 using Path = System.IO.Path;
 using Classes;
 using System.Collections.ObjectModel;
@@ -125,11 +126,7 @@ namespace VideoPlayer
                 }
                 else if (e.Key == Key.Back)
                 {
-                    //this.MainGrid.RowDefinitions[1].Height = new GridLength(100);
-                    //this.MainGrid.RowDefinitions[2].Height = new GridLength(80);
-                    this._uiHomePage.Visibility = Visibility.Visible;
-                    this._uiVideosView.Visibility = Visibility.Hidden;
-                    this._uiSettingsView.Visibility = Visibility.Hidden;
+                    this._uiTabs.SelectedItem = this._uiHomeTab;
                     e.Handled = true;
 
                 }
@@ -159,9 +156,7 @@ namespace VideoPlayer
         
         private void _uiHomePage_VideoClick(object sender, RoutedEventArgs e)
         {
-            this._uiSettingsView.Visibility = Visibility.Hidden;
-            this._uiVideosView.Visibility = Visibility.Visible;
-            this._uiHomePage.Visibility = Visibility.Hidden;
+            this._uiTabs.SelectedItem = this._uiVideoTab;
         }
 
         private void _uiHomePage_CleanClick(object sender, RoutedEventArgs e)
@@ -194,9 +189,17 @@ namespace VideoPlayer
 
         private void _uiHomePage_SettingsClick(object sender, RoutedEventArgs e)
         {
-            this._uiHomePage.Visibility = Visibility.Hidden;
-            this._uiSettingsView.Visibility = Visibility.Visible;
-            this._uiVideosView.Visibility = Visibility.Hidden;
+            this._uiTabs.SelectedItem = this._uiSettingsTab;
+            //if (this._uiSettingsTab.Content == null)
+            //{
+            //    SettingsPage settingsPage = new SettingsPage();
+            //    settingsPage.HorizontalAlignment = HorizontalAlignment.Stretch;
+            //    settingsPage.VerticalAlignment = VerticalAlignment.Stretch;
+            //    settingsPage.Name = "_uiVideosView";
+            //    settingsPage.Directories = this._directories;
+            //    settingsPage.DataContext = this._directories;
+            //    this._uiSettingsTab.Content = settingsPage;
+            //}
         }
 
         private void _uiHomePage_LoadClick(object sender, RoutedEventArgs e)
@@ -207,6 +210,5 @@ namespace VideoPlayer
             backgroundWorkerLoad.RunWorkerAsync();
 
         }
-
     }
 }

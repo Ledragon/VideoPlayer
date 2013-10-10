@@ -60,7 +60,7 @@ namespace VideoPlayer
             //// refer to http://wiki.videolan.org/VLC_command-line_help for more information
             VlcContext.StartupOptions.IgnoreConfig = true;
             VlcContext.StartupOptions.AddOption("--no-video-title-show");
-            //VlcContext.StartupOptions.ScreenSaverEnabled = false;
+            VlcContext.StartupOptions.ScreenSaverEnabled = false;
             VlcContext.StartupOptions.AddOption("--no-snapshot-preview");
             VlcContext.StartupOptions.AddOption("--no-mouse-events");
             VlcContext.StartupOptions.AddOption("--no-keyboard-events");

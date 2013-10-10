@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Log
 {
     public static class Logger
     {
-        private static StreamWriter writer;
+        private static StreamWriter _writer;
         public static void SetPath(String path)
         {
-            writer = new StreamWriter(path);
+            _writer = new StreamWriter(path);
         }
         //public static Logger()
         //{
@@ -21,18 +17,18 @@ namespace Log
 
         public static void Write(string logText)
         {
-            if (writer != null)
+            if (_writer != null)
             {
-                writer.WriteLine(logText);
-                writer.Flush();
+                _writer.WriteLine(logText);
+                _writer.Flush();
             }
         }
 
         public static void Close()
         {
-            if (writer != null)
+            if (_writer != null)
             {
-                writer.Close();
+                _writer.Close();
             }
         }
         

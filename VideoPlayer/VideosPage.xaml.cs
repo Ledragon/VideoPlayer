@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Data;
-using Classes;
+﻿using Classes;
 using System;
 using System.ComponentModel;
 using System.Linq;

@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 //using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace VideoPlayer
 {
@@ -20,7 +11,7 @@ namespace VideoPlayer
     /// </summary>
     public partial class DirectoryBrowser : Window
     {
-        public Classes.Directory _directory = new Classes.Directory();
+        public Classes.Directory Directory = new Classes.Directory();
 
         public DirectoryBrowser()
         {
@@ -30,15 +21,15 @@ namespace VideoPlayer
         public DirectoryBrowser(Classes.Directory directory)
         {
             InitializeComponent();
-            this._directory = directory;
-            this._uiNameTextBox.Text = this._directory.DirectoryName;
-            this._uiPathText.Text = this._directory.DirectoryPath;
-            this._uiSubFoldersCheckBox.IsChecked = this._directory.IsIncludeSubdirectories;
+            this.Directory = directory;
+            this._uiNameTextBox.Text = this.Directory.DirectoryName;
+            this._uiPathText.Text = this.Directory.DirectoryPath;
+            this._uiSubFoldersCheckBox.IsChecked = this.Directory.IsIncludeSubdirectories;
         }
 
         private void _uiDirectoriesTree_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (String folderName in Directory.GetLogicalDrives())
+            foreach (String folderName in System.IO.Directory.GetLogicalDrives())
             {
                 try
                 {
@@ -46,7 +37,7 @@ namespace VideoPlayer
                     item.Header = folderName;
                     item.Tag = folderName;
                     item.Items.Add(null);
-                    item.Expanded += new RoutedEventHandler(item_Expanded);
+                    item.Expanded += this.item_Expanded;
                     this._uiDirectoriesTree.Items.Add(item);
                 }
                 catch (Exception exc)
@@ -68,18 +59,19 @@ namespace VideoPlayer
                     DriveInfo driveInfo = new DriveInfo(currentFolder);
                     if (driveInfo.IsReady)
                     {
-                        foreach (String subfolder in Directory.GetDirectories(currentFolder))
+                        foreach (String subfolder in System.IO.Directory.GetDirectories(currentFolder))
                         {
                             DirectoryInfo directoryInfo = new DirectoryInfo(subfolder);
                             FileAttributes fa = directoryInfo.Attributes;
-                            string attributes = fa.ToString();
                             //if (!attributes.Contains("Hidden"))
                             //{
-                            TreeViewItem newItem = new TreeViewItem();
-                            newItem.Header = System.IO.Path.GetFileName(subfolder);
-                            newItem.Tag = subfolder;
+                            TreeViewItem newItem = new TreeViewItem
+                            {
+                                Header = Path.GetFileName(subfolder),
+                                Tag = subfolder
+                            };
                             newItem.Items.Add(null);
-                            newItem.Expanded += new RoutedEventHandler(item_Expanded);
+                            newItem.Expanded += this.item_Expanded;
                             //newItem.Selected += new RoutedEventHandler(Item_Selected);
                             item.Items.Add(newItem);
                             //}
@@ -96,9 +88,9 @@ namespace VideoPlayer
         private void _uiOKButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
-            this._directory.DirectoryName = this._uiNameTextBox.Text;
-            this._directory.DirectoryPath = this._uiPathText.Text;
-            this._directory.IsIncludeSubdirectories = (Boolean)this._uiSubFoldersCheckBox.IsChecked;
+            this.Directory.DirectoryName = this._uiNameTextBox.Text;
+            this.Directory.DirectoryPath = this._uiPathText.Text;
+            this.Directory.IsIncludeSubdirectories = this._uiSubFoldersCheckBox.IsChecked ?? false;
             this.Close();
         }
     }

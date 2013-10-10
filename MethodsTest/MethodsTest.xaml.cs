@@ -1,21 +1,10 @@
 ﻿using Classes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Controlers;
 using System.Collections.ObjectModel;
 //using VideoPlayer;
+using Controllers;
 
 namespace MethodsTest
 {
@@ -30,7 +19,8 @@ namespace MethodsTest
             get { return this._videos.Count.ToString(); }
             set { this._videosCount = value;} 
         }
-            Controler controler = new Controler();
+
+        readonly Controller _controller = new Controller();
         public MainWindow()
         {
             InitializeComponent();            
@@ -44,7 +34,7 @@ namespace MethodsTest
             if (args.Length > 1)
             {
 
-                foreach (String fil in this.controler.GetVideoFiles(args[1]))
+                foreach (String fil in this._controller.GetVideoFiles(args[1]))
                 {
                     Video video = new Video(fil);
                     this._videos.Add(video);
@@ -60,7 +50,7 @@ namespace MethodsTest
             String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             ObjectsWrapper wrapper = new ObjectsWrapper();
             wrapper.Videos = this._videos;
-            this.controler.Save(filePath, wrapper);
+            this._controller.Save(filePath, wrapper);
         }
 
         private void _uiPlayButton_Click(object sender, RoutedEventArgs e)

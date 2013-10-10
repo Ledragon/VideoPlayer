@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-//using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using VideoPlayer.Properties;
+using Controllers;
+using VideoPlayer.ViewModels;
 using Path = System.IO.Path;
 using Classes;
 using System.Collections.ObjectModel;
-using Controlers;
 using System.ComponentModel;
 using Log;
 
@@ -20,9 +16,10 @@ namespace VideoPlayer
     /// </summary>
     public partial class MainWindow
     {
-        private ObservableCollection<Video> _videos = new ObservableCollection<Video>();
-        private ObservableCollection<Directory> _directories = new ObservableCollection<Directory>();
-        readonly Controler _controler = new Controler();
+        private ViewModel _viewModel;
+        private ObservableCollection<Video> _videos;
+        private ObservableCollection<Directory> _directories;
+        readonly Controller _controller = new Controller();
 
         public MainWindow()
         {
@@ -40,49 +37,16 @@ namespace VideoPlayer
 
         void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            ObjectsWrapper wrapper = this._controler.GetObjectsFromFile();
-            if (wrapper != null)
-            {
-                this._videos = wrapper.Videos;
-                this._directories = wrapper.Directories;
-            }
+            ViewModel viewModel = new ViewModel();
+            this._viewModel = viewModel;
+            this._videos = viewModel.VideoCollection;
+            this._directories = viewModel.DirectoryCollection;
         }
 
         private void Save()
         {
-            ObjectsWrapper wrapper = new ObjectsWrapper();
-            wrapper.Videos = this._videos;
-            wrapper.Directories = this._directories;
-            this._controler.Save(wrapper);
+            this._viewModel.Save();
         }
-
-
-        private void backgroundWorkerLoad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            MessageBox.Show("Finished loading");
-            //this._uiCurrentOperationStatusBarItem.Content = "Ready";
-        }
-
-        private void backgroundWorkerLoad_DoWork(object sender, DoWorkEventArgs e)
-        {
-            Action<Video> addMethod = video => this._videos.Add(video);
-            Video[] tmpList = this._videos.ToArray();
-            foreach (var directory in this._directories)
-            {
-                List<String> files = this._controler.GetVideoFiles(directory);
-                foreach (String videoFile in files)
-                {
-                    if (!tmpList.Any(s => s.FileName == videoFile))
-                    {
-                        Video newVideo = new Video(videoFile);
-                        // cross-thread
-                        this.Dispatcher.BeginInvoke(addMethod, newVideo);
-                        newVideo.DateAdded = DateTime.Now;
-                    }
-                }
-            }
-        }
-
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -90,29 +54,7 @@ namespace VideoPlayer
             backgroundWorker.DoWork += this.backgroundWorker_DoWork;
             backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
             backgroundWorker.RunWorkerAsync();
-            Logger.SetPath(Path.Combine(this._controler.GetDefaultFolder(), "Log.txt"));
-        }
-
-        private void Window_KeyUp(object sender, KeyEventArgs e)
-        {
-            //if (e.Key == Key.Back)
-            //{
-            //    this.MainGrid.RowDefinitions[1].Height = new GridLength(100);
-            //    this.MainGrid.RowDefinitions[2].Height = new GridLength(80);
-            //    this._uiVideosView.Visibility = Visibility.Hidden;
-            //    this._uiSettingsView.Visibility = Visibility.Hidden;
-            //}
-            //if (e.SystemKey == Key.Return && Keyboard.Modifiers == ModifierKeys.Alt)
-            //{
-            //    if (this.WindowStyle == System.Windows.WindowStyle.None)
-            //    {
-            //        this.WindowStyle = System.Windows.WindowStyle.SingleBorderWindow;
-            //    }
-            //    else
-            //    {
-            //        this.WindowStyle = System.Windows.WindowStyle.None;
-            //    }
-            //}
+            Logger.SetPath(Path.Combine(this._controller.GetDefaultFolder(), "Log.txt"));
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -161,30 +103,7 @@ namespace VideoPlayer
 
         private void _uiHomePage_CleanClick(object sender, RoutedEventArgs e)
         {
-            List<String> existingFiles = new List<String>();
-            foreach (var directory in this._directories)
-            {
-                List<String> files = this._controler.GetVideoFiles(directory);
-                foreach (String file in files)
-                {
-                    existingFiles.Add(file);
-                }
-            }
-            var i = from t in this._videos select t.FileName;
-            List<String> l = i.ToList();
-            List<String> videosToRemove = l.Except(existingFiles).ToList();
-            foreach (String file in videosToRemove)
-            {
-                foreach (var video in this._videos)
-                {
-                    if (video.FileName == file)
-                    {
-                        this._videos.Remove(video);
-                        break;
-                    }
-                }
-            }
-
+            this._viewModel.Clean();
         }
 
         private void _uiHomePage_SettingsClick(object sender, RoutedEventArgs e)
@@ -204,11 +123,7 @@ namespace VideoPlayer
 
         private void _uiHomePage_LoadClick(object sender, RoutedEventArgs e)
         {
-            BackgroundWorker backgroundWorkerLoad = new BackgroundWorker();
-            backgroundWorkerLoad.DoWork += this.backgroundWorkerLoad_DoWork;
-            backgroundWorkerLoad.RunWorkerCompleted += backgroundWorkerLoad_RunWorkerCompleted;
-            backgroundWorkerLoad.RunWorkerAsync();
-
+            this._viewModel.Load(this.Dispatcher);
         }
     }
 }

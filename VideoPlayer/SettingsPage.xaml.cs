@@ -34,7 +34,7 @@ namespace VideoPlayer
             DirectoryBrowser directoryBrowser = new DirectoryBrowser();
             if ((Boolean)directoryBrowser.ShowDialog())
             {
-                this.Directories.Add(directoryBrowser._directory);
+                this.Directories.Add(directoryBrowser.Directory);
             }
         }
 

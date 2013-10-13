@@ -17,7 +17,7 @@ namespace Classes
 
         public Video(String videoPath)
         {
-            this.GetVideoInfo(videoPath);
+            //this.GetVideoInfo(videoPath);
             this.Directory = Path.GetDirectoryName(videoPath);
             this.FileName = videoPath;
             this.Title = Path.GetFileNameWithoutExtension(videoPath);

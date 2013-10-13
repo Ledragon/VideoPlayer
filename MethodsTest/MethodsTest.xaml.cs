@@ -26,7 +26,7 @@ namespace MethodsTest
             InitializeComponent();            
         }
 
-        private ObservableCollection<Video> _videos = new ObservableCollection<Video>();
+        private readonly ObservableCollection<Video> _videos = new ObservableCollection<Video>();
         
         private void InfoViewer_Loaded(object sender, RoutedEventArgs e)
         {

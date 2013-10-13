@@ -24,7 +24,6 @@ namespace VideoPlayer
         public MainWindow()
         {
             InitializeComponent();
-            //log4net.Config.XmlConfigurator.Configure();
         }
 
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -43,12 +42,7 @@ namespace VideoPlayer
             this._videos = viewModel.VideoCollection;
             this._directories = viewModel.DirectoryCollection;
         }
-
-        private void Save()
-        {
-            this._viewModel.Save();
-        }
-
+        
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             BackgroundWorker backgroundWorker = new BackgroundWorker();
@@ -93,8 +87,7 @@ namespace VideoPlayer
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            this.Save();
-            LoggingSystemManager.Close();
+            this._viewModel.Save();
         }
         
         private void _uiHomePage_VideoClick(object sender, RoutedEventArgs e)

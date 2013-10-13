@@ -1,0 +1,7 @@
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Log\bin\Debug\Log.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Log\bin\Debug\Log.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Log\obj\Debug\Log.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Log\obj\Debug\Log.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Log\obj\Debug\Log.csprojResolveAssemblyReference.cache
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Log\bin\Debug\log4net.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Log\bin\Debug\log4net.xml

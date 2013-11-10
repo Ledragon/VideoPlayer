@@ -33,6 +33,15 @@ namespace VideoPlayer.ViewModels
                 this._videos = this._wrapper.Videos;
                 this._directories = this._wrapper.Directories;
             }
+            else
+            {
+                this._wrapper = new ObjectsWrapper
+                {
+                    Videos = this._videos,
+                    Directories = this._directories
+                };
+
+            }
             this._logger.Info("File decoded.");
         }
 
@@ -113,5 +122,6 @@ namespace VideoPlayer.ViewModels
                 }
             }
         }
+
     }
 }

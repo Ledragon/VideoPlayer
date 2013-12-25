@@ -99,8 +99,14 @@ namespace VideoPlayer.ViewModels
         {
             //TODO pourri
             MessageBox.Show("Finished loading");
-            //this._uiCurrentOperationStatusBarItem.Content = "Ready";
+            //this._dispatcher.BeginInvoke(DispatcherPriority.Normal, UpdateStatus);
         }
+
+        //private void UpdateStatus()
+        //{
+        //    this._uiCurrentOperationStatusBarItem.Content = "Ready";
+            
+        //}
 
         private void backgroundWorkerLoad_DoWork(object sender, DoWorkEventArgs e)
         {

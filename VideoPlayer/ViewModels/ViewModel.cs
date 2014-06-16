@@ -112,6 +112,7 @@ namespace VideoPlayer.ViewModels
         {
             Action<Video> addMethod = video => this._videos.Add(video);
             Video[] tmpList = this._videos.ToArray();
+            var categories = tmpList.Select(v => v.Category).OrderBy(c => c).ToList();
             foreach (var directory in this._directories)
             {
                 var files = this._controller.GetVideoFiles(directory);
@@ -120,6 +121,11 @@ namespace VideoPlayer.ViewModels
                     if (tmpList.All(s => s.FileName != videoFile))
                     {
                         Video newVideo = new Video(videoFile);
+                        var firstCategory = categories.FirstOrDefault(c => newVideo.Title.Contains(c));
+                        if (firstCategory != null)
+                        {
+                            newVideo.Category = firstCategory;
+                        }
                         // cross-thread
                         this._dispatcher.BeginInvoke(addMethod, newVideo);
                         newVideo.DateAdded = DateTime.Now;

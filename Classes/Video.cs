@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
-using System.Windows.Media;
 using System.IO;
 using System.ComponentModel;
+using Microsoft.WindowsAPICodePack.Shell;
 using ToolLib;
 
 namespace Classes
@@ -20,11 +20,31 @@ namespace Classes
             //this.GetVideoInfo(videoPath);
             this.Directory = Path.GetDirectoryName(videoPath);
             this.FileName = videoPath;
-            this.Title = Path.GetFileNameWithoutExtension(videoPath);
-            this.NumberOfViews = 0;
+            this.Title = Path.GetFileNameWithoutExtension(videoPath).Replace("%20"," ");
+            //this.NumberOfViews = 0;
             this.Rating = 0;
+            this.Tags = new ObservableCollection<Tag>();
+            using (ShellFile shellFile = ShellFile.FromFilePath(videoPath))
+            {
+                var thumbnail = shellFile.Thumbnail.ExtraLargeBitmap;
+                this.PreviewImage = thumbnail;
+                var duration = shellFile.Properties.System.Media.Duration.Value;
+                
+                Double nanoSeconds = 0;
+                if (Double.TryParse(duration.ToString(), out nanoSeconds))
+                {
+                    var milliSeconds = nanoSeconds*0.0001;
+                    this.Length = TimeSpan.FromMilliseconds(milliSeconds);
+                }
+                var rating = shellFile.Properties.System.Rating.Value;
+                UInt32 myRating = 0;
+                if (UInt32.TryParse(rating.ToString(), out myRating))
+                {
+                    this.Rating = myRating;
+                }
+            }
         }
-
+        /*
         private void GetVideoInfo(String videoPath)
         {
             MediaPlayer mediaPlayer = new MediaPlayer();
@@ -58,7 +78,7 @@ namespace Classes
 
             mediaPlayer.Close();
         }
-
+        */
         [XmlAttribute("FileName")]
         public String FileName { get; set; }
         
@@ -107,7 +127,7 @@ namespace Classes
 
         [XmlArray("Tags")]
         [XmlArrayItem("Tag")]
-        public ObservableCollection<String> Tags { get; set; }
+        public ObservableCollection<Tag> Tags { get; set; }
 
         [XmlAttribute("Directory")]
         public String Directory { get; set; }
@@ -130,9 +150,9 @@ namespace Classes
             }
         }
 
-        private Int32 _rating;
+        private UInt32 _rating;
         [XmlAttribute("Rating")]
-        public Int32 Rating
+        public UInt32 Rating
         {
             get
             {
@@ -142,6 +162,23 @@ namespace Classes
             {
                 this._rating = value;
                 this.NotifyPropertyChanged("Rating");
+                //using (ShellFile shellFile = ShellFile.FromFilePath(this.FileName))
+                //{
+                //    shellFile.Properties.System.Rating.AllowSetTruncatedValue = true;
+                //    //shellFile.Properties.System.Rating.Value = this._rating;
+                //}
+            }
+        }
+
+        [XmlAttribute]
+        public String Category
+        {
+            get { return this._category; }
+            set
+            {
+                this._category = value;
+
+                this.NotifyPropertyChanged("Category");
             }
         }
 
@@ -156,6 +193,8 @@ namespace Classes
         }
 
         private DateTime _lastPlayed;
+        private string _category;
+
         [XmlAttribute("LastPlayed")]
         public DateTime LastPlayed
         {

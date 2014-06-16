@@ -4,3 +4,7 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\obj\Debug\Classes.dll
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\obj\Debug\Classes.pdb
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\obj\Debug\Classes.csprojResolveAssemblyReference.cache
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\Microsoft.WindowsAPICodePack.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\Microsoft.WindowsAPICodePack.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb

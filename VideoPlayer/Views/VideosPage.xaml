@@ -3,29 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:VideoPlayer" x:Class="VideoPlayer.VideosPage" 
+             xmlns:local="clr-namespace:VideoPlayer" 
              xmlns:med="clr-namespace:System.Windows.Media"
     xmlns:VLC="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
     xmlns:classes="clr-namespace:Classes;assembly=Classes"
+    xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="VideoPlayer.VideosPage"
     mc:Ignorable="d" 
              d:DesignHeight="768" d:DesignWidth="1024" KeyDown="UserControl_KeyDown" Loaded="UserControl_Loaded" Background="#00000000" IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
-        <Style TargetType="Label" x:Key="Label">
+        <Style TargetType="{x:Type Label}" x:Key="Label">
             <Setter Property="Foreground" Value="White"/>
         </Style>
-        <Style TargetType="Label" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
+        <Style TargetType="{x:Type Label}" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
             <Setter Property="BorderBrush" Value="Gray"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Height" Value="25"/>
         </Style>
-        <Style TargetType="ListBoxItem">
+        <Style TargetType="{x:Type ListBoxItem}">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Padding" Value="0,5,0,5"/>
             <Setter Property="BorderThickness" Value="0.2"/>
             <Setter Property="BorderBrush" Value="Gray"/>
-            <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
+            <EventSetter Event="Control.MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick"/>
         </Style>
-        <Style TargetType="Button" x:Key="MediaControl">
+        <Style TargetType="{x:Type Button}" x:Key="MediaControl">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Width" Value="25"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
@@ -33,9 +34,9 @@
             <Setter Property="Foreground" Value="Wheat"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Name="border" 
-                            Background="{TemplateBinding Background}">
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" 
+        					Background="{TemplateBinding Background}">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                         </Border>
                         <ControlTemplate.Triggers>
@@ -51,34 +52,34 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="Image">
+        <Style TargetType="{x:Type Image}">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Stretch" Value="None"/>
         </Style>
-        <Style TargetType="ListBox">
+        <Style TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White"></Setter>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="White"/>
         </Style>
         <Image x:Key="Muted" Source="..\Icons\sound_none.png"/>
         <Image x:Key="Unmuted" Source="..\Icons\sound.png"/>
         <med:ImageConverter x:Key="imageConverter" />
     </UserControl.Resources>
-    <TabControl Name="_uiVideosTabControl">
-        <TabItem Name="_uiVideosList">
-            <Grid Name="_uiMainGrid">
+    <TabControl x:Name="_uiVideosTabControl">
+        <TabItem x:Name="_uiVideosList">
+            <Grid x:Name="_uiMainGrid">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" Name="_uiVideoInfosRow"/>
-                    <RowDefinition Height="25"></RowDefinition>
-                    <RowDefinition Height="350" Name="_uiVideosListRow"/>
-                    <RowDefinition Height="25" Name="_uiInfosRow"/>
+                    <RowDefinition Height="*" x:Name="_uiVideoInfosRow"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="350" x:Name="_uiVideosListRow"/>
+                    <RowDefinition Height="25" x:Name="_uiInfosRow"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="3" Orientation="Horizontal" Background="#33D3D3D3" Name="_uiStatusBar">
-                    <TextBlock VerticalAlignment="Center" x:Name="_uiNumberOfVideos" Text="{Binding Count, Mode=OneWay, StringFormat='Number of videos: 0'}" TextAlignment="Left" Foreground="White" Margin="5,0,10,0"/>
-                    <TextBlock VerticalAlignment="Center" Name="_uiNowPlaying" Foreground="White" Margin="5,0,10,0" Text="Now Playing: "/>
+                <StackPanel Grid.Row="3" Orientation="Horizontal" Background="#33D3D3D3" x:Name="_uiStatusBar">
+                    <TextBlock VerticalAlignment="Center" x:Name="_uiNumberOfVideos" Text="{Binding Count, Mode=OneWay, StringFormat=Number of videos: 0}" TextAlignment="Left" Foreground="White" Margin="5,0,10,0"/>
+                    <TextBlock VerticalAlignment="Center" x:Name="_uiNowPlaying" Foreground="White" Margin="5,0,10,0" Text="Now Playing: "/>
                 </StackPanel>
 
                 <Grid Grid.Row="0" Margin="30"  Background="#CC000000">
@@ -86,21 +87,37 @@
                         <ColumnDefinition Width="600" x:Name="_uiMediaElementColumn"/>
                         <ColumnDefinition Width="*" x:Name="_uiVideoPropertiesColumn"/>
                     </Grid.ColumnDefinitions>
-                    <Image Source="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}" Stretch="Uniform" Name="_uiPreviewImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,20,20,20"/>
-                    <TabControl Grid.Column="1" Name="_uiVideoInfoTabControl">
-                        <TabItem Name="_uiVideoInfoTab">
+                    <Image Source="{Binding PreviewImage, Converter={StaticResource imageConverter}}" Stretch="Uniform" x:Name="_uiPreviewImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,20,20,20"/>
+                    <TabControl Grid.Column="1" x:Name="_uiVideoInfoTabControl">
+                        <TabItem x:Name="_uiVideoInfoTab">
                             <Views:VideoInfo HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </TabItem>
-                        <TabItem Name="_uiEditVideoTab">
+                        <TabItem x:Name="_uiEditVideoTab">
                             <local:EditVideo  HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         </TabItem>
                     </TabControl>
                 </Grid>
-                <Grid Grid.Row="1">
-                    <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" Name="_uiFilterTextBox"/>
-                    <Button x:Name="_uiFilterButton" Content="Filter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Margin="150,0,0,0" Click="_uiFilterButton_Click"/>
-                    <Button Name="_uiPlayAll" Content="Play All" Width="75" Margin="235,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Click="_uiPlayAll_OnClick"/>
-                </Grid>
+                <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Orientation="Horizontal" Visibility="Collapsed" Name="_uiFilterPanel">
+                    <StackPanel>
+                        <Label x:Name="_uiNameFilter" Content="Name:" Style="{StaticResource Label}"/>
+                        <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" x:Name="_uiFilterTextBox"/>
+                        <Label x:Name="_uiTagFilter" Content="Tag:" Style="{StaticResource Label}"/>
+                        <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120" x:Name="_uiTagFilterTextBox"/>
+                        <Label x:Name="_uiCategoryFilter" Content="Category:" Style="{StaticResource Label}"/>
+                        <ComboBox x:Name="_uiCategoryFilterComboBox"></ComboBox>
+                    </StackPanel>
+                    <Button x:Name="_uiFilterButton" Content="Filter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Click="_uiFilterButton_Click"/>
+                    <Button x:Name="_uiClearFilter" Content="Clear filter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Click="_uiClearFilter_OnClick"/>
+                    <Button x:Name="_uiPlayAll" Content="Play All" Width="75" HorizontalAlignment="Left" VerticalAlignment="Center" Click="_uiPlayAll_OnClick"/>
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Center"  Style="{StaticResource Label}">Sort by:</Label>
+                    <ComboBox x:Name="_uiSortComboBox" SelectionChanged="_uiSortComboBox_OnSelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Center" SelectedIndex="0">
+                        <System:String>Category</System:String>
+                        <System:String>Length</System:String>
+                        <System:String>Title</System:String>
+                        <System:String>Newest</System:String>
+                        <System:String>Oldest</System:String>
+                    </ComboBox>
+                </StackPanel>
                 <ListBox x:Name="_uiFilesListBox" Grid.Row="2" SelectionMode="Single" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" IsHitTestVisible="True" IsTextSearchEnabled="False"  Background="#CC000000">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -110,19 +127,19 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical" Margin="10,0,10,0">
-                                <Image Source="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}" Height="300" Width="300"/>
-                                <TextBlock Text="{Binding Path=Title}" VerticalAlignment="Center" Width="300" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontSize="15"/>
+                                <Image Source="{Binding PreviewImage, Converter={StaticResource imageConverter}}" Height="300" Width="300"/>
+                                <TextBlock Text="{Binding Title}" VerticalAlignment="Center" Width="300" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontSize="15"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
 
                 <ListBox x:Name="_uiPlaylist"  ItemsSource="{Binding}" DisplayMemberPath="Title" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.RowSpan="2" TabIndex="0"/>
-                </Grid>
+            </Grid>
         </TabItem>
-        <TabItem Name="_uiVideoPlaying" KeyUp="_uiVideoPlaying_KeyUp" >
+        <TabItem x:Name="_uiVideoPlaying" KeyUp="_uiVideoPlaying_KeyUp" >
             <Grid Visibility="Visible" x:Name="_uiVLCFullScrenGrid" Background="Black">
-                <VLC:VlcControl Name="_VLCcontrol"/>
+                <VLC:VlcControl x:Name="_VLCcontrol"/>
 
                 <Image Source="{Binding VideoSource, ElementName=_VLCcontrol}" Stretch="Uniform"/>
                 <Grid x:Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom" Background="#B23E3E3E" Width="600" Height="50">

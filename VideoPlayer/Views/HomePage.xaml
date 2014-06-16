@@ -7,11 +7,11 @@
              d:DesignHeight="768" d:DesignWidth="1024">
     <UserControl.Resources>
         <Style x:Key="ToolbarStyle" TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="#CC999990"/>
+            <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Width" Value="150"/>
             <Setter Property="Height" Value="60"/>
-            <Setter Property="FontSize" Value="30"/>
-            <!--<Setter Property="FontFamily" Value="Vivaldi"/>-->
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontFamily" Value="Harlow Solid Italic"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Margin" Value="50,0,50,0"/>
             <Setter Property="Foreground" Value="White"/>
@@ -20,7 +20,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Name="border" 
-                            BorderThickness="1"
+                            BorderThickness="0"
                             Padding="4,2" 
                             BorderBrush="DarkGray" 
                             CornerRadius="3" 
@@ -30,9 +30,25 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="BorderBrush" Value="Black" />
+                                <Setter TargetName="border" Property="Background" >
+                                    <Setter.Value>
+                                        <RadialGradientBrush>
+                                            <GradientStop Color="#FFB0B0B0" Offset="0"/>
+                                            <GradientStop Color="Transparent" Offset="1"/>
+                                        </RadialGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="#CC4F4F4F" />
+                                <Setter TargetName="border" Property="Background" >
+                                    <Setter.Value>
+                                        <RadialGradientBrush>
+                                            <GradientStop Color="#FFB0B0B0" Offset="0"/>
+                                            <GradientStop Color="Transparent" Offset="1"/>
+                                        </RadialGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

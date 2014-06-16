@@ -1,4 +1,5 @@
-﻿using Classes;
+﻿using System.Windows.Data;
+using Classes;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -65,6 +66,7 @@ namespace VideoPlayer
             VlcContext.StartupOptions.AddOption("--no-snapshot-preview");
             VlcContext.StartupOptions.AddOption("--no-mouse-events");
             VlcContext.StartupOptions.AddOption("--no-keyboard-events");
+            VlcContext.StartupOptions.AddOption("--disable-screensaver");
             ////VlcContext.StartupOptions.AddOption("--no-skip-frames");
             //VlcContext.StartupOptions.AddOption("--directx-hw-yuv");
             ////VlcContext.StartupOptions.AddOption("--directx-3buffering");
@@ -79,7 +81,7 @@ namespace VideoPlayer
             ////VlcContext.StartupOptions.LogOptions.LogInFilePath = @"D:\videoplayer_vlc.log";
             //// Initialize the VlcContext
             VlcContext.Initialize();
-
+            
             InitializeComponent();
         }
 
@@ -151,8 +153,47 @@ namespace VideoPlayer
                 }
                 else if (e.Key == Key.E)
                 {
-                    this._uiVideoInfoTabControl.SelectedIndex = Keyboard.Modifiers == ModifierKeys.Control ? 0 : 1;
+                    if (Keyboard.Modifiers == ModifierKeys.Control)
+                    {
+                        //ListCollectionView listCollectionView = CollectionViewSource.GetDefaultView(this._uiFilesListBox.Items) as ListCollectionView;
+                        //if(listCollectionView!=null)
+                        //{
+                        //    listCollectionView.Refresh();
+                        //}
+                        //;
+                        this._uiVideoInfoTabControl.SelectedIndex = 0;
+                        this._uiFilesListBox.Items.SortDescriptions.Clear();
+                        this._uiFilesListBox.Items.SortDescriptions.Add(
+                            new SortDescription(this._uiSortComboBox.SelectedItem.ToString(),
+                                ListSortDirection.Ascending));
+                        this._uiFilesListBox.Items.SortDescriptions.Add(
+                            new SortDescription("Title",
+                                ListSortDirection.Ascending));
+                        
+                    }
+                    else
+                    {
+                        this._uiVideoInfoTabControl.SelectedIndex = 1;
+                    }
                     e.Handled = true;
+                }
+                else if (e.Key == Key.F && Keyboard.Modifiers == ModifierKeys.Control)
+                {
+                    if (this._uiFilterPanel.Visibility == Visibility.Collapsed)
+                    {
+                        ObservableCollection<Video> videos = this.DataContext as ObservableCollection<Video>;
+                        if (videos != null)
+                        {
+                            var categories =
+                                videos.Select(v => v.Category).Distinct().OrderBy(v => v);
+                            this._uiCategoryFilterComboBox.ItemsSource = categories;
+                        }
+                        this._uiFilterPanel.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        this._uiFilterPanel.Visibility = Visibility.Collapsed;
+                    }
                 }
             }
         }
@@ -333,20 +374,31 @@ namespace VideoPlayer
 
         private void _VLCcontrol_SnapshotTaken(VlcControl sender, VlcEventArgs<string> e)
         {
-            String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.NowPlaying.Title + ".jpg");
-            if (File.Exists(imgPath))
+            try
             {
-                System.Drawing.Image img = new Bitmap(imgPath);
-                this.NowPlaying.PreviewImage = img;
-                img.Dispose();
-                File.Delete(imgPath);
+
+                String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.NowPlaying.Title + ".jpg");
+                if (File.Exists(imgPath))
+                {
+                    System.Drawing.Image img = new Bitmap(imgPath);
+                    this.NowPlaying.PreviewImage = img;
+                    img.Dispose();
+                    File.Delete(imgPath);
+                }
+                this._VLCcontrol.SnapshotTaken -= _VLCcontrol_SnapshotTaken;
             }
-            this._VLCcontrol.SnapshotTaken -= _VLCcontrol_SnapshotTaken;
+            catch (Exception ex)
+            {
+                this._logger.ErrorFormat(ex.Message);
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this._uiFilesListBox.Items.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
+            this._uiFilesListBox.Items.SortDescriptions.Add(new SortDescription(this._uiSortComboBox.SelectedItem.ToString(), ListSortDirection.Ascending));
+            this._uiFilesListBox.Items.SortDescriptions.Add(
+                new SortDescription("Title",
+                    ListSortDirection.Ascending));
             this._timer.Interval = 1000;
             this._timer.Tick += timer_Tick;
             this._VLCcontrol.PositionChanged += _VLCcontrol_PositionChanged;
@@ -470,8 +522,42 @@ namespace VideoPlayer
 
         private bool Filter(Object item)
         {
-            Video video = item as Video;
-            return video.Title.ToLower().Contains(this._uiFilterTextBox.Text);
+            Boolean result = false;
+            try
+            {
+                Video video = item as Video;
+                var isNameOk = video.Title.ToLower().Contains(this._uiFilterTextBox.Text);
+                var tagFilter = this._uiTagFilterTextBox.Text.ToLower();
+                Boolean isTagOk = false;
+                if (!String.IsNullOrEmpty(tagFilter))
+                {
+                    var filters = tagFilter.Split(new String[] {";"}, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var filter in filters)
+                    {
+                        isTagOk = isTagOk || video.Tags.Any(t => t.Value.ToLower().Contains(filter));
+                    }
+                }
+                else
+                {
+                    isTagOk = true;
+                }
+                var categoryFilter = this._uiCategoryFilterComboBox.SelectedItem.ToString().ToLower();
+                Boolean isCategoryOk = false;
+                if (!String.IsNullOrEmpty(categoryFilter) && !String.IsNullOrEmpty(video.Category))
+                {
+                    isCategoryOk = video.Category.ToLower() == categoryFilter;
+                }
+                else
+                {
+                    isCategoryOk = true;
+                }
+                result = isNameOk && isTagOk && isCategoryOk;
+            }
+            catch (Exception e)
+            {
+                this._logger.ErrorFormat(e.Message);
+            }
+            return result;
         }
 
         private void _uiPlayAll_OnClick(object sender, RoutedEventArgs e)
@@ -491,6 +577,27 @@ namespace VideoPlayer
                     e.Handled = true;
                 }
 
+        }
+
+        private void _uiSortComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this._uiFilesListBox != null)
+            {
+                this._uiFilesListBox.Items.SortDescriptions.Clear();
+                this._uiFilesListBox.Items.SortDescriptions.Add(
+                    new SortDescription(this._uiSortComboBox.SelectedItem.ToString(), ListSortDirection.Ascending));
+            }
+        }
+
+        private void _uiClearFilter_OnClick(object sender, RoutedEventArgs e)
+        {
+            ICollectionView view = this._uiFilesListBox.Items;
+            view.Filter = this.TrueFilter;
+        }
+
+        private Boolean TrueFilter(Object item)
+        {
+            return true;
         }
     }
 }

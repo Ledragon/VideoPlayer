@@ -22,18 +22,45 @@
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="White"></Setter>
         </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="Black"></Setter>
+            <Setter Property="ColumnWidth" Value="*"></Setter>
+        </Style>
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="Black"></Setter>
+            <Setter Property="Foreground" Value="White"></Setter>
+        </Style>
     </UserControl.Resources>
     <Grid>
-        <Label Style="{StaticResource Label}" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <Label Style="{StaticResource ValueLabel}"  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Margin="80,0,20,0" Content="{Binding Title}"  Name="_uiTitleLabel"/>
-        <Label Style="{StaticResource Label}" Content="Duration:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0"/>
-        <Label Style="{StaticResource ValueLabel}"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,25,20,0" Content="{Binding Length}" ContentStringFormat="HH:mm:ss"/>
-        <Label Style="{StaticResource Label}" Content="Rating:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,50,0,0"/>
-        <Label Style="{StaticResource Label}"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,50,20,0" Content="{Binding Rating}"/>
-        <Label Style="{StaticResource Label}" Content="Views:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,75,0,0"/>
-        <Label Style="{StaticResource ValueLabel}"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,75,20,0" Content="{Binding NumberOfViews}"/>
-        <Label Style="{StaticResource Label}" Content="Date added:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,100,0,0"/>
-        <Label Style="{StaticResource ValueLabel}"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="80,100,20,0" Content="{Binding DateAdded}" ContentStringFormat="dd/MM/yyy HH:mm"/>
-        <Label Style="{StaticResource Label}" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,125,0,0"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Label}" Content="Title:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueLabel}"  VerticalAlignment="Top" HorizontalAlignment="Stretch"  Content="{Binding Title}"  Name="_uiTitleLabel"/>
+        <Label Grid.Row="1" Grid.Column="0"  Style="{StaticResource Label}" Content="Duration:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Grid.Row="1" Grid.Column="1"  Style="{StaticResource ValueLabel}"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Content="{Binding Length}" ContentStringFormat="HH:mm:ss"/>
+        <Label Grid.Row="2" Grid.Column="0"  Style="{StaticResource Label}" Content="Rating:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Grid.Row="2" Grid.Column="1"  Style="{StaticResource Label}"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Content="{Binding Rating}"/>
+        <Label Grid.Row="3" Grid.Column="0"  Style="{StaticResource Label}" Content="Views:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Grid.Row="3" Grid.Column="1"  Style="{StaticResource ValueLabel}"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Content="{Binding NumberOfViews}"/>
+        <Label Grid.Row="4" Grid.Column="0"  Style="{StaticResource Label}" Content="Date added:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Grid.Row="4" Grid.Column="1"  Style="{StaticResource ValueLabel}"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Content="{Binding DateAdded}" ContentStringFormat="dd/MM/yyy HH:mm"/>
+        <Label Grid.Row="5" Grid.Column="0"  Style="{StaticResource Label}" Content="Category:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label Grid.Row="5" Grid.Column="1"  Style="{StaticResource ValueLabel}"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Content="{Binding Category}" ContentStringFormat="dd/MM/yyy HH:mm"/>
+        <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource Label}" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <DataGrid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Tags}" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+            
+        </DataGrid>
     </Grid>
 </UserControl>

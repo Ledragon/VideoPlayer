@@ -22,3 +22,7 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsT
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Controllers.pdb
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\log4net.dll
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\log4net.xml
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.pdb

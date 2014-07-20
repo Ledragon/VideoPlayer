@@ -33,6 +33,7 @@ namespace VideoPlayer
         private Boolean _isPositionChanging;
         private readonly ObservableCollection<Video> _currentPlayList = new ObservableCollection<Video>();
         private readonly ILog _logger;
+        private Boolean _isPlaylist;
 
         private Video NowPlaying
         {
@@ -123,6 +124,7 @@ namespace VideoPlayer
                 }
                 else if (e.Key == Key.P)
                 {
+                    this._isPlaylist = true;
                     this.PlaySelectedVideo(false);
                     //this.playlistPosition = 0;
                     e.Handled = true;
@@ -366,8 +368,17 @@ namespace VideoPlayer
 
         private void _VLCcontrol_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-            this.StopVideoPlaying();
-            this._VLCcontrol.EndReached -= _VLCcontrol_EndReached;
+            if (!this._isPlaylist)
+            {
+                this.StopVideoPlaying();
+                this._VLCcontrol.EndReached -= _VLCcontrol_EndReached;
+            }
+            else
+            {
+                this._VLCcontrol.Next();
+                //this.NowPlaying = this._VLCcontrol.Media
+                this.UpdateInfos();
+            }
 
             // TODO gerer la fin d'une video selon qu'on est en playlist ou pas
         }
@@ -453,15 +464,16 @@ namespace VideoPlayer
                     this._logger.InfoFormat("Added as media {0}", video.Title);
                     this._currentPlayList.Clear();
                     this._currentPlayList.Add(video);
-                    this._VLCcontrol.EndReached += _VLCcontrol_EndReached;
                     if (this._VLCcontrol.Media.Duration == TimeSpan.Zero)
                     {
                         this._VLCcontrol.Media.DurationChanged += Media_DurationChanged;
                     }
+                    this._isPlaylist = false;
                 }
                 else
                 {
                 }
+                    this._VLCcontrol.EndReached += _VLCcontrol_EndReached;
                 this._VLCcontrol.Play();
                 this.UpdateInfos();
                 this.SwitchToFullScreen();
@@ -584,9 +596,28 @@ namespace VideoPlayer
             if (this._uiFilesListBox != null)
             {
                 this._uiFilesListBox.Items.SortDescriptions.Clear();
-                this._uiFilesListBox.Items.SortDescriptions.Add(
-                    new SortDescription(this._uiSortComboBox.SelectedItem.ToString(), ListSortDirection.Ascending));
+                var sortDescription = this.SortDescription();
+                this._uiFilesListBox.Items.SortDescriptions.Add(sortDescription);
             }
+        }
+
+        private SortDescription SortDescription()
+        {
+            SortDescription sortDescription;
+            if (this._uiSortComboBox.SelectedItem.ToString() == "Newest")
+            {
+                sortDescription= new SortDescription("DateAdded", ListSortDirection.Descending);
+            }
+            else if (this._uiSortComboBox.SelectedItem.ToString() == "Oldest")
+            {
+                sortDescription = new SortDescription("DateAdded", ListSortDirection.Ascending);
+            }
+            else
+            {
+                sortDescription = new SortDescription(this._uiSortComboBox.SelectedItem.ToString(),
+                    ListSortDirection.Ascending);
+            }
+            return sortDescription;
         }
 
         private void _uiClearFilter_OnClick(object sender, RoutedEventArgs e)

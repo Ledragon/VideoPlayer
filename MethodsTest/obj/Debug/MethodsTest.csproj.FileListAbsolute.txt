@@ -26,3 +26,13 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsT
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.dll
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\VideoPlayer.Helpers.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\VideoPlayer.Helpers.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\VideoPlayer.Database.Repository.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Log.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\VideoPlayer.Database.Repository.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Log.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\VideoPlayer.Bootstrapper.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.Practices.Unity.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\VideoPlayer.Bootstrapper.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.Practices.Unity.xml

@@ -13,6 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolLib", "..\CSharp\ToolLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Log\Log.csproj", "{02C8E3B1-3796-49B2-ABA2-67D0E8644871}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Database.Repository", "VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj", "{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Helpers", "VideoPlayer.Helpers\VideoPlayer.Helpers.csproj", "{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{AB865795-450F-4980-B7C9-238E49C2D5E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Bootstrapper", "VideoPlayer.Bootstrapper\VideoPlayer.Bootstrapper.csproj", "{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,9 +51,27 @@ Global
 		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF} = {AB865795-450F-4980-B7C9-238E49C2D5E0}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

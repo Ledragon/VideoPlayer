@@ -7,42 +7,33 @@ using System.Windows;
 using System.Windows.Threading;
 using Classes;
 using Controllers;
-using log4net;
+using Log;
 
 namespace VideoPlayer.ViewModels
 {
     internal class ViewModel
     {
-        private readonly ObservableCollection<Video> _videos;
-        private readonly ObservableCollection<Directory> _directories;
         private readonly Controller _controller;
         private Dispatcher _dispatcher;
-        private readonly ObjectsWrapper _wrapper;
-        private readonly ILog _logger;
+        private ObjectsWrapper _wrapper;
 
         public ViewModel()
         {
-            this._logger = LogManager.GetLogger(typeof(ViewModel));
-            _videos = new ObservableCollection<Video>();
-            _directories = new ObservableCollection<Directory>();
-            _controller = new Controller();
-            this._logger.Info("Decoding file.");
-            this._wrapper = this._controller.GetObjectsFromFile();
-            if (this._wrapper != null)
-            {
-                this._videos = this._wrapper.Videos;
-                this._directories = this._wrapper.Directories;
-            }
-            else
-            {
-                this._wrapper = new ObjectsWrapper
-                {
-                    Videos = this._videos,
-                    Directories = this._directories
-                };
+            this._controller = new Controller();
+            this.LoadFile();
+        }
 
-            }
-            this._logger.Info("File decoded.");
+        public ObservableCollection<Video> VideoCollection { get; private set; }
+
+        public ObservableCollection<Directory> DirectoryCollection { get; private set; }
+
+        private void LoadFile()
+        {
+            this.Logger().Info("Decoding file.");
+            this._wrapper = this._controller.GetObjectsFromFile();
+            this.VideoCollection = this._wrapper.Videos;
+            this.DirectoryCollection = this._wrapper.Directories;
+            this.Logger().Info("File decoded.");
         }
 
         public void Save()
@@ -50,48 +41,33 @@ namespace VideoPlayer.ViewModels
             this._controller.Save(this._wrapper);
         }
 
-        public ObservableCollection<Video> VideoCollection
-        {
-            get
-            {
-                return this._videos;
-            }
-        }
-
-        public ObservableCollection<Directory> DirectoryCollection
-        {
-            get
-            {
-                return this._directories;
-            }
-        }
-
         public void Clean()
         {
-            this._logger.Info("Cleaning files");
-            var existingFiles = this._directories.SelectMany(directory => this._controller.GetVideoFiles(directory)).ToList();
-            var videosToRemove = this._videos.Select(t => t.FileName).Except(existingFiles).ToList();
-            foreach (var file in videosToRemove)
+            this.Logger().Info("Cleaning files");
+            List<string> existingFiles =
+                this.DirectoryCollection.SelectMany(directory => this._controller.GetVideoFiles(directory)).ToList();
+            List<string> videosToRemove = this.VideoCollection.Select(t => t.FileName).Except(existingFiles).ToList();
+            foreach (string file in videosToRemove)
             {
-                foreach (var video in this._videos)
+                foreach (Video video in this.VideoCollection)
                 {
                     if (video.FileName == file)
                     {
-                        this._videos.Remove(video);
-                        this._logger.InfoFormat("File {0} removed.", video.FileName);
+                        this.VideoCollection.Remove(video);
+                        this.Logger().InfoFormat("File {0} removed.", video.FileName);
                         break;
                     }
                 }
             }
-            this._logger.Info("Files cleaned.");
+            this.Logger().Info("Files cleaned.");
         }
 
         public void Load(Dispatcher dispatcher)
         {
             this._dispatcher = dispatcher;
-            BackgroundWorker backgroundWorkerLoad = new BackgroundWorker();
+            var backgroundWorkerLoad = new BackgroundWorker();
             backgroundWorkerLoad.DoWork += this.backgroundWorkerLoad_DoWork;
-            backgroundWorkerLoad.RunWorkerCompleted += backgroundWorkerLoad_RunWorkerCompleted;
+            backgroundWorkerLoad.RunWorkerCompleted += this.backgroundWorkerLoad_RunWorkerCompleted;
             backgroundWorkerLoad.RunWorkerAsync();
         }
 
@@ -105,23 +81,23 @@ namespace VideoPlayer.ViewModels
         //private void UpdateStatus()
         //{
         //    this._uiCurrentOperationStatusBarItem.Content = "Ready";
-            
+
         //}
 
         private void backgroundWorkerLoad_DoWork(object sender, DoWorkEventArgs e)
         {
-            Action<Video> addMethod = video => this._videos.Add(video);
-            Video[] tmpList = this._videos.ToArray();
-            var categories = tmpList.Select(v => v.Category).OrderBy(c => c).ToList();
-            foreach (var directory in this._directories)
+            Action<Video> addMethod = video => this.VideoCollection.Add(video);
+            Video[] tmpList = this.VideoCollection.ToArray();
+            List<string> categories = tmpList.Select(v => v.Category).OrderBy(c => c).ToList();
+            foreach (Directory directory in this.DirectoryCollection)
             {
-                var files = this._controller.GetVideoFiles(directory);
+                List<string> files = this._controller.GetVideoFiles(directory);
                 foreach (String videoFile in files)
                 {
                     if (tmpList.All(s => s.FileName != videoFile))
                     {
-                        Video newVideo = new Video(videoFile);
-                        var firstCategory = categories.FirstOrDefault(c => newVideo.Title.Contains(c));
+                        var newVideo = new Video(videoFile);
+                        string firstCategory = categories.FirstOrDefault(c => newVideo.Title.Contains(c));
                         if (firstCategory != null)
                         {
                             newVideo.Category = firstCategory;
@@ -129,11 +105,10 @@ namespace VideoPlayer.ViewModels
                         // cross-thread
                         this._dispatcher.BeginInvoke(addMethod, newVideo);
                         newVideo.DateAdded = DateTime.Now;
-                        this._logger.InfoFormat("File {0} added.", newVideo.FileName);
+                        this.Logger().InfoFormat("File {0} added.", newVideo.FileName);
                     }
                 }
             }
         }
-
     }
 }

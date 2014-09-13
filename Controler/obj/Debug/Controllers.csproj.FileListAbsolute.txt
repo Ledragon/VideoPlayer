@@ -14,3 +14,11 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controle
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\Microsoft.WindowsAPICodePack.dll
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\Microsoft.WindowsAPICodePack.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\VideoPlayer.Helpers.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\VideoPlayer.Helpers.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\VideoPlayer.Database.Repository.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\VideoPlayer.Database.Repository.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\VideoPlayer.Bootstrapper.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\Microsoft.Practices.Unity.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\VideoPlayer.Bootstrapper.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Controler\bin\Debug\Microsoft.Practices.Unity.xml

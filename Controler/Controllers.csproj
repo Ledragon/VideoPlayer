@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Controllers</RootNamespace>
     <AssemblyName>Controllers</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -57,6 +59,18 @@
     <ProjectReference Include="..\Log\Log.csproj">
       <Project>{02c8e3b1-3796-49b2-aba2-67d0e8644871}</Project>
       <Name>Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Bootstrapper\VideoPlayer.Bootstrapper.csproj">
+      <Project>{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}</Project>
+      <Name>VideoPlayer.Bootstrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj">
+      <Project>{a5db04f0-1dff-4533-8c49-ee4f1519b5ff}</Project>
+      <Name>VideoPlayer.Database.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Helpers\VideoPlayer.Helpers.csproj">
+      <Project>{2b1b69bb-fff7-4dd6-967b-ca5180ebee85}</Project>
+      <Name>VideoPlayer.Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace VideoPlayer
@@ -96,6 +97,12 @@ namespace VideoPlayer
         private void _uiCleanButton_Click(object sender, RoutedEventArgs e)
         {
             this.RaiseCleanClickEvent();
+        }
+
+        private void UiExportButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = ((((this.Parent as TabItem).Parent as TabControl).Parent as Grid).Parent as MainWindow);
+            InfoExporter.ExportImageResolutions(mainWindow.Videos.OrderByDescending(v=>v.PreviewImage.Width));
         }
     }
 }

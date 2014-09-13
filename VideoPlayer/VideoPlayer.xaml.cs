@@ -1,55 +1,59 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Controllers;
-using VideoPlayer.ViewModels;
-using Path = System.IO.Path;
 using Classes;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using Log;
+using VideoPlayer.Helpers;
+using VideoPlayer.ViewModels;
+using Directory = Classes.Directory;
 
 namespace VideoPlayer
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
-        private ViewModel _viewModel;
-        private ObservableCollection<Video> _videos;
         private ObservableCollection<Directory> _directories;
-        readonly Controller _controller = new Controller();
+        private ObservableCollection<Video> _videos;
+        private ViewModel _viewModel;
 
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        public ObservableCollection<Video> Videos
         {
-            this._uiVideosView.DataContext = this._videos;
+            get { return this._videos; }
+        }
+
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this._uiVideosView.VideoCollection = this._videos;
             this._uiSettingsView.Directories = this._directories;
             this._uiSettingsView.DataContext = this._directories;
-            //this._uiCurrentOperationStatusBarItem.Content = "Ready";
-
         }
 
-        void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            ViewModel viewModel = new ViewModel();
+            var viewModel = new ViewModel();
             this._viewModel = viewModel;
             this._videos = viewModel.VideoCollection;
             this._directories = viewModel.DirectoryCollection;
         }
-        
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            new LoggingSystemManager().SetPath(Path.Combine(FileSystemHelper.GetDefaultFolder(), "Log.txt"));
+            Bootstrapper.Bootstrapper.BuildContainer();
+            var backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += this.backgroundWorker_DoWork;
-            backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
+            backgroundWorker.RunWorkerCompleted += this.backgroundWorker_RunWorkerCompleted;
             backgroundWorker.RunWorkerAsync();
-            new LoggingSystemManager().SetPath(Path.Combine(this._controller.GetDefaultFolder(), "Log.txt"));
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -65,7 +69,6 @@ namespace VideoPlayer
                 {
                     this._uiTabs.SelectedItem = this._uiHomeTab;
                     e.Handled = true;
-
                 }
                 else if (e.Key == Key.Return && Keyboard.Modifiers == ModifierKeys.Alt)
                 {
@@ -89,7 +92,7 @@ namespace VideoPlayer
         {
             this._viewModel.Save();
         }
-        
+
         private void _uiHomePage_VideoClick(object sender, RoutedEventArgs e)
         {
             this._uiTabs.SelectedItem = this._uiVideoTab;

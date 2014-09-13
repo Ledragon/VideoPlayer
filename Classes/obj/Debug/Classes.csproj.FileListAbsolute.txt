@@ -8,3 +8,7 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\Microsoft.WindowsAPICodePack.pdb
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\log4net.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\log4net.xml
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\Log.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\Classes\bin\Debug\Log.pdb

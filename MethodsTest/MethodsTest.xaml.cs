@@ -20,7 +20,7 @@ namespace MethodsTest
             set { this._videosCount = value;} 
         }
 
-        readonly Controller _controller = new Controller();
+        //readonly Controller _controller = new Controller();
         public MainWindow()
         {
             InitializeComponent();            
@@ -34,23 +34,23 @@ namespace MethodsTest
             if (args.Length > 1)
             {
 
-                foreach (String fil in this._controller.GetVideoFiles(args[1]))
-                {
-                    Video video = new Video(fil);
-                    this._videos.Add(video);
-                    this.FilesList.Items.Add(video.FileName);
-                    this._uiVideosCount.Text = this._videos.Count.ToString();
-                }
+                //foreach (String fil in this._controller.GetVideoFiles(args[1]))
+                //{
+                //    Video video = new Video(fil);
+                //    this._videos.Add(video);
+                //    this.FilesList.Items.Add(video.FileName);
+                //    this._uiVideosCount.Text = this._videos.Count.ToString();
+                //}
             }
             this._me.LoadedBehavior = MediaState.Manual;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             ObjectsWrapper wrapper = new ObjectsWrapper();
             wrapper.Videos = this._videos;
-            this._controller.Save(filePath, wrapper);
+            //this._controller.Save(filePath, wrapper);
         }
 
         private void _uiPlayButton_Click(object sender, RoutedEventArgs e)

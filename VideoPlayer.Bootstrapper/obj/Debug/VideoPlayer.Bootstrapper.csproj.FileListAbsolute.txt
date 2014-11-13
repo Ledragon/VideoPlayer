@@ -22,3 +22,9 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPla
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Bootstrapper\obj\Debug\VideoPlayer.Bootstrapper.csprojResolveAssemblyReference.cache
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Bootstrapper\obj\Debug\VideoPlayer.Bootstrapper.dll
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Bootstrapper\obj\Debug\VideoPlayer.Bootstrapper.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Bootstrapper\bin\Debug\VideoPlayer.Common.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Bootstrapper\bin\Debug\VideoPlayer.Services.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Bootstrapper\bin\Debug\VideoPlayer.Helpers.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Bootstrapper\bin\Debug\VideoPlayer.Common.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Bootstrapper\bin\Debug\VideoPlayer.Services.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Bootstrapper\bin\Debug\VideoPlayer.Helpers.pdb

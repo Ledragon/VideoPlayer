@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -6,7 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Classes;
 using Log;
+using VideoPlayer.Common;
 using VideoPlayer.Helpers;
+using VideoPlayer.Services;
 using VideoPlayer.ViewModels;
 using Directory = Classes.Directory;
 
@@ -26,19 +29,19 @@ namespace VideoPlayer
             this.InitializeComponent();
         }
 
-        public ObservableCollection<Video> Videos
-        {
-            get { return this._videos; }
-        }
+        //public ObservableCollection<Video> Videos
+        //{
+        //    get { return this._videos; }
+        //}
 
-        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void backgroundWorker_RunWorkerCompleted(Object sender, RunWorkerCompletedEventArgs e)
         {
             this._uiVideosView.VideoCollection = this._videos;
             this._uiSettingsView.Directories = this._directories;
             this._uiSettingsView.DataContext = this._directories;
         }
 
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void backgroundWorker_DoWork(Object sender, DoWorkEventArgs e)
         {
             var viewModel = new ViewModel();
             this._viewModel = viewModel;
@@ -46,9 +49,9 @@ namespace VideoPlayer
             this._directories = viewModel.DirectoryCollection;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(Object sender, RoutedEventArgs e)
         {
-            new LoggingSystemManager().SetPath(Path.Combine(FileSystemHelper.GetDefaultFolder(), "Log.txt"));
+            new LoggingSystemManager().SetPath(Path.Combine(FileSystemHelper.GetDefaultFolder(), "VideoPlayer.log"));
             Bootstrapper.Bootstrapper.BuildContainer();
             var backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += this.backgroundWorker_DoWork;
@@ -56,7 +59,7 @@ namespace VideoPlayer
             backgroundWorker.RunWorkerAsync();
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Window_KeyDown(Object sender, KeyEventArgs e)
         {
             if (!(e.OriginalSource is TextBox))
             {
@@ -88,22 +91,23 @@ namespace VideoPlayer
             }
         }
 
-        private void Window_Closing(object sender, CancelEventArgs e)
+        private void Window_Closing(Object sender, CancelEventArgs e)
         {
             this._viewModel.Save();
         }
 
-        private void _uiHomePage_VideoClick(object sender, RoutedEventArgs e)
+        private void _uiHomePage_VideoClick(Object sender, RoutedEventArgs e)
         {
             this._uiTabs.SelectedItem = this._uiVideoTab;
         }
 
-        private void _uiHomePage_CleanClick(object sender, RoutedEventArgs e)
+        private void _uiHomePage_CleanClick(Object sender, RoutedEventArgs e)
         {
-            this._viewModel.Clean();
+            ILibraryService libraryService = DependencyFactory.Resolve<ILibraryService>();
+            libraryService.Clean(this._directories, this._videos);
         }
 
-        private void _uiHomePage_SettingsClick(object sender, RoutedEventArgs e)
+        private void _uiHomePage_SettingsClick(Object sender, RoutedEventArgs e)
         {
             this._uiTabs.SelectedItem = this._uiSettingsTab;
             //if (this._uiSettingsTab.Content == null)
@@ -118,7 +122,7 @@ namespace VideoPlayer
             //}
         }
 
-        private void _uiHomePage_LoadClick(object sender, RoutedEventArgs e)
+        private void _uiHomePage_LoadClick(Object sender, RoutedEventArgs e)
         {
             this._viewModel.Load(this.Dispatcher);
         }

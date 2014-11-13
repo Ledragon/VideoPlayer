@@ -70,7 +70,7 @@
             <Button Content="Videos" Style="{StaticResource ToolbarStyle}" x:Name="_uiVideosButton" Click="_uiVideosButton_Click" TabIndex="1" IsDefault="True"/>
             <Button Content="Load" Style="{StaticResource ToolbarStyle}" x:Name="_uiLoadButton" Click="_uiLoadButton_Click" TabIndex="3"/>
             <Button Content="Clean" Style="{StaticResource ToolbarStyle}" x:Name="_uiCleanButton" Click="_uiCleanButton_Click" TabIndex="4"/>
-            <Button Content="Export" Style="{StaticResource ToolbarStyle}" x:Name="UiExportButton" Click="UiExportButton_OnClick" TabIndex="4" Visibility="Collapsed"/>
+            <!--<Button Content="Export" Style="{StaticResource ToolbarStyle}" x:Name="UiExportButton" Click="UiExportButton_OnClick" TabIndex="4" Visibility="Collapsed"/>-->
         </StackPanel>
     </Grid>
 </UserControl>

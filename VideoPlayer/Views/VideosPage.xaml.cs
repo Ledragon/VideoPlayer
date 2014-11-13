@@ -752,5 +752,6 @@ namespace VideoPlayer
             }
             this.PlaySelectedVideo(false);
         }
+
     }
 }

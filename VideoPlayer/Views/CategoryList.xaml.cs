@@ -13,9 +13,13 @@ namespace VideoPlayer.Views
     /// </summary>
     public partial class CategoryList : UserControl
     {
+        private CategoryListViewModel _viewModel;
+
         public CategoryList()
         {
             this.InitializeComponent();
+            this._viewModel = new CategoryListViewModel();
+            this.DataContext = this._viewModel;
         }
 
         private void CategoriesListboxItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -23,11 +27,11 @@ namespace VideoPlayer.Views
         }
 
 
-        private void Filter(ICollectionView view, CategoryListViewModel categoryListViewModel)
+        private void Filter(ICollectionView view, CategoryViewModel categoryViewModel)
         {
             if (view != null)
             {
-                if (categoryListViewModel.Name == "All")
+                if (categoryViewModel.Name == "All")
                 {
                     view.Filter = this.TrueFilter;
                 }
@@ -49,7 +53,7 @@ namespace VideoPlayer.Views
             try
             {
                 var video = item as Video;
-                var categoryListViewModel = this.UiCategoriesListBox.SelectedItem as CategoryListViewModel;
+                var categoryListViewModel = this.UiCategoriesListBox.SelectedItem as CategoryViewModel;
                 if (video != null && categoryListViewModel != null)
                 {
                     String category = categoryListViewModel.Name;

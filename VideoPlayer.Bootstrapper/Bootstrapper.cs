@@ -1,5 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
+using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
+using VideoPlayer.Services;
 
 namespace VideoPlayer.Bootstrapper
 {
@@ -15,6 +17,7 @@ namespace VideoPlayer.Bootstrapper
         private static void RegisterTypes(IUnityContainer container)
         {
             container.RegisterType<IVideoRepository, FileVideoRepository>();
+            container.RegisterType<ILibraryService, LibraryService>();
         }
     }
 }

@@ -51,17 +51,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Locator.cs" />
-    <Compile Include="DependencyFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VideoPlayer.Common\VideoPlayer.Common.csproj">
+      <Project>{85D3796A-9536-460E-8FF0-F96ACD68878F}</Project>
+      <Name>VideoPlayer.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj">
       <Project>{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}</Project>
       <Name>VideoPlayer.Database.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Services\VideoPlayer.Services.csproj">
+      <Project>{8c8e56e4-9b91-4ec1-82ca-7ec017e4e43a}</Project>
+      <Name>VideoPlayer.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

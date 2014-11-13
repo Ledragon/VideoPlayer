@@ -26,8 +26,6 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPla
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\obj\Debug\VideoPlayer.Properties.Resources.resources
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\obj\Debug\VideoPlayer.csproj.GenerateResource.Cache
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\obj\Debug\VideoPlayer.exe
-C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\bin\Debug\Controllers.dll
-C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\bin\Debug\Controllers.pdb
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\bin\Debug\log4net.dll
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\bin\Debug\log4net.xml
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\obj\Debug\Views\DirectoryBrowser.baml
@@ -65,3 +63,7 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPla
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\bin\Debug\Microsoft.Practices.Unity.xml
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\obj\Debug\Views\CategoryList.baml
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\obj\Debug\Views\CategoryList.g.cs
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\bin\Debug\VideoPlayer.Common.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\bin\Debug\VideoPlayer.Services.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\bin\Debug\VideoPlayer.Common.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\bin\Debug\VideoPlayer.Services.pdb

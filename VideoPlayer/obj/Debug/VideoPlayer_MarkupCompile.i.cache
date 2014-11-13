@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer\App.xaml
-81048487142
+10-793049327
 
-19-389763277
-32395072303
-Views\DirectoryBrowser.xaml;Views\EditVideo.xaml;Views\HomePage.xaml;Views\PlayerControls.xaml;Views\SettingsPage.xaml;VideoPlayer.xaml;Views\VideoInfo.xaml;Views\VideosPage.xaml;
+291715118464
+351273723949
+Views\CategoryList.xaml;Views\DirectoryBrowser.xaml;Views\EditVideo.xaml;Views\FilterPanel.xaml;Views\HomePage.xaml;Views\PlayerControls.xaml;Views\SettingsPage.xaml;VideoPlayer.xaml;Views\VideoInfo.xaml;Views\VideosPage.xaml;
 
 False
 

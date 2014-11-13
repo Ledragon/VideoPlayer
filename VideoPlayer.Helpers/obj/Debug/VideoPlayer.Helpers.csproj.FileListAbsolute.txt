@@ -3,3 +3,7 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPla
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Helpers\obj\Debug\VideoPlayer.Helpers.csprojResolveAssemblyReference.cache
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Helpers\obj\Debug\VideoPlayer.Helpers.dll
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Helpers\obj\Debug\VideoPlayer.Helpers.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Helpers\bin\Debug\Log.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Helpers\bin\Debug\log4net.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Helpers\bin\Debug\Log.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\VideoPlayer.Helpers\bin\Debug\log4net.xml

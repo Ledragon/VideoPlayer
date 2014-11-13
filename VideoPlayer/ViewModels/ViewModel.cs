@@ -6,20 +6,22 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
 using Classes;
-using Controllers;
 using Log;
+using VideoPlayer.Common;
+using VideoPlayer.Helpers;
+using VideoPlayer.Services;
 
 namespace VideoPlayer.ViewModels
 {
     internal class ViewModel
     {
-        private readonly Controller _controller;
+        //private readonly Controller _controller;
         private Dispatcher _dispatcher;
         private ObjectsWrapper _wrapper;
 
         public ViewModel()
         {
-            this._controller = new Controller();
+            //this._controller = new Controller();
             this.LoadFile();
         }
 
@@ -30,7 +32,8 @@ namespace VideoPlayer.ViewModels
         private void LoadFile()
         {
             this.Logger().Info("Decoding file.");
-            this._wrapper = this._controller.GetObjectsFromFile();
+            var libraryService = DependencyFactory.Resolve<ILibraryService>();
+            this._wrapper = libraryService.GetObjectsFromFile();
             this.VideoCollection = this._wrapper.Videos;
             this.DirectoryCollection = this._wrapper.Directories;
             this.Logger().Info("File decoded.");
@@ -38,29 +41,32 @@ namespace VideoPlayer.ViewModels
 
         public void Save()
         {
-            this._controller.Save(this._wrapper);
+            var libraryService = DependencyFactory.Resolve<ILibraryService>();
+            libraryService.Save(this._wrapper);
         }
 
-        public void Clean()
-        {
-            this.Logger().Info("Cleaning files");
-            List<string> existingFiles =
-                this.DirectoryCollection.SelectMany(directory => this._controller.GetVideoFiles(directory)).ToList();
-            List<string> videosToRemove = this.VideoCollection.Select(t => t.FileName).Except(existingFiles).ToList();
-            foreach (string file in videosToRemove)
-            {
-                foreach (Video video in this.VideoCollection)
-                {
-                    if (video.FileName == file)
-                    {
-                        this.VideoCollection.Remove(video);
-                        this.Logger().InfoFormat("File {0} removed.", video.FileName);
-                        break;
-                    }
-                }
-            }
-            this.Logger().Info("Files cleaned.");
-        }
+        //public void Clean()
+        //{
+        //    var libraryService = DependencyFactory.Resolve<ILibraryService>();
+        //    libraryService.Clean(this.DirectoryCollection, this.VideoCollection);
+        //    //this.Logger().Info("Cleaning files");
+        //    //List<string> existingFiles =
+        //    //    this.DirectoryCollection.SelectMany(d=>DirectoryHelper.GetVideoFiles(d.DirectoryPath, d.IsIncludeSubdirectories)).ToList();
+        //    //List<string> videosToRemove = this.VideoCollection.Select(t => t.FileName).Except(existingFiles).ToList();
+        //    //foreach (string file in videosToRemove)
+        //    //{
+        //    //    foreach (Video video in this.VideoCollection)
+        //    //    {
+        //    //        if (video.FileName == file)
+        //    //        {
+        //    //            this.VideoCollection.Remove(video);
+        //    //            this.Logger().InfoFormat("File {0} removed.", video.FileName);
+        //    //            break;
+        //    //        }
+        //    //    }
+        //    //}
+        //    //this.Logger().Info("Files cleaned.");
+        //}
 
         public void Load(Dispatcher dispatcher)
         {
@@ -91,7 +97,7 @@ namespace VideoPlayer.ViewModels
             List<string> categories = tmpList.Select(v => v.Category).OrderBy(c => c).ToList();
             foreach (Directory directory in this.DirectoryCollection)
             {
-                List<string> files = this._controller.GetVideoFiles(directory);
+                List<string> files = DirectoryHelper.GetVideoFiles(directory.DirectoryPath, directory.IsIncludeSubdirectories);
                 foreach (String videoFile in files)
                 {
                     if (tmpList.All(s => s.FileName != videoFile))
@@ -105,7 +111,7 @@ namespace VideoPlayer.ViewModels
                         // cross-thread
                         this._dispatcher.BeginInvoke(addMethod, newVideo);
                         newVideo.DateAdded = DateTime.Now;
-                        this.Logger().InfoFormat("File {0} added.", newVideo.FileName);
+                        this.Logger().DebugFormat("File '{0}' added.", newVideo.FileName);
                     }
                 }
             }

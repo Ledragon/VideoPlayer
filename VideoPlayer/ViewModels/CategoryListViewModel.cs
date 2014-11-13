@@ -1,10 +1,9 @@
-﻿using System;
+﻿using System.Collections.ObjectModel;
 
 namespace VideoPlayer.ViewModels
 {
     public class CategoryListViewModel
     {
-        public String Name { get; set; }
-        public Int32 Count { get; set; }
+        public ObservableCollection<CategoryViewModel> CategoryViewModels { get; set; } 
     }
 }

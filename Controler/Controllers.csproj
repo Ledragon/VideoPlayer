@@ -64,6 +64,10 @@
       <Project>{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}</Project>
       <Name>VideoPlayer.Bootstrapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Common\VideoPlayer.Common.csproj">
+      <Project>{85D3796A-9536-460E-8FF0-F96ACD68878F}</Project>
+      <Name>VideoPlayer.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj">
       <Project>{a5db04f0-1dff-4533-8c49-ee4f1519b5ff}</Project>
       <Name>VideoPlayer.Database.Repository</Name>

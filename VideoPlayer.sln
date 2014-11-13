@@ -21,6 +21,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{AB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Bootstrapper", "VideoPlayer.Bootstrapper\VideoPlayer.Bootstrapper.csproj", "{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Services", "VideoPlayer.Services\VideoPlayer.Services.csproj", "{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Common", "VideoPlayer.Common\VideoPlayer.Common.csproj", "{85D3796A-9536-460E-8FF0-F96ACD68878F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85D3796A-9536-460E-8FF0-F96ACD68878F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85D3796A-9536-460E-8FF0-F96ACD68878F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85D3796A-9536-460E-8FF0-F96ACD68878F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85D3796A-9536-460E-8FF0-F96ACD68878F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

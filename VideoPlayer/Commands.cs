@@ -4,10 +4,15 @@ namespace VideoPlayer
 {
     public static class Commands
     {
-        public static RoutedCommand StopCommand = new RoutedCommand();
-        static Commands ()
-        {
-            StopCommand.InputGestures.Add(new KeyGesture(Key.X));
-        }
+        public static readonly RoutedUICommand Exit = new RoutedUICommand
+                       (
+                               "Exit",
+                               "Exit",
+                               typeof(Commands),
+                               new InputGestureCollection()
+                                {
+                                        new KeyGesture(Key.F4, ModifierKeys.Alt)
+                                }
+                       );
     }
 }

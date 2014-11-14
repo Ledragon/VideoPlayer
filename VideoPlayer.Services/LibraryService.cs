@@ -14,11 +14,17 @@ namespace VideoPlayer.Services
 {
     public class LibraryService : ILibraryService
     {
+        // Singleton-like
+        private static ObjectsWrapper _objectsWrapper;
+
         public ObjectsWrapper GetObjectsFromFile()
         {
-            var repository = DependencyFactory.Resolve<IVideoRepository>();
-            ObjectsWrapper objectsFromFile = repository.Load(FileSystemHelper.GetDefaultFileName());
-            return objectsFromFile;
+            if (_objectsWrapper == null)
+            {
+                var repository = DependencyFactory.Resolve<IVideoRepository>();
+                _objectsWrapper = repository.Load(FileSystemHelper.GetDefaultFileName()); 
+            }
+            return _objectsWrapper;
         }
 
         public void Save(ObjectsWrapper wrapper)

@@ -117,12 +117,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands.cs" />
+    <Compile Include="Commands\CommandBase.cs" />
+    <Compile Include="Commands\FilterByCategoryCommand.cs" />
+    <Compile Include="Commands\PlayCommand.cs" />
     <Compile Include="DataProvider.cs" />
     <Compile Include="IKeyHandler.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\CategoryListViewModel.cs" />
+    <Compile Include="ViewModels\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\PlayVideoViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\VLCVM.cs" />
     <Compile Include="Views\CategoryList.xaml.cs">
       <DependentUpon>CategoryList.xaml</DependentUpon>
     </Compile>
@@ -143,6 +149,9 @@
     </Compile>
     <Compile Include="Views\PlayerControls.xaml.cs">
       <DependentUpon>PlayerControls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlayVideo.xaml.cs">
+      <DependentUpon>PlayVideo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VideoInfo.xaml.cs">
       <DependentUpon>VideoInfo.xaml</DependentUpon>
@@ -174,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\PlayerControls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PlayVideo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

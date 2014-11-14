@@ -9,7 +9,7 @@
         <FontFamily x:Key="TextFontFamily">Leelawadee</FontFamily>
     </UserControl.Resources>
     <Grid>
-        <ListBox Width="150" Grid.Column="0" Name="UiCategoriesListBox" ItemsSource="{Binding}" Background="#FF494949" Margin="5" VerticalAlignment="Stretch" UseLayoutRounding="False">
+        <ListBox Width="150" Grid.Column="0" Name="UiCategoriesListBox" ItemsSource="{Binding CategoryViewModels}" SelectedItem="{Binding SelectedCategory}" Background="#FF494949" Margin="5" VerticalAlignment="Stretch" UseLayoutRounding="False">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>

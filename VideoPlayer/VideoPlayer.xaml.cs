@@ -51,8 +51,6 @@ namespace VideoPlayer
 
         private void Window_Loaded(Object sender, RoutedEventArgs e)
         {
-            new LoggingSystemManager().SetPath(Path.Combine(FileSystemHelper.GetDefaultFolder(), "VideoPlayer.log"));
-            Bootstrapper.Bootstrapper.BuildContainer();
             var backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += this.backgroundWorker_DoWork;
             backgroundWorker.RunWorkerCompleted += this.backgroundWorker_RunWorkerCompleted;

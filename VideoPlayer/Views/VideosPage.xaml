@@ -94,39 +94,45 @@
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                <ListBox Grid.Row="0" Width="150" Name="UiCategoriesListBox" ItemsSource="{Binding}"
-                         Background="#aa494949" Margin="5" VerticalAlignment="Stretch" UseLayoutRounding="False"  HorizontalContentAlignment="Stretch">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch" CanVerticallyScroll="True"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding Path=Name}" Margin="5" Foreground="White"
-                                           FontSize="14" FontFamily="{StaticResource TextFontFamily}" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
-                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1"
-                                           Text="{Binding Path=Count}" Margin="5" Foreground="#FF999999" FontSize="10"
-                                           FontFamily="{StaticResource TextFontFamily}" />
-                            </Grid>
+                    <Views:CategoryList></Views:CategoryList>
+                    <!--<ListBox Grid.Row="0" Width="150" Name="UiCategoriesListBox" ItemsSource="{Binding}"
+                             Background="#aa494949" Margin="5" VerticalAlignment="Stretch" UseLayoutRounding="False"
+                             HorizontalContentAlignment="Stretch">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" VerticalAlignment="Center"
+                                            HorizontalAlignment="Stretch" CanVerticallyScroll="True" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Path=Name}" Margin="5" Foreground="White"
+                                               FontSize="14" FontFamily="{StaticResource TextFontFamily}"
+                                               VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1"
+                                               Text="{Binding Path=Count}" Margin="5" Foreground="#FF999999"
+                                               FontSize="10"
+                                               FontFamily="{StaticResource TextFontFamily}" />
+                                </Grid>
 
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <EventSetter Event="MouseLeftButtonUp" Handler="CategoriesListboxItem_MouseLeftButtonUp" />
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>
-                <Button Grid.Row="1" Click="UiPlayAllButton_OnClick" Name="UiPlayAllButton">Play all</Button>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <EventSetter Event="MouseLeftButtonUp"
+                                             Handler="CategoriesListboxItem_MouseLeftButtonUp" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>-->
+                    <Button Grid.Row="1" Click="UiPlayAllButton_OnClick" Name="UiPlayAllButton">Play all</Button>
                 </Grid>
                 <Grid x:Name="_uiMainGrid" Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -255,9 +261,9 @@
         </TabItem>
         <TabItem x:Name="_uiVideoPlaying" KeyUp="_uiVideoPlaying_KeyUp">
             <Grid Visibility="Visible" x:Name="_uiVLCFullScrenGrid" Background="Black">
-                <VLC:VlcControl x:Name="_VLCcontrol" />
+                <VLC:VlcControl x:Name="_VLCcontrol" VideoSource="{Binding CurrentSource}"/>
 
-                <Image Source="{Binding VideoSource, ElementName=_VLCcontrol}" Stretch="Uniform" />
+                <Image Name="UiVlcRendererImage" Source="{Binding VideoSource, ElementName=_VLCcontrol}" Stretch="Uniform" />
                 <Grid x:Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom"
                       Background="#B23E3E3E" Width="600" Height="50">
                     <Grid.RowDefinitions>

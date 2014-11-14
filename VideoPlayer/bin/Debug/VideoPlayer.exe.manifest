@@ -63,7 +63,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>HkWCcPxWyjEEnAFNWnkZveeO/tf7AvjX/1z/k4KrOC8=</dsig:DigestValue>
+        <dsig:DigestValue>TDFUKm2dwHCcBrhr3gob3MT/TqbbhShI1zMjainhmVI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -87,7 +87,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>qJVLM+sugeCtg97w5+4IGAOT1/zjFLh6tZu1tZ1MHHI=</dsig:DigestValue>
+        <dsig:DigestValue>quJ+Ug6syQC+Hx7SuEOTjRc6AE95o+RrCWVskxFWey0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -152,14 +152,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VideoPlayer.exe" size="809984">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VideoPlayer.exe" size="815616">
       <assemblyIdentity name="VideoPlayer" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>g22AocdcvvVxH36/HQ6TnKmEMti1zffclNCarGbespg=</dsig:DigestValue>
+        <dsig:DigestValue>XbkNXNJfwiWDueW2BedA+4scOmsPjOUN4EsjgzwWhmQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -171,7 +171,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8MXjzkkzqRAMCVvO1Rto4YrBn66Inb1aRjlFo6W+s04=</dsig:DigestValue>
+        <dsig:DigestValue>vStYYh3ym2PzhXZbVxxzQCSHl0ANfvEFAGnLMN/Tb6s=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -183,7 +183,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>UcUeItPIEBQkG/eYpxElu6fc+Ac/2QzkUL1mHGV+aws=</dsig:DigestValue>
+        <dsig:DigestValue>8o14MF9V+ObPFiXKMSPUXq0swf27vopm3FXft3gQPfI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -195,7 +195,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>H/22qoJipiyVlQMmz6b6OfFVDJs0lfyvNCWPKFb01dA=</dsig:DigestValue>
+        <dsig:DigestValue>NAVPqx65zLBekeBZ0EcOHV6/LKZl637lWaH/gvsa7CY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -207,7 +207,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>F+2dM96vSdPbRH4emotukUGgcqbsso82TRxgPJUWnkQ=</dsig:DigestValue>
+        <dsig:DigestValue>kH/vjguuZ/6jPdgEKJQLyGbvuXdV3iaINOyWti3tdzQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -219,7 +219,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>vu2AvUzgV3xT69gLbv1bzXtE/xs785jYy+VaQg+0h8A=</dsig:DigestValue>
+        <dsig:DigestValue>Xu9omdbfoBUHbcnkWsIaQtyGyTFkpABQAH0kO/9Fckk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

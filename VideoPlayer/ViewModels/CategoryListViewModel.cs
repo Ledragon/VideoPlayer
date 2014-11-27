@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -13,6 +14,7 @@ namespace VideoPlayer.ViewModels
     public class CategoryListViewModel : ViewModelBase
     {
         #region Private members
+
         private ObservableCollection<CategoryViewModel> _categoryViewModels;
         private ICommand _filterByCategoryCommand;
         private CategoryViewModel _selectedCategory;
@@ -60,7 +62,6 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-
         private void InitCommands()
         {
             this._filterByCategoryCommand = new FilterByCategoryCommand(this.FilterByCategory);
@@ -77,25 +78,28 @@ namespace VideoPlayer.ViewModels
             {
                 var libraryService = DependencyFactory.Resolve<ILibraryService>();
                 ObjectsWrapper wrapper = libraryService.GetObjectsFromFile();
-                var categories =
-                    wrapper.Videos
-                        .Select(v => new {Name = v.Category})
-                        .Distinct()
-                        .OrderBy(c => c.Name);
-                foreach (var category in categories)
+                IEnumerable<IGrouping<string, Video>> grouped =
+                    wrapper.Videos.OrderBy(v => v.Category).GroupBy(v => v.Category);
+                foreach (var grouping in grouped)
                 {
                     this.CategoryViewModels.Add(new CategoryViewModel
                     {
-                        Name = category.Name,
-                        Count = wrapper.Videos.Count(v => v.Category == category.Name)
+                        Name = grouping.Key,
+                        Count = grouping.Count()
                     });
                 }
+
+
+                this.CategoryViewModels.Insert(0, new CategoryViewModel
+                {
+                    Count = wrapper.Videos.Count,
+                    Name = "All"
+                });
             }
             catch (Exception e)
             {
                 this.Logger().ErrorFormat(e.Message);
             }
         }
-
     }
 }

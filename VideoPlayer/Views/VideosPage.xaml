@@ -97,10 +97,10 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Views:CategoryList></Views:CategoryList>
-                    <!--<ListBox Grid.Row="0" Width="150" Name="UiCategoriesListBox" ItemsSource="{Binding}"
+                    <!--<Views:CategoryList></Views:CategoryList>-->
+                    <ListBox Grid.Row="0" Width="150" Name="UiCategoriesListBox" ItemsSource="{Binding CategoryViewModels}"
                              Background="#aa494949" Margin="5" VerticalAlignment="Stretch" UseLayoutRounding="False"
-                             HorizontalContentAlignment="Stretch">
+                             HorizontalContentAlignment="Stretch" SelectionChanged="UiCategoriesListBox_OnSelectionChanged" Loaded="UiCategoriesListBox_Loaded">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical" VerticalAlignment="Center"
@@ -125,13 +125,7 @@
 
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListBoxItem}">
-                                <EventSetter Event="MouseLeftButtonUp"
-                                             Handler="CategoriesListboxItem_MouseLeftButtonUp" />
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>-->
+                    </ListBox>
                     <Button Grid.Row="1" Click="UiPlayAllButton_OnClick" Name="UiPlayAllButton">Play all</Button>
                 </Grid>
                 <Grid x:Name="_uiMainGrid" Grid.Column="1">
@@ -261,7 +255,7 @@
         </TabItem>
         <TabItem x:Name="_uiVideoPlaying" KeyUp="_uiVideoPlaying_KeyUp">
             <Grid Visibility="Visible" x:Name="_uiVLCFullScrenGrid" Background="Black">
-                <VLC:VlcControl x:Name="_VLCcontrol" VideoSource="{Binding CurrentSource}"/>
+                <VLC:VlcControl x:Name="_VLCcontrol"/>
 
                 <Image Name="UiVlcRendererImage" Source="{Binding VideoSource, ElementName=_VLCcontrol}" Stretch="Uniform" />
                 <Grid x:Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom"

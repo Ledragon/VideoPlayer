@@ -104,9 +104,6 @@ namespace VideoPlayer
             VlcContext.Initialize();
 
             this.InitializeComponent();
-
-            this._VLCcontrol.DataContext = new VLCVM();
-            UiVlcRendererImage.DataContext = this._VLCcontrol.DataContext;
         }
 
         #endregion
@@ -292,28 +289,7 @@ namespace VideoPlayer
             this._timer.Tick += this.timer_Tick;
             this._VLCcontrol.PositionChanged += this._VLCcontrol_PositionChanged;
             this._uiPlaylist.DataContext = this._currentPlayList;
-            this.CreateCategoryListBox();
-        }
 
-        private void CreateCategoryListBox()
-        {
-            var viewModel = new ObservableCollection<CategoryViewModel>();
-            viewModel.Add(new CategoryViewModel
-            {
-                Count = this.VideoCollection.Count,
-                Name = "All"
-            });
-            var categories =
-                this.VideoCollection.Select(v => new {Name = v.Category}).Distinct().OrderBy(c => c.Name);
-            foreach (var category in categories)
-            {
-                viewModel.Add(new CategoryViewModel
-                {
-                    Name = category.Name,
-                    Count = this.VideoCollection.Count(v => v.Category == category.Name)
-                });
-            }
-            //this.UiCategoriesListBox.ItemsSource = viewModel;
         }
 
         private void Media_DurationChanged(MediaBase sender, VlcEventArgs<long> e)
@@ -704,13 +680,6 @@ namespace VideoPlayer
             return true;
         }
 
-        //private void CategoriesListboxItem_MouseLeftButtonUp(Object sender, MouseButtonEventArgs e)
-        //{
-        //    ICollectionView view = CollectionViewSource.GetDefaultView(this._uiFilesListBox.ItemsSource);
-        //    var categoryListViewModel = this.UiCategoriesListBox.SelectedItem as CategoryViewModel;
-        //    this.Filter(view, categoryListViewModel);
-        //}
-
         private void Filter(ICollectionView view, CategoryViewModel categoryViewModel)
         {
             if (view != null)
@@ -731,14 +700,14 @@ namespace VideoPlayer
             Boolean result = true;
             try
             {
-                //var video = item as Video;
-                //var categoryListViewModel = this.UiCategoriesListBox.SelectedItem as CategoryViewModel;
-                //if (video != null && categoryListViewModel != null)
-                //{
-                //    String category = categoryListViewModel.Name;
-                //    Boolean isCategoryOk = this.IsCategoryOk(video, category);
-                //    result = isCategoryOk;
-                //}
+                var video = item as Video;
+                var categoryListViewModel = this.UiCategoriesListBox.SelectedItem as CategoryViewModel;
+                if (video != null && categoryListViewModel != null)
+                {
+                    String category = categoryListViewModel.Name;
+                    Boolean isCategoryOk = this.IsCategoryOk(video, category);
+                    result = isCategoryOk;
+                }
             }
             catch (Exception e)
             {
@@ -756,5 +725,16 @@ namespace VideoPlayer
             this.PlaySelectedVideo(false);
         }
 
+        private void UiCategoriesListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ICollectionView view = CollectionViewSource.GetDefaultView(this._uiFilesListBox.ItemsSource);
+            var categoryListViewModel = this.UiCategoriesListBox.SelectedItem as CategoryViewModel;
+            this.Filter(view, categoryListViewModel);
+        }
+
+        private void UiCategoriesListBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.UiCategoriesListBox.DataContext = new CategoryListViewModel();
+        }
     }
 }

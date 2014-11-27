@@ -28,28 +28,34 @@ namespace Classes
             //this.GetVideoInfo(videoPath);
             this.Directory = Path.GetDirectoryName(videoPath);
             this.FileName = videoPath;
-            this.Title = Path.GetFileNameWithoutExtension(videoPath).Replace("%20", " ");
-            //this.NumberOfViews = 0;
-            this.Rating = 0;
-            this.Tags = new ObservableCollection<Tag>();
-            using (ShellFile shellFile = ShellFile.FromFilePath(videoPath))
+            try
             {
-                Bitmap thumbnail = shellFile.Thumbnail.ExtraLargeBitmap;
-                this.PreviewImage = thumbnail;
-                ulong? duration = shellFile.Properties.System.Media.Duration.Value;
+                this.Title = Path.GetFileNameWithoutExtension(videoPath).Replace("%20", " ");
+                //this.NumberOfViews = 0;
+                this.Rating = 0;
+                this.Tags = new ObservableCollection<Tag>();
+                using (ShellFile shellFile = ShellFile.FromFilePath(videoPath))
+                {
+                    Bitmap thumbnail = shellFile.Thumbnail.ExtraLargeBitmap;
+                    this.PreviewImage = thumbnail;
+                    ulong? duration = shellFile.Properties.System.Media.Duration.Value;
 
-                Double nanoSeconds = 0;
-                if (Double.TryParse(duration.ToString(), out nanoSeconds))
-                {
-                    double milliSeconds = nanoSeconds*0.0001;
-                    this.Length = TimeSpan.FromMilliseconds(milliSeconds);
+                    Double nanoSeconds = 0;
+                    if (Double.TryParse(duration.ToString(), out nanoSeconds))
+                    {
+                        double milliSeconds = nanoSeconds * 0.0001;
+                        this.Length = TimeSpan.FromMilliseconds(milliSeconds);
+                    }
+                    uint? rating = shellFile.Properties.System.Rating.Value;
+                    UInt32 myRating = 0;
+                    if (UInt32.TryParse(rating.ToString(), out myRating))
+                    {
+                        this.Rating = myRating;
+                    }
                 }
-                uint? rating = shellFile.Properties.System.Rating.Value;
-                UInt32 myRating = 0;
-                if (UInt32.TryParse(rating.ToString(), out myRating))
-                {
-                    this.Rating = myRating;
-                }
+            }
+            catch (Exception)
+            {
             }
         }
 

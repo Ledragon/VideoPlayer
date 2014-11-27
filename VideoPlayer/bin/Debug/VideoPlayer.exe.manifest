@@ -51,7 +51,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>mPEkoF3WMTw0DEGbg2XNULcbL5/cvLNpW4YJZipDXkY=</dsig:DigestValue>
+        <dsig:DigestValue>cQanfDxFCgiS/DQih/oZMOlK23cbVZWNsbD0KZY3UMw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -152,14 +152,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VideoPlayer.exe" size="815616">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="VideoPlayer.exe" size="816128">
       <assemblyIdentity name="VideoPlayer" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>XbkNXNJfwiWDueW2BedA+4scOmsPjOUN4EsjgzwWhmQ=</dsig:DigestValue>
+        <dsig:DigestValue>mZC/mDJ0GvIrKJ/CWR5nMg7kR5hRikG9YzrBpinGlzo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -224,38 +224,38 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vlc.DotNet.Core.dll" size="49664">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vlc.DotNet.Core.dll" size="47104">
       <assemblyIdentity name="Vlc.DotNet.Core" version="1.2.0.0" publicKeyToken="84529DA31F4EB963" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MOy1vRLdHI1PuBr0edL+ryNYyUTJg2jkTlpvOiwZq14=</dsig:DigestValue>
+        <dsig:DigestValue>mEjUmi/3W1DrMPgp8KG75q4F98CWBDlXJe5lGLmaRNw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vlc.DotNet.Core.Interops.dll" size="104448">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vlc.DotNet.Core.Interops.dll" size="97792">
       <assemblyIdentity name="Vlc.DotNet.Core.Interops" version="1.2.0.0" publicKeyToken="84529DA31F4EB963" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>i3MmMrCH/WJYcEe6u0vltlyq5Mq8Vl1/08B+9LZbpNc=</dsig:DigestValue>
+        <dsig:DigestValue>0DEGF50jd6I1EPo2n/bBhHxnH+X4q6AKDVrkb7NTI1s=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vlc.DotNet.Wpf.dll" size="38400">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Vlc.DotNet.Wpf.dll" size="37376">
       <assemblyIdentity name="Vlc.DotNet.Wpf" version="1.2.0.0" publicKeyToken="84529DA31F4EB963" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>QwMBexgsFdQPjKG+tnmZDVJM7uvBOmbVPDMBHOVV7LE=</dsig:DigestValue>
+        <dsig:DigestValue>DwNPBzvApio4upe6rNfPYDjY1QxPBXaRQEJrqQrQWkg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

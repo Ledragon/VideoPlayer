@@ -7,14 +7,14 @@
     <framework targetVersion="4.5.1" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="VideoPlayer.exe.manifest" size="16150">
+    <dependentAssembly dependencyType="install" codebase="VideoPlayer.exe.manifest" size="16149">
       <assemblyIdentity name="VideoPlayer.exe" version="1.0.0.68" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>b48FGe6X3zgC2xcxCl9AlliCV8npC/kZH0Ieoxx9a8s=</dsig:DigestValue>
+        <dsig:DigestValue>bOERtMcP3fVmFDEpXrE/hMQNu7kf8Amiq1kRGErlqQk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

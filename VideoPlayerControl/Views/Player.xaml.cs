@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Classes;
 using Log;
 using VideoPlayerControl.ViewModels;
 using Vlc.DotNet.Core;
@@ -35,6 +36,12 @@ namespace VideoPlayerControl.Views
             this._viewModel.VideoChanged += this.ViewModelOnVideoChanged;
             this._viewModel.RateChanged += this.ViewModelOnRateChanged;
             this._viewModel.Stopped += this.ViewModelOnStopped;
+            this._viewModel.Played += this.ViewModelOnPlayed;
+        }
+
+        private void ViewModelOnPlayed(object sender, EventArgs e)
+        {
+            this.ExecuteHandled(() => this._VLCcontrol.Play(new PathMedia(this._viewModel.CurrentVideo.FileName)));
         }
 
         private void InitializeVlc()
@@ -62,6 +69,21 @@ namespace VideoPlayerControl.Views
             this._viewModel.AddVideo(path);
         }
 
+        public void AddVideo(Video video)
+        {
+            this._viewModel.AddVideo(video);
+        }
+
+        public void PlayVideo(Video video)
+        {
+            this._viewModel.PlayVideo(video);
+        }
+
+        public void PlayAll()
+        {
+            this._viewModel.PlayAll();
+        }
+
         public event StoppedEventHandler Stopped;
 
         private void OnStopped(EventArgs e)
@@ -69,6 +91,23 @@ namespace VideoPlayerControl.Views
             if (this.Stopped != null)
             {
                 this.Stopped(this, e);
+            }
+        }
+
+        private void Player_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            this._viewModel.MouseMove();
+        }
+
+        private void ExecuteHandled(Action method)
+        {
+            try
+            {
+                method.Invoke();
+            }
+            catch (Exception e)
+            {
+                this.Logger().ErrorFormat(e.Message);
             }
         }
 
@@ -152,6 +191,11 @@ namespace VideoPlayerControl.Views
             }
         }
 
+        private void _VLCcontrol_OnEndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
+        {
+            this._viewModel.Next();
+        }
+
         #endregion
 
         #region Slider
@@ -173,6 +217,7 @@ namespace VideoPlayerControl.Views
         private void ViewModelOnStopped(object sender, EventArgs eventArgs)
         {
             this._VLCcontrol.Stop();
+            this._VLCcontrol.Medias.RemoveAt(0);
             this.OnStopped(new EventArgs());
         }
 
@@ -192,10 +237,5 @@ namespace VideoPlayerControl.Views
         }
 
         #endregion
-
-        private void Player_OnMouseMove(object sender, MouseEventArgs e)
-        {
-            this._viewModel.MouseMove();
-        }
     }
 }

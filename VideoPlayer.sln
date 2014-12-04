@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Common", "Video
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayerMVVM", "VideoPlayerMVVM\VideoPlayerMVVM.csproj", "{5A46DFDF-D514-4583-BB56-34543B33659C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayerControl", "VideoPlayerControl\VideoPlayerControl.csproj", "{B2BA9593-FF7A-490E-A0EA-F29CC2CA28FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{5A46DFDF-D514-4583-BB56-34543B33659C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A46DFDF-D514-4583-BB56-34543B33659C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A46DFDF-D514-4583-BB56-34543B33659C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2BA9593-FF7A-490E-A0EA-F29CC2CA28FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2BA9593-FF7A-490E-A0EA-F29CC2CA28FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2BA9593-FF7A-490E-A0EA-F29CC2CA28FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2BA9593-FF7A-490E-A0EA-F29CC2CA28FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

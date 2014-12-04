@@ -109,7 +109,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\VideoPlayer\trunk\Classes\Classes.csproj">
+    <ProjectReference Include="..\Classes\Classes.csproj">
       <Project>{ffb9c128-ca7e-40bb-bbcd-7b28707c6719}</Project>
       <Name>Classes</Name>
     </ProjectReference>

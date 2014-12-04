@@ -1,10 +1,12 @@
-﻿using System;
+﻿//using Vlc.DotNet.Core;
+//using Vlc.DotNet.Core.Medias;
+//using Vlc.DotNet.Wpf;
+
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,15 +14,6 @@ using System.Windows.Input;
 using Classes;
 using Log;
 using VideoPlayer.ViewModels;
-using Vlc.DotNet.Core;
-using Vlc.DotNet.Core.Medias;
-using Vlc.DotNet.Wpf;
-using Cursors = System.Windows.Input.Cursors;
-using Image = System.Drawing.Image;
-using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using MouseEventArgs = System.Windows.Input.MouseEventArgs;
-using TextBox = System.Windows.Controls.TextBox;
-using Timer = System.Windows.Forms.Timer;
 
 namespace VideoPlayer
 {
@@ -29,7 +22,14 @@ namespace VideoPlayer
     /// </summary>
     public partial class VideosPage
     {
+        private CategoryListViewModel _categoryListViewModel;
         private ObservableCollection<Video> _videoCollection;
+        private readonly VideosTabControlViewModel _videosTabControlViewModel;
+
+        private Video CurrentVideo
+        {
+            get { return this._uiFilesListBox.SelectedItem as Video; }
+        }
 
         public ObservableCollection<Video> VideoCollection
         {
@@ -43,29 +43,30 @@ namespace VideoPlayer
 
         #region Private Members
 
-        private readonly ObservableCollection<Video> _currentPlayList = new ObservableCollection<Video>();
+        //private readonly ObservableCollection<Video> _currentPlayList = new ObservableCollection<Video>();
 
-        private readonly Timer _timer = new Timer();
+        //private readonly Timer _timer = new Timer();
         private Boolean _isFullScreenVideo;
 
-        private Boolean _isPlaylist;
+        //private Boolean _isPlaylist;
 
         private Boolean _isPositionChanging;
+        private Video _currentVideo;
 
-        private DateTime _mouseLastMouveDateTime = DateTime.Now;
+        //private DateTime _mouseLastMouveDateTime = DateTime.Now;
 
-        private Video NowPlaying
-        {
-            get
-            {
-                //ObservableCollection<Video> videos = this.DataContext as ObservableCollection<Video>;
-                //String path = new Uri(this._VLCcontrol.Media.MRL).LocalPath;
-                //return videos.FirstOrDefault(v => v.FileName == path);
-                ObservableCollection<Video> videos = this.VideoCollection;
-                String path = new Uri(this._VLCcontrol.Media.MRL).LocalPath;
-                return videos.FirstOrDefault(v => v.FileName == path);
-            }
-        }
+        //private Video NowPlaying
+        //{
+        //    get
+        //    {
+        //        //ObservableCollection<Video> videos = this.DataContext as ObservableCollection<Video>;
+        //        //String path = new Uri(this._VLCcontrol.Media.MRL).LocalPath;
+        //        //return videos.FirstOrDefault(v => v.FileName == path);
+        //        ObservableCollection<Video> videos = this.VideoCollection;
+        //        String path = new Uri(this._VLCcontrol.Media.MRL).LocalPath;
+        //        return videos.FirstOrDefault(v => v.FileName == path);
+        //    }
+        //}
 
         #endregion
 
@@ -73,46 +74,35 @@ namespace VideoPlayer
 
         public VideosPage()
         {
-            // Set libvlc.dll and libvlccore.dll directory path
-            String programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-            VlcContext.LibVlcDllsPath = Path.Combine(programFilesPath, @"VideoLan\VLC");
-
-            // Set the vlc plugins directory path
-            VlcContext.LibVlcPluginsPath = Path.Combine(VlcContext.LibVlcDllsPath, "plugins");
-
-            //// refer to http://wiki.videolan.org/VLC_command-line_help for more information
-            VlcContext.StartupOptions.IgnoreConfig = true;
-            VlcContext.StartupOptions.AddOption("--no-video-title-show");
-            VlcContext.StartupOptions.ScreenSaverEnabled = false;
-            VlcContext.StartupOptions.AddOption("--no-snapshot-preview");
-            VlcContext.StartupOptions.AddOption("--no-mouse-events");
-            VlcContext.StartupOptions.AddOption("--no-keyboard-events");
-            VlcContext.StartupOptions.AddOption("--disable-screensaver");
-            ////VlcContext.StartupOptions.AddOption("--no-skip-frames");
-            //VlcContext.StartupOptions.AddOption("--directx-hw-yuv");
-            ////VlcContext.StartupOptions.AddOption("--directx-3buffering");
-            //VlcContext.StartupOptions.AddOption("--ffmpeg-skiploopfilter=4");
-            //VlcContext.StartupOptions.AddOption("--ffmpeg-hw");
-            //VlcContext.StartupOptions.AddOption("--vout=directx");
-
-
-            ////VlcContext.StartupOptions.ShowLoggerConsole = false;
-            ////VlcContext.StartupOptions.LogOptions.Verbosity = VlcLogVerbosities.Debug;
-            ////VlcContext.StartupOptions.LogOptions.LogInFile = false;
-            ////VlcContext.StartupOptions.LogOptions.LogInFilePath = @"D:\videoplayer_vlc.log";
-            //// Initialize the VlcContext
-            VlcContext.Initialize();
-
             this.InitializeComponent();
+            this.Player.Stopped += this.Player_Stopped;
+            this._videosTabControlViewModel = new VideosTabControlViewModel();
+            this.DataContext = this._videosTabControlViewModel;
         }
 
+
         #endregion
+
+        private void Player_Stopped(object sender, EventArgs e)
+        {
+            this.StopVideoPlaying();
+        }
 
         #region Events
 
         private void ListBoxItem_MouseDoubleClick(Object sender, MouseButtonEventArgs e)
         {
-            this.PlaySelectedVideo();
+            var video = this.CurrentVideo;
+            if (video != null && File.Exists(video.FileName))
+            {
+                this.Player.PlayVideo(video);
+                this.SwitchToFullScreen();
+            }
+            else
+            {
+                MessageBox.Show("File not found");
+                //this.Logger().ErrorFormat("Could not find file {0}", video.FileName);
+            }
         }
 
         private void UserControl_KeyDown(Object sender, KeyEventArgs e)
@@ -133,7 +123,8 @@ namespace VideoPlayer
                 }
                 else if (e.Key == Key.Return)
                 {
-                    this.PlaySelectedVideo();
+                    this.SwitchToFullScreen();
+                    this.Player.PlayVideo(this.CurrentVideo);
                     e.Handled = true;
                 }
                 else if (e.Key == Key.A)
@@ -143,35 +134,37 @@ namespace VideoPlayer
                 }
                 else if (e.Key == Key.P)
                 {
-                    this._isPlaylist = true;
-                    this.PlaySelectedVideo(false);
+                    this.SwitchToFullScreen();
+                    this.Player.PlayAll();
+                    //this._isPlaylist = true;
+                    //this.PlaySelectedVideo(false);
                     //this.playlistPosition = 0;
                     e.Handled = true;
                 }
-                else if (e.Key == Key.C)
-                {
-                    if (this._uiPlaylist.IsVisible)
-                    {
-                        this._uiPlaylist.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        this._uiPlaylist.Visibility = Visibility.Visible;
-                    }
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.Space)
-                {
-                    if (this._VLCcontrol.IsPaused)
-                    {
-                        this._VLCcontrol.Play();
-                    }
-                    else
-                    {
-                        this._VLCcontrol.Pause();
-                    }
-                    e.Handled = true;
-                }
+                //else if (e.Key == Key.C)
+                //{
+                //    if (this._uiPlaylist.IsVisible)
+                //    {
+                //        this._uiPlaylist.Visibility = Visibility.Collapsed;
+                //    }
+                //    else
+                //    {
+                //        this._uiPlaylist.Visibility = Visibility.Visible;
+                //    }
+                //    e.Handled = true;
+                //}
+                    //else if (e.Key == Key.Space)
+                    //{
+                    //    if (this._VLCcontrol.IsPaused)
+                    //    {
+                    //        this._VLCcontrol.Play();
+                    //    }
+                    //    else
+                    //    {
+                    //        this._VLCcontrol.Pause();
+                    //    }
+                    //    e.Handled = true;
+                    //}
                 else if (e.Key == Key.E)
                 {
                     if (Keyboard.Modifiers == ModifierKeys.Control)
@@ -223,59 +216,7 @@ namespace VideoPlayer
 
         private void AddToExistingPlaylist()
         {
-            this.AddToExistingPlaylist(this._uiFilesListBox.SelectedItem as Video);
-        }
-
-        private void AddToExistingPlaylist(Video video)
-        {
-            this._VLCcontrol.Medias.Add(new PathMedia(video.FileName));
-            this._currentPlayList.Add(video);
-        }
-
-        private void _VLCcontrol_PositionChanged(VlcControl sender, VlcEventArgs<float> e)
-        {
-            if (!this._isPositionChanging)
-            {
-                this._uiFullScreenSlider.Value = this._VLCcontrol.Position;
-            }
-        }
-
-        private void _VLCcontrol_EndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
-        {
-            //this.NowPlaying.NumberOfViews++;
-            if (!this._isPlaylist)
-            {
-                this.StopVideoPlaying();
-                this._VLCcontrol.EndReached -= this._VLCcontrol_EndReached;
-            }
-            else
-            {
-                this._VLCcontrol.Next();
-                //this.NowPlaying = this._currentPlayList.SingleOrDefault(v => v.FileName == this._VLCcontrol.Media.MRL);
-                this.UpdateInfos();
-            }
-
-            // TODO gerer la fin d'une video selon qu'on est en playlist ou pas
-        }
-
-        private void _VLCcontrol_SnapshotTaken(VlcControl sender, VlcEventArgs<string> e)
-        {
-            try
-            {
-                String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.NowPlaying.Title + ".jpg");
-                if (File.Exists(imgPath))
-                {
-                    Image img = new Bitmap(imgPath);
-                    this.NowPlaying.PreviewImage = img;
-                    img.Dispose();
-                    File.Delete(imgPath);
-                }
-                this._VLCcontrol.SnapshotTaken -= this._VLCcontrol_SnapshotTaken;
-            }
-            catch (Exception ex)
-            {
-                this.Logger().ErrorFormat(ex.Message);
-            }
+            this.Player.AddVideo(this.CurrentVideo);
         }
 
         private void UserControl_Loaded(Object sender, RoutedEventArgs e)
@@ -285,174 +226,7 @@ namespace VideoPlayer
             this._uiFilesListBox.Items.SortDescriptions.Add(
                 new SortDescription("Title",
                     ListSortDirection.Ascending));
-            this._timer.Interval = 1000;
-            this._timer.Tick += this.timer_Tick;
-            this._VLCcontrol.PositionChanged += this._VLCcontrol_PositionChanged;
-            this._uiPlaylist.DataContext = this._currentPlayList;
-
         }
-
-        private void Media_DurationChanged(MediaBase sender, VlcEventArgs<long> e)
-        {
-            this.NowPlaying.Length = this._VLCcontrol.Duration;
-            this._uiDuration.Text = this.NowPlaying.Length.ToString("hh\\:mm\\:ss");
-        }
-
-        private void timer_Tick(Object sender, EventArgs e)
-        {
-            if (DateTime.Now - this._mouseLastMouveDateTime > new TimeSpan(0, 0, 2))
-            {
-                this.Cursor = Cursors.None;
-                this._uiFullScreenControlsGrid.Visibility = Visibility.Hidden;
-            }
-        }
-
-        #region Buttons
-
-        private void _uiMuteButton_Click(Object sender, RoutedEventArgs e)
-        {
-            this._VLCcontrol.AudioProperties.IsMute = !this._VLCcontrol.AudioProperties.IsMute;
-            if (this._VLCcontrol.AudioProperties.IsMute)
-            {
-                this._uiFullScreenMuteButton.Content = this.FindResource("Muted");
-            }
-            else
-            {
-                this._uiFullScreenMuteButton.Content = this.FindResource("Unmuted");
-            }
-        }
-
-        private void _uiStopButton_Click(Object sender, RoutedEventArgs e)
-        {
-            this.StopVideoPlaying();
-        }
-
-        private void _uiPauseButton_Click(Object sender, RoutedEventArgs e)
-        {
-            if (this._VLCcontrol.IsPaused)
-            {
-                this._VLCcontrol.Play();
-            }
-            else
-            {
-                this._VLCcontrol.Pause();
-            }
-        }
-
-        private void _uiPlayButton_Click(Object sender, RoutedEventArgs e)
-        {
-            if (this._VLCcontrol.IsPaused)
-            {
-                this._VLCcontrol.Play();
-            }
-            else
-            {
-                this.PlaySelectedVideo();
-            }
-        }
-
-        private void _uiFasterButton_Click(Object sender, RoutedEventArgs e)
-        {
-            this._VLCcontrol.Rate *= 2;
-            this._uiRate.Text = "Rate: " + this._VLCcontrol.Rate;
-        }
-
-        private void _uiSlowerButton_Click(Object sender, RoutedEventArgs e)
-        {
-            this._VLCcontrol.Rate /= 2;
-            this._uiRate.Text = "Rate: " + this._VLCcontrol.Rate;
-        }
-
-        private void _uiNextButton_Click(Object sender, RoutedEventArgs e)
-        {
-            this._VLCcontrol.Next();
-            this.UpdateInfos();
-        }
-
-        private void _uiPreviousButton_Click(Object sender, RoutedEventArgs e)
-        {
-            this._VLCcontrol.Previous();
-            this.UpdateInfos();
-        }
-
-        private void _uiSnapshotButton_Click(Object sender, RoutedEventArgs e)
-        {
-            String imgPath = Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.NowPlaying.Title + ".jpg");
-            Boolean isPaused = this._VLCcontrol.IsPaused;
-            try
-            {
-                this._VLCcontrol.Pause();
-                Thread.Sleep(100);
-                this._VLCcontrol.TakeSnapshot(imgPath,
-                    uint.Parse(this._VLCcontrol.VideoProperties.Size.Width.ToString("0")),
-                    uint.Parse(this._VLCcontrol.VideoProperties.Size.Height.ToString("0")));
-                this._VLCcontrol.SnapshotTaken += this._VLCcontrol_SnapshotTaken;
-            }
-            catch (Exception exc)
-            {
-                this.Logger().Error(exc.Message);
-                this.Logger().Error(exc.Source);
-            }
-            if (!isPaused)
-            {
-                this._VLCcontrol.Play();
-            }
-        }
-
-        #endregion
-
-        #region Slider
-
-        private void _uiVLCFullScrenGrid_MouseMove(Object sender, MouseEventArgs e)
-        {
-            this._mouseLastMouveDateTime = DateTime.Now;
-            this.Cursor = Cursors.Arrow;
-            this._uiFullScreenControlsGrid.Visibility = Visibility.Visible;
-        }
-
-        private void _uiSlider_PreviewMouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
-        {
-            this._VLCcontrol.PositionChanged -= this._VLCcontrol_PositionChanged;
-            this._isPositionChanging = true;
-        }
-
-        private void _uiSlider_PreviewMouseLeftButtonUp(Object sender, MouseButtonEventArgs e)
-        {
-            this._VLCcontrol.Position = (float) this._uiFullScreenSlider.Value;
-            this._VLCcontrol.PositionChanged += this._VLCcontrol_PositionChanged;
-            this._isPositionChanging = false;
-        }
-
-        private void _uiSlider_ValueChanged(Object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (this._isPositionChanging)
-            {
-                this._VLCcontrol.Position = (float) e.NewValue;
-            }
-            Int32 seconds =
-                Int32.Parse((this._uiFullScreenSlider.Value*this._VLCcontrol.Duration.TotalSeconds).ToString("0"));
-            var position = new TimeSpan(0, 0, seconds);
-            this._uiPosition.Text = position.ToString("hh\\:mm\\:ss");
-        }
-
-        private void _uiSlider_PreviewMouseWheel(Object sender, MouseWheelEventArgs e)
-        {
-            this._VLCcontrol.PositionChanged -= this._VLCcontrol_PositionChanged;
-            this._isPositionChanging = true;
-
-            if (e.Delta < 0)
-            {
-                this._uiFullScreenSlider.Value -= this._uiFullScreenSlider.SmallChange;
-            }
-            else
-            {
-                this._uiFullScreenSlider.Value += this._uiFullScreenSlider.SmallChange;
-            }
-            this._VLCcontrol.PositionChanged += this._VLCcontrol_PositionChanged;
-            this._isPositionChanging = false;
-        }
-
-        #endregion
 
         #endregion
 
@@ -460,79 +234,22 @@ namespace VideoPlayer
 
         private void StopVideoPlaying()
         {
-            this._VLCcontrol.Stop();
-            this._uiVLCFullScrenGrid.MouseMove -= this._uiVLCFullScrenGrid_MouseMove;
-            this._uiFullScreenSlider.Value = 0;
-            this._VLCcontrol.Medias.Clear();
-            this._VLCcontrol.Medias.RemoveAt(0);
-            this._currentPlayList.Clear();
             this._uiNowPlaying.Text = "Now playing: ";
             this.SwitchToWindowMode();
         }
 
-        private void PlaySelectedVideo(Boolean isNewPlaylist)
-        {
-            this._uiVLCFullScrenGrid.MouseMove += this._uiVLCFullScrenGrid_MouseMove;
-            if (this._VLCcontrol.IsPlaying)
-            {
-                this._VLCcontrol.Stop();
-                this._uiFullScreenSlider.Value = 0;
-            }
-
-            var video = this._uiFilesListBox.SelectedItem as Video;
-            if (File.Exists(video.FileName))
-            {
-                if (isNewPlaylist)
-                {
-                    this._VLCcontrol.Media = new PathMedia(video.FileName);
-                    this._currentPlayList.Clear();
-                    this._currentPlayList.Add(video);
-                    if (this._VLCcontrol.Media.Duration == TimeSpan.Zero)
-                    {
-                        this._VLCcontrol.Media.DurationChanged += this.Media_DurationChanged;
-                    }
-                    this._isPlaylist = false;
-                }
-                this._VLCcontrol.EndReached += this._VLCcontrol_EndReached;
-                this._VLCcontrol.Play();
-                this.UpdateInfos();
-                this.SwitchToFullScreen();
-            }
-            else
-            {
-                MessageBox.Show("File not found");
-                this.Logger().ErrorFormat("Could not find file {0}", video.FileName);
-            }
-        }
-
-        private void PlaySelectedVideo()
-        {
-            this.PlaySelectedVideo(true);
-        }
-
         private void SwitchToFullScreen()
         {
+            this._videosTabControlViewModel.SelectedIndex = 1;
             this._isFullScreenVideo = true;
             this._uiVideosTabControl.SelectedItem = this._uiVideoPlaying;
-            this._timer.Start();
         }
 
         private void SwitchToWindowMode()
         {
+            this._videosTabControlViewModel.SelectedIndex = 0;
             this._isFullScreenVideo = false;
-            this._uiVideosTabControl.SelectedItem = this._uiVideosList;
-            this._uiFilesListBox.Focus();
-            this._uiFilesListBox.SelectedItem = this.NowPlaying;
-            this._timer.Stop();
             this.Cursor = Cursors.Arrow;
-        }
-
-        private void UpdateInfos()
-        {
-            //TODO enlever la methode ci-dessous et faire du binding correct
-            this._uiDuration.Text = this.NowPlaying.Length.ToString("hh\\:mm\\:ss");
-            this._uiNowPlaying.Text = "Now playing: " + this.NowPlaying.Title;
-            this._uiPlaylist.SelectedItem = this.NowPlaying;
         }
 
         #endregion
@@ -624,11 +341,23 @@ namespace VideoPlayer
 
         private void _uiPlayAll_OnClick(Object sender, RoutedEventArgs e)
         {
+            this.PlayAll();
+            //foreach (Object item in this._uiFilesListBox.Items)
+            //{
+            //    this.Player.AddVideo((Video)item);
+            //    //this.AddToExistingPlaylist(item as Video);
+            //}
+            //this.Player.PlayAll();
+            //this.PlaySelectedVideo(false);
+        }
+
+        private void PlayAll()
+        {
             foreach (Object item in this._uiFilesListBox.Items)
             {
-                this.AddToExistingPlaylist(item as Video);
+                this.Player.AddVideo((Video)item);
             }
-            this.PlaySelectedVideo(false);
+            this.Player.PlayAll();
         }
 
         private void _uiVideoPlaying_KeyUp(Object sender, KeyEventArgs e)
@@ -684,7 +413,7 @@ namespace VideoPlayer
         {
             if (view != null)
             {
-                if (categoryViewModel.Name == "All")
+                if (categoryViewModel == null || categoryViewModel.Name == "All")
                 {
                     view.Filter = this.TrueFilter;
                 }
@@ -718,11 +447,12 @@ namespace VideoPlayer
 
         private void UiPlayAllButton_OnClick(object sender, RoutedEventArgs e)
         {
-            foreach (Object item in this._uiFilesListBox.Items)
-            {
-                this.AddToExistingPlaylist(item as Video);
-            }
-            this.PlaySelectedVideo(false);
+            this.PlayAll();
+            //foreach (Object item in this._uiFilesListBox.Items)
+            //{
+            //    this.AddToExistingPlaylist(item as Video);
+            //}
+            //this.PlaySelectedVideo(false);
         }
 
         private void UiCategoriesListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -734,7 +464,11 @@ namespace VideoPlayer
 
         private void UiCategoriesListBox_Loaded(object sender, RoutedEventArgs e)
         {
-            this.UiCategoriesListBox.DataContext = new CategoryListViewModel();
+            if (this._categoryListViewModel == null)
+            {
+                this._categoryListViewModel = new CategoryListViewModel();
+            }
+            this.UiCategoriesListBox.DataContext = this._categoryListViewModel;
         }
     }
 }

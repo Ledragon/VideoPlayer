@@ -98,15 +98,6 @@
     </Reference>
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
-    <Reference Include="Vlc.DotNet.Core">
-      <HintPath>..\..\..\dll\Vlc.DotNet.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Core.Interops">
-      <HintPath>..\..\..\dll\Vlc.DotNet.Core.Interops.dll</HintPath>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Wpf">
-      <HintPath>..\..\..\dll\Vlc.DotNet.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -127,6 +118,7 @@
     <Compile Include="ViewModels\CategoryListViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\PlayVideoViewModel.cs" />
+    <Compile Include="ViewModels\VideosTabControlViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\CategoryList.xaml.cs">
       <DependentUpon>CategoryList.xaml</DependentUpon>
@@ -145,12 +137,6 @@
     </Compile>
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Views\PlayerControls.xaml.cs">
-      <DependentUpon>PlayerControls.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PlayVideo.xaml.cs">
-      <DependentUpon>PlayVideo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VideoInfo.xaml.cs">
       <DependentUpon>VideoInfo.xaml</DependentUpon>
@@ -178,14 +164,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PlayerControls.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PlayVideo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -272,6 +250,10 @@
       <Project>{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}</Project>
       <Name>VideoPlayer.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayerControl\VideoPlayerControl.csproj">
+      <Project>{b2ba9593-ff7a-490e-a0ea-f29cc2ca28fe}</Project>
+      <Name>VideoPlayerControl</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="..\..\..\..\Images et photos\TheaterCurtains.jpg">
@@ -335,25 +317,6 @@
     <Resource Include="Icons\control_rewind.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <COMReference Include="AxAXVLC">
-      <Guid>{DF2BBE39-40A8-433B-A279-073F48DA94B6}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>aximp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
-    <COMReference Include="AXVLC">
-      <Guid>{DF2BBE39-40A8-433B-A279-073F48DA94B6}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\arrow_in.png" />

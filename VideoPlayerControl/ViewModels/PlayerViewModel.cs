@@ -12,6 +12,8 @@ namespace VideoPlayerControl.ViewModels
 {
     public class PlayerViewModel : ViewModelBase
     {
+        public delegate void PlayedEventHandler(Object sender, EventArgs e);
+
         public delegate void PositionChangedEventHandler(Object sender, EventArgs e);
 
         public delegate void RateChangedEventHandler(Object sender, EventArgs e);
@@ -342,6 +344,24 @@ namespace VideoPlayerControl.ViewModels
             }
         }
 
+        public void ClearPlaylist()
+        {
+            this.Playlist.Clear();
+        }
+
+        public void PlayVideo(Video video)
+        {
+            this.ClearPlaylist();
+            this.AddVideo(video);
+            this.CurrentVideo = video;
+            this.OnPlayed(new EventArgs());
+        }
+
+        public void PlayAll()
+        {
+            this.OnPlayed(new EventArgs());
+        }
+
         public void Next()
         {
             this._index++;
@@ -410,6 +430,16 @@ namespace VideoPlayerControl.ViewModels
             if (this.Stopped != null)
             {
                 this.Stopped(this, e);
+            }
+        }
+
+        public event PlayedEventHandler Played;
+
+        private void OnPlayed(EventArgs e)
+        {
+            if (this.Played != null)
+            {
+                this.Played(this, e);
             }
         }
 

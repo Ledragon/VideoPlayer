@@ -60,6 +60,7 @@
                         PositionChanged="_VLCcontrol_OnPositionChanged"
                         SnapshotTaken="_VLCcontrol_OnSnapshotTaken"
                         LengthChanged="_VLCcontrol_OnLengthChanged"
+                        EndReached="_VLCcontrol_OnEndReached"
                         />
 
         <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform" />

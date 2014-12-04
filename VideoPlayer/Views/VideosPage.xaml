@@ -1,12 +1,10 @@
-﻿<UserControl xmlns:Views="clr-namespace:VideoPlayer.Views"
+﻿<UserControl xmlns:Views1="clr-namespace:VideoPlayerControl.Views;assembly=VideoPlayerControl"  xmlns:Views="clr-namespace:VideoPlayer.Views"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:VideoPlayer"
              xmlns:med="clr-namespace:System.Windows.Media"
-             xmlns:VLC="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
-             xmlns:classes="clr-namespace:Classes;assembly=Classes"
              xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="VideoPlayer.VideosPage"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1024" KeyDown="UserControl_KeyDown" Loaded="UserControl_Loaded"
@@ -85,7 +83,7 @@
         <med:ImageConverter x:Key="imageConverter" />
         <FontFamily x:Key="TextFontFamily">Leelawadee</FontFamily>
     </UserControl.Resources>
-    <TabControl x:Name="_uiVideosTabControl">
+    <TabControl x:Name="_uiVideosTabControl" SelectedIndex="{Binding SelectedIndex}">
         <TabItem x:Name="_uiVideosList">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -247,78 +245,16 @@
                         </ListBox.ItemContainerStyle>
                     </ListBox>
 
-                    <ListBox x:Name="_uiPlaylist" ItemsSource="{Binding}" DisplayMemberPath="Title" Visibility="Hidden"
-                             HorizontalAlignment="Right" VerticalAlignment="Center" Grid.RowSpan="2" TabIndex="0" />
+                    <!--<ListBox x:Name="_uiPlaylist" ItemsSource="{Binding}" DisplayMemberPath="Title" Visibility="Hidden"
+                             HorizontalAlignment="Right" VerticalAlignment="Center" Grid.RowSpan="2" TabIndex="0" />-->
                 </Grid>
             </Grid>
 
         </TabItem>
         <TabItem x:Name="_uiVideoPlaying" KeyUp="_uiVideoPlaying_KeyUp">
-            <Grid Visibility="Visible" x:Name="_uiVLCFullScrenGrid" Background="Black">
-                <VLC:VlcControl x:Name="_VLCcontrol"/>
-
-                <Image Name="UiVlcRendererImage" Source="{Binding VideoSource, ElementName=_VLCcontrol}" Stretch="Uniform" />
-                <Grid x:Name="_uiFullScreenControlsGrid" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                      Background="#B23E3E3E" Width="600" Height="50">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="25" />
-                        <RowDefinition Height="25" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                        <Button Style="{StaticResource MediaControl}" Margin="5,0,0,0" HorizontalAlignment="Left"
-                                VerticalAlignment="Center" x:Name="_uiFullScreenPlayButton" Click="_uiPlayButton_Click">
-                            <Image Source="..\Icons\control_play.png" />
-                        </Button>
-                        <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left"
-                                VerticalAlignment="Center" x:Name="_uiFullScreenPauseButton"
-                                Click="_uiPauseButton_Click">
-                            <Image Source="..\Icons\control_pause.png" />
-                        </Button>
-                        <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left"
-                                VerticalAlignment="Center" x:Name="_uiFullScreenStopButton" Click="_uiStopButton_Click">
-                            <Image Source="..\Icons\control_stop.png" />
-                        </Button>
-                        <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left"
-                                VerticalAlignment="Center" x:Name="_uiFullScreenMuteButton" Click="_uiMuteButton_Click"
-                                Content="{DynamicResource Unmuted}" />
-                        <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left"
-                                VerticalAlignment="Center" x:Name="_uiSnapshotButton" Click="_uiSnapshotButton_Click">
-                            <Image Source="..\Icons\camera_small.png" />
-                        </Button>
-                        <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left"
-                                VerticalAlignment="Center" x:Name="_uiFullScreenPreviousButton"
-                                Click="_uiPreviousButton_Click">
-                            <Image Source="..\Icons\control_start.png" />
-                        </Button>
-                        <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left"
-                                VerticalAlignment="Center" x:Name="_uiFullScreenNextButton" Click="_uiNextButton_Click">
-                            <Image Source="..\Icons\control_end.png" />
-                        </Button>
-                    </StackPanel>
-                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Right"
-                            VerticalAlignment="Center" x:Name="_uiFullScreenFasterButton" Click="_uiFasterButton_Click">
-                        <Image Source="..\Icons\control_fastforward.png" />
-                    </Button>
-                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left" VerticalAlignment="Center"
-                            x:Name="_uiFullScreenSlowerButton" Click="_uiSlowerButton_Click">
-                        <Image Source="..\Icons\control_rewind.png" />
-                    </Button>
-                    <Slider HorizontalAlignment="Stretch" Maximum="1" VerticalAlignment="Bottom"
-                            x:Name="_uiFullScreenSlider" Margin="30,0,30,0"
-                            PreviewMouseLeftButtonDown="_uiSlider_PreviewMouseLeftButtonDown"
-                            PreviewMouseLeftButtonUp="_uiSlider_PreviewMouseLeftButtonUp" LargeChange="0.05"
-                            SmallChange="0.01" ValueChanged="_uiSlider_ValueChanged"
-                            PreviewMouseWheel="_uiSlider_PreviewMouseWheel" />
-                    <TextBlock x:Name="_uiPosition" Grid.Row="1" IsEnabled="false" Width="50"
-                               HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,55,0" Text="" />
-                    <TextBlock x:Name="_uiDuration" Grid.Row="1" IsEnabled="false" Width="50"
-                               HorizontalAlignment="Right" VerticalAlignment="Center"
-                               Text="{Binding Length, StringFormat=HH:mm:ss}" />
-                    <TextBlock x:Name="_uiRate" Grid.Row="1" IsEnabled="false" Width="50" HorizontalAlignment="Right"
-                               VerticalAlignment="Center" Text="Rate: 1" Margin="0,0,110,0" />
-                </Grid>
-            </Grid>
+            <!--<Grid Visibility="Visible" x:Name="_uiVLCFullScrenGrid" Background="Black">-->
+                <Views1:Player x:Name="Player"/>
+            <!--</Grid>-->
         </TabItem>
     </TabControl>
 </UserControl>

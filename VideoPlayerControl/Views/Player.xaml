@@ -52,6 +52,11 @@
             <Setter Property="Margin" Value="5" />
         </Style>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding StopCommand}" Key="X"></KeyBinding>
+        <KeyBinding Command="{Binding NextCommand}" Key="N"></KeyBinding>
+        <KeyBinding Command="{Binding PreviousCommand}" Key="P"></KeyBinding>
+    </UserControl.InputBindings>
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>

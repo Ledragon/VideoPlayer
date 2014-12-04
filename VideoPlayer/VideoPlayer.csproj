@@ -108,6 +108,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AddToPlaylistCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\FilterByCategoryCommand.cs" />
     <Compile Include="Commands\PlayCommand.cs" />

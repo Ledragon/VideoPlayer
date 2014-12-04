@@ -36,7 +36,7 @@ namespace VideoPlayer
 
         private void backgroundWorker_RunWorkerCompleted(Object sender, RunWorkerCompletedEventArgs e)
         {
-            this._uiVideosView.VideoCollection = this._videos;
+            //this._uiVideosView.VideoCollection = this._videos;
             this._uiSettingsView.Directories = this._directories;
             this._uiSettingsView.DataContext = this._directories;
         }

@@ -22,53 +22,7 @@ namespace VideoPlayer
     /// </summary>
     public partial class VideosPage
     {
-        private CategoryListViewModel _categoryListViewModel;
-        private ObservableCollection<Video> _videoCollection;
         private readonly VideosTabControlViewModel _videosTabControlViewModel;
-
-        private Video CurrentVideo
-        {
-            get { return this._uiFilesListBox.SelectedItem as Video; }
-        }
-
-        public ObservableCollection<Video> VideoCollection
-        {
-            get { return this._videoCollection; }
-            set
-            {
-                this._videoCollection = value;
-                this._uiFilesListBox.DataContext = this._videoCollection;
-            }
-        }
-
-        #region Private Members
-
-        //private readonly ObservableCollection<Video> _currentPlayList = new ObservableCollection<Video>();
-
-        //private readonly Timer _timer = new Timer();
-        private Boolean _isFullScreenVideo;
-
-        //private Boolean _isPlaylist;
-
-        private Boolean _isPositionChanging;
-        private Video _currentVideo;
-
-        //private DateTime _mouseLastMouveDateTime = DateTime.Now;
-
-        //private Video NowPlaying
-        //{
-        //    get
-        //    {
-        //        //ObservableCollection<Video> videos = this.DataContext as ObservableCollection<Video>;
-        //        //String path = new Uri(this._VLCcontrol.Media.MRL).LocalPath;
-        //        //return videos.FirstOrDefault(v => v.FileName == path);
-        //        ObservableCollection<Video> videos = this.VideoCollection;
-        //        String path = new Uri(this._VLCcontrol.Media.MRL).LocalPath;
-        //        return videos.FirstOrDefault(v => v.FileName == path);
-        //    }
-        //}
-
-        #endregion
 
         #region Constructors
 
@@ -80,179 +34,12 @@ namespace VideoPlayer
             this.DataContext = this._videosTabControlViewModel;
         }
 
-
         #endregion
 
         private void Player_Stopped(object sender, EventArgs e)
         {
             this.StopVideoPlaying();
         }
-
-        #region Events
-
-        private void ListBoxItem_MouseDoubleClick(Object sender, MouseButtonEventArgs e)
-        {
-            var video = this.CurrentVideo;
-            if (video != null && File.Exists(video.FileName))
-            {
-                this.Player.PlayVideo(video);
-                this.SwitchToFullScreen();
-            }
-            else
-            {
-                MessageBox.Show("File not found");
-                //this.Logger().ErrorFormat("Could not find file {0}", video.FileName);
-            }
-        }
-
-        private void UserControl_KeyDown(Object sender, KeyEventArgs e)
-        {
-            if (!(e.OriginalSource is TextBox))
-            {
-                if (e.Key == Key.Tab)
-                {
-                    if (this._isFullScreenVideo)
-                    {
-                        this.SwitchToWindowMode();
-                    }
-                    else
-                    {
-                        this.SwitchToFullScreen();
-                    }
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.Return)
-                {
-                    this.SwitchToFullScreen();
-                    this.Player.PlayVideo(this.CurrentVideo);
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.A)
-                {
-                    this.AddToExistingPlaylist();
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.P)
-                {
-                    this.SwitchToFullScreen();
-                    this.Player.PlayAll();
-                    //this._isPlaylist = true;
-                    //this.PlaySelectedVideo(false);
-                    //this.playlistPosition = 0;
-                    e.Handled = true;
-                }
-                //else if (e.Key == Key.C)
-                //{
-                //    if (this._uiPlaylist.IsVisible)
-                //    {
-                //        this._uiPlaylist.Visibility = Visibility.Collapsed;
-                //    }
-                //    else
-                //    {
-                //        this._uiPlaylist.Visibility = Visibility.Visible;
-                //    }
-                //    e.Handled = true;
-                //}
-                    //else if (e.Key == Key.Space)
-                    //{
-                    //    if (this._VLCcontrol.IsPaused)
-                    //    {
-                    //        this._VLCcontrol.Play();
-                    //    }
-                    //    else
-                    //    {
-                    //        this._VLCcontrol.Pause();
-                    //    }
-                    //    e.Handled = true;
-                    //}
-                else if (e.Key == Key.E)
-                {
-                    if (Keyboard.Modifiers == ModifierKeys.Control)
-                    {
-                        ICollectionView listCollectionView =
-                            CollectionViewSource.GetDefaultView(this._uiFilesListBox.ItemsSource) as ListCollectionView;
-                        if (listCollectionView != null)
-                        {
-                            listCollectionView.Refresh();
-                        }
-                        ;
-                        this._uiVideoInfoTabControl.SelectedIndex = 0;
-                        this._uiFilesListBox.Items.Refresh();
-                        //this._uiFilesListBox.Items.SortDescriptions.Clear();
-                        //this._uiFilesListBox.Items.SortDescriptions.Add(
-                        //    new SortDescription(this._uiSortComboBox.SelectedItem.ToString(),
-                        //        ListSortDirection.Ascending));
-                        //this._uiFilesListBox.Items.SortDescriptions.Add(
-                        //    new SortDescription("Title",
-                        //        ListSortDirection.Ascending));
-                    }
-                    else
-                    {
-                        this._uiVideoInfoTabControl.SelectedIndex = 1;
-                    }
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.F && Keyboard.Modifiers == ModifierKeys.Control)
-                {
-                    if (this._uiFilterGrid.Visibility == Visibility.Collapsed)
-                    {
-                        ObservableCollection<Video> videos = this.VideoCollection;
-                        if (videos != null)
-                        {
-                            IOrderedEnumerable<string> categories =
-                                videos.Select(v => v.Category).Distinct().OrderBy(v => v);
-
-                            this._uiCategoryFilterComboBox.ItemsSource = categories;
-                        }
-                        this._uiFilterGrid.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        this._uiFilterGrid.Visibility = Visibility.Collapsed;
-                    }
-                }
-            }
-        }
-
-        private void AddToExistingPlaylist()
-        {
-            this.Player.AddVideo(this.CurrentVideo);
-        }
-
-        private void UserControl_Loaded(Object sender, RoutedEventArgs e)
-        {
-            this._uiFilesListBox.Items.SortDescriptions.Add(
-                new SortDescription(this._uiSortComboBox.SelectedItem.ToString(), ListSortDirection.Ascending));
-            this._uiFilesListBox.Items.SortDescriptions.Add(
-                new SortDescription("Title",
-                    ListSortDirection.Ascending));
-        }
-
-        #endregion
-
-        #region Methods
-
-        private void StopVideoPlaying()
-        {
-            this._uiNowPlaying.Text = "Now playing: ";
-            this.SwitchToWindowMode();
-        }
-
-        private void SwitchToFullScreen()
-        {
-            this._videosTabControlViewModel.SelectedIndex = 1;
-            this._isFullScreenVideo = true;
-            this._uiVideosTabControl.SelectedItem = this._uiVideoPlaying;
-        }
-
-        private void SwitchToWindowMode()
-        {
-            this._videosTabControlViewModel.SelectedIndex = 0;
-            this._isFullScreenVideo = false;
-            this.Cursor = Cursors.Arrow;
-        }
-
-        #endregion
 
         private void UserControl_IsVisibleChanged(Object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -279,8 +66,11 @@ namespace VideoPlayer
                 Boolean isTagOk = true;
                 if (this._uiFilterGrid.Visibility == Visibility.Visible)
                 {
-                    isNameOk = video.Title.ToLower().Contains(this._uiFilterTextBox.Text);
-                    isTagOk = this.IsTagOk(video);
+                    if (video != null)
+                    {
+                        isNameOk = video.Title.ToLower().Contains(this._uiFilterTextBox.Text);
+                        isTagOk = this.IsTagOk(video);
+                    }
                 }
                 Boolean isCategoryOk = this.IsCategoryOk(video);
                 result = isNameOk && isTagOk && isCategoryOk;
@@ -302,17 +92,7 @@ namespace VideoPlayer
             }
             return isCategoryOk;
         }
-
-        private Boolean IsCategoryOk(Video video, String category)
-        {
-            Boolean isCategoryOk = true;
-            if (!String.IsNullOrEmpty(category) && !String.IsNullOrEmpty(video.Category))
-            {
-                isCategoryOk = video.Category == category;
-            }
-            return isCategoryOk;
-        }
-
+        
         private Boolean IsTagOk(Video video)
         {
             Boolean isTagOk = false;
@@ -355,7 +135,7 @@ namespace VideoPlayer
         {
             foreach (Object item in this._uiFilesListBox.Items)
             {
-                this.Player.AddVideo((Video)item);
+                this.Player.AddVideo((Video) item);
             }
             this.Player.PlayAll();
         }
@@ -409,41 +189,6 @@ namespace VideoPlayer
             return true;
         }
 
-        private void Filter(ICollectionView view, CategoryViewModel categoryViewModel)
-        {
-            if (view != null)
-            {
-                if (categoryViewModel == null || categoryViewModel.Name == "All")
-                {
-                    view.Filter = this.TrueFilter;
-                }
-                else
-                {
-                    view.Filter = this.FilterCategory;
-                }
-            }
-        }
-
-        private Boolean FilterCategory(Object item)
-        {
-            Boolean result = true;
-            try
-            {
-                var video = item as Video;
-                var categoryListViewModel = this.UiCategoriesListBox.SelectedItem as CategoryViewModel;
-                if (video != null && categoryListViewModel != null)
-                {
-                    String category = categoryListViewModel.Name;
-                    Boolean isCategoryOk = this.IsCategoryOk(video, category);
-                    result = isCategoryOk;
-                }
-            }
-            catch (Exception e)
-            {
-                this.Logger().ErrorFormat(e.Message);
-            }
-            return result;
-        }
 
         private void UiPlayAllButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -455,20 +200,167 @@ namespace VideoPlayer
             //this.PlaySelectedVideo(false);
         }
 
-        private void UiCategoriesListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        #region Events
+
+        private void ListBoxItem_MouseDoubleClick(Object sender, MouseButtonEventArgs e)
         {
-            ICollectionView view = CollectionViewSource.GetDefaultView(this._uiFilesListBox.ItemsSource);
-            var categoryListViewModel = this.UiCategoriesListBox.SelectedItem as CategoryViewModel;
-            this.Filter(view, categoryListViewModel);
+            Video video = this._videosTabControlViewModel.CurrentVideo;
+            if (video != null && File.Exists(video.FileName))
+            {
+                this.Player.PlayVideo(video);
+                this.SwitchToFullScreen();
+            }
+            else
+            {
+                MessageBox.Show("File not found");
+                //this.Logger().ErrorFormat("Could not find file {0}", video.FileName);
+            }
         }
 
-        private void UiCategoriesListBox_Loaded(object sender, RoutedEventArgs e)
+        private void UserControl_KeyDown(Object sender, KeyEventArgs e)
         {
-            if (this._categoryListViewModel == null)
+            if (!(e.OriginalSource is TextBox))
             {
-                this._categoryListViewModel = new CategoryListViewModel();
+                if (e.Key == Key.Tab)
+                {
+                    if (this._videosTabControlViewModel.SelectedIndex == 1)
+                    {
+                        this.SwitchToWindowMode();
+                    }
+                    else
+                    {
+                        this.SwitchToFullScreen();
+                    }
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Return)
+                {
+                    this.SwitchToFullScreen();
+                    this.Player.PlayVideo(this._videosTabControlViewModel.CurrentVideo);
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.A)
+                {
+                    this.AddToExistingPlaylist();
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.P)
+                {
+                    this.SwitchToFullScreen();
+                    this.Player.PlayAll();
+                    //this._isPlaylist = true;
+                    //this.PlaySelectedVideo(false);
+                    //this.playlistPosition = 0;
+                    e.Handled = true;
+                }
+                    //else if (e.Key == Key.C)
+                    //{
+                    //    if (this._uiPlaylist.IsVisible)
+                    //    {
+                    //        this._uiPlaylist.Visibility = Visibility.Collapsed;
+                    //    }
+                    //    else
+                    //    {
+                    //        this._uiPlaylist.Visibility = Visibility.Visible;
+                    //    }
+                    //    e.Handled = true;
+                    //}
+                    //else if (e.Key == Key.Space)
+                    //{
+                    //    if (this._VLCcontrol.IsPaused)
+                    //    {
+                    //        this._VLCcontrol.Play();
+                    //    }
+                    //    else
+                    //    {
+                    //        this._VLCcontrol.Pause();
+                    //    }
+                    //    e.Handled = true;
+                    //}
+                else if (e.Key == Key.E)
+                {
+                    if (Keyboard.Modifiers == ModifierKeys.Control)
+                    {
+                        ICollectionView listCollectionView =
+                            CollectionViewSource.GetDefaultView(this._uiFilesListBox.ItemsSource) as ListCollectionView;
+                        if (listCollectionView != null)
+                        {
+                            listCollectionView.Refresh();
+                        }
+                        this._uiVideoInfoTabControl.SelectedIndex = 0;
+                        this._uiFilesListBox.Items.Refresh();
+                        //this._uiFilesListBox.Items.SortDescriptions.Clear();
+                        //this._uiFilesListBox.Items.SortDescriptions.Add(
+                        //    new SortDescription(this._uiSortComboBox.SelectedItem.ToString(),
+                        //        ListSortDirection.Ascending));
+                        //this._uiFilesListBox.Items.SortDescriptions.Add(
+                        //    new SortDescription("Title",
+                        //        ListSortDirection.Ascending));
+                    }
+                    else
+                    {
+                        this._uiVideoInfoTabControl.SelectedIndex = 1;
+                    }
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.F && Keyboard.Modifiers == ModifierKeys.Control)
+                {
+                    if (this._uiFilterGrid.Visibility == Visibility.Collapsed)
+                    {
+                        ObservableCollection<Video> videos = this._videosTabControlViewModel.VideoCollection;
+                        if (videos != null)
+                        {
+                            IOrderedEnumerable<string> categories =
+                                videos.Select(v => v.Category).Distinct().OrderBy(v => v);
+
+                            this._uiCategoryFilterComboBox.ItemsSource = categories;
+                        }
+                        this._uiFilterGrid.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        this._uiFilterGrid.Visibility = Visibility.Collapsed;
+                    }
+                }
             }
-            this.UiCategoriesListBox.DataContext = this._categoryListViewModel;
         }
+
+        private void AddToExistingPlaylist()
+        {
+            this.Player.AddVideo(this._videosTabControlViewModel.CurrentVideo);
+        }
+
+        private void UserControl_Loaded(Object sender, RoutedEventArgs e)
+        {
+            this._uiFilesListBox.Items.SortDescriptions.Add(
+                new SortDescription(this._uiSortComboBox.SelectedItem.ToString(), ListSortDirection.Ascending));
+            this._uiFilesListBox.Items.SortDescriptions.Add(
+                new SortDescription("Title",
+                    ListSortDirection.Ascending));
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void StopVideoPlaying()
+        {
+            this._uiNowPlaying.Text = "Now playing: ";
+            this.SwitchToWindowMode();
+        }
+
+        private void SwitchToFullScreen()
+        {
+            this._videosTabControlViewModel.SelectedIndex = 1;
+            //this._uiVideosTabControl.SelectedItem = this._uiVideoPlaying;
+        }
+
+        private void SwitchToWindowMode()
+        {
+            this._videosTabControlViewModel.SelectedIndex = 0;
+            this.Cursor = Cursors.Arrow;
+        }
+
+        #endregion
     }
 }

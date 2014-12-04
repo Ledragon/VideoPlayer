@@ -5,10 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:VideoPlayer"
              xmlns:med="clr-namespace:System.Windows.Media"
-             xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="VideoPlayer.VideosPage"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             x:Class="VideoPlayer.VideosPage"
              mc:Ignorable="d"
-             d:DesignHeight="768" d:DesignWidth="1024" KeyDown="UserControl_KeyDown" Loaded="UserControl_Loaded"
-             Background="#00000000" IsVisibleChanged="UserControl_IsVisibleChanged">
+             d:DesignHeight="768" d:DesignWidth="1024" 
+             KeyDown="UserControl_KeyDown" 
+             Loaded="UserControl_Loaded"
+             Background="#00000000" 
+             IsVisibleChanged="UserControl_IsVisibleChanged">
     <UserControl.Resources>
 
         <Style TargetType="{x:Type Label}" x:Key="Label">
@@ -83,6 +88,7 @@
         <med:ImageConverter x:Key="imageConverter" />
         <FontFamily x:Key="TextFontFamily">Leelawadee</FontFamily>
     </UserControl.Resources>
+    
     <TabControl x:Name="_uiVideosTabControl" SelectedIndex="{Binding SelectedIndex}">
         <TabItem x:Name="_uiVideosList">
             <Grid>
@@ -96,9 +102,14 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <!--<Views:CategoryList></Views:CategoryList>-->
-                    <ListBox Grid.Row="0" Width="150" Name="UiCategoriesListBox" ItemsSource="{Binding CategoryViewModels}"
-                             Background="#aa494949" Margin="5" VerticalAlignment="Stretch" UseLayoutRounding="False"
-                             HorizontalContentAlignment="Stretch" SelectionChanged="UiCategoriesListBox_OnSelectionChanged" Loaded="UiCategoriesListBox_Loaded">
+                    <ListBox Grid.Row="0" Width="150" 
+                             Name="UiCategoriesListBox" 
+                             ItemsSource="{Binding CategoryViewModels}"
+                             Background="#aa494949" Margin="5" 
+                             VerticalAlignment="Stretch" 
+                             UseLayoutRounding="False"
+                             HorizontalContentAlignment="Stretch" 
+                             SelectedItem="{Binding SelectedCategory}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Vertical" VerticalAlignment="Center"
@@ -219,9 +230,18 @@
                        
                     </StackPanel>-->
                     </Grid>
-                    <ListBox x:Name="_uiFilesListBox" Grid.Row="2" SelectionMode="Single"
-                             IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" IsHitTestVisible="True"
+                    <ListBox x:Name="_uiFilesListBox" Grid.Row="2" 
+                             SelectionMode="Single"
+                             IsSynchronizedWithCurrentItem="True" 
+                             ItemsSource="{Binding FilteredVideos, Mode=OneWay}" 
+                             SelectedItem="{Binding CurrentVideo}"
+                             IsHitTestVisible="True"
                              IsTextSearchEnabled="False" Background="#CC000000">
+                        <!--<CollectionViewSource>
+                            <CollectionViewSource.SortDescriptions>
+                                <componentModel:SortDescription PropertyName="Title" Direction="Ascending"></componentModel:SortDescription>
+                            </CollectionViewSource.SortDescriptions>
+                        </CollectionViewSource>-->
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" />

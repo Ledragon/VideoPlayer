@@ -70,7 +70,7 @@
 
         <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform" />
         <Grid Grid.Column="0" x:Name="UiControlsGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
-              Background="#B23E3E3E" Margin="20,0,20,0" Visibility="{Binding ControlsVisibility}">
+              Background="#B23E3E3E" Margin="20,0,20,0" Visibility="{Binding ControlsVisibility}" MaxWidth="800">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

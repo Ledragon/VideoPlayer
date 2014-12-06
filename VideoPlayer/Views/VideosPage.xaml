@@ -81,6 +81,15 @@
         <Style TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="White" />
         </Style>
+        <Style TargetType="{x:Type TextBlock}" x:Key="StatusBarStyle" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="Foreground" Value="LightGray" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="5,0,10,0" />
+        </Style>
+        <Style TargetType="{x:Type StackPanel}" x:Key="FilterStackPanelStyle">
+            <Setter Property="Margin" Value="5" />
+        </Style>
         <Image x:Key="Muted" Source="..\Icons\sound_none.png" />
         <Image x:Key="Unmuted" Source="..\Icons\sound.png" />
         <med:ImageConverter x:Key="imageConverter" />
@@ -145,11 +154,9 @@
                         <RowDefinition Height="25" x:Name="_uiInfosRow" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="3" Orientation="Horizontal" Background="#33D3D3D3" x:Name="_uiStatusBar">
-                        <TextBlock VerticalAlignment="Center" x:Name="_uiNumberOfVideos"
-                                   Text="{Binding ElementName=_uiFilesListBox, Path=DataContext.Count, Mode=OneWay, StringFormat=Number of videos: 0}"
-                                   TextAlignment="Left" Foreground="White" Margin="5,0,10,0" />
-                        <TextBlock VerticalAlignment="Center" x:Name="_uiNowPlaying" Foreground="White"
-                                   Margin="5,0,10,0" Text="Now Playing: " />
+                        <!--<TextBlock x:Name="_uiNowPlaying" Text="{Binding Path=CurrentVideo.Title, StringFormat=Now playing: {0} }"  Style="{StaticResource StatusBarStyle}"/>-->
+                        <TextBlock Text="{Binding NumberOfVideos, StringFormat=Videos: {0} }"
+                                   Style="{StaticResource StatusBarStyle}" />
                     </StackPanel>
 
                     <Grid Grid.Row="0" Margin="30" Background="#CC000000" DataContext="{Binding CurrentVideo}">
@@ -181,18 +188,18 @@
                           HorizontalAlignment="Stretch" ZIndex="10" Name="_uiFilterGrid"
                           Visibility="{Binding FilterGridVisibility}">
                         <Grid VerticalAlignment="Center" Background="#cc550000" Margin="0">
-                            <StackPanel Orientation="Horizontal" Margin="10">
-                                <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <StackPanel Style="{StaticResource FilterStackPanelStyle}">
                                     <Label x:Name="_uiNameFilter" Content="Name:" Style="{StaticResource Label}" />
                                     <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding NameFilter}"
                                              VerticalAlignment="Center" Width="120" x:Name="_uiFilterTextBox" />
                                 </StackPanel>
-                                <StackPanel>
+                                <StackPanel Style="{StaticResource FilterStackPanelStyle}">
                                     <Label x:Name="_uiTagFilter" Content="Tag:" Style="{StaticResource Label}" />
                                     <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TagFilter}"
                                              VerticalAlignment="Center" Width="120" x:Name="_uiTagFilterTextBox" />
                                 </StackPanel>
-                                <StackPanel>
+                                <StackPanel Style="{StaticResource FilterStackPanelStyle}">
 
                                     <Label x:Name="_uiCategoryFilter" Content="Category:"
                                            Style="{StaticResource Label}" />
@@ -208,7 +215,7 @@
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                 </StackPanel>
-                                <StackPanel>
+                                <StackPanel Style="{StaticResource FilterStackPanelStyle}">
                                     <Label HorizontalAlignment="Left" VerticalAlignment="Center"
                                            Style="{StaticResource Label}">
                                         Sort by:
@@ -228,9 +235,12 @@
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                 </StackPanel>
-                                <Button x:Name="_uiClearFilter" Content="Clear filter" HorizontalAlignment="Left"
-                                        VerticalAlignment="Center" Width="75"
-                                        Command="{Binding ClearFilterCommand}"/>
+                                <StackPanel Style="{StaticResource FilterStackPanelStyle}" VerticalAlignment="Stretch">
+                                    <Label Foreground="Transparent">empty</Label>
+                                    <Button x:Name="_uiClearFilter" Content="Clear filter" HorizontalAlignment="Left"
+                                            VerticalAlignment="Bottom" Width="75"
+                                            Command="{Binding ClearFilterCommand}" />
+                                </StackPanel>
                             </StackPanel>
                         </Grid>
                     </Grid>

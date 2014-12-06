@@ -32,6 +32,22 @@ namespace VideoPlayer.ViewModels
         private string _tagFilter;
         private ObservableCollection<Video> _videoCollection;
         private ICommand _clearFilterCommand;
+        private int _numberOfVideos;
+
+        public Int32 NumberOfVideos
+        {
+            get
+            {
+                return this._numberOfVideos;
+                //return this.FilteredVideos.Cast<Video>().Count();
+            }
+            set
+            {
+                if (value == this._numberOfVideos) return;
+                this._numberOfVideos = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public ICommand ClearFilterCommand
         {
@@ -337,6 +353,7 @@ namespace VideoPlayer.ViewModels
             {
                 view.Filter = this.GlobalFilter;
                 this.FilteredVideos = view;
+                this.NumberOfVideos= this.FilteredVideos.Cast<Video>().Count();
             }
         }
 

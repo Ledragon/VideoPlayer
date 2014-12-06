@@ -40,16 +40,7 @@ namespace VideoPlayer
         {
             this.StopVideoPlaying();
         }
-
-        private void UserControl_IsVisibleChanged(Object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (this._uiFilesListBox.Visibility == Visibility.Visible)
-            {
-                this._uiFilesListBox.Focus();
-                this._uiFilesListBox.SelectedIndex = 0;
-            }
-        }
-
+        
         private void _uiFilterButton_Click(Object sender, RoutedEventArgs e)
         {
             ICollectionView view = this._uiFilesListBox.Items;
@@ -133,7 +124,7 @@ namespace VideoPlayer
 
         private void PlayAll()
         {
-            foreach (Object item in this._uiFilesListBox.Items)
+            foreach (Object item in this._videosTabControlViewModel.FilteredVideos)
             {
                 this.Player.AddVideo((Video) item);
             }
@@ -149,35 +140,6 @@ namespace VideoPlayer
             }
         }
 
-        private void _uiSortComboBox_OnSelectionChanged(Object sender, SelectionChangedEventArgs e)
-        {
-            if (this._uiFilesListBox != null)
-            {
-                this._uiFilesListBox.Items.SortDescriptions.Clear();
-                SortDescription sortDescription = this.SortDescription();
-                this._uiFilesListBox.Items.SortDescriptions.Add(sortDescription);
-            }
-        }
-
-        private SortDescription SortDescription()
-        {
-            SortDescription sortDescription;
-            if (this._uiSortComboBox.SelectedItem.ToString() == "Newest")
-            {
-                sortDescription = new SortDescription("DateAdded", ListSortDirection.Descending);
-            }
-            else if (this._uiSortComboBox.SelectedItem.ToString() == "Oldest")
-            {
-                sortDescription = new SortDescription("DateAdded", ListSortDirection.Ascending);
-            }
-            else
-            {
-                sortDescription = new SortDescription(this._uiSortComboBox.SelectedItem.ToString(),
-                    ListSortDirection.Ascending);
-            }
-            return sortDescription;
-        }
-
         private void _uiClearFilter_OnClick(Object sender, RoutedEventArgs e)
         {
             ICollectionView view = this._uiFilesListBox.Items;
@@ -188,7 +150,6 @@ namespace VideoPlayer
         {
             return true;
         }
-
 
         private void UiPlayAllButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -204,17 +165,7 @@ namespace VideoPlayer
 
         private void ListBoxItem_MouseDoubleClick(Object sender, MouseButtonEventArgs e)
         {
-            Video video = this._videosTabControlViewModel.CurrentVideo;
-            if (video != null && File.Exists(video.FileName))
-            {
-                this.Player.PlayVideo(video);
-                this.SwitchToFullScreen();
-            }
-            else
-            {
-                MessageBox.Show("File not found");
-                //this.Logger().ErrorFormat("Could not find file {0}", video.FileName);
-            }
+            this.PlayCurrent();
         }
 
         private void UserControl_KeyDown(Object sender, KeyEventArgs e)
@@ -235,8 +186,9 @@ namespace VideoPlayer
                 }
                 else if (e.Key == Key.Return)
                 {
-                    this.SwitchToFullScreen();
-                    this.Player.PlayVideo(this._videosTabControlViewModel.CurrentVideo);
+                    this.PlayCurrent();
+                    //this.SwitchToFullScreen();
+                    //this.Player.PlayVideo(this._videosTabControlViewModel.CurrentVideo);
                     e.Handled = true;
                 }
                 else if (e.Key == Key.A)
@@ -303,25 +255,6 @@ namespace VideoPlayer
                     }
                     e.Handled = true;
                 }
-                else if (e.Key == Key.F && Keyboard.Modifiers == ModifierKeys.Control)
-                {
-                    if (this._uiFilterGrid.Visibility == Visibility.Collapsed)
-                    {
-                        ObservableCollection<Video> videos = this._videosTabControlViewModel.VideoCollection;
-                        if (videos != null)
-                        {
-                            IOrderedEnumerable<string> categories =
-                                videos.Select(v => v.Category).Distinct().OrderBy(v => v);
-
-                            this._uiCategoryFilterComboBox.ItemsSource = categories;
-                        }
-                        this._uiFilterGrid.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        this._uiFilterGrid.Visibility = Visibility.Collapsed;
-                    }
-                }
             }
         }
 
@@ -329,36 +262,40 @@ namespace VideoPlayer
         {
             this.Player.AddVideo(this._videosTabControlViewModel.CurrentVideo);
         }
-
-        private void UserControl_Loaded(Object sender, RoutedEventArgs e)
-        {
-            this._uiFilesListBox.Items.SortDescriptions.Add(
-                new SortDescription(this._uiSortComboBox.SelectedItem.ToString(), ListSortDirection.Ascending));
-            this._uiFilesListBox.Items.SortDescriptions.Add(
-                new SortDescription("Title",
-                    ListSortDirection.Ascending));
-        }
-
+        
         #endregion
 
         #region Methods
 
+        private void PlayCurrent()
+        {
+            Video video = this._videosTabControlViewModel.CurrentVideo;
+            if (video != null && File.Exists(video.FileName))
+            {
+                this.Player.PlayVideo(video);
+                this.SwitchToFullScreen();
+            }
+            else
+            {
+                MessageBox.Show("File not found");
+                //this.Logger().ErrorFormat("Could not find file {0}", video.FileName);
+            }
+        }
+
         private void StopVideoPlaying()
         {
-            this._uiNowPlaying.Text = "Now playing: ";
+            //this._uiNowPlaying.Text = "Now playing: ";
             this.SwitchToWindowMode();
         }
 
         private void SwitchToFullScreen()
         {
-            this._videosTabControlViewModel.SelectedIndex = 1;
-            //this._uiVideosTabControl.SelectedItem = this._uiVideoPlaying;
+            this._videosTabControlViewModel.SwitchToFullScreenCommand.Execute(null);
         }
 
         private void SwitchToWindowMode()
         {
-            this._videosTabControlViewModel.SelectedIndex = 0;
-            this.Cursor = Cursors.Arrow;
+            this._videosTabControlViewModel.SwitchToWindowCommand.Execute(null);
         }
 
         #endregion

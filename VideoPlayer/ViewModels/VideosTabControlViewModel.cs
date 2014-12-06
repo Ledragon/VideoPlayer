@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using Classes;
 using Log;
+using VideoPlayer.Commands;
 using VideoPlayer.Common;
 using VideoPlayer.Services;
 
@@ -15,16 +18,160 @@ namespace VideoPlayer.ViewModels
     {
         private ObservableCollection<CategoryViewModel> _categoryViewModels;
         private Video _currentVideo;
+        private Cursor _cursor;
+        private Visibility _filterGridVisibility;
+        private String _filterText;
         private ICollectionView _filteredVideos;
         private CategoryViewModel _selectedCategory;
         private Int32 _selectedIndex;
+        private SortingViewModel _selectedSorting;
+        private ICommand _showFilterGridCommand;
+        private ObservableCollection<SortingViewModel> _sortings;
+        private ICommand _switchToFullScreenCommand;
         private ObservableCollection<Video> _videoCollection;
+        private ICommand _switchToWindowCommand;
+
+        public ICommand SwitchToWindowCommand
+        {
+            get { return this._switchToWindowCommand; }
+            set
+            {
+                if (Equals(value, this._switchToWindowCommand)) return;
+                this._switchToWindowCommand = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public VideosTabControlViewModel()
         {
             var service = DependencyFactory.Resolve<ILibraryService>();
             this.VideoCollection = service.GetObjectsFromFile().Videos;
             this.CategoryViewModels = new ObservableCollection<CategoryViewModel>();
+            this.FilterGridVisibility = Visibility.Collapsed;
+
+            this.ShowFilterGridCommand = new GenericCommand(this.ShowFilterGrid);
+            this.SwitchToFullScreenCommand = new GenericCommand(this.SwitchToFullScreen);
+            this.SwitchToWindowCommand = new GenericCommand(this.SwitchToWindowMode);
+        }
+
+        public ICommand SwitchToFullScreenCommand
+        {
+            get { return this._switchToFullScreenCommand; }
+            set
+            {
+                if (Equals(value, this._switchToFullScreenCommand)) return;
+                this._switchToFullScreenCommand = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public Cursor Cursor
+        {
+            get { return this._cursor; }
+            set
+            {
+                if (Equals(value, this._cursor)) return;
+                this._cursor = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public ICommand ShowFilterGridCommand
+        {
+            get { return this._showFilterGridCommand; }
+            set
+            {
+                if (Equals(value, this._showFilterGridCommand)) return;
+                this._showFilterGridCommand = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public SortingViewModel SelectedSorting
+        {
+            get { return this._selectedSorting; }
+            set
+            {
+                if (!Equals(value, this._selectedSorting))
+                {
+                    this._selectedSorting = value;
+                    this.FilteredVideos.SortDescriptions.Clear();
+                    this.FilteredVideos.SortDescriptions.Add(this._selectedSorting.SortDescription);
+                    this.OnPropertyChanged();
+                }
+            }
+        }
+
+        public ObservableCollection<SortingViewModel> Sortings
+        {
+            get
+            {
+                if (this._sortings == null)
+                {
+                    this._sortings = new ObservableCollection<SortingViewModel>
+                    {
+                        new SortingViewModel
+                        {
+                            Name = "Title",
+                            SortDescription = new SortDescription("Title", ListSortDirection.Ascending)
+                        },
+                        new SortingViewModel
+                        {
+                            Name = "Category",
+                            SortDescription = new SortDescription("Category", ListSortDirection.Ascending)
+                        },
+                        new SortingViewModel
+                        {
+                            Name = "Length",
+                            SortDescription = new SortDescription("Length", ListSortDirection.Ascending)
+                        },
+                        new SortingViewModel
+                        {
+                            Name = "Oldest",
+                            SortDescription = new SortDescription("DateAdded", ListSortDirection.Ascending)
+                        },
+                        new SortingViewModel
+                        {
+                            Name = "Newest",
+                            SortDescription = new SortDescription("DateAdded", ListSortDirection.Descending)
+                        }
+                    };
+                    this.SelectedSorting = this._sortings[0];
+                }
+                return this._sortings;
+            }
+            set
+            {
+                if (Equals(value, this._sortings)) return;
+                this._sortings = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public String FilterText
+        {
+            get { return this._filterText; }
+            set
+            {
+                if (value != this._filterText)
+                {
+                    this._filterText = value;
+                    this.OnPropertyChanged();
+                }
+            }
+        }
+
+        public Visibility FilterGridVisibility
+        {
+            get { return this._filterGridVisibility; }
+            set
+            {
+                if (!value.Equals(this._filterGridVisibility))
+                {
+                    this._filterGridVisibility = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         public CategoryViewModel SelectedCategory
@@ -70,24 +217,27 @@ namespace VideoPlayer.ViewModels
         {
             get
             {
-                IEnumerable<IGrouping<string, Video>> grouped =
-                    this.VideoCollection.OrderBy(v => v.Category).GroupBy(v => v.Category);
-                foreach (var grouping in grouped)
+                if (this._categoryViewModels.Count == 0)
                 {
-                    this._categoryViewModels.Add(new CategoryViewModel
+                    IEnumerable<IGrouping<string, Video>> grouped =
+                        this.VideoCollection.OrderBy(v => v.Category).GroupBy(v => v.Category);
+                    foreach (var grouping in grouped)
                     {
-                        Name = grouping.Key,
-                        Count = grouping.Count()
+                        this._categoryViewModels.Add(new CategoryViewModel
+                        {
+                            Name = grouping.Key,
+                            Count = grouping.Count()
+                        });
+                    }
+
+
+                    this._categoryViewModels.Insert(0, new CategoryViewModel
+                    {
+                        Count = this.VideoCollection.Count,
+                        Name = "All"
                     });
+                    this.SelectedCategory = this._categoryViewModels[0];
                 }
-
-
-                this._categoryViewModels.Insert(0, new CategoryViewModel
-                {
-                    Count = this.VideoCollection.Count,
-                    Name = "All"
-                });
-                this.SelectedCategory = this._categoryViewModels[0];
                 return this._categoryViewModels;
             }
             set
@@ -124,7 +274,23 @@ namespace VideoPlayer.ViewModels
                     return;
                 }
                 this._filteredVideos = value;
+                if (this.CurrentVideo == null)
+                {
+                    this.CurrentVideo = this.VideoCollection.OrderBy(t => t.Title).First();
+                }
                 this.OnPropertyChanged();
+            }
+        }
+
+        private void ShowFilterGrid()
+        {
+            if (this.FilterGridVisibility == Visibility.Collapsed)
+            {
+                this.FilterGridVisibility = Visibility.Visible;
+            }
+            else
+            {
+                this.FilterGridVisibility = Visibility.Collapsed;
             }
         }
 
@@ -176,5 +342,69 @@ namespace VideoPlayer.ViewModels
             }
             return isCategoryOk;
         }
+
+        private void SwitchToWindowMode()
+        {
+            this.SelectedIndex = 0;
+            this.Cursor = Cursors.Arrow;
+        }
+
+        private void SwitchToFullScreen()
+        {
+            this.SelectedIndex = 1;
+            //this._uiVideosTabControl.SelectedItem = this._uiVideoPlaying;
+        }
+
+        //private Boolean IsTagOk(Video video)
+        //{
+        //    Boolean isTagOk = false;
+        //    if (!String.IsNullOrEmpty(this.FilterText))
+        //    {
+        //        string tagFilter = this.FilterText;
+        //        if (!String.IsNullOrEmpty(tagFilter))
+        //        {
+        //            string[] filters = tagFilter.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+        //            foreach (string filter in filters)
+        //            {
+        //                isTagOk = isTagOk || video.Tags.Any(t => t.Value.ToLower().Contains(filter));
+        //            }
+        //        }
+        //        else
+        //        {
+        //            isTagOk = true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        isTagOk = true;
+        //    }
+        //    return isTagOk;
+        //}
+
+        //private Boolean Filter(Object item)
+        //{
+        //    Boolean result = true;
+        //    try
+        //    {
+        //        var video = item as Video;
+        //        Boolean isNameOk = true;
+        //        Boolean isTagOk = true;
+        //        if (this.FilterGridVisibility == Visibility.Visible)
+        //        {
+        //            if (video != null)
+        //            {
+        //                isNameOk = video.Title.ToLower().Contains(this.FilterText);
+        //                isTagOk = this.IsTagOk(video);
+        //            }
+        //        }
+        //        Boolean isCategoryOk = this.IsCategoryOk(video);
+        //        result = isNameOk && isTagOk && isCategoryOk;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        this.Logger().ErrorFormat(e.Message);
+        //    }
+        //    return result;
+        //}
     }
 }

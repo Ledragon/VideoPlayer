@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace VideoPlayer.Commands
 {
-    public class CommandBase : ICommand
+    public abstract class CommandBase : ICommand
     {
         private readonly Action _method;
 

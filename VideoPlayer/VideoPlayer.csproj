@@ -111,6 +111,8 @@
     <Compile Include="Commands\AddToPlaylistCommand.cs" />
     <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\FilterByCategoryCommand.cs" />
+    <Compile Include="Commands\FilterCommand.cs" />
+    <Compile Include="Commands\GenericCommand.cs" />
     <Compile Include="Commands\PlayCommand.cs" />
     <Compile Include="DataProvider.cs" />
     <Compile Include="IKeyHandler.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="ViewModels\CategoryListViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\PlayVideoViewModel.cs" />
+    <Compile Include="ViewModels\SortingViewModel.cs" />
     <Compile Include="ViewModels\VideosTabControlViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\CategoryList.xaml.cs">

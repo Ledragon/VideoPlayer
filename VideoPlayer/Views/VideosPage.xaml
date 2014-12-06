@@ -1,19 +1,17 @@
-﻿<UserControl xmlns:Views1="clr-namespace:VideoPlayerControl.Views;assembly=VideoPlayerControl"  xmlns:Views="clr-namespace:VideoPlayer.Views"
+﻿<UserControl xmlns:Views1="clr-namespace:VideoPlayerControl.Views;assembly=VideoPlayerControl"
+             xmlns:Views="clr-namespace:VideoPlayer.Views"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:VideoPlayer"
              xmlns:med="clr-namespace:System.Windows.Media"
-             xmlns:System="clr-namespace:System;assembly=mscorlib"
-             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              x:Class="VideoPlayer.VideosPage"
              mc:Ignorable="d"
-             d:DesignHeight="768" d:DesignWidth="1024" 
-             KeyDown="UserControl_KeyDown" 
-             Loaded="UserControl_Loaded"
-             Background="#00000000" 
-             IsVisibleChanged="UserControl_IsVisibleChanged">
+             d:DesignHeight="768" d:DesignWidth="1024"
+             KeyDown="UserControl_KeyDown"
+             Background="#00000000"
+             Cursor="{Binding Cursor}">
     <UserControl.Resources>
 
         <Style TargetType="{x:Type Label}" x:Key="Label">
@@ -88,7 +86,9 @@
         <med:ImageConverter x:Key="imageConverter" />
         <FontFamily x:Key="TextFontFamily">Leelawadee</FontFamily>
     </UserControl.Resources>
-    
+    <UserControl.InputBindings>
+        <KeyBinding Command="{Binding ShowFilterGridCommand}" Key="F" Modifiers="Control" />
+    </UserControl.InputBindings>
     <TabControl x:Name="_uiVideosTabControl" SelectedIndex="{Binding SelectedIndex}">
         <TabItem x:Name="_uiVideosList">
             <Grid>
@@ -101,14 +101,14 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <!--<Views:CategoryList></Views:CategoryList>-->
-                    <ListBox Grid.Row="0" Width="150" 
-                             Name="UiCategoriesListBox" 
+                    <!--<Views:CategoryList DataContext="{Binding CategoryViewModels}"></Views:CategoryList>-->
+                    <ListBox Grid.Row="0" Width="150"
+                             Name="UiCategoriesListBox"
                              ItemsSource="{Binding CategoryViewModels}"
-                             Background="#aa494949" Margin="5" 
-                             VerticalAlignment="Stretch" 
+                             Background="#aa494949" Margin="5"
+                             VerticalAlignment="Stretch"
                              UseLayoutRounding="False"
-                             HorizontalContentAlignment="Stretch" 
+                             HorizontalContentAlignment="Stretch"
                              SelectedItem="{Binding SelectedCategory}">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -152,30 +152,34 @@
                                    Margin="5,0,10,0" Text="Now Playing: " />
                     </StackPanel>
 
-                    <Grid Grid.Row="0" Margin="30" Background="#CC000000">
+                    <Grid Grid.Row="0" Margin="30" Background="#CC000000"  DataContext="{Binding CurrentVideo}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="600" x:Name="_uiMediaElementColumn" />
                             <ColumnDefinition Width="*" x:Name="_uiVideoPropertiesColumn" />
                         </Grid.ColumnDefinitions>
                         <Image
-                            Source="{Binding ElementName=UiVideoInfo,Path=DataContext.PreviewImage, Converter={StaticResource imageConverter}}"
-                            Stretch="Uniform" x:Name="_uiPreviewImage" HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch" Margin="20,20,20,20" />
+                            Source="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}"
+                            Stretch="Uniform" 
+                            x:Name="_uiPreviewImage"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch" 
+                            Margin="20" />
                         <TabControl Grid.Column="1" x:Name="_uiVideoInfoTabControl">
                             <TabItem x:Name="_uiVideoInfoTab">
-                                <Views:VideoInfo HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                 DataContext="{Binding ElementName=_uiFilesListBox, Path=SelectedItem}"
+                                <Views:VideoInfo HorizontalAlignment="Stretch" 
+                                                 VerticalAlignment="Stretch"
                                                  x:Name="UiVideoInfo" />
                             </TabItem>
                             <TabItem x:Name="_uiEditVideoTab">
-                                <local:EditVideo HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                 DataContext="{Binding ElementName=_uiFilesListBox, Path=SelectedItem}"
+                                <local:EditVideo HorizontalAlignment="Stretch" 
+                                                 VerticalAlignment="Stretch"
                                                  x:Name="UiVideoEditInfo" />
                             </TabItem>
                         </TabControl>
                     </Grid>
                     <Grid Grid.Row="0" Grid.RowSpan="4" VerticalAlignment="Stretch" Background="#cc000000"
-                          HorizontalAlignment="Stretch" ZIndex="10" Name="_uiFilterGrid" Visibility="Collapsed">
+                          HorizontalAlignment="Stretch" ZIndex="10" Name="_uiFilterGrid"
+                          Visibility="{Binding FilterGridVisibility}">
                         <Grid VerticalAlignment="Center" Background="#cc550000" Margin="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -184,7 +188,7 @@
                             <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
                                 <StackPanel>
                                     <Label x:Name="_uiNameFilter" Content="Name:" Style="{StaticResource Label}" />
-                                    <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text=""
+                                    <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding FilterText}"
                                              VerticalAlignment="Center" Width="120" x:Name="_uiFilterTextBox" />
                                 </StackPanel>
                                 <StackPanel>
@@ -196,7 +200,17 @@
 
                                     <Label x:Name="_uiCategoryFilter" Content="Category:"
                                            Style="{StaticResource Label}" />
-                                    <ComboBox x:Name="_uiCategoryFilterComboBox" Width="120" />
+                                    <ComboBox x:Name="_uiCategoryFilterComboBox"
+                                              Width="120"
+                                              ItemsSource="{Binding CategoryViewModels}"
+                                              SelectedItem="{Binding SelectedCategory}"
+                                              HorizontalContentAlignment="Stretch">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
@@ -211,14 +225,18 @@
                                     Sort by:
                                 </Label>
                                 <ComboBox x:Name="_uiSortComboBox"
-                                          SelectionChanged="_uiSortComboBox_OnSelectionChanged"
-                                          HorizontalAlignment="Left" VerticalAlignment="Center" SelectedIndex="0"
-                                          Width="100">
-                                    <System:String>Category</System:String>
-                                    <System:String>Length</System:String>
-                                    <System:String>Title</System:String>
-                                    <System:String>Newest</System:String>
-                                    <System:String>Oldest</System:String>
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Center"
+                                          Width="100"
+                                          ItemsSource="{Binding Sortings}"
+                                          SelectedIndex="0"
+                                          HorizontalContentAlignment="Stretch"
+                                          SelectedItem="{Binding SelectedSorting}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
                                 </ComboBox>
                             </StackPanel>
                         </Grid>
@@ -230,10 +248,10 @@
                        
                     </StackPanel>-->
                     </Grid>
-                    <ListBox x:Name="_uiFilesListBox" Grid.Row="2" 
+                    <ListBox x:Name="_uiFilesListBox" Grid.Row="2"
                              SelectionMode="Single"
-                             IsSynchronizedWithCurrentItem="True" 
-                             ItemsSource="{Binding FilteredVideos, Mode=OneWay}" 
+                             IsSynchronizedWithCurrentItem="True"
+                             ItemsSource="{Binding FilteredVideos, Mode=OneWay}"
                              SelectedItem="{Binding CurrentVideo}"
                              IsHitTestVisible="True"
                              IsTextSearchEnabled="False" Background="#CC000000">
@@ -273,7 +291,7 @@
         </TabItem>
         <TabItem x:Name="_uiVideoPlaying" KeyUp="_uiVideoPlaying_KeyUp">
             <!--<Grid Visibility="Visible" x:Name="_uiVLCFullScrenGrid" Background="Black">-->
-                <Views1:Player x:Name="Player"/>
+            <Views1:Player x:Name="Player" />
             <!--</Grid>-->
         </TabItem>
     </TabControl>

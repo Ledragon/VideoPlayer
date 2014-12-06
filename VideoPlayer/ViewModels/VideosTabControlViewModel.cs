@@ -20,24 +20,26 @@ namespace VideoPlayer.ViewModels
         private Video _currentVideo;
         private Cursor _cursor;
         private Visibility _filterGridVisibility;
-        private String _filterText;
         private ICollectionView _filteredVideos;
+        private String _nameFilter;
         private CategoryViewModel _selectedCategory;
         private Int32 _selectedIndex;
         private SortingViewModel _selectedSorting;
         private ICommand _showFilterGridCommand;
         private ObservableCollection<SortingViewModel> _sortings;
         private ICommand _switchToFullScreenCommand;
-        private ObservableCollection<Video> _videoCollection;
         private ICommand _switchToWindowCommand;
+        private string _tagFilter;
+        private ObservableCollection<Video> _videoCollection;
+        private ICommand _clearFilterCommand;
 
-        public ICommand SwitchToWindowCommand
+        public ICommand ClearFilterCommand
         {
-            get { return this._switchToWindowCommand; }
+            get { return this._clearFilterCommand; }
             set
             {
-                if (Equals(value, this._switchToWindowCommand)) return;
-                this._switchToWindowCommand = value;
+                if (Equals(value, this._clearFilterCommand)) return;
+                this._clearFilterCommand = value;
                 this.OnPropertyChanged();
             }
         }
@@ -52,6 +54,39 @@ namespace VideoPlayer.ViewModels
             this.ShowFilterGridCommand = new GenericCommand(this.ShowFilterGrid);
             this.SwitchToFullScreenCommand = new GenericCommand(this.SwitchToFullScreen);
             this.SwitchToWindowCommand = new GenericCommand(this.SwitchToWindowMode);
+            this.ClearFilterCommand=new GenericCommand(this.ClearFilter);
+        }
+
+        private void ClearFilter()
+        {
+            this.NameFilter = String.Empty;
+            this.TagFilter = String.Empty;
+        }
+
+        public String TagFilter
+        {
+            get { return this._tagFilter; }
+            set
+            {
+                if (value != this._tagFilter)
+                {
+                    this._tagFilter = value;
+                    this.Filter();
+                    this.OnPropertyChanged();
+                }
+            }
+        }
+
+
+        public ICommand SwitchToWindowCommand
+        {
+            get { return this._switchToWindowCommand; }
+            set
+            {
+                if (Equals(value, this._switchToWindowCommand)) return;
+                this._switchToWindowCommand = value;
+                this.OnPropertyChanged();
+            }
         }
 
         public ICommand SwitchToFullScreenCommand
@@ -148,14 +183,15 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-        public String FilterText
+        public String NameFilter
         {
-            get { return this._filterText; }
+            get { return this._nameFilter; }
             set
             {
-                if (value != this._filterText)
+                if (value != this._nameFilter)
                 {
-                    this._filterText = value;
+                    this._nameFilter = value;
+                    this.Filter();
                     this.OnPropertyChanged();
                 }
             }
@@ -299,9 +335,21 @@ namespace VideoPlayer.ViewModels
             ICollectionView view = CollectionViewSource.GetDefaultView(this.VideoCollection);
             if (view != null)
             {
-                view.Filter = this.FilterCategory;
+                view.Filter = this.GlobalFilter;
                 this.FilteredVideos = view;
             }
+        }
+
+        private Boolean GlobalFilter(Object item)
+        {
+            var filters = new List<Predicate<Object>>
+            {
+                this.FilterCategory,
+                this.FilterTag,
+                this.FilterName
+            };
+
+            return filters.All(predicate => predicate(item));
         }
 
         private Boolean FilterCategory(Object item)
@@ -341,6 +389,44 @@ namespace VideoPlayer.ViewModels
                 isCategoryOk = !String.IsNullOrEmpty(video.Category) && video.Category == category;
             }
             return isCategoryOk;
+        }
+
+        private Boolean FilterTag(Object item)
+        {
+            return this.IsTagOk(item as Video);
+        }
+
+        private Boolean FilterName(Object item)
+        {
+            return this.IsNameOk(item as Video);
+        }
+
+        private Boolean IsNameOk(Video video)
+        {
+            var result = true;
+            if (!String.IsNullOrEmpty(this.NameFilter))
+            {
+                result = video.Title.ToLower().Contains(this.NameFilter.ToLower());
+            }
+            return result;
+        }
+
+        private Boolean IsTagOk(Video video)
+        {
+            Boolean isTagOk = false;
+            if (!String.IsNullOrEmpty(this.TagFilter))
+            {
+                String tagFilter = this.TagFilter;
+
+                string[] filters = tagFilter.Split(new[] {";"}, StringSplitOptions.RemoveEmptyEntries);
+                isTagOk = filters.Aggregate(isTagOk,
+                    (current, filter) => current || video.Tags.Any(t => t.Value.ToLower().Contains(filter)));
+            }
+            else
+            {
+                isTagOk = true;
+            }
+            return isTagOk;
         }
 
         private void SwitchToWindowMode()

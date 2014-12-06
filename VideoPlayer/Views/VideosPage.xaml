@@ -152,26 +152,26 @@
                                    Margin="5,0,10,0" Text="Now Playing: " />
                     </StackPanel>
 
-                    <Grid Grid.Row="0" Margin="30" Background="#CC000000"  DataContext="{Binding CurrentVideo}">
+                    <Grid Grid.Row="0" Margin="30" Background="#CC000000" DataContext="{Binding CurrentVideo}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="600" x:Name="_uiMediaElementColumn" />
                             <ColumnDefinition Width="*" x:Name="_uiVideoPropertiesColumn" />
                         </Grid.ColumnDefinitions>
                         <Image
                             Source="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}"
-                            Stretch="Uniform" 
+                            Stretch="Uniform"
                             x:Name="_uiPreviewImage"
                             HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch" 
+                            VerticalAlignment="Stretch"
                             Margin="20" />
                         <TabControl Grid.Column="1" x:Name="_uiVideoInfoTabControl">
                             <TabItem x:Name="_uiVideoInfoTab">
-                                <Views:VideoInfo HorizontalAlignment="Stretch" 
+                                <Views:VideoInfo HorizontalAlignment="Stretch"
                                                  VerticalAlignment="Stretch"
                                                  x:Name="UiVideoInfo" />
                             </TabItem>
                             <TabItem x:Name="_uiEditVideoTab">
-                                <local:EditVideo HorizontalAlignment="Stretch" 
+                                <local:EditVideo HorizontalAlignment="Stretch"
                                                  VerticalAlignment="Stretch"
                                                  x:Name="UiVideoEditInfo" />
                             </TabItem>
@@ -181,19 +181,15 @@
                           HorizontalAlignment="Stretch" ZIndex="10" Name="_uiFilterGrid"
                           Visibility="{Binding FilterGridVisibility}">
                         <Grid VerticalAlignment="Center" Background="#cc550000" Margin="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+                            <StackPanel Orientation="Horizontal" Margin="10">
                                 <StackPanel>
                                     <Label x:Name="_uiNameFilter" Content="Name:" Style="{StaticResource Label}" />
-                                    <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding FilterText}"
+                                    <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding NameFilter}"
                                              VerticalAlignment="Center" Width="120" x:Name="_uiFilterTextBox" />
                                 </StackPanel>
                                 <StackPanel>
                                     <Label x:Name="_uiTagFilter" Content="Tag:" Style="{StaticResource Label}" />
-                                    <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text=""
+                                    <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TagFilter}"
                                              VerticalAlignment="Center" Width="120" x:Name="_uiTagFilterTextBox" />
                                 </StackPanel>
                                 <StackPanel>
@@ -212,41 +208,31 @@
                                         </ComboBox.ItemTemplate>
                                     </ComboBox>
                                 </StackPanel>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
-                                <Button x:Name="_uiFilterButton" Content="Filter" HorizontalAlignment="Left"
-                                        VerticalAlignment="Center" Width="75" Click="_uiFilterButton_Click" />
+                                <StackPanel>
+                                    <Label HorizontalAlignment="Left" VerticalAlignment="Center"
+                                           Style="{StaticResource Label}">
+                                        Sort by:
+                                    </Label>
+                                    <ComboBox x:Name="_uiSortComboBox"
+                                              HorizontalAlignment="Left"
+                                              VerticalAlignment="Center"
+                                              Width="100"
+                                              ItemsSource="{Binding Sortings}"
+                                              SelectedIndex="0"
+                                              HorizontalContentAlignment="Stretch"
+                                              SelectedItem="{Binding SelectedSorting}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" />
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </StackPanel>
                                 <Button x:Name="_uiClearFilter" Content="Clear filter" HorizontalAlignment="Left"
-                                        VerticalAlignment="Center" Width="75" Click="_uiClearFilter_OnClick" />
-                                <Button x:Name="_uiPlayAll" Content="Play All" Width="75" HorizontalAlignment="Left"
-                                        VerticalAlignment="Center" Click="_uiPlayAll_OnClick" />
-                                <Label HorizontalAlignment="Left" VerticalAlignment="Center"
-                                       Style="{StaticResource Label}">
-                                    Sort by:
-                                </Label>
-                                <ComboBox x:Name="_uiSortComboBox"
-                                          HorizontalAlignment="Left"
-                                          VerticalAlignment="Center"
-                                          Width="100"
-                                          ItemsSource="{Binding Sortings}"
-                                          SelectedIndex="0"
-                                          HorizontalContentAlignment="Stretch"
-                                          SelectedItem="{Binding SelectedSorting}">
-                                    <ComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" />
-                                        </DataTemplate>
-                                    </ComboBox.ItemTemplate>
-                                </ComboBox>
+                                        VerticalAlignment="Center" Width="75"
+                                        Command="{Binding ClearFilterCommand}"/>
                             </StackPanel>
                         </Grid>
-                        <!--<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Center" Orientation="Horizontal" Visibility="Visible" Name="_uiFilterPanel" Background="Crimson">
-
-                        <StackPanel Margin="10">
-                            
-                        </StackPanel>
-                       
-                    </StackPanel>-->
                     </Grid>
                     <ListBox x:Name="_uiFilesListBox" Grid.Row="2"
                              SelectionMode="Single"

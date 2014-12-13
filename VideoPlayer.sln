@@ -25,9 +25,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Services", "Vid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Common", "VideoPlayer.Common\VideoPlayer.Common.csproj", "{85D3796A-9536-460E-8FF0-F96ACD68878F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayerMVVM", "VideoPlayerMVVM\VideoPlayerMVVM.csproj", "{5A46DFDF-D514-4583-BB56-34543B33659C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{D5A6E48F-B4F3-4079-920E-62429AB43D28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayerControl", "VideoPlayerControl\VideoPlayerControl.csproj", "{B2BA9593-FF7A-490E-A0EA-F29CC2CA28FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Module", "Module\Module.csproj", "{27F28F3A-17FE-4EE3-ABF4-1A13EA1ABFF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Infrastructure", "VideoPlayer.Infrastructure\VideoPlayer.Infrastructure.csproj", "{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,20 +81,21 @@ Global
 		{85D3796A-9536-460E-8FF0-F96ACD68878F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85D3796A-9536-460E-8FF0-F96ACD68878F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85D3796A-9536-460E-8FF0-F96ACD68878F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A46DFDF-D514-4583-BB56-34543B33659C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A46DFDF-D514-4583-BB56-34543B33659C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A46DFDF-D514-4583-BB56-34543B33659C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A46DFDF-D514-4583-BB56-34543B33659C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B2BA9593-FF7A-490E-A0EA-F29CC2CA28FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B2BA9593-FF7A-490E-A0EA-F29CC2CA28FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B2BA9593-FF7A-490E-A0EA-F29CC2CA28FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B2BA9593-FF7A-490E-A0EA-F29CC2CA28FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F28F3A-17FE-4EE3-ABF4-1A13EA1ABFF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F28F3A-17FE-4EE3-ABF4-1A13EA1ABFF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F28F3A-17FE-4EE3-ABF4-1A13EA1ABFF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F28F3A-17FE-4EE3-ABF4-1A13EA1ABFF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF} = {AB865795-450F-4980-B7C9-238E49C2D5E0}
+		{27F28F3A-17FE-4EE3-ABF4-1A13EA1ABFF5} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

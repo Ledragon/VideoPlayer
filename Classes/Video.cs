@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
-using Log;
 using Microsoft.WindowsAPICodePack.Shell;
 using ToolLib;
 
@@ -12,11 +11,11 @@ namespace Classes
 {
     public class Video : INotifyPropertyChanged
     {
-        private string _category;
+        private String _category;
         private DateTime _lastPlayed;
         private TimeSpan _length;
         private Int32 _numberOfViews;
-        private UInt32 _rating;
+        private UInt32 _rating; 
         private String _title;
 
         public Video()
@@ -43,7 +42,7 @@ namespace Classes
                     Double nanoSeconds = 0;
                     if (Double.TryParse(duration.ToString(), out nanoSeconds))
                     {
-                        double milliSeconds = nanoSeconds * 0.0001;
+                        double milliSeconds = nanoSeconds*0.0001;
                         this.Length = TimeSpan.FromMilliseconds(milliSeconds);
                     }
                     uint? rating = shellFile.Properties.System.Rating.Value;
@@ -201,7 +200,7 @@ namespace Classes
             get
             {
                 var modifier = new ImageModifier();
-                var image = modifier.DeserializeFromBase64String(this.SerializedImage);
+                Image image = modifier.DeserializeFromBase64String(this.SerializedImage);
                 return image;
 
                 //return GetValue(PreviewImageProperty) as System.Drawing.Image;
@@ -209,11 +208,11 @@ namespace Classes
             set
             {
                 var modifier = new ImageModifier();
-                var resized = value;
+                Image resized = value;
                 if (resized.Width > 640)
                 {
-                    Double ratio = (Double)value.Width/value.Height;
-                    var newHeight = (640/ratio).ToString("0");
+                    Double ratio = (Double) value.Width/value.Height;
+                    string newHeight = (640/ratio).ToString("0");
                     resized = modifier.ResizeImage(value, 640, Int32.Parse(newHeight));
                 }
                 this.SerializedImage = modifier.SerializeToBase64String(resized);

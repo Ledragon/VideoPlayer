@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Classes;
-using Log;
 using VideoPlayer.Common;
-using VideoPlayer.Helpers;
 using VideoPlayer.Services;
 using VideoPlayer.ViewModels;
-using Directory = Classes.Directory;
 
 namespace VideoPlayer
 {
@@ -29,14 +25,8 @@ namespace VideoPlayer
             this.InitializeComponent();
         }
 
-        //public ObservableCollection<Video> Videos
-        //{
-        //    get { return this._videos; }
-        //}
-
         private void backgroundWorker_RunWorkerCompleted(Object sender, RunWorkerCompletedEventArgs e)
         {
-            //this._uiVideosView.VideoCollection = this._videos;
             this._uiSettingsView.Directories = this._directories;
             this._uiSettingsView.DataContext = this._directories;
         }
@@ -101,7 +91,7 @@ namespace VideoPlayer
 
         private void _uiHomePage_CleanClick(Object sender, RoutedEventArgs e)
         {
-            ILibraryService libraryService = DependencyFactory.Resolve<ILibraryService>();
+            var libraryService = DependencyFactory.Resolve<ILibraryService>();
             libraryService.Clean(this._directories, this._videos);
         }
 

@@ -10,10 +10,17 @@ namespace VideoPlayer
     /// </summary>
     public partial class App : Application
     {
-        private void Application_Startup(object sender, StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
             new LoggingSystemManager().SetPath(Path.Combine(FileSystemHelper.GetDefaultFolder(), "VideoPlayer.log"));
-            Bootstrapper.Bootstrapper.BuildContainer();
+            var bootstrapper = new Bootstrapper();
+            bootstrapper.Run();
         }
+
+        //private void Application_Startup(object sender, StartupEventArgs e)
+        //{
+        //    Bootstrapper.Bootstrapper.BuildContainer();
+        //}
     }
 }

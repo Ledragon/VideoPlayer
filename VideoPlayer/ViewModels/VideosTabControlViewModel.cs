@@ -4,35 +4,71 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 using Classes;
 using Log;
-using VideoPlayer.Commands;
-using VideoPlayer.Common;
-using VideoPlayer.Services;
+using Microsoft.Practices.Prism.PubSubEvents;
+using VideoPlayer.Infrastructure;
 
 namespace VideoPlayer.ViewModels
 {
     public class VideosTabControlViewModel : ViewModelBase
     {
         private ObservableCollection<CategoryViewModel> _categoryViewModels;
-        private Video _currentVideo;
+        private ICommand _clearFilterCommand;
         private Cursor _cursor;
         private Visibility _filterGridVisibility;
-        private ICollectionView _filteredVideos;
         private String _nameFilter;
+        private int _numberOfVideos;
         private CategoryViewModel _selectedCategory;
         private Int32 _selectedIndex;
         private SortingViewModel _selectedSorting;
         private ICommand _showFilterGridCommand;
         private ObservableCollection<SortingViewModel> _sortings;
+        private ICommand _switchEditCommand;
         private ICommand _switchToFullScreenCommand;
         private ICommand _switchToWindowCommand;
         private string _tagFilter;
-        private ObservableCollection<Video> _videoCollection;
-        private ICommand _clearFilterCommand;
-        private int _numberOfVideos;
+        private int _videoEditIndex;
+
+        public VideosTabControlViewModel(IEventAggregator eventAggregator)
+        {
+            //var service = DependencyFactory.Resolve<ILibraryService>();
+            //this.VideoCollection = service.GetObjectsFromFile().Videos;
+            this.CategoryViewModels = new ObservableCollection<CategoryViewModel>();
+            this.FilterGridVisibility = Visibility.Collapsed;
+
+            this.ShowFilterGridCommand = new GenericCommand(this.ShowFilterGrid);
+            this.SwitchToFullScreenCommand = new GenericCommand(this.SwitchToFullScreen);
+            this.SwitchToWindowCommand = new GenericCommand(this.SwitchToWindowMode);
+            this.ClearFilterCommand = new GenericCommand(this.ClearFilter);
+            this.SwitchEditCommand = new GenericCommand(this.SwitchEdit);
+
+            eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.SwitchToFullScreen);
+            eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.SwitchToWindowMode);
+        }
+
+        public ICommand SwitchEditCommand
+        {
+            get { return this._switchEditCommand; }
+            set
+            {
+                if (Equals(value, this._switchEditCommand)) return;
+                this._switchEditCommand = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public Int32 VideoEditIndex
+        {
+            get { return this._videoEditIndex; }
+            set
+            {
+                if (value == this._videoEditIndex) return;
+                this._videoEditIndex = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public Int32 NumberOfVideos
         {
@@ -60,25 +96,6 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-        public VideosTabControlViewModel()
-        {
-            var service = DependencyFactory.Resolve<ILibraryService>();
-            this.VideoCollection = service.GetObjectsFromFile().Videos;
-            this.CategoryViewModels = new ObservableCollection<CategoryViewModel>();
-            this.FilterGridVisibility = Visibility.Collapsed;
-
-            this.ShowFilterGridCommand = new GenericCommand(this.ShowFilterGrid);
-            this.SwitchToFullScreenCommand = new GenericCommand(this.SwitchToFullScreen);
-            this.SwitchToWindowCommand = new GenericCommand(this.SwitchToWindowMode);
-            this.ClearFilterCommand=new GenericCommand(this.ClearFilter);
-        }
-
-        private void ClearFilter()
-        {
-            this.NameFilter = String.Empty;
-            this.TagFilter = String.Empty;
-        }
-
         public String TagFilter
         {
             get { return this._tagFilter; }
@@ -92,7 +109,6 @@ namespace VideoPlayer.ViewModels
                 }
             }
         }
-
 
         public ICommand SwitchToWindowCommand
         {
@@ -146,8 +162,8 @@ namespace VideoPlayer.ViewModels
                 if (!Equals(value, this._selectedSorting))
                 {
                     this._selectedSorting = value;
-                    this.FilteredVideos.SortDescriptions.Clear();
-                    this.FilteredVideos.SortDescriptions.Add(this._selectedSorting.SortDescription);
+                    //this.FilteredVideos.SortDescriptions.Clear();
+                    //this.FilteredVideos.SortDescriptions.Add(this._selectedSorting.SortDescription);
                     this.OnPropertyChanged();
                 }
             }
@@ -241,19 +257,6 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-        public Video CurrentVideo
-        {
-            get { return this._currentVideo; }
-            set
-            {
-                if (!Equals(value, this._currentVideo))
-                {
-                    this._currentVideo = value;
-                    this.OnPropertyChanged();
-                }
-            }
-        }
-
         public Int32 SelectedIndex
         {
             get { return this._selectedIndex; }
@@ -271,24 +274,24 @@ namespace VideoPlayer.ViewModels
             {
                 if (this._categoryViewModels.Count == 0)
                 {
-                    IEnumerable<IGrouping<string, Video>> grouped =
-                        this.VideoCollection.OrderBy(v => v.Category).GroupBy(v => v.Category);
-                    foreach (var grouping in grouped)
-                    {
-                        this._categoryViewModels.Add(new CategoryViewModel
-                        {
-                            Name = grouping.Key,
-                            Count = grouping.Count()
-                        });
-                    }
+                    //IEnumerable<IGrouping<string, Video>> grouped =
+                    //    this.VideoCollection.OrderBy(v => v.Category).GroupBy(v => v.Category);
+                    //foreach (var grouping in grouped)
+                    //{
+                    //    this._categoryViewModels.Add(new CategoryViewModel
+                    //    {
+                    //        Name = grouping.Key,
+                    //        Count = grouping.Count()
+                    //    });
+                    //}
 
 
-                    this._categoryViewModels.Insert(0, new CategoryViewModel
-                    {
-                        Count = this.VideoCollection.Count,
-                        Name = "All"
-                    });
-                    this.SelectedCategory = this._categoryViewModels[0];
+                    //this._categoryViewModels.Insert(0, new CategoryViewModel
+                    //{
+                    //    Count = this.VideoCollection.Count,
+                    //    Name = "All"
+                    //});
+                    //this.SelectedCategory = this._categoryViewModels[0];
                 }
                 return this._categoryViewModels;
             }
@@ -303,35 +306,23 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-        public ObservableCollection<Video> VideoCollection
+        private void SwitchEdit()
         {
-            get { return this._videoCollection; }
-            set
+            if (this.VideoEditIndex == 0)
             {
-                if (!Equals(value, this._videoCollection))
-                {
-                    this._videoCollection = value;
-                    this.OnPropertyChanged();
-                }
+                this.VideoEditIndex = 1;
+            }
+            else
+            {
+                this.VideoEditIndex = 0;
+                //this.FilteredVideos.Refresh();
             }
         }
 
-        public ICollectionView FilteredVideos
+        private void ClearFilter()
         {
-            get { return this._filteredVideos; }
-            set
-            {
-                if (Equals(value, this._filteredVideos))
-                {
-                    return;
-                }
-                this._filteredVideos = value;
-                if (this.CurrentVideo == null)
-                {
-                    this.CurrentVideo = this.VideoCollection.OrderBy(t => t.Title).First();
-                }
-                this.OnPropertyChanged();
-            }
+            this.NameFilter = String.Empty;
+            this.TagFilter = String.Empty;
         }
 
         private void ShowFilterGrid()
@@ -348,13 +339,13 @@ namespace VideoPlayer.ViewModels
 
         private void Filter()
         {
-            ICollectionView view = CollectionViewSource.GetDefaultView(this.VideoCollection);
-            if (view != null)
-            {
-                view.Filter = this.GlobalFilter;
-                this.FilteredVideos = view;
-                this.NumberOfVideos= this.FilteredVideos.Cast<Video>().Count();
-            }
+            //ICollectionView view = CollectionViewSource.GetDefaultView(this.VideoCollection);
+            //if (view != null)
+            //{
+            //    view.Filter = this.GlobalFilter;
+            //    this.FilteredVideos = view;
+            //    this.NumberOfVideos = this.FilteredVideos.Cast<Video>().Count();
+            //}
         }
 
         private Boolean GlobalFilter(Object item)
@@ -420,7 +411,7 @@ namespace VideoPlayer.ViewModels
 
         private Boolean IsNameOk(Video video)
         {
-            var result = true;
+            bool result = true;
             if (!String.IsNullOrEmpty(this.NameFilter))
             {
                 result = video.Title.ToLower().Contains(this.NameFilter.ToLower());
@@ -448,66 +439,24 @@ namespace VideoPlayer.ViewModels
 
         private void SwitchToWindowMode()
         {
+            this.SwitchToWindowMode(null);
+        }
+
+        private void SwitchToWindowMode(object dummy)
+        {
             this.SelectedIndex = 0;
             this.Cursor = Cursors.Arrow;
         }
 
         private void SwitchToFullScreen()
         {
+            this.SwitchToFullScreen(null);
+        }
+
+        private void SwitchToFullScreen(Object dummy)
+        {
             this.SelectedIndex = 1;
             //this._uiVideosTabControl.SelectedItem = this._uiVideoPlaying;
         }
-
-        //private Boolean IsTagOk(Video video)
-        //{
-        //    Boolean isTagOk = false;
-        //    if (!String.IsNullOrEmpty(this.FilterText))
-        //    {
-        //        string tagFilter = this.FilterText;
-        //        if (!String.IsNullOrEmpty(tagFilter))
-        //        {
-        //            string[] filters = tagFilter.Split(new[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
-        //            foreach (string filter in filters)
-        //            {
-        //                isTagOk = isTagOk || video.Tags.Any(t => t.Value.ToLower().Contains(filter));
-        //            }
-        //        }
-        //        else
-        //        {
-        //            isTagOk = true;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        isTagOk = true;
-        //    }
-        //    return isTagOk;
-        //}
-
-        //private Boolean Filter(Object item)
-        //{
-        //    Boolean result = true;
-        //    try
-        //    {
-        //        var video = item as Video;
-        //        Boolean isNameOk = true;
-        //        Boolean isTagOk = true;
-        //        if (this.FilterGridVisibility == Visibility.Visible)
-        //        {
-        //            if (video != null)
-        //            {
-        //                isNameOk = video.Title.ToLower().Contains(this.FilterText);
-        //                isTagOk = this.IsTagOk(video);
-        //            }
-        //        }
-        //        Boolean isCategoryOk = this.IsCategoryOk(video);
-        //        result = isNameOk && isTagOk && isCategoryOk;
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        this.Logger().ErrorFormat(e.Message);
-        //    }
-        //    return result;
-        //}
     }
 }

@@ -2,8 +2,14 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsT
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\MethodsTest.exe
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\MethodsTest.pdb
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Classes.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Controllers.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\ToolLib.dll
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.dll
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Classes.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Controllers.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
+C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.pdb
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.csprojResolveAssemblyReference.cache
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\obj\Debug\VideoInfoViewer.baml
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.g.cs
@@ -18,9 +24,3 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsT
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.csproj.GenerateResource.Cache
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.exe
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.pdb
-C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Controllers.dll
-C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Controllers.pdb
-C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
-C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.dll
-C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
-C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.pdb

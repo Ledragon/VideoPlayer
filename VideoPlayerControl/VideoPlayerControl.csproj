@@ -71,7 +71,6 @@
     <Compile Include="Views\Player.xaml.cs">
       <DependentUpon>Player.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Commands\CommandBase.cs" />
     <Compile Include="Commands\DecreaseRateCommand.cs" />
     <Compile Include="Commands\IncreaseRateCommant.cs" />
     <Compile Include="Commands\NextCommand.cs" />
@@ -112,6 +111,10 @@
     <ProjectReference Include="..\Classes\Classes.csproj">
       <Project>{ffb9c128-ca7e-40bb-bbcd-7b28707c6719}</Project>
       <Name>Classes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Infrastructure\VideoPlayer.Infrastructure.csproj">
+      <Project>{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}</Project>
+      <Name>VideoPlayer.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

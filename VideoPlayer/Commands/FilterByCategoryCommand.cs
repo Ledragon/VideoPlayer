@@ -1,4 +1,5 @@
 ﻿using System;
+using VideoPlayer.Infrastructure;
 
 namespace VideoPlayer.Commands
 {

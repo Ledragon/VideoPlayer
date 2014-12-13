@@ -10,6 +10,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using Classes;
+using Microsoft.Practices.Unity;
+using VideoPlayer.Common;
 using VideoPlayer.ViewModels;
 
 namespace VideoPlayer
@@ -24,8 +26,8 @@ namespace VideoPlayer
         public VideosPage()
         {
             this.InitializeComponent();
-            this.Player.Stopped += this.Player_Stopped;
-            this._videosTabControlViewModel = new VideosTabControlViewModel();
+            //this.Player.Stopped += this.Player_Stopped;
+            this._videosTabControlViewModel = Locator.Container.Resolve<VideosTabControlViewModel>();
             this.DataContext = this._videosTabControlViewModel;
         }
 
@@ -81,31 +83,31 @@ namespace VideoPlayer
                     this.AddToExistingPlaylist();
                     e.Handled = true;
                 }
-                else if (e.Key == Key.P)
-                {
-                    this.SwitchToFullScreen();
-                    this.Player.PlayAll();
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.E)
-                {
-                    if (Keyboard.Modifiers == ModifierKeys.Control)
-                    {
-                        ICollectionView listCollectionView =
-                            CollectionViewSource.GetDefaultView(this._uiFilesListBox.ItemsSource) as ListCollectionView;
-                        if (listCollectionView != null)
-                        {
-                            listCollectionView.Refresh();
-                        }
-                        this._uiVideoInfoTabControl.SelectedIndex = 0;
-                        this._uiFilesListBox.Items.Refresh();
-                    }
-                    else
-                    {
-                        this._uiVideoInfoTabControl.SelectedIndex = 1;
-                    }
-                    e.Handled = true;
-                }
+                //else if (e.Key == Key.P)
+                //{
+                //    this.SwitchToFullScreen();
+                //    //this.Player.PlayAll();
+                //    e.Handled = true;
+                //}
+                //else if (e.Key == Key.E)
+                //{
+                //    if (Keyboard.Modifiers == ModifierKeys.Control)
+                //    {
+                //        //ICollectionView listCollectionView =
+                //        //    CollectionViewSource.GetDefaultView(this._uiFilesListBox.ItemsSource) as ListCollectionView;
+                //        //if (listCollectionView != null)
+                //        //{
+                //        //    listCollectionView.Refresh();
+                //        //}
+                //        //this._uiVideoInfoTabControl.SelectedIndex = 0;
+                //        //this._uiFilesListBox.Items.Refresh();
+                //    }
+                //    else
+                //    {
+                //        //this._uiVideoInfoTabControl.SelectedIndex = 1;
+                //    }
+                //    e.Handled = true;
+                //}
             }
         }
 
@@ -115,30 +117,30 @@ namespace VideoPlayer
 
         private void PlayAll()
         {
-            foreach (Object item in this._videosTabControlViewModel.FilteredVideos)
-            {
-                this.Player.AddVideo((Video) item);
-            }
-            this.Player.PlayAll();
+            //foreach (Object item in this._videosTabControlViewModel.FilteredVideos)
+            //{
+            //    this.Player.AddVideo((Video) item);
+            //}
+            //this.Player.PlayAll();
         }
 
         private void AddToExistingPlaylist()
         {
-            this.Player.AddVideo(this._videosTabControlViewModel.CurrentVideo);
+            //this.Player.AddVideo(this._videosTabControlViewModel.CurrentVideo);
         }
 
         private void PlayCurrent()
         {
-            Video video = this._videosTabControlViewModel.CurrentVideo;
-            if (video != null && File.Exists(video.FileName))
-            {
-                this.Player.PlayVideo(video);
-                this.SwitchToFullScreen();
-            }
-            else
-            {
-                MessageBox.Show("File not found");
-            }
+            //Video video = this._videosTabControlViewModel.CurrentVideo;
+            //if (video != null && File.Exists(video.FileName))
+            //{
+            //    this.Player.PlayVideo(video);
+            //    this.SwitchToFullScreen();
+            //}
+            //else
+            //{
+            //    MessageBox.Show("File not found");
+            //}
         }
 
         private void SwitchToFullScreen()

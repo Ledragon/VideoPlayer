@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using VideoPlayer.Infrastructure;
 
-namespace Module
+namespace Module.Interfaces
 {
     public interface ICategoryListViewModel : IViewModel
     {

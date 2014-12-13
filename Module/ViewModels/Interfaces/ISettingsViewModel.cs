@@ -1,6 +1,6 @@
 ﻿using VideoPlayer.Infrastructure;
 
-namespace Module
+namespace Module.Interfaces
 {
     public interface ISettingsViewModel : IViewModel
     {

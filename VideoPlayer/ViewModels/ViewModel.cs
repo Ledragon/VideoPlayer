@@ -17,7 +17,7 @@ namespace VideoPlayer.ViewModels
     {
         //private readonly Controller _controller;
         private Dispatcher _dispatcher;
-        private ObjectsWrapper _wrapper;
+        //private ObjectsWrapper _wrapper;
 
         public ViewModel()
         {
@@ -31,18 +31,18 @@ namespace VideoPlayer.ViewModels
 
         private void LoadFile()
         {
-            this.Logger().Info("Decoding file.");
+            this.Logger().Debug("Decoding file.");
             var libraryService = DependencyFactory.Resolve<ILibraryService>();
-            this._wrapper = libraryService.GetObjectsFromFile();
-            this.VideoCollection = this._wrapper.Videos;
-            this.DirectoryCollection = this._wrapper.Directories;
-            this.Logger().Info("File decoded.");
+            var wrapper = libraryService.GetObjectsFromFile();
+            this.VideoCollection = wrapper.Videos;
+            this.DirectoryCollection = wrapper.Directories;
+            this.Logger().Debug("File decoded.");
         }
 
         public void Save()
         {
             var libraryService = DependencyFactory.Resolve<ILibraryService>();
-            libraryService.Save(this._wrapper);
+            libraryService.Save();
         }
 
         //public void Clean()

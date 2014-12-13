@@ -24,17 +24,24 @@ namespace Module
     {
         public delegate void StoppedEventHandler(Object sender, EventArgs e);
 
+        private readonly IEventAggregator _eventAggregator;
         private PlayerViewModel _viewModel;
 
         public Player()
         {
             this.InitializeComponent();
             this.InitializeVlc();
-            var eventAggregator = DependencyFactory.Resolve<IEventAggregator>();
+            this._eventAggregator = DependencyFactory.Resolve<IEventAggregator>();
 
-            eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.Stop);
-            eventAggregator.GetEvent<RateChanged>().Subscribe(this.RateChanged);
-            eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.Play);
+            this._eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.Stop);
+            this._eventAggregator.GetEvent<RateChanged>().Subscribe(this.RateChanged);
+            this._eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.Play);
+            this._eventAggregator.GetEvent<VideoPositionChanged>().Subscribe(this.PositionChanged);
+        }
+
+        private void PositionChanged(Single position)
+        {
+            this._VLCcontrol.Position = position;
         }
 
         public IViewModel ViewModel
@@ -44,8 +51,6 @@ namespace Module
             {
                 this.DataContext = value;
                 this._viewModel = (PlayerViewModel) value;
-
-                this._viewModel.PositionChanged += this.ViewModelOnPositionChanged;
             }
         }
 
@@ -53,12 +58,10 @@ namespace Module
         {
             this._VLCcontrol.Rate = rate;
         }
-        
+
         private void Play(Video video)
         {
-            this.ExecuteHandled(() => {
-                this._VLCcontrol.Media=new PathMedia(video.FileName);
-            });
+            this.ExecuteHandled(() => { this._VLCcontrol.Media = new PathMedia(video.FileName); });
         }
 
         private void InitializeVlc()
@@ -84,28 +87,11 @@ namespace Module
         private void Stop(Object dummy)
         {
             this._VLCcontrol.Stop();
-            this._VLCcontrol.Medias.RemoveAt(0);
+            while (this._VLCcontrol.Medias.Count > 0)
+            {
+                this._VLCcontrol.Medias.RemoveAt(0);
+            }
         }
-
-        public void AddVideo(String path)
-        {
-            this._viewModel.AddVideo(path);
-        }
-
-        public void AddVideo(Video video)
-        {
-            this._viewModel.AddVideo(video);
-        }
-
-        public void PlayVideo(Video video)
-        {
-            this._viewModel.PlayVideo(video);
-        }
-
-        //public void PlayAll()
-        //{
-        //    this._viewModel.PlayAll(null);
-        //}
 
         private void ExecuteHandled(Action method)
         {
@@ -197,16 +183,12 @@ namespace Module
 
         private void _VLCcontrol_OnLengthChanged(VlcControl sender, VlcEventArgs<long> e)
         {
-            if (this._viewModel.Duration == TimeSpan.Zero)
-            {
-                TimeSpan duration = this._VLCcontrol.Duration;
-                this._viewModel.Duration = duration;
-            }
+            this._eventAggregator.GetEvent<VideoDurationChanged>().Publish(this._VLCcontrol.Duration);
         }
 
         private void _VLCcontrol_OnEndReached(VlcControl sender, VlcEventArgs<EventArgs> e)
         {
-            this._viewModel.Next();
+            this._eventAggregator.GetEvent<VideoEnded>().Publish(null);
         }
 
         #endregion
@@ -221,15 +203,6 @@ namespace Module
         private void UiPositionSlider_PreviewMouseLeftButtonUp(Object sender, MouseButtonEventArgs e)
         {
             this._VLCcontrol.PositionChanged += this._VLCcontrol_OnPositionChanged;
-        }
-
-        #endregion
-
-        #region ViewModel events
-
-        private void ViewModelOnPositionChanged(Object sender, EventArgs eventArgs)
-        {
-            this._VLCcontrol.Position = this._viewModel.Position;
         }
 
         #endregion

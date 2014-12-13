@@ -2,7 +2,7 @@
 using Classes;
 using VideoPlayer.Infrastructure;
 
-namespace Module
+namespace Module.Interfaces
 {
     public interface IVideosListViewModel:IViewModel
     {

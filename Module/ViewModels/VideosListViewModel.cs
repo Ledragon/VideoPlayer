@@ -8,6 +8,7 @@ using Classes;
 using Log;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using Module.Interfaces;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
 
@@ -17,6 +18,7 @@ namespace Module
     {
         private readonly IEventAggregator _eventAggregator;
         private Video _currentVideo;
+        private int _editIndex;
         private ICollectionView _filteredVideos;
         private Visibility _infoVisibility;
         private ObservableCollection<Video> _videoCollection;
@@ -74,6 +76,17 @@ namespace Module
             }
         }
 
+        public Int32 EditIndex
+        {
+            get { return this._editIndex; }
+            set
+            {
+                if (value == this._editIndex) return;
+                this._editIndex = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         public Video CurrentVideo
         {
             get { return this._currentVideo; }
@@ -117,7 +130,15 @@ namespace Module
 
         private void Edit()
         {
-            this.InfoVisibility = this.InfoVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            if (this.EditIndex == 0)
+            {
+                this.EditIndex = 1;
+            }
+            else
+            {
+                this._eventAggregator.GetEvent<VideoEdited>().Publish(null);
+                this.EditIndex = 0;
+            }
         }
 
         private void Add()

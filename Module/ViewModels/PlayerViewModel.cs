@@ -9,14 +9,13 @@ using System.Windows.Media;
 using Classes;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using Module.Interfaces;
 using VideoPlayer.Infrastructure;
 
 namespace Module
 {
     public class PlayerViewModel : ViewModelBase, IPlayerViewModel
     {
-        public delegate void PositionChangedEventHandler(Object sender, EventArgs e);
-
         private readonly IEventAggregator _eventAggregator;
 
         private readonly Timer _timer = new Timer();
@@ -59,6 +58,8 @@ namespace Module
             eventAggregator.GetEvent<VideoAddedEvent>().Subscribe(this.AddVideo);
             eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
             eventAggregator.GetEvent<PlayOneEvent>().Subscribe(this.PlayVideo);
+            eventAggregator.GetEvent<VideoDurationChanged>().Subscribe(this.VideoDurationChanged);
+            eventAggregator.GetEvent<VideoEnded>().Subscribe(this.Next);
         }
 
         public ICommand MouseMoveCommand
@@ -167,10 +168,10 @@ namespace Module
             get { return this._currentVideo; }
             set
             {
-                if (Equals(value, this._currentVideo)) return;
-                this._currentVideo = value;
                 this.Duration = value.Length;
                 this.Title = value.Title;
+                if (Equals(value, this._currentVideo)) return;
+                this._currentVideo = value;
                 this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
                 this.OnPropertyChanged();
             }
@@ -202,7 +203,7 @@ namespace Module
                 Double ticks = this._duration.Ticks*this._position;
                 Int64 parsedTicks = Int64.Parse(ticks.ToString("0"));
                 this.PositionTimeSpan = new TimeSpan(parsedTicks);
-                this.OnPositionChanged(new EventArgs());
+                this._eventAggregator.GetEvent<VideoPositionChanged>().Publish(this._position);
                 this.OnPropertyChanged();
             }
         }
@@ -288,6 +289,15 @@ namespace Module
             }
         }
 
+        private void VideoDurationChanged(TimeSpan span)
+        {
+            if (this.CurrentVideo.Length == TimeSpan.Zero)
+            {
+                this.CurrentVideo.Length = span;
+                this.Duration = span;
+            }
+        }
+
         private void TimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
         {
             if (DateTime.Now - this._mouseLastMouveDateTime > new TimeSpan(0, 0, 2))
@@ -317,6 +327,7 @@ namespace Module
         private void Stop()
         {
             this.IsPaused = false;
+            this.Playlist.Clear();
             this._eventAggregator.GetEvent<StoppedEvent>().Publish(null);
         }
 
@@ -364,6 +375,11 @@ namespace Module
             this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
         }
 
+        public void Next(Object dummy)
+        {
+            this.Next();
+        }
+
         public void Next()
         {
             this._index++;
@@ -371,7 +387,7 @@ namespace Module
             {
                 this.NextCommand.CanExecute(false);
             }
-            else if (this._index == this.Playlist.Count)
+            else if (this._index >= this.Playlist.Count)
             {
                 this._index = 0;
             }
@@ -391,20 +407,5 @@ namespace Module
             }
             this.CurrentVideo = this.Playlist[this._index];
         }
-
-        #region Events
-
-        //FOllowing events to be removed  when proper binding can be done
-        public event PositionChangedEventHandler PositionChanged;
-
-        private void OnPositionChanged(EventArgs e)
-        {
-            if (this.PositionChanged != null)
-            {
-                this.PositionChanged(this, e);
-            }
-        }
-
-        #endregion
     }
 }

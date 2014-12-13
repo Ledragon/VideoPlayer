@@ -19,18 +19,26 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="30" Background="#CC000000" DataContext="{Binding CurrentVideo}">
+        <Grid Grid.Row="0" Margin="30" Background="#CC000000">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="400"/>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" 
-                   Source="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}"
+                   Source="{Binding Path=CurrentVideo.PreviewImage, Converter={StaticResource imageConverter}}"
                    Stretch="Uniform"
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch"
                    Margin="20" />
-            <Module:VideoInfo Grid.Column="1"/>
+            <TabControl Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedIndex="{Binding EditIndex}">
+                <TabItem>
+                    <Module:VideoInfo DataContext="{Binding CurrentVideo}"/>
+
+                </TabItem>
+                <TabItem>
+                    <Module:EditVideo  DataContext="{Binding CurrentVideo}"/>
+                </TabItem>
+            </TabControl>
         </Grid>
         <ListBox Grid.Row="1"
                  SelectionMode="Single"

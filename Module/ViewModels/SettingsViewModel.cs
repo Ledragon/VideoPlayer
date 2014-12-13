@@ -1,4 +1,5 @@
-﻿using VideoPlayer.Infrastructure;
+﻿using Module.Interfaces;
+using VideoPlayer.Infrastructure;
 
 namespace Module
 {

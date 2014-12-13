@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using Module.Interfaces;
 using VideoPlayer.Infrastructure;
 
 namespace Module

@@ -152,20 +152,11 @@
     <Compile Include="IKeyHandler.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModels\CategoryListViewModel.cs" />
-    <Compile Include="ViewModels\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\PlayVideoViewModel.cs" />
     <Compile Include="ViewModels\SortingViewModel.cs" />
     <Compile Include="ViewModels\VideosTabControlViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\CategoryList.xaml.cs">
-      <DependentUpon>CategoryList.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\DirectoryBrowser.xaml.cs">
       <DependentUpon>DirectoryBrowser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\EditVideo.xaml.cs">
-      <DependentUpon>EditVideo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FilterPanel.xaml.cs">
       <DependentUpon>FilterPanel.xaml</DependentUpon>
@@ -176,24 +167,11 @@
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\VideoInfo.xaml.cs">
-      <DependentUpon>VideoInfo.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\VideosPage.xaml.cs">
       <DependentUpon>VideosPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\EditCommand.cs" />
-    <Compile Include="ViewModels\VideosPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
-    <Page Include="Views\CategoryList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\DirectoryBrowser.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EditVideo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,10 +202,6 @@
       <DependentUpon>VideoPlayer.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\VideoInfo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\VideosPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

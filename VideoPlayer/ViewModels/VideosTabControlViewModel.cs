@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Classes;
-using Log;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
 
@@ -14,60 +14,30 @@ namespace VideoPlayer.ViewModels
 {
     public class VideosTabControlViewModel : ViewModelBase
     {
-        private ObservableCollection<CategoryViewModel> _categoryViewModels;
         private ICommand _clearFilterCommand;
         private Cursor _cursor;
         private Visibility _filterGridVisibility;
         private String _nameFilter;
         private int _numberOfVideos;
-        private CategoryViewModel _selectedCategory;
         private Int32 _selectedIndex;
         private SortingViewModel _selectedSorting;
         private ICommand _showFilterGridCommand;
         private ObservableCollection<SortingViewModel> _sortings;
-        private ICommand _switchEditCommand;
         private ICommand _switchToFullScreenCommand;
         private ICommand _switchToWindowCommand;
         private string _tagFilter;
-        private int _videoEditIndex;
 
         public VideosTabControlViewModel(IEventAggregator eventAggregator)
         {
-            //var service = DependencyFactory.Resolve<ILibraryService>();
-            //this.VideoCollection = service.GetObjectsFromFile().Videos;
-            this.CategoryViewModels = new ObservableCollection<CategoryViewModel>();
             this.FilterGridVisibility = Visibility.Collapsed;
 
-            this.ShowFilterGridCommand = new GenericCommand(this.ShowFilterGrid);
+            this.ShowFilterGridCommand = new DelegateCommand(this.ShowFilterGrid);
             this.SwitchToFullScreenCommand = new GenericCommand(this.SwitchToFullScreen);
             this.SwitchToWindowCommand = new GenericCommand(this.SwitchToWindowMode);
             this.ClearFilterCommand = new GenericCommand(this.ClearFilter);
-            this.SwitchEditCommand = new GenericCommand(this.SwitchEdit);
 
             eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
             eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.SwitchToWindowMode);
-        }
-
-        public ICommand SwitchEditCommand
-        {
-            get { return this._switchEditCommand; }
-            set
-            {
-                if (Equals(value, this._switchEditCommand)) return;
-                this._switchEditCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public Int32 VideoEditIndex
-        {
-            get { return this._videoEditIndex; }
-            set
-            {
-                if (value == this._videoEditIndex) return;
-                this._videoEditIndex = value;
-                this.OnPropertyChanged();
-            }
         }
 
         public Int32 NumberOfVideos
@@ -242,21 +212,6 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-        public CategoryViewModel SelectedCategory
-        {
-            get { return this._selectedCategory; }
-            set
-            {
-                if (Equals(value, this._selectedCategory))
-                {
-                    return;
-                }
-                this._selectedCategory = value;
-                this.Filter();
-                this.OnPropertyChanged();
-            }
-        }
-
         public Int32 SelectedIndex
         {
             get { return this._selectedIndex; }
@@ -265,57 +220,6 @@ namespace VideoPlayer.ViewModels
                 if (value == this._selectedIndex) return;
                 this._selectedIndex = value;
                 this.OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<CategoryViewModel> CategoryViewModels
-        {
-            get
-            {
-                if (this._categoryViewModels.Count == 0)
-                {
-                    //IEnumerable<IGrouping<string, Video>> grouped =
-                    //    this.VideoCollection.OrderBy(v => v.Category).GroupBy(v => v.Category);
-                    //foreach (var grouping in grouped)
-                    //{
-                    //    this._categoryViewModels.Add(new CategoryViewModel
-                    //    {
-                    //        Name = grouping.Key,
-                    //        Count = grouping.Count()
-                    //    });
-                    //}
-
-
-                    //this._categoryViewModels.Insert(0, new CategoryViewModel
-                    //{
-                    //    Count = this.VideoCollection.Count,
-                    //    Name = "All"
-                    //});
-                    //this.SelectedCategory = this._categoryViewModels[0];
-                }
-                return this._categoryViewModels;
-            }
-            set
-            {
-                if (Equals(value, this._categoryViewModels))
-                {
-                    return;
-                }
-                this._categoryViewModels = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        private void SwitchEdit()
-        {
-            if (this.VideoEditIndex == 0)
-            {
-                this.VideoEditIndex = 1;
-            }
-            else
-            {
-                this.VideoEditIndex = 0;
-                //this.FilteredVideos.Refresh();
             }
         }
 
@@ -352,51 +256,11 @@ namespace VideoPlayer.ViewModels
         {
             var filters = new List<Predicate<Object>>
             {
-                this.FilterCategory,
                 this.FilterTag,
                 this.FilterName
             };
 
             return filters.All(predicate => predicate(item));
-        }
-
-        private Boolean FilterCategory(Object item)
-        {
-            Boolean result = true;
-            try
-            {
-                var video = item as Video;
-                CategoryViewModel categoryListViewModel = this.SelectedCategory;
-                if (video != null && categoryListViewModel != null)
-                {
-                    String category = categoryListViewModel.Name;
-                    Boolean isCategoryOk = this.IsCategoryOk(video, category);
-                    result = isCategoryOk;
-                }
-            }
-            catch (Exception e)
-            {
-                this.Logger().ErrorFormat(e.Message);
-            }
-            return result;
-        }
-
-        private Boolean IsCategoryOk(Video video, String category)
-        {
-            Boolean isCategoryOk;
-            if (String.Compare(category, "all", StringComparison.InvariantCultureIgnoreCase) == 0)
-            {
-                isCategoryOk = true;
-            }
-            else if (String.IsNullOrEmpty(category))
-            {
-                isCategoryOk = String.IsNullOrEmpty(video.Category);
-            }
-            else
-            {
-                isCategoryOk = !String.IsNullOrEmpty(video.Category) && video.Category == category;
-            }
-            return isCategoryOk;
         }
 
         private Boolean FilterTag(Object item)
@@ -462,7 +326,6 @@ namespace VideoPlayer.ViewModels
             {
                 this.SelectedIndex = 1;
             }
-            //this._uiVideosTabControl.SelectedItem = this._uiVideoPlaying;
         }
     }
 }

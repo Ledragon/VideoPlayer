@@ -165,7 +165,6 @@ namespace Classes
             set
             {
                 this._category = value;
-
                 this.NotifyPropertyChanged("Category");
             }
         }

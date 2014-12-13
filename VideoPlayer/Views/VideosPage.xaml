@@ -114,76 +114,14 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.CategoriesListRegion}"></ContentControl>
-
-                    <!--<Views:CategoryList DataContext="{Binding CategoryViewModels}"></Views:CategoryList>-->
-                    <!--<ListBox Grid.Row="0" Width="150"
-                             Name="UiCategoriesListBox"
-                             ItemsSource="{Binding CategoryViewModels}"
-                             Background="#aa494949" Margin="5"
-                             VerticalAlignment="Stretch"
-                             UseLayoutRounding="False"
-                             HorizontalContentAlignment="Stretch"
-                             SelectedItem="{Binding SelectedCategory}">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical" VerticalAlignment="Center"
-                                            HorizontalAlignment="Stretch" CanVerticallyScroll="True" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="{Binding Path=Name}" Margin="5" Foreground="White"
-                                               FontSize="14" FontFamily="{StaticResource TextFontFamily}"
-                                               VerticalAlignment="Center" HorizontalAlignment="Stretch" />
-                                    <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right"
-                                               Text="{Binding Path=Count}" Margin="5" Foreground="#FF999999"
-                                               FontSize="10"
-                                               FontFamily="{StaticResource TextFontFamily}" />
-                                </Grid>
-
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>-->
                     <Button Grid.Row="1" Click="UiPlayAllButton_OnClick" Name="UiPlayAllButton">Play all</Button>
                 </Grid>
                 <Grid x:Name="_uiMainGrid" Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" x:Name="_uiVideoInfosRow" />
+                        <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" x:Name="_uiVideosListRow" />
-                        <RowDefinition Height="Auto" x:Name="_uiInfosRow" />
                     </Grid.RowDefinitions>
-
-                    <!--<Grid Grid.Row="0" Margin="30" Background="#CC000000" DataContext="{Binding CurrentVideo}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="600" x:Name="_uiMediaElementColumn" />
-                            <ColumnDefinition Width="*" x:Name="_uiVideoPropertiesColumn" />
-                        </Grid.ColumnDefinitions>
-                        <Image
-                            Source="{Binding Path=PreviewImage, Converter={StaticResource imageConverter}}"
-                            Stretch="Uniform"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            Margin="20" />
-                        <TabControl Grid.Column="1" x:Name="_uiVideoInfoTabControl">
-                            <TabItem x:Name="_uiVideoInfoTab">
-                                <Views:VideoInfo HorizontalAlignment="Stretch"
-                                                 VerticalAlignment="Stretch"
-                                                 x:Name="UiVideoInfo" />
-                            </TabItem>
-                            <TabItem x:Name="_uiEditVideoTab">
-                                <local:EditVideo HorizontalAlignment="Stretch"
-                                                 VerticalAlignment="Stretch"
-                                                 x:Name="UiVideoEditInfo" />
-                            </TabItem>
-                        </TabControl>
-                    </Grid>-->
-                    <!--<Grid Grid.Row="0" Grid.RowSpan="4" VerticalAlignment="Stretch" Background="#cc000000"
+                    <Grid Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Stretch" Background="#cc000000"
                           HorizontalAlignment="Stretch" ZIndex="10" Name="_uiFilterGrid"
                           Visibility="{Binding FilterGridVisibility}">
                         <Grid VerticalAlignment="Center" Background="#cc550000" Margin="0">
@@ -242,63 +180,19 @@
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
-                    </Grid>-->
+                    </Grid>
                     
                     <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosListRegion}"></ContentControl>
-                    <StackPanel Grid.Row="3" Orientation="Horizontal" Background="#33D3D3D3" x:Name="_uiStatusBar">
-                        <!--<TextBlock x:Name="_uiNowPlaying" Text="{Binding Path=CurrentVideo.Title, StringFormat=Now playing: {0} }"  Style="{StaticResource StatusBarStyle}"/>-->
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#33D3D3D3" x:Name="_uiStatusBar">
                         <TextBlock Text="{Binding NumberOfVideos, StringFormat=Videos: {0} }"
                                    Style="{StaticResource StatusBarStyle}" />
                     </StackPanel>
-
-                    <!--<ListBox x:Name="_uiFilesListBox" Grid.Row="2"
-                             SelectionMode="Single"
-                             IsSynchronizedWithCurrentItem="True"
-                             ItemsSource="{Binding FilteredVideos, Mode=OneWay}"
-                             SelectedItem="{Binding CurrentVideo}"
-                             IsHitTestVisible="True"
-                             IsTextSearchEnabled="False" 
-                             Background="#CC000000">
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="300" Margin="5">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                        <RowDefinition Height="Auto"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <Image Source="{Binding PreviewImage, Converter={StaticResource imageConverter}}"
-                                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5"/>
-                                    <TextBlock Grid.Row="1" Text="{Binding Title}" VerticalAlignment="Center" Width="300"
-                                               TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontSize="14"
-                                               FontFamily="{StaticResource TextFontFamily}" 
-                                               Margin="5"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListBoxItem}" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                                <EventSetter Event="MouseDoubleClick" Handler="ListBoxItem_MouseDoubleClick" />
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>-->
-
-                    <!--<ListBox x:Name="_uiPlaylist" ItemsSource="{Binding}" DisplayMemberPath="Title" Visibility="Hidden"
-                             HorizontalAlignment="Right" VerticalAlignment="Center" Grid.RowSpan="2" TabIndex="0" />-->
                 </Grid>
             </Grid>
 
         </TabItem>
-        <TabItem x:Name="_uiVideoPlaying" KeyUp="_uiVideoPlaying_KeyUp">
-            <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}"></ContentControl>
-
-            <!--<Grid Visibility="Visible" x:Name="_uiVLCFullScrenGrid" Background="Black">-->
-            <!--<Views1:Player x:Name="Player" />-->
-            <!--</Grid>-->
+        <TabItem>
+            <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}"></ContentControl>
         </TabItem>
     </TabControl>
 </UserControl>

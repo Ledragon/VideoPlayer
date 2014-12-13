@@ -22,9 +22,14 @@ namespace VideoPlayer.Services
             if (_objectsWrapper == null)
             {
                 var repository = DependencyFactory.Resolve<IVideoRepository>();
-                _objectsWrapper = repository.Load(FileSystemHelper.GetDefaultFileName()); 
+                _objectsWrapper = repository.Load(FileSystemHelper.GetDefaultFileName());
             }
             return _objectsWrapper;
+        }
+
+        public void Save()
+        {
+            this.Save(this.GetObjectsFromFile());
         }
 
         public void Save(ObjectsWrapper wrapper)

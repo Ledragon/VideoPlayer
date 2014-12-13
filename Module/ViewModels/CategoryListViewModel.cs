@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Classes;
 using Log;
 using Microsoft.Practices.Prism.PubSubEvents;
+using Module.Interfaces;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
 
@@ -14,6 +15,7 @@ namespace Module
     public class CategoryListViewModel : ViewModelBase, ICategoryListViewModel
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly ILibraryService _libraryService;
 
         #region Private members
 
@@ -23,12 +25,14 @@ namespace Module
 
         #endregion
 
-        public CategoryListViewModel(ILibraryService libraryService, ICategoryListView categoryListView, IEventAggregator eventAggregator)
+        public CategoryListViewModel(ILibraryService libraryService, ICategoryListView categoryListView,
+            IEventAggregator eventAggregator)
             : base(categoryListView)
         {
+            this._libraryService = libraryService;
             this._eventAggregator = eventAggregator;
             this.InitCollection(libraryService);
-            this.InitCommands();
+            this._eventAggregator.GetEvent<VideoEdited>().Subscribe(this.Refresh);
         }
 
         public ICommand FilterByCategoryCommand
@@ -60,54 +64,61 @@ namespace Module
             {
                 if (Equals(value, this._selectedCategory)) return;
                 this._selectedCategory = value;
-                this._eventAggregator.GetEvent<SelectedCategoryChangedEvent>().Publish(this.SelectedCategory.Name);
-                this.FilterByCategory();
+                if (this._selectedCategory != null)
+                {
+                    this._eventAggregator.GetEvent<SelectedCategoryChangedEvent>().Publish(this.SelectedCategory.Name);
+                }
+                //this.FilterByCategory();
                 this.OnPropertyChanged();
             }
         }
 
-        private void InitCommands()
+        private void Refresh(Object dummy)
         {
-            //this._filterByCategoryCommand = new FilterByCategoryCommand(this.FilterByCategory);
-        }
-
-        private void FilterByCategory()
-        {
-            //this.Logger().InfoFormat("Filtered on category {0}.", this._selectedCategory.Name);
+            string selectedCategoryName = this.SelectedCategory.Name;
+            this.CategoryViewModels.Clear();
+            this.BuildCategorylist(this._libraryService);
+            this.SelectedCategory = this.CategoryViewModels.SingleOrDefault(c => c.Name == selectedCategoryName) ??
+                                    this.CategoryViewModels.First();
         }
 
         private void InitCollection(ILibraryService libraryService)
         {
             try
             {
-                ObjectsWrapper wrapper = libraryService.GetObjectsFromFile();
-                IEnumerable<IGrouping<string, Video>> grouped =
-                    wrapper.Videos.OrderBy(v => v.Category).GroupBy(v => v.Category);
                 if (this.CategoryViewModels == null)
                 {
                     this.CategoryViewModels = new ObservableCollection<CategoryViewModel>();
                 }
-                foreach (var grouping in grouped)
-                {
-                    this.CategoryViewModels.Add(new CategoryViewModel
-                    {
-                        Name = grouping.Key,
-                        Count = grouping.Count()
-                    });
-                }
 
+                this.BuildCategorylist(libraryService);
 
-                this.CategoryViewModels.Insert(0, new CategoryViewModel
-                {
-                    Count = wrapper.Videos.Count,
-                    Name = "All"
-                });
                 this.SelectedCategory = this.CategoryViewModels.First();
             }
             catch (Exception e)
             {
                 this.Logger().ErrorFormat(e.Message);
             }
+        }
+
+        private void BuildCategorylist(ILibraryService libraryService)
+        {
+            ObjectsWrapper wrapper = libraryService.GetObjectsFromFile();
+            IEnumerable<IGrouping<string, Video>> grouped =
+                wrapper.Videos.OrderBy(v => v.Category).GroupBy(v => v.Category);
+            foreach (var grouping in grouped)
+            {
+                this.CategoryViewModels.Add(new CategoryViewModel
+                {
+                    Name = grouping.Key,
+                    Count = grouping.Count()
+                });
+            }
+            this.CategoryViewModels.Insert(0, new CategoryViewModel
+            {
+                Count = wrapper.Videos.Count,
+                Name = "All"
+            });
         }
     }
 }

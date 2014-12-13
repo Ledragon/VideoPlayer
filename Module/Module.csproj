@@ -93,16 +93,19 @@
     <Compile Include="ViewModels\CategoryListViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\ICategoryListViewModel.cs" />
-    <Compile Include="ViewModels\IHomeViewModel.cs" />
-    <Compile Include="ViewModels\IPlayerViewModel.cs" />
-    <Compile Include="ViewModels\ISettingsViewModel.cs" />
-    <Compile Include="ViewModels\IVideosListViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ICategoryListViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IHomeViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IPlayerViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ISettingsViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\IVideosListViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\VideosListViewModel.cs" />
     <Compile Include="Views\CategoryList.xaml.cs">
       <DependentUpon>CategoryList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditVideo.xaml.cs">
+      <DependentUpon>EditVideo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
@@ -148,6 +151,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\CategoryList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EditVideo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

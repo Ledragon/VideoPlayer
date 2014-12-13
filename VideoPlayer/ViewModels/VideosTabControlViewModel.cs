@@ -44,7 +44,7 @@ namespace VideoPlayer.ViewModels
             this.ClearFilterCommand = new GenericCommand(this.ClearFilter);
             this.SwitchEditCommand = new GenericCommand(this.SwitchEdit);
 
-            eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.SwitchToFullScreen);
+            eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
             eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.SwitchToWindowMode);
         }
 
@@ -444,8 +444,11 @@ namespace VideoPlayer.ViewModels
 
         private void SwitchToWindowMode(object dummy)
         {
-            this.SelectedIndex = 0;
-            this.Cursor = Cursors.Arrow;
+            if (this.SelectedIndex != 0)
+            {
+                this.SelectedIndex = 0;
+                this.Cursor = Cursors.Arrow;
+            }
         }
 
         private void SwitchToFullScreen()
@@ -455,7 +458,10 @@ namespace VideoPlayer.ViewModels
 
         private void SwitchToFullScreen(Object dummy)
         {
-            this.SelectedIndex = 1;
+            if (this.SelectedIndex != 1)
+            {
+                this.SelectedIndex = 1;
+            }
             //this._uiVideosTabControl.SelectedItem = this._uiVideoPlaying;
         }
     }

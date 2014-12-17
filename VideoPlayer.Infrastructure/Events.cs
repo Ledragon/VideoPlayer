@@ -12,7 +12,7 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class PlayAllEvent : PubSubEvent<Object>
+    public class PlayPlaylistEvent : PubSubEvent<Object>
     {
     }
 
@@ -43,7 +43,16 @@ namespace VideoPlayer.Infrastructure
     public class VideoPositionChanged : PubSubEvent<Single>
     {
     }
+
     public class VideoEdited : PubSubEvent<Object>
+    {
+    }
+
+    public class PlayAllEvent : PubSubEvent<Object>
+    {
+    }
+
+    public class ClearPlaylistEvent : PubSubEvent<Object>
     {
     }
 }

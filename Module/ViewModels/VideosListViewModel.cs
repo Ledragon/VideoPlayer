@@ -29,21 +29,34 @@ namespace Module
         {
             this._eventAggregator = eventAggregator;
             this._eventAggregator.GetEvent<SelectedCategoryChangedEvent>().Subscribe(this.FilterCategory);
+            this._eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
+
             this.VideoCollection = libraryService.GetObjectsFromFile().Videos;
             this.FilteredVideos = CollectionViewSource.GetDefaultView(this.VideoCollection.OrderBy(v => v.Title));
             this.InfoVisibility = Visibility.Visible;
 
             this.EditCommand = new DelegateCommand(this.Edit, this.CanEdit);
             this.AddVideoCommand = new DelegateCommand(this.Add);
-            this.PlayAllCommand = new DelegateCommand(this.PlayAll);
+            this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist);
             this.PlayOneCommand = new DelegateCommand(this.PlayOne);
+        }
+
+        private void PlayAll(object obj)
+        {
+            this._eventAggregator.GetEvent<ClearPlaylistEvent>().Publish(null);
+            var videoAddedEvent = this._eventAggregator.GetEvent<VideoAddedEvent>();
+            foreach (var video in this.FilteredVideos.Cast<Video>())
+            {
+                videoAddedEvent.Publish(video);
+            }
+            this.PlayPlaylist();
         }
 
         public DelegateCommand AddVideoCommand { get; set; }
 
         public DelegateCommand PlayOneCommand { get; set; }
 
-        public DelegateCommand PlayAllCommand { get; set; }
+        public DelegateCommand PlayPlaylistCommand { get; set; }
 
         public Visibility InfoVisibility
         {
@@ -118,9 +131,9 @@ namespace Module
             this._eventAggregator.GetEvent<PlayOneEvent>().Publish(this.CurrentVideo);
         }
 
-        private void PlayAll()
+        private void PlayPlaylist()
         {
-            this._eventAggregator.GetEvent<PlayAllEvent>().Publish(null);
+            this._eventAggregator.GetEvent<PlayPlaylistEvent>().Publish(null);
         }
 
         private Boolean CanEdit()

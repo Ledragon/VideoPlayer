@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
@@ -24,11 +23,6 @@ namespace VideoPlayer
 
         #region Events
 
-        private void UiPlayAllButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            this.PlayAll();
-        }
-
         private void UserControl_KeyDown(Object sender, KeyEventArgs e)
         {
             if (!(e.OriginalSource is TextBox))
@@ -45,40 +39,12 @@ namespace VideoPlayer
                     }
                     e.Handled = true;
                 }
-                //else if (e.Key == Key.E)
-                //{
-                //    if (Keyboard.Modifiers == ModifierKeys.Control)
-                //    {
-                //        //ICollectionView listCollectionView =
-                //        //    CollectionViewSource.GetDefaultView(this._uiFilesListBox.ItemsSource) as ListCollectionView;
-                //        //if (listCollectionView != null)
-                //        //{
-                //        //    listCollectionView.Refresh();
-                //        //}
-                //        //this._uiVideoInfoTabControl.SelectedIndex = 0;
-                //        //this._uiFilesListBox.Items.Refresh();
-                //    }
-                //    else
-                //    {
-                //        //this._uiVideoInfoTabControl.SelectedIndex = 1;
-                //    }
-                //    e.Handled = true;
-                //}
             }
         }
 
         #endregion
 
         #region Methods
-
-        private void PlayAll()
-        {
-            //foreach (Object item in this._videosTabControlViewModel.FilteredVideos)
-            //{
-            //    this.Player.AddVideo((Video) item);
-            //}
-            //this.Player.PlayAll();
-        }
 
         private void SwitchToFullScreen()
         {

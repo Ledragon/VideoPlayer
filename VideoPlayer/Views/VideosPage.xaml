@@ -114,7 +114,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ContentControl Grid.Row="0" prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.CategoriesListRegion}"></ContentControl>
-                    <Button Grid.Row="1" Click="UiPlayAllButton_OnClick" Name="UiPlayAllButton">Play all</Button>
+                    <Button Grid.Row="1" Name="UiPlayAllButton" Command="{Binding PlayAllCommand}">Play all</Button>
                 </Grid>
                 <Grid x:Name="_uiMainGrid" Grid.Column="1">
                     <Grid.RowDefinitions>

@@ -56,10 +56,16 @@ namespace Module
             this.InitCommands();
 
             eventAggregator.GetEvent<VideoAddedEvent>().Subscribe(this.AddVideo);
-            eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
+            eventAggregator.GetEvent<PlayPlaylistEvent>().Subscribe(this.PlayAll);
             eventAggregator.GetEvent<PlayOneEvent>().Subscribe(this.PlayVideo);
             eventAggregator.GetEvent<VideoDurationChanged>().Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>().Subscribe(this.Next);
+            eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
+        }
+
+        private void ClearPlaylist(object obj)
+        {
+            this.ClearPlaylist();
         }
 
         public ICommand MouseMoveCommand

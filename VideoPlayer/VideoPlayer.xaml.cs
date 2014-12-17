@@ -98,16 +98,6 @@ namespace VideoPlayer
         private void _uiHomePage_SettingsClick(Object sender, RoutedEventArgs e)
         {
             this._uiTabs.SelectedItem = this._uiSettingsTab;
-            //if (this._uiSettingsTab.Content == null)
-            //{
-            //    SettingsPage settingsPage = new SettingsPage();
-            //    settingsPage.HorizontalAlignment = HorizontalAlignment.Stretch;
-            //    settingsPage.VerticalAlignment = VerticalAlignment.Stretch;
-            //    settingsPage.Name = "_uiVideosView";
-            //    settingsPage.Directories = this._directories;
-            //    settingsPage.DataContext = this._directories;
-            //    this._uiSettingsTab.Content = settingsPage;
-            //}
         }
 
         private void _uiHomePage_LoadClick(Object sender, RoutedEventArgs e)

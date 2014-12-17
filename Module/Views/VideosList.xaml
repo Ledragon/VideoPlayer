@@ -12,7 +12,7 @@
     <UserControl.InputBindings>
         <KeyBinding Key="E" Command="{Binding EditCommand}" Modifiers="Control"></KeyBinding>
         <KeyBinding Key="A" Command="{Binding AddVideoCommand}"></KeyBinding>
-        <KeyBinding Key="P" Command="{Binding PlayAllCommand}"></KeyBinding>
+        <KeyBinding Key="P" Command="{Binding PlayPlaylistCommand}"></KeyBinding>
     </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>

@@ -14,6 +14,7 @@ namespace VideoPlayer.ViewModels
 {
     public class VideosTabControlViewModel : ViewModelBase
     {
+        private readonly IEventAggregator _eventAggregator;
         private ICommand _clearFilterCommand;
         private Cursor _cursor;
         private Visibility _filterGridVisibility;
@@ -26,18 +27,38 @@ namespace VideoPlayer.ViewModels
         private ICommand _switchToFullScreenCommand;
         private ICommand _switchToWindowCommand;
         private string _tagFilter;
+        private ICommand _playAllCommand;
+
+        public ICommand PlayAllCommand
+        {
+            get { return this._playAllCommand; }
+            set
+            {
+                if (Equals(value, this._playAllCommand)) return;
+                this._playAllCommand = value;
+                this.OnPropertyChanged();
+            }
+        }
+
 
         public VideosTabControlViewModel(IEventAggregator eventAggregator)
         {
+            this._eventAggregator = eventAggregator;
             this.FilterGridVisibility = Visibility.Collapsed;
 
             this.ShowFilterGridCommand = new DelegateCommand(this.ShowFilterGrid);
-            this.SwitchToFullScreenCommand = new GenericCommand(this.SwitchToFullScreen);
-            this.SwitchToWindowCommand = new GenericCommand(this.SwitchToWindowMode);
-            this.ClearFilterCommand = new GenericCommand(this.ClearFilter);
+            this.SwitchToFullScreenCommand = new DelegateCommand(this.SwitchToFullScreen);
+            this.SwitchToWindowCommand = new DelegateCommand(this.SwitchToWindowMode);
+            this.ClearFilterCommand = new DelegateCommand(this.ClearFilter);
+            this.PlayAllCommand=new DelegateCommand(this.PlayAll);
 
-            eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
-            eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.SwitchToWindowMode);
+            this._eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
+            this._eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.SwitchToWindowMode);
+        }
+
+        private void PlayAll()
+        {
+            this._eventAggregator.GetEvent<PlayAllEvent>().Publish(null);
         }
 
         public Int32 NumberOfVideos

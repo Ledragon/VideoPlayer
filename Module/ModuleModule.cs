@@ -29,24 +29,14 @@ namespace Module
             this._container.RegisterType<ICategoryListView, CategoryList>();
             this._container.RegisterType<IPlayerViewModel, PlayerViewModel>();
             this._container.RegisterType<IPlayer, Player>();
+            this._container.RegisterType<IVideoFilterGrid, VideoFilterGrid>();
+            this._container.RegisterType<IVideoFilterGridViewModel, VideoFilterGridViewModel>();
 
             //this.ReferenceRegion<IHomeView>(RegionNames.ContentRegion);
             this.ReferenceRegion<IVideosListViewModel>(RegionNames.VideosListRegion);
             this.ReferenceRegion<ICategoryListViewModel>(RegionNames.CategoriesListRegion);
             this.ReferenceRegion<IPlayerViewModel>(RegionNames.PlayerRegion);
-            //if (this._regionManager.Regions.ContainsRegionWithName(RegionNames.ContentRegion))
-            //{
-            //    IRegion homeRegion = this._regionManager.Regions[RegionNames.ContentRegion];
-            //    var homeView = this._container.Resolve<IHomeView>();
-            //    homeRegion.Add(homeView);
-            //}
-
-            //if (this._regionManager.Regions.ContainsRegionWithName(RegionNames.VideoInfoRegion))
-            //{
-            //    IRegion videoInfoRegion = this._regionManager.Regions[RegionNames.VideoInfoRegion];
-            //    var view = this._container.Resolve<VideoInfo>();
-            //    videoInfoRegion.Add(view);
-            //}
+            this.ReferenceRegion<IVideoFilterGridViewModel>(RegionNames.FilterRegion);
         }
 
         private void ReferenceRegion<T>(String regionName) where T:IViewModel

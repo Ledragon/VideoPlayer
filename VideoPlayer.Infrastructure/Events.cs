@@ -1,10 +1,27 @@
 ﻿using System;
+using System.ComponentModel;
 using Classes;
 using Microsoft.Practices.Prism.PubSubEvents;
 
 namespace VideoPlayer.Infrastructure
 {
     public class SelectedCategoryChangedEvent : PubSubEvent<String>
+    {
+    }
+
+    public class NameFilterChangedEvent : PubSubEvent<String>
+    {
+    }
+
+    public class TagFilterChangedEvent : PubSubEvent<String>
+    {
+    }
+    
+    public class SortingChangedEvent : PubSubEvent<SortDescription>
+    {
+    }
+    
+    public class FilterChangedEvent : PubSubEvent<Int32>
     {
     }
 

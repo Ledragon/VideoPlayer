@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <Style TargetType="{x:Type Label}" x:Key="Label">
             <Setter Property="Foreground" Value="White" />
@@ -13,7 +13,7 @@
             <Setter Property="Margin" Value="5" />
         </Style>
     </UserControl.Resources>
-    <Grid VerticalAlignment="Center" Background="#cc550000" Margin="0">
+    <Grid VerticalAlignment="Center" Background="#cc330000" Margin="0">
         <StackPanel Orientation="Horizontal" Margin="5">
             <StackPanel Style="{StaticResource FilterStackPanelStyle}">
                 <Label x:Name="_uiNameFilter" Content="Name:" Style="{StaticResource Label}" />
@@ -24,22 +24,6 @@
                 <Label x:Name="_uiTagFilter" Content="Tag:" Style="{StaticResource Label}" />
                 <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TagFilter}"
                                              VerticalAlignment="Center" Width="120" x:Name="_uiTagFilterTextBox" />
-            </StackPanel>
-            <StackPanel Style="{StaticResource FilterStackPanelStyle}">
-
-                <Label x:Name="_uiCategoryFilter" Content="Category:"
-                                           Style="{StaticResource Label}" />
-                <ComboBox x:Name="_uiCategoryFilterComboBox"
-                                              Width="120"
-                                              ItemsSource="{Binding CategoryViewModels}"
-                                              SelectedItem="{Binding SelectedCategory}"
-                                              HorizontalContentAlignment="Stretch">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
             </StackPanel>
             <StackPanel Style="{StaticResource FilterStackPanelStyle}">
                 <Label HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -60,12 +44,6 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </StackPanel>
-            <StackPanel Style="{StaticResource FilterStackPanelStyle}" VerticalAlignment="Stretch">
-                <Label Foreground="Transparent">empty</Label>
-                <Button x:Name="_uiClearFilter" Content="Clear filter" HorizontalAlignment="Left"
-                                            VerticalAlignment="Bottom" Width="75"
-                                            Command="{Binding ClearFilterCommand}" />
             </StackPanel>
         </StackPanel>
     </Grid>

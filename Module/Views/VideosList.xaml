@@ -22,7 +22,7 @@
         <Grid Grid.Row="0" Margin="30" Background="#CC000000">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="600"/>
             </Grid.ColumnDefinitions>
             <Image Grid.Column="0" 
                    Source="{Binding Path=CurrentVideo.PreviewImage, Converter={StaticResource imageConverter}}"

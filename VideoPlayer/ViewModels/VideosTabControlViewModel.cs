@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Classes;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
@@ -18,16 +13,30 @@ namespace VideoPlayer.ViewModels
         private ICommand _clearFilterCommand;
         private Cursor _cursor;
         private Visibility _filterGridVisibility;
-        private String _nameFilter;
         private int _numberOfVideos;
+        private ICommand _playAllCommand;
         private Int32 _selectedIndex;
-        private SortingViewModel _selectedSorting;
         private ICommand _showFilterGridCommand;
-        private ObservableCollection<SortingViewModel> _sortings;
         private ICommand _switchToFullScreenCommand;
         private ICommand _switchToWindowCommand;
-        private string _tagFilter;
-        private ICommand _playAllCommand;
+
+        public VideosTabControlViewModel(IEventAggregator eventAggregator)
+        {
+            this._eventAggregator = eventAggregator;
+            this.FilterGridVisibility = Visibility.Collapsed;
+
+            this.ShowFilterGridCommand = new DelegateCommand(this.ShowFilterGrid);
+            this.SwitchToFullScreenCommand = new DelegateCommand(this.SwitchToFullScreen);
+            this.SwitchToWindowCommand = new DelegateCommand(this.SwitchToWindowMode);
+            this.PlayAllCommand = new DelegateCommand(this.PlayAll);
+
+            this._eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
+            this._eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.SwitchToWindowMode);
+            this._eventAggregator.GetEvent<FilterChangedEvent>().Subscribe(i =>
+            {
+                this.NumberOfVideos = i;
+            });
+        }
 
         public ICommand PlayAllCommand
         {
@@ -38,27 +47,6 @@ namespace VideoPlayer.ViewModels
                 this._playAllCommand = value;
                 this.OnPropertyChanged();
             }
-        }
-
-
-        public VideosTabControlViewModel(IEventAggregator eventAggregator)
-        {
-            this._eventAggregator = eventAggregator;
-            this.FilterGridVisibility = Visibility.Collapsed;
-
-            this.ShowFilterGridCommand = new DelegateCommand(this.ShowFilterGrid);
-            this.SwitchToFullScreenCommand = new DelegateCommand(this.SwitchToFullScreen);
-            this.SwitchToWindowCommand = new DelegateCommand(this.SwitchToWindowMode);
-            this.ClearFilterCommand = new DelegateCommand(this.ClearFilter);
-            this.PlayAllCommand=new DelegateCommand(this.PlayAll);
-
-            this._eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
-            this._eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.SwitchToWindowMode);
-        }
-
-        private void PlayAll()
-        {
-            this._eventAggregator.GetEvent<PlayAllEvent>().Publish(null);
         }
 
         public Int32 NumberOfVideos
@@ -84,20 +72,6 @@ namespace VideoPlayer.ViewModels
                 if (Equals(value, this._clearFilterCommand)) return;
                 this._clearFilterCommand = value;
                 this.OnPropertyChanged();
-            }
-        }
-
-        public String TagFilter
-        {
-            get { return this._tagFilter; }
-            set
-            {
-                if (value != this._tagFilter)
-                {
-                    this._tagFilter = value;
-                    this.Filter();
-                    this.OnPropertyChanged();
-                }
             }
         }
 
@@ -145,81 +119,6 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-        public SortingViewModel SelectedSorting
-        {
-            get { return this._selectedSorting; }
-            set
-            {
-                if (!Equals(value, this._selectedSorting))
-                {
-                    this._selectedSorting = value;
-                    //this.FilteredVideos.SortDescriptions.Clear();
-                    //this.FilteredVideos.SortDescriptions.Add(this._selectedSorting.SortDescription);
-                    this.OnPropertyChanged();
-                }
-            }
-        }
-
-        public ObservableCollection<SortingViewModel> Sortings
-        {
-            get
-            {
-                if (this._sortings == null)
-                {
-                    this._sortings = new ObservableCollection<SortingViewModel>
-                    {
-                        new SortingViewModel
-                        {
-                            Name = "Title",
-                            SortDescription = new SortDescription("Title", ListSortDirection.Ascending)
-                        },
-                        new SortingViewModel
-                        {
-                            Name = "Category",
-                            SortDescription = new SortDescription("Category", ListSortDirection.Ascending)
-                        },
-                        new SortingViewModel
-                        {
-                            Name = "Length",
-                            SortDescription = new SortDescription("Length", ListSortDirection.Ascending)
-                        },
-                        new SortingViewModel
-                        {
-                            Name = "Oldest",
-                            SortDescription = new SortDescription("DateAdded", ListSortDirection.Ascending)
-                        },
-                        new SortingViewModel
-                        {
-                            Name = "Newest",
-                            SortDescription = new SortDescription("DateAdded", ListSortDirection.Descending)
-                        }
-                    };
-                    this.SelectedSorting = this._sortings[0];
-                }
-                return this._sortings;
-            }
-            set
-            {
-                if (Equals(value, this._sortings)) return;
-                this._sortings = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public String NameFilter
-        {
-            get { return this._nameFilter; }
-            set
-            {
-                if (value != this._nameFilter)
-                {
-                    this._nameFilter = value;
-                    this.Filter();
-                    this.OnPropertyChanged();
-                }
-            }
-        }
-
         public Visibility FilterGridVisibility
         {
             get { return this._filterGridVisibility; }
@@ -244,10 +143,9 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-        private void ClearFilter()
+        private void PlayAll()
         {
-            this.NameFilter = String.Empty;
-            this.TagFilter = String.Empty;
+            this._eventAggregator.GetEvent<PlayAllEvent>().Publish(null);
         }
 
         private void ShowFilterGrid()
@@ -260,66 +158,6 @@ namespace VideoPlayer.ViewModels
             {
                 this.FilterGridVisibility = Visibility.Collapsed;
             }
-        }
-
-        private void Filter()
-        {
-            //ICollectionView view = CollectionViewSource.GetDefaultView(this.VideoCollection);
-            //if (view != null)
-            //{
-            //    view.Filter = this.GlobalFilter;
-            //    this.FilteredVideos = view;
-            //    this.NumberOfVideos = this.FilteredVideos.Cast<Video>().Count();
-            //}
-        }
-
-        private Boolean GlobalFilter(Object item)
-        {
-            var filters = new List<Predicate<Object>>
-            {
-                this.FilterTag,
-                this.FilterName
-            };
-
-            return filters.All(predicate => predicate(item));
-        }
-
-        private Boolean FilterTag(Object item)
-        {
-            return this.IsTagOk(item as Video);
-        }
-
-        private Boolean FilterName(Object item)
-        {
-            return this.IsNameOk(item as Video);
-        }
-
-        private Boolean IsNameOk(Video video)
-        {
-            bool result = true;
-            if (!String.IsNullOrEmpty(this.NameFilter))
-            {
-                result = video.Title.ToLower().Contains(this.NameFilter.ToLower());
-            }
-            return result;
-        }
-
-        private Boolean IsTagOk(Video video)
-        {
-            Boolean isTagOk = false;
-            if (!String.IsNullOrEmpty(this.TagFilter))
-            {
-                String tagFilter = this.TagFilter;
-
-                string[] filters = tagFilter.Split(new[] {";"}, StringSplitOptions.RemoveEmptyEntries);
-                isTagOk = filters.Aggregate(isTagOk,
-                    (current, filter) => current || video.Tags.Any(t => t.Value.ToLower().Contains(filter)));
-            }
-            else
-            {
-                isTagOk = true;
-            }
-            return isTagOk;
         }
 
         private void SwitchToWindowMode()

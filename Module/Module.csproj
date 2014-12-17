@@ -101,6 +101,7 @@
     <Compile Include="ViewModels\Interfaces\IVideoFilterGridViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\SortingViewModel.cs" />
     <Compile Include="ViewModels\VideoFilterGridViewModel.cs" />
     <Compile Include="ViewModels\VideosListViewModel.cs" />
     <Compile Include="Views\CategoryList.xaml.cs">

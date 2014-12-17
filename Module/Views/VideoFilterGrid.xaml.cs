@@ -13,6 +13,10 @@ namespace Module
             this.InitializeComponent();
         }
 
-        public IViewModel ViewModel { get; set; }
+        public IViewModel ViewModel
+        {
+            get { return (IViewModel) this.DataContext; }
+            set { this.DataContext = value; }
+        }
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="Commands.cs" />
     <Compile Include="Directory.cs" />
     <Compile Include="ObjectsWrapper.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Tag.cs" />
     <Compile Include="Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -21,8 +22,10 @@ namespace Module
         private Video _currentVideo;
         private int _editIndex;
         private String _filterName;
+        private List<String> _filterTags;
         private ICollectionView _filteredVideos;
         private Visibility _infoVisibility;
+        private SortDescription _sortDescription;
         private ObservableCollection<Video> _videoCollection;
 
         public VideosListViewModel(ILibraryService libraryService, IVideosList videosList,
@@ -30,19 +33,24 @@ namespace Module
             : base(videosList)
         {
             this._eventAggregator = eventAggregator;
+            this._categoryFilter = "All";
             this._eventAggregator.GetEvent<SelectedCategoryChangedEvent>().Subscribe(this.FilterCategory);
             this._eventAggregator.GetEvent<NameFilterChangedEvent>().Subscribe(this.FilterName);
+            this._eventAggregator.GetEvent<TagFilterChangedEvent>().Subscribe(this.FilterTag);
             this._eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
             this._eventAggregator.GetEvent<SortingChangedEvent>().Subscribe(this.Sort);
 
             this.VideoCollection = libraryService.GetObjectsFromFile().Videos;
-            this.FilteredVideos = CollectionViewSource.GetDefaultView(this.VideoCollection.OrderBy(v => v.Title));
+            this._sortDescription = new SortDescription("Title", ListSortDirection.Ascending);
+            ICollectionView view = CollectionViewSource.GetDefaultView(this.VideoCollection);
+            view.SortDescriptions.Add(this._sortDescription);
+            this.FilteredVideos = view;
             this.InfoVisibility = Visibility.Visible;
 
             this.EditCommand = new DelegateCommand(this.Edit, this.CanEdit);
-            this.AddVideoCommand = new DelegateCommand(this.Add);
-            this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist);
-            this.PlayOneCommand = new DelegateCommand(this.PlayOne);
+            this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
+            this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
+            this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
         }
 
         public DelegateCommand AddVideoCommand { get; set; }
@@ -120,22 +128,46 @@ namespace Module
             }
         }
 
+        private void FilterTag(List<String> tags)
+        {
+            this._filterTags = tags;
+            this.SetFilter();
+        }
+
+        private Boolean CanCommandsExecute()
+        {
+            return this.EditIndex == 0;
+        }
+
         private void Sort(SortDescription obj)
         {
-            this.FilteredVideos.SortDescriptions.Clear();
-            this.FilteredVideos.SortDescriptions.Add(obj);
+            if (this._sortDescription != obj)
+            {
+                this._sortDescription = obj;
+                //this.FilteredVideos.DeferRefresh();
+                this.FilteredVideos.SortDescriptions.Clear();
+                this.FilteredVideos.SortDescriptions.Add(obj);
+                this.FilteredVideos.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
+                //this.FilteredVideos.Refresh();
+            }
         }
 
         private void FilterName(String obj)
         {
-            this._filterName = obj;
-            this.SetFilter();
+            if (this._filterName != obj)
+            {
+                this._filterName = obj;
+                this.SetFilter();
+            }
         }
 
         private void FilterCategory(String category)
         {
-            this._categoryFilter = category;
-            this.SetFilter();
+            if (this._categoryFilter != category)
+            {
+                this._categoryFilter = category;
+                this.SetFilter();
+            }
         }
 
         private void SetFilter()
@@ -154,7 +186,8 @@ namespace Module
                     var video = item as Video;
                     Boolean isNameOk = this.IsNameOk(video);
                     Boolean isCategoryOk = this.IsCategoryOk(video, this._categoryFilter);
-                    result = isNameOk && isCategoryOk;
+                    Boolean isTagOk = this.IsTagOK(video);
+                    result = isNameOk && isCategoryOk && isTagOk;
                 }
                 catch (Exception e)
                 {
@@ -232,6 +265,20 @@ namespace Module
             if (!String.IsNullOrEmpty(this._filterName))
             {
                 result = video.Title.ToLower().Contains(this._filterName.ToLower());
+            }
+            return result;
+        }
+
+        private Boolean IsTagOK(Video video)
+        {
+            Boolean result = true;
+            if (this._filterTags != null && this._filterTags.Any())
+            {
+                result =
+                    this._filterTags.Any(
+                        filterTag =>
+                            video.Tags.Any(
+                                t => String.Equals(t.Value, filterTag, StringComparison.CurrentCultureIgnoreCase)));
             }
             return result;
         }

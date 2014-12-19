@@ -1,9 +1,9 @@
 ﻿<UserControl x:Class="Module.VideoFilterGrid"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <Style TargetType="{x:Type Label}" x:Key="Label">
@@ -13,38 +13,39 @@
             <Setter Property="Margin" Value="5" />
         </Style>
     </UserControl.Resources>
-    <Grid VerticalAlignment="Center" Background="#cc330000" Margin="0">
-        <StackPanel Orientation="Horizontal" Margin="5">
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Left" Background="#cc330000" Margin="0">
+        <StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center">
             <StackPanel Style="{StaticResource FilterStackPanelStyle}">
-                <Label x:Name="_uiNameFilter" Content="Name:" Style="{StaticResource Label}" />
+                <Label Content="Name:" Style="{StaticResource Label}" />
                 <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding NameFilter}"
-                                             VerticalAlignment="Center" Width="120" x:Name="_uiFilterTextBox" />
+                         VerticalAlignment="Center" Width="120"/>
             </StackPanel>
             <StackPanel Style="{StaticResource FilterStackPanelStyle}">
-                <Label x:Name="_uiTagFilter" Content="Tag:" Style="{StaticResource Label}" />
-                <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TagFilter}"
-                                             VerticalAlignment="Center" Width="120" x:Name="_uiTagFilterTextBox" />
-            </StackPanel>
-            <StackPanel Style="{StaticResource FilterStackPanelStyle}">
-                <Label HorizontalAlignment="Left" VerticalAlignment="Center"
-                                           Style="{StaticResource Label}">
-                    Sort by:
-                </Label>
-                <ComboBox x:Name="_uiSortComboBox"
-                                              HorizontalAlignment="Left"
-                                              VerticalAlignment="Center"
-                                              Width="100"
-                                              ItemsSource="{Binding Sortings}"
-                                              SelectedIndex="0"
-                                              HorizontalContentAlignment="Stretch"
-                                              SelectedItem="{Binding SelectedSorting}">
+                <Label Content="Tag:" Style="{StaticResource Label}" />
+                <ComboBox ItemsSource="{Binding Tags}" SelectedItem="{Binding SelectedTag}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <Button Command="{Binding AddTagCommand}">+</Button>
+                <Button Command="{Binding ClearTagsCommand}">Clear</Button>
+                <ListBox ItemsSource="{Binding SelectedTags}" Margin="5">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" Margin="5"/>
+                                <TextBlock Text="{Binding Count}" Margin="5"/>
+                                <!--<Button Command="{Binding Path=Parent.RemoveTagCommand}">-</Button>-->
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
             </StackPanel>
+
         </StackPanel>
     </Grid>
 </UserControl>

@@ -3,6 +3,7 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using Module.Interfaces;
+using Module.Views;
 using VideoPlayer.Infrastructure;
 
 namespace Module
@@ -31,12 +32,18 @@ namespace Module
             this._container.RegisterType<IPlayer, Player>();
             this._container.RegisterType<IVideoFilterGrid, VideoFilterGrid>();
             this._container.RegisterType<IVideoFilterGridViewModel, VideoFilterGridViewModel>();
+            this._container.RegisterType<ITagsListView, TagsList>();
+            this._container.RegisterType<ITagsListViewModel, TagsListViewModel>();
+            this._container.RegisterType<ISortGrid, SortGrid>();
+            this._container.RegisterType<ISortGridViewModel, SortGridViewModel>();
 
             //this.ReferenceRegion<IHomeView>(RegionNames.ContentRegion);
             this.ReferenceRegion<IVideosListViewModel>(RegionNames.VideosListRegion);
             this.ReferenceRegion<ICategoryListViewModel>(RegionNames.CategoriesListRegion);
             this.ReferenceRegion<IPlayerViewModel>(RegionNames.PlayerRegion);
             this.ReferenceRegion<IVideoFilterGridViewModel>(RegionNames.FilterRegion);
+            this.ReferenceRegion<ITagsListViewModel>(RegionNames.TagsRegion);
+            this.ReferenceRegion<ISortGridViewModel>(RegionNames.SortGridRegion);
         }
 
         private void ReferenceRegion<T>(String regionName) where T:IViewModel

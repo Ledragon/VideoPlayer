@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Documents;
 using Classes;
 using Microsoft.Practices.Prism.PubSubEvents;
 
@@ -13,7 +15,7 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class TagFilterChangedEvent : PubSubEvent<String>
+    public class TagFilterChangedEvent : PubSubEvent<List<String>>
     {
     }
     

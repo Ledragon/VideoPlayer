@@ -10,5 +10,7 @@ namespace VideoPlayer.Infrastructure
         public const String CategoriesListRegion = "CategoriesListRegion";
         public const String PlayerRegion = "PlayerRegion";
         public const String FilterRegion = "FilterRegion";
+        public const String TagsRegion = "TagsRegion";
+        public const String SortGridRegion = "SortGridRegion";
     }
 }

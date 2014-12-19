@@ -99,11 +99,16 @@
     <Compile Include="ViewModels\Interfaces\ISettingsViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IVideosListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IVideoFilterGridViewModel.cs" />
+    <Compile Include="ViewModels\ISortGridViewModel.cs" />
+    <Compile Include="ViewModels\ITagsListViewModel.cs" />
     <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\SortGridViewModel.cs" />
     <Compile Include="ViewModels\SortingViewModel.cs" />
+    <Compile Include="ViewModels\TagsListViewModel.cs" />
     <Compile Include="ViewModels\VideoFilterGridViewModel.cs" />
     <Compile Include="ViewModels\VideosListViewModel.cs" />
+    <Compile Include="ViewModels\EditVideoViewModel.cs" />
     <Compile Include="Views\CategoryList.xaml.cs">
       <DependentUpon>CategoryList.xaml</DependentUpon>
     </Compile>
@@ -130,10 +135,17 @@
     <Compile Include="Views\ICategoryListView.cs" />
     <Compile Include="Views\IHomeView.cs" />
     <Compile Include="Views\IPlayer.cs" />
+    <Compile Include="Views\ITagsListView.cs" />
     <Compile Include="Views\IVideoFilterGrid.cs" />
     <Compile Include="Views\IVideosList.cs" />
     <Compile Include="Views\Player.xaml.cs">
       <DependentUpon>Player.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SortGrid.xaml.cs">
+      <DependentUpon>SortGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TagsList.xaml.cs">
+      <DependentUpon>TagsList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VideoFilterGrid.xaml.cs">
       <DependentUpon>VideoFilterGrid.xaml</DependentUpon>
@@ -170,6 +182,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Player.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SortGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TagsList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

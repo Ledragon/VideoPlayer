@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:prism="http://www.codeplex.com/prism"
+
              xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1024">
@@ -11,12 +13,13 @@
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="E" Command="{Binding EditCommand}" Modifiers="Control"></KeyBinding>
-        <KeyBinding Key="A" Command="{Binding AddVideoCommand}"></KeyBinding>
-        <KeyBinding Key="P" Command="{Binding PlayPlaylistCommand}"></KeyBinding>
+        <KeyBinding Key="A" Command="{Binding AddVideoCommand}" Modifiers="Control"></KeyBinding>
+        <KeyBinding Key="P" Command="{Binding PlayPlaylistCommand}" Modifiers="Control"></KeyBinding>
     </UserControl.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="30" Background="#CC000000">
@@ -36,10 +39,11 @@
 
                 </TabItem>
                 <TabItem>
-                    <Module:EditVideo  DataContext="{Binding CurrentVideo}"/>
+                    <Module:EditVideo DataContext="{Binding CurrentVideo}"/>
                 </TabItem>
             </TabControl>
         </Grid>
+        <ContentControl Grid.Row="2" prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SortGridRegion}"></ContentControl>
         <ListBox Grid.Row="1"
                  SelectionMode="Single"
                  IsSynchronizedWithCurrentItem="True"

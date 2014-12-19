@@ -100,8 +100,10 @@
                 
                 <ContentControl Grid.Column="0"
                                 prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.CategoriesListRegion}"
-                                Visibility="{Binding FilterGridVisibility}" />
-                
+                                />
+                <!--<ContentControl Grid.Column="1"
+                        prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.TagsRegion}" />-->
+
                 <Grid Grid.Column="1" VerticalAlignment="Stretch" Background="#cc000000"
                       HorizontalAlignment="Stretch" ZIndex="10" Name="_uiFilterGrid"
                       Visibility="{Binding FilterGridVisibility}">
@@ -109,7 +111,7 @@
                         prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.FilterRegion}" />
                 </Grid>
                 
-                <Grid x:Name="_uiMainGrid" Grid.Column="1">
+                <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -123,7 +125,7 @@
                         <Button Command="{Binding PlayAllCommand}" ToolTip="Play all" Style="{StaticResource PlayAll}">
                             <Viewbox>
                                 <Grid>
-                                    <Grid Name="backgroundGrid" Width="64" Height="64" Visibility="Visible">
+                                    <Grid Width="48" Height="48" Visibility="Visible">
                                         <Ellipse Style="{StaticResource ButtonContainer}" />
                                     </Grid>
                                     <Path Data="M48.00922,49.362999C51.186989,49.362999,53.762001,51.117016,53.762001,53.274704L53.762001,57.866001 42.256001,57.866001 42.256001,53.274704C42.256001,51.117016,44.833462,49.362999,48.00922,49.362999z M32.508339,49.362999C35.684731,49.362999,38.261002,51.112968,38.261002,53.274384L38.261002,57.864002 26.757,57.864002 26.757,53.274384C26.757,51.112968,29.331949,49.362999,32.508339,49.362999z M15.99059,49.362999C19.170095,49.362999,21.744999,51.112968,21.744999,53.274384L21.744999,57.864002 10.238,57.864002 10.238,53.274384C10.238,51.112968,12.816765,49.362999,15.99059,49.362999z M48.154602,40.026001C50.45908,40.026001 52.323002,41.891827 52.323002,44.19516 52.323002,46.498615 50.45908,48.367001 48.154602,48.367001 45.853271,48.367001 43.985001,46.498615 43.985001,44.19516 43.985001,41.891827 45.853271,40.026001 48.154602,40.026001z M32.654629,40.026001C34.957329,40.026001 36.821999,41.891876 36.821999,44.19405 36.821999,46.498783 34.957329,48.366001 32.654629,48.366001 30.351231,48.366001 28.483999,46.498783 28.483999,44.19405 28.483999,41.891876 30.351231,40.026001 32.654629,40.026001z M16.1376,40.026001C18.44146,40.026001 20.306,41.891876 20.306,44.19405 20.306,46.498783 18.44146,48.366001 16.1376,48.366001 13.836289,48.366001 11.968,46.498783 11.968,44.19405 11.968,41.891876 13.836289,40.026001 16.1376,40.026001z M26.070999,7.4309998L26.070999,16.890345 26.070999,26.351 32.00005,21.619423 37.927002,16.890345 32.00005,12.161267z M0,0L64,0 64,33.348999 0,33.348999z" Stretch="Uniform" Fill="#FF333333" Width="12" Height="12" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">

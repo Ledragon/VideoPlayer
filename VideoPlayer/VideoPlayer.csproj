@@ -149,17 +149,12 @@
     <Compile Include="Commands\FilterCommand.cs" />
     <Compile Include="Commands\PlayCommand.cs" />
     <Compile Include="DataProvider.cs" />
-    <Compile Include="IKeyHandler.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModels\SortingViewModel.cs" />
     <Compile Include="ViewModels\VideosTabControlViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\DirectoryBrowser.xaml.cs">
       <DependentUpon>DirectoryBrowser.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FilterPanel.xaml.cs">
-      <DependentUpon>FilterPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -172,10 +167,6 @@
     </Compile>
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="Views\DirectoryBrowser.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\FilterPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -363,9 +354,7 @@
   <ItemGroup>
     <Resource Include="XMLFile1.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

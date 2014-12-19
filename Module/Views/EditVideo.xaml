@@ -1,60 +1,64 @@
 ﻿<UserControl x:Class="Module.EditVideo"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="Label">
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-        <Style TargetType="Label" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
-            <Setter Property="BorderBrush" Value="Gray"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="5" />
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="BorderBrush" Value="Gray"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="BorderBrush" Value="Gray" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="5" />
         </Style>
     </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="25"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Label}" Content="Title:"/>
-        <TextBox Grid.Row="0" Grid.Column="1"  Text="{Binding Title}"/>
-        <Label Grid.Row="1" Grid.Column="0"  Style="{StaticResource Label}" Content="Duration:"/>
-        <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource Label}" Content="{Binding Length}" ContentStringFormat="HH:mm:ss"/>
-        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Label}"  Content="Rating:"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Rating}"/>
-        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Label}" Content="Views:"/>
-        <Label Grid.Row="3" Grid.Column="1" Style="{StaticResource Label}" Content="{Binding NumberOfViews}"/>
-        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource Label}" Content="Date added:"/>
-        <Label Grid.Row="4" Grid.Column="1" Style="{StaticResource Label}" Content="{Binding DateAdded}" ContentStringFormat="dd/MM/yyy HH:mm"/>
-        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource Label}" Content="Category:"/>
-        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding Category}"/>
-        <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource Label}" Content="Tags:"/>
-        <DataGrid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemsSource="{Binding Tags}" ColumnWidth="*">
-
-        </DataGrid>
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Label}" Content="Title:" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Title}" />
+        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Content="Duration:" />
+        <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource Label}" Content="{Binding Length}"
+               ContentStringFormat="HH:mm:ss" />
+        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Label}" Content="Rating:" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Rating}" />
+        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Label}" Content="Views:" />
+        <Label Grid.Row="3" Grid.Column="1" Style="{StaticResource Label}" Content="{Binding NumberOfViews}" />
+        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource Label}" Content="Date added:" />
+        <Label Grid.Row="4" Grid.Column="1" Style="{StaticResource Label}" Content="{Binding DateAdded}"
+               ContentStringFormat="dd/MM/yyy HH:mm" />
+        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource Label}" Content="Category:" />
+        <TextBox  Grid.Row="5" Grid.Column="1" Text="{Binding Category}"></TextBox>
+        <!--<ComboBox Grid.Row="5" Grid.Column="1" IsEditable="True" SelectedItem="{Binding SelectedCategory}"
+                  ItemsSource="{Binding CategoryViewModels}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>-->
+        <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource Label}" Content="Tags:" />
+        <DataGrid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch"
+                  HorizontalAlignment="Stretch" ItemsSource="{Binding Tags}" ColumnWidth="*"  Margin="5"/>
     </Grid>
 </UserControl>

@@ -372,6 +372,7 @@ namespace Module
             this.ClearPlaylist();
             this.AddVideo(video);
             this.CurrentVideo = video;
+            this.CurrentVideo.NumberOfViews++;
             this._eventAggregator.GetEvent<PlayedEvent>().Publish(video);
         }
 

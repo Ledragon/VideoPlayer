@@ -8,6 +8,7 @@
     <UserControl.Resources>
         <Style TargetType="Label" x:Key="Label">
             <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="5" />
         </Style>
         <Style TargetType="Label" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
             <Setter Property="BorderBrush" Value="Gray"/>
@@ -18,6 +19,7 @@
         <Style TargetType="ListBox">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="5" />
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="White"></Setter>
@@ -60,7 +62,7 @@
         <Label Grid.Row="5" Grid.Column="0"  Style="{StaticResource Label}" Content="Category:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
         <Label Grid.Row="5" Grid.Column="1"  Style="{StaticResource ValueLabel}"  VerticalAlignment="Top" HorizontalAlignment="Stretch" Content="{Binding Category}" ContentStringFormat="dd/MM/yyy HH:mm"/>
         <Label Grid.Row="6" Grid.Column="0" Style="{StaticResource Label}" Content="Tags:" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-        <DataGrid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Tags}" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True">
+        <DataGrid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Tags}" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Margin="5">
             
         </DataGrid>
         <StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">

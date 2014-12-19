@@ -10,6 +10,7 @@ namespace Module
         public EditVideo()
         {
             InitializeComponent();
+            //this.DataContext = new EditVideoViewModel();
         }
     }
 }

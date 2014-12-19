@@ -3,7 +3,9 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
+using Classes.Annotations;
 using Microsoft.WindowsAPICodePack.Shell;
 using ToolLib;
 
@@ -104,7 +106,7 @@ namespace Classes
             set
             {
                 this._title = value;
-                this.NotifyPropertyChanged("Title");
+                this.OnPropertyChanged();
             }
         }
 
@@ -115,7 +117,7 @@ namespace Classes
             set
             {
                 this._length = value;
-                this.NotifyPropertyChanged("Length");
+                this.OnPropertyChanged();
             }
         }
 
@@ -143,7 +145,7 @@ namespace Classes
             set
             {
                 this._numberOfViews = value;
-                this.NotifyPropertyChanged("NumberOfViews");
+                this.OnPropertyChanged();
             }
         }
 
@@ -154,7 +156,7 @@ namespace Classes
             set
             {
                 this._rating = value;
-                this.NotifyPropertyChanged("Rating");
+                this.OnPropertyChanged();
             }
         }
 
@@ -165,7 +167,7 @@ namespace Classes
             set
             {
                 this._category = value;
-                this.NotifyPropertyChanged("Category");
+                this.OnPropertyChanged();
             }
         }
 
@@ -186,7 +188,7 @@ namespace Classes
             set
             {
                 this._lastPlayed = value;
-                this.NotifyPropertyChanged("LastPlayed");
+                this.OnPropertyChanged();
             }
         }
 
@@ -215,7 +217,7 @@ namespace Classes
                     resized = modifier.ResizeImage(value, 640, Int32.Parse(newHeight));
                 }
                 this.SerializedImage = modifier.SerializeToBase64String(resized);
-                this.NotifyPropertyChanged("PreviewImage");
+                this.OnPropertyChanged();
             }
         }
 
@@ -242,14 +244,14 @@ namespace Classes
         //    }
         //}
 
+
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged(String propertyName)
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            var handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

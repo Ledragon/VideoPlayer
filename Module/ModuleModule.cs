@@ -36,6 +36,8 @@ namespace Module
             this._container.RegisterType<ITagsListViewModel, TagsListViewModel>();
             this._container.RegisterType<ISortGrid, SortGrid>();
             this._container.RegisterType<ISortGridViewModel, SortGridViewModel>();
+            this._container.RegisterType<IEditView, EditVideo>();
+            this._container.RegisterType<IEditVideoViewModel, EditVideoViewModel>();
 
             //this.ReferenceRegion<IHomeView>(RegionNames.ContentRegion);
             this.ReferenceRegion<IVideosListViewModel>(RegionNames.VideosListRegion);
@@ -44,6 +46,7 @@ namespace Module
             this.ReferenceRegion<IVideoFilterGridViewModel>(RegionNames.FilterRegion);
             this.ReferenceRegion<ITagsListViewModel>(RegionNames.TagsRegion);
             this.ReferenceRegion<ISortGridViewModel>(RegionNames.SortGridRegion);
+            this.ReferenceRegion<IEditVideoViewModel>(RegionNames.EditVideoInfoRegion);
         }
 
         private void ReferenceRegion<T>(String regionName) where T:IViewModel

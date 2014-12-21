@@ -93,6 +93,7 @@
     <Compile Include="ViewModels\CategoryListViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="ViewModels\IEditVideoViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ICategoryListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IHomeViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IPlayerViewModel.cs" />
@@ -133,6 +134,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Views\ICategoryListView.cs" />
+    <Compile Include="Views\IEditView.cs" />
     <Compile Include="Views\IHomeView.cs" />
     <Compile Include="Views\IPlayer.cs" />
     <Compile Include="Views\ITagsListView.cs" />

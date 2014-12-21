@@ -6,6 +6,7 @@ namespace VideoPlayer.Infrastructure
     {
         public const String ContentRegion = "ContentRegion";
         public const String VideoInfoRegion = "VideoInfoRegion";
+        public const String EditVideoInfoRegion = "EditVideoInfoRegion";
         public const String VideosListRegion = "VideosListRegion";
         public const String CategoriesListRegion = "CategoriesListRegion";
         public const String PlayerRegion = "PlayerRegion";

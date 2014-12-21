@@ -68,7 +68,6 @@ namespace Module
                 {
                     this._eventAggregator.GetEvent<SelectedCategoryChangedEvent>().Publish(this.SelectedCategory.Name);
                 }
-                //this.FilterByCategory();
                 this.OnPropertyChanged();
             }
         }

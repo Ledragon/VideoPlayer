@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -110,6 +111,10 @@ namespace Module
                 if (!Equals(value, this._currentVideo))
                 {
                     this._currentVideo = value;
+                    if (this.EditIndex == 1)
+                    {
+                        this._eventAggregator.GetEvent<VideoEditing>().Publish(this.CurrentVideo);
+                    }
                     this.OnPropertyChanged();
                 }
             }
@@ -210,7 +215,14 @@ namespace Module
 
         private void PlayOne()
         {
-            this._eventAggregator.GetEvent<PlayOneEvent>().Publish(this.CurrentVideo);
+            if (File.Exists(this.CurrentVideo.FileName))
+            {
+                this._eventAggregator.GetEvent<PlayOneEvent>().Publish(this.CurrentVideo);
+            }
+            else
+            {
+                MessageBox.Show("File not found.");
+            }
         }
 
         private void PlayPlaylist()
@@ -227,6 +239,7 @@ namespace Module
         {
             if (this.EditIndex == 0)
             {
+                this._eventAggregator.GetEvent<VideoEditing>().Publish(this.CurrentVideo);
                 this.EditIndex = 1;
             }
             else
@@ -238,7 +251,10 @@ namespace Module
 
         private void Add()
         {
-            this._eventAggregator.GetEvent<VideoAddedEvent>().Publish(this.CurrentVideo);
+            if (File.Exists(this.CurrentVideo.FileName))
+            {
+                this._eventAggregator.GetEvent<VideoAddedEvent>().Publish(this.CurrentVideo);
+            }
         }
 
         private Boolean IsCategoryOk(Video video, String category)

@@ -39,7 +39,8 @@
 
                 </TabItem>
                 <TabItem>
-                    <Module:EditVideo DataContext="{Binding CurrentVideo}"/>
+                    <!--<Module:EditVideo DataContext="{Binding CurrentVideo}"/>-->
+                    <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.EditVideoInfoRegion}"></ContentControl>
                 </TabItem>
             </TabControl>
         </Grid>

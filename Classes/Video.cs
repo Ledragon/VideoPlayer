@@ -6,7 +6,9 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Classes.Annotations;
+using Log;
 using Microsoft.WindowsAPICodePack.Shell;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using ToolLib;
 
 namespace Classes
@@ -17,7 +19,9 @@ namespace Classes
         private DateTime _lastPlayed;
         private TimeSpan _length;
         private Int32 _numberOfViews;
-        private UInt32 _rating; 
+        private UInt32 _rating;
+        private Size _resolution;
+        private ObservableCollection<Tag> _tags;
         private String _title;
 
         public Video()
@@ -31,27 +35,30 @@ namespace Classes
             this.FileName = videoPath;
             try
             {
-                this.Title = Path.GetFileNameWithoutExtension(videoPath).Replace("%20", " ");
-                //this.NumberOfViews = 0;
-                this.Rating = 0;
-                this.Tags = new ObservableCollection<Tag>();
-                using (ShellFile shellFile = ShellFile.FromFilePath(videoPath))
+                if (File.Exists(videoPath))
                 {
-                    Bitmap thumbnail = shellFile.Thumbnail.ExtraLargeBitmap;
-                    this.PreviewImage = thumbnail;
-                    ulong? duration = shellFile.Properties.System.Media.Duration.Value;
+                    this.Title = Path.GetFileNameWithoutExtension(videoPath).Replace("%20", " ");
+                    //this.NumberOfViews = 0;
+                    this.Rating = 0;
+                    this.Tags = new ObservableCollection<Tag>();
+                    using (ShellFile shellFile = ShellFile.FromFilePath(videoPath))
+                    {
+                        Bitmap thumbnail = shellFile.Thumbnail.ExtraLargeBitmap;
+                        this.PreviewImage = thumbnail;
+                        ulong? duration = shellFile.Properties.System.Media.Duration.Value;
 
-                    Double nanoSeconds = 0;
-                    if (Double.TryParse(duration.ToString(), out nanoSeconds))
-                    {
-                        double milliSeconds = nanoSeconds*0.0001;
-                        this.Length = TimeSpan.FromMilliseconds(milliSeconds);
-                    }
-                    uint? rating = shellFile.Properties.System.Rating.Value;
-                    UInt32 myRating = 0;
-                    if (UInt32.TryParse(rating.ToString(), out myRating))
-                    {
-                        this.Rating = myRating;
+                        Double nanoSeconds = 0;
+                        if (Double.TryParse(duration.ToString(), out nanoSeconds))
+                        {
+                            double milliSeconds = nanoSeconds*0.0001;
+                            this.Length = TimeSpan.FromMilliseconds(milliSeconds);
+                        }
+                        uint? rating = shellFile.Properties.System.Rating.Value;
+                        UInt32 myRating = 0;
+                        if (UInt32.TryParse(rating.ToString(), out myRating))
+                        {
+                            this.Rating = myRating;
+                        }
                     }
                 }
             }
@@ -130,7 +137,16 @@ namespace Classes
 
         [XmlArray("Tags")]
         [XmlArrayItem("Tag")]
-        public ObservableCollection<Tag> Tags { get; set; }
+        public ObservableCollection<Tag> Tags
+        {
+            get { return this._tags; }
+            set
+            {
+                if (Equals(value, this._tags)) return;
+                this._tags = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         [XmlAttribute("Directory")]
         public String Directory { get; set; }
@@ -202,6 +218,7 @@ namespace Classes
             {
                 var modifier = new ImageModifier();
                 Image image = modifier.DeserializeFromBase64String(this.SerializedImage);
+                //image = modifier.ResizeImage(image, 640, 480);
                 return image;
 
                 //return GetValue(PreviewImageProperty) as System.Drawing.Image;
@@ -221,26 +238,57 @@ namespace Classes
             }
         }
 
+
+        public Size Resolution
+        {
+            get
+            {
+                if (this._resolution == Size.Empty && File.Exists(this.FileName))
+                {
+                    try
+                    {
+                        using (ShellFile shellFile = ShellFile.FromFilePath(this.FileName))
+                        {
+                            ShellProperties.PropertySystemVideo video = shellFile.Properties.System.Video;
+                            this._resolution = new Size(Convert.ToInt32(video.FrameWidth.Value),
+                                Convert.ToInt32(video.FrameHeight.Value));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger().Error(e.Message);
+                    }
+                }
+                return this._resolution;
+            }
+            set
+            {
+                if (value.Equals(this._resolution)) return;
+                this._resolution = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         //[XmlIgnore]
-        //public String Resolution
+        //public Size Resolution
         //{
         //    get
         //    {
-        //        String resolution = String.Empty;
-        //        try
-        //        {
-        //            using (ShellFile shellFile = ShellFile.FromFilePath(this.FileName))
-        //            {
-        //                resolution = (shellFile.Properties.System.Video.FrameWidth.Value ?? 0) + "*" +
-        //                             (shellFile.Properties.System.Video.FrameHeight.Value ?? 0);
-        //            }
+        //        //String resolution = String.Empty;
+        //        //try
+        //        //{
+        //        //    using (ShellFile shellFile = ShellFile.FromFilePath(this.FileName))
+        //        //    {
+        //        //        resolution = (shellFile.Properties.System.Video.FrameWidth.Value ?? 0) + "*" +
+        //        //                     (shellFile.Properties.System.Video.FrameHeight.Value ?? 0);
+        //        //    }
 
-        //        }
-        //        catch (Exception e)
-        //        {
+        //        //}
+        //        //catch (Exception e)
+        //        //{
 
-        //        }
-        //        return resolution;
+        //        //}
+        //        //return resolution;
         //    }
         //}
 
@@ -250,7 +298,7 @@ namespace Classes
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            var handler = PropertyChanged;
+            PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }

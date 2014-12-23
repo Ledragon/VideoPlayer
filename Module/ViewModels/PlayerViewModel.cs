@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Classes;
+using Log;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Module.Interfaces;
@@ -61,11 +62,6 @@ namespace Module
             eventAggregator.GetEvent<VideoDurationChanged>().Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>().Subscribe(this.Next);
             eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
-        }
-
-        private void ClearPlaylist(object obj)
-        {
-            this.ClearPlaylist();
         }
 
         public ICommand MouseMoveCommand
@@ -174,8 +170,11 @@ namespace Module
             get { return this._currentVideo; }
             set
             {
-                this.Duration = value.Length;
-                this.Title = value.Title;
+                if (value != null)
+                {
+                    this.Duration = value.Length;
+                    this.Title = value.Title;
+                }
                 if (Equals(value, this._currentVideo)) return;
                 this._currentVideo = value;
                 this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
@@ -206,9 +205,18 @@ namespace Module
             {
                 if (value.Equals(this._position)) return;
                 this._position = value;
+                if (this._position > 1)
+                {
+                    this._position = 1;
+                }
+                else if (this._position < 0)
+                {
+                    this._position = 0;
+                }
                 Double ticks = this._duration.Ticks*this._position;
                 Int64 parsedTicks = Int64.Parse(ticks.ToString("0"));
                 this.PositionTimeSpan = new TimeSpan(parsedTicks);
+
                 this._eventAggregator.GetEvent<VideoPositionChanged>().Publish(this._position);
                 this.OnPropertyChanged();
             }
@@ -295,6 +303,11 @@ namespace Module
             }
         }
 
+        private void ClearPlaylist(object obj)
+        {
+            this.ClearPlaylist();
+        }
+
         private void VideoDurationChanged(TimeSpan span)
         {
             if (this.CurrentVideo.Length == TimeSpan.Zero)
@@ -355,6 +368,7 @@ namespace Module
 
         public void AddVideo(Video video)
         {
+            this.Logger().DebugFormat("Adding video '{0}' to playlist.", video.Title);
             this.Playlist.Add(video);
             if (this._currentVideo == null)
             {
@@ -370,16 +384,30 @@ namespace Module
         public void PlayVideo(Video video)
         {
             this.ClearPlaylist();
-            this.AddVideo(video);
-            this.CurrentVideo = video;
-            this.CurrentVideo.NumberOfViews++;
-            this._eventAggregator.GetEvent<PlayedEvent>().Publish(video);
+            if (video != null)
+            {
+                this.AddVideo(video);
+                this.CurrentVideo = video;
+                this._eventAggregator.GetEvent<PlayedEvent>().Publish(video);
+            }
+            else
+            {
+                this.Logger().WarnFormat("No video to play.");
+            }
         }
 
         public void PlayAll(Object dummy)
         {
-            this.CurrentVideo = this.Playlist.First();
-            this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
+            if (this.Playlist.Any())
+            {
+                this.Logger().DebugFormat("Playing created playlist.");
+                this.CurrentVideo = this.Playlist.First();
+                this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
+            }
+            else
+            {
+                this.Logger().WarnFormat("No video in playlist.");
+            }
         }
 
         public void Next(Object dummy)

@@ -114,7 +114,8 @@ namespace Module
                 .Videos;
             IEnumerable<Tag> tags = videos
                 .SelectMany(v => v.Tags)
-                .Distinct();
+                .Distinct()
+                .OrderBy(t=>t.Value);
             foreach (Tag tag in tags)
             {
                 this.Tags.Add(tag);
@@ -132,7 +133,8 @@ namespace Module
             IEnumerable<IGrouping<string, Video>> categories =
                 libraryService.GetObjectsFromFile()
                     .Videos.Where(v => !String.IsNullOrEmpty(v.Category))
-                    .GroupBy(v => v.Category);
+                    .GroupBy(v => v.Category)
+                    .OrderBy(g=>g.Key);
             foreach (var category in categories)
             {
                 this.CategoryViewModels.Add(new CategoryViewModel

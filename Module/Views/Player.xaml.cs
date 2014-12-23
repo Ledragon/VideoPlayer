@@ -61,7 +61,15 @@ namespace Module
 
         private void Play(Video video)
         {
-            this.ExecuteHandled(() => { this._VLCcontrol.Media = new PathMedia(video.FileName); });
+            this.ExecuteHandled(() =>
+            {
+                if (video != null)
+                {
+                    this.Logger().DebugFormat("Playing video '{0}'.", video.Title);
+                    video.NumberOfViews++;
+                    this._VLCcontrol.Media = new PathMedia(video.FileName);
+                }
+            });
         }
 
         private void InitializeVlc()

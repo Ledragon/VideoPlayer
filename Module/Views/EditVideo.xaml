@@ -68,7 +68,7 @@
         <Label Grid.Row="7" Grid.Column="0" Style="{StaticResource Label}" Content="Tags:" />
         <DataGrid Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch"
                   HorizontalAlignment="Stretch" ItemsSource="{Binding Video.Tags}" ColumnWidth="*" Margin="5"
-                  AutoGenerateColumns="True">
+                  AutoGenerateColumns="True" CanUserAddRows="True">
             <!--<DataGridComboBoxColumn ItemsSource="{Binding Parent.Tags}" />-->
         </DataGrid>
     </Grid>

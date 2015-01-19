@@ -205,11 +205,13 @@ namespace Module
 
         private void UiPositionSlider_PreviewMouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
         {
+            this._viewModel.IsMouseDown = true;
             this._VLCcontrol.PositionChanged -= this._VLCcontrol_OnPositionChanged;
         }
 
         private void UiPositionSlider_PreviewMouseLeftButtonUp(Object sender, MouseButtonEventArgs e)
         {
+            this._viewModel.IsMouseDown = false;
             this._VLCcontrol.PositionChanged += this._VLCcontrol_OnPositionChanged;
         }
 

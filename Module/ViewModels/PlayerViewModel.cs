@@ -29,6 +29,7 @@ namespace Module
         private TimeSpan _duration;
         private ICommand _increaseRateCommand;
         private Int32 _index;
+        private bool _isMouseDown;
         private Boolean _isMute;
         private Boolean _isPaused;
         private Boolean _isRepeat;
@@ -62,6 +63,17 @@ namespace Module
             eventAggregator.GetEvent<VideoDurationChanged>().Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>().Subscribe(this.Next);
             eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
+        }
+
+        public Boolean IsMouseDown
+        {
+            get { return this._isMouseDown; }
+            set
+            {
+                if (value.Equals(this._isMouseDown)) return;
+                this._isMouseDown = value;
+                this.OnPropertyChanged();
+            }
         }
 
         public ICommand MouseMoveCommand
@@ -213,11 +225,13 @@ namespace Module
                 {
                     this._position = 0;
                 }
-                Double ticks = this._duration.Ticks*this._position;
-                Int64 parsedTicks = Int64.Parse(ticks.ToString("0"));
-                this.PositionTimeSpan = new TimeSpan(parsedTicks);
-
-                this._eventAggregator.GetEvent<VideoPositionChanged>().Publish(this._position);
+                if (this.IsMouseDown)
+                {
+                    Double ticks = this._duration.Ticks*this._position;
+                    Int64 parsedTicks = Int64.Parse(ticks.ToString("0"));
+                    this.PositionTimeSpan = new TimeSpan(parsedTicks);
+                    this._eventAggregator.GetEvent<VideoPositionChanged>().Publish(this._position);
+                }
                 this.OnPropertyChanged();
             }
         }

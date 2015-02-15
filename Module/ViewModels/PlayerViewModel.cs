@@ -225,11 +225,11 @@ namespace Module
                 {
                     this._position = 0;
                 }
+                Double ticks = this._duration.Ticks*this._position;
+                Int64 parsedTicks = Int64.Parse(ticks.ToString("0"));
+                this.PositionTimeSpan = new TimeSpan(parsedTicks);
                 if (this.IsMouseDown)
                 {
-                    Double ticks = this._duration.Ticks*this._position;
-                    Int64 parsedTicks = Int64.Parse(ticks.ToString("0"));
-                    this.PositionTimeSpan = new TimeSpan(parsedTicks);
                     this._eventAggregator.GetEvent<VideoPositionChanged>().Publish(this._position);
                 }
                 this.OnPropertyChanged();

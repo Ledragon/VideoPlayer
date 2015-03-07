@@ -24,3 +24,33 @@ C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsT
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.csproj.GenerateResource.Cache
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.exe
 C:\Users\Hugues\Documents\Visual Studio 2012\Projects\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.pdb
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\MethodsTest.exe.config
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\MethodsTest.exe
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\MethodsTest.pdb
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\Classes.dll
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\Controllers.dll
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\ToolLib.dll
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\Log.dll
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\log4net.dll
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.dll
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\Classes.pdb
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\Controllers.pdb
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\Log.pdb
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\log4net.xml
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.pdb
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.csprojResolveAssemblyReference.cache
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\VideoInfoViewer.baml
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.g.cs
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\VideoInfoViewer.g.cs
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\App.g.cs
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\GeneratedInternalTypeHelper.g.cs
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest_MarkupCompile.cache
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest_MarkupCompile.lref
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.baml
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.g.resources
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.Properties.Resources.resources
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.csproj.GenerateResource.Cache
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.exe
+E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.pdb

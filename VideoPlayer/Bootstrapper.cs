@@ -31,11 +31,19 @@ namespace VideoPlayer
         protected override void ConfigureModuleCatalog()
         {
             //base.ConfigureModuleCatalog();
-            Type moduleType = typeof (Module.ModuleModule);
+            Type moduleType = typeof(Module.ModuleModule);
             this.ModuleCatalog.AddModule(new ModuleInfo()
             {
-                ModuleName=moduleType.Name,
+                ModuleName = moduleType.Name,
                 ModuleType = moduleType.AssemblyQualifiedName,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
+
+            Type vlcPlayerModuleType = typeof(VlcPlayer.VlcPlayerModule);
+            this.ModuleCatalog.AddModule(new ModuleInfo()
+            {
+                ModuleName = vlcPlayerModuleType.Name,
+                ModuleType = vlcPlayerModuleType.AssemblyQualifiedName,
                 InitializationMode = InitializationMode.WhenAvailable
             });
         }

@@ -29,8 +29,8 @@ namespace Module
 
         public Player()
         {
-            this.InitializeComponent();
             this.InitializeVlc();
+            this.InitializeComponent();
             this._eventAggregator = DependencyFactory.Resolve<IEventAggregator>();
 
             this._eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.Stop);
@@ -74,8 +74,11 @@ namespace Module
 
         private void InitializeVlc()
         {
-            String programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-            VlcContext.LibVlcDllsPath = Path.Combine(programFilesPath, @"VideoLan\VLC");
+            //TODO problem with 64bit version of VLC
+            //String programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles).Replace(" (x86)", "");
+            //VlcContext.LibVlcDllsPath = Path.Combine(programFilesPath, @"VideoLan\VLC");
+            String programFilesPath = @"D:\Development\VisualStudio\dll\vlc-2.1.5";
+            VlcContext.LibVlcDllsPath = programFilesPath;
 
             // Set the vlc plugins directory path
             VlcContext.LibVlcPluginsPath = Path.Combine(VlcContext.LibVlcDllsPath, "plugins");

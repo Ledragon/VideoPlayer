@@ -28,8 +28,8 @@ namespace Module
             this._container.RegisterType<IVideosListViewModel, VideosListViewModel>();
             this._container.RegisterType<ICategoryListViewModel, CategoryListViewModel>();
             this._container.RegisterType<ICategoryListView, CategoryList>();
-            this._container.RegisterType<IPlayerViewModel, PlayerViewModel>();
-            this._container.RegisterType<IPlayer, Player>();
+            //this._container.RegisterType<IPlayerViewModel, PlayerViewModel>();
+            //this._container.RegisterType<IPlayer, Player>();
             this._container.RegisterType<IVideoFilterGrid, VideoFilterGrid>();
             this._container.RegisterType<IVideoFilterGridViewModel, VideoFilterGridViewModel>();
             this._container.RegisterType<ITagsListView, TagsList>();
@@ -42,7 +42,7 @@ namespace Module
             //this.ReferenceRegion<IHomeView>(RegionNames.ContentRegion);
             this.ReferenceRegion<IVideosListViewModel>(RegionNames.VideosListRegion);
             this.ReferenceRegion<ICategoryListViewModel>(RegionNames.CategoriesListRegion);
-            this.ReferenceRegion<IPlayerViewModel>(RegionNames.PlayerRegion);
+            //this.ReferenceRegion<IPlayerViewModel>(RegionNames.PlayerRegion);
             this.ReferenceRegion<IVideoFilterGridViewModel>(RegionNames.FilterRegion);
             this.ReferenceRegion<ITagsListViewModel>(RegionNames.TagsRegion);
             this.ReferenceRegion<ISortGridViewModel>(RegionNames.SortGridRegion);

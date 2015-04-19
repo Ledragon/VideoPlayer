@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -15,19 +14,24 @@ namespace VideoPlayer.ViewModels
 {
     internal class ViewModel
     {
+        private static ViewModel _instance;
         //private readonly Controller _controller;
         private Dispatcher _dispatcher;
-        //private ObjectsWrapper _wrapper;
+        private ObjectsWrapper _wrapper;
 
-        public ViewModel()
+        private ViewModel()
         {
             //this._controller = new Controller();
             this.LoadFile();
         }
 
         public ObservableCollection<Video> VideoCollection { get; private set; }
-
         public ObservableCollection<Directory> DirectoryCollection { get; private set; }
+
+        public static ViewModel GetInstance()
+        {
+            return _instance ?? (_instance = new ViewModel());
+        }
 
         private void LoadFile()
         {
@@ -37,12 +41,13 @@ namespace VideoPlayer.ViewModels
             this.VideoCollection = wrapper.Videos;
             this.DirectoryCollection = wrapper.Directories;
             this.Logger().Debug("File decoded.");
+            this._wrapper = wrapper;
         }
 
         public void Save()
         {
             var libraryService = DependencyFactory.Resolve<ILibraryService>();
-            libraryService.Save();
+            libraryService.Save(this._wrapper);
         }
 
         //public void Clean()
@@ -81,29 +86,22 @@ namespace VideoPlayer.ViewModels
         {
             //TODO pourri
             MessageBox.Show("Finished loading");
-            //this._dispatcher.BeginInvoke(DispatcherPriority.Normal, UpdateStatus);
         }
-
-        //private void UpdateStatus()
-        //{
-        //    this._uiCurrentOperationStatusBarItem.Content = "Ready";
-
-        //}
 
         private void backgroundWorkerLoad_DoWork(object sender, DoWorkEventArgs e)
         {
             Action<Video> addMethod = video => this.VideoCollection.Add(video);
-            Video[] tmpList = this.VideoCollection.ToArray();
-            List<string> categories = tmpList.Select(v => v.Category).OrderBy(c => c).ToList();
-            foreach (Directory directory in this.DirectoryCollection)
+            var tmpList = this.VideoCollection.ToArray();
+            var categories = tmpList.Where(v => v.Category != null).Select(v => v.Category).OrderBy(c => c).ToList();
+            foreach (var directory in this.DirectoryCollection)
             {
-                List<string> files = DirectoryHelper.GetVideoFiles(directory.DirectoryPath, directory.IsIncludeSubdirectories);
-                foreach (String videoFile in files)
+                var files = DirectoryHelper.GetVideoFiles(directory.DirectoryPath, directory.IsIncludeSubdirectories);
+                foreach (var videoFile in files)
                 {
                     if (tmpList.All(s => s.FileName != videoFile))
                     {
                         var newVideo = new Video(videoFile);
-                        string firstCategory = categories.FirstOrDefault(c => newVideo.Title.Contains(c));
+                        var firstCategory = categories.FirstOrDefault(c => newVideo.Title.Contains(c));
                         if (firstCategory != null)
                         {
                             newVideo.Category = firstCategory;

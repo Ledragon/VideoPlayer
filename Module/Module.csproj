@@ -78,15 +78,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="Vlc.DotNet.Core">
-      <HintPath>..\VideoPlayerControl\bin\Debug\Vlc.DotNet.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Core.Interops">
-      <HintPath>..\VideoPlayerControl\bin\Debug\Vlc.DotNet.Core.Interops.dll</HintPath>
-    </Reference>
-    <Reference Include="Vlc.DotNet.Wpf">
-      <HintPath>..\VideoPlayerControl\bin\Debug\Vlc.DotNet.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -98,13 +89,11 @@
     <Compile Include="ViewModels\IEditVideoViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ICategoryListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IHomeViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IPlayerViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IVideosListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IVideoFilterGridViewModel.cs" />
     <Compile Include="ViewModels\ISortGridViewModel.cs" />
     <Compile Include="ViewModels\ITagsListViewModel.cs" />
-    <Compile Include="ViewModels\PlayerViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\SortGridViewModel.cs" />
     <Compile Include="ViewModels\SortingViewModel.cs" />
@@ -138,13 +127,9 @@
     <Compile Include="Views\ICategoryListView.cs" />
     <Compile Include="Views\IEditView.cs" />
     <Compile Include="Views\IHomeView.cs" />
-    <Compile Include="Views\IPlayer.cs" />
     <Compile Include="Views\ITagsListView.cs" />
     <Compile Include="Views\IVideoFilterGrid.cs" />
     <Compile Include="Views\IVideosList.cs" />
-    <Compile Include="Views\Player.xaml.cs">
-      <DependentUpon>Player.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Playlist.xaml.cs">
       <DependentUpon>Playlist.xaml</DependentUpon>
     </Compile>
@@ -187,10 +172,6 @@
     <Page Include="Views\Home.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Player.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Playlist.xaml">
       <SubType>Designer</SubType>

@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VlcPlayer", "VlcPlayer\VlcPlayer.csproj", "{A060B03D-3DEF-4826-888F-1B80059B7E13}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewVlcPlayer", "NEwVlcPlayer\NewVlcPlayer.csproj", "{C08E79E6-FAF0-4B21-AAEF-3D0191865F03}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,10 @@ Global
 		{A060B03D-3DEF-4826-888F-1B80059B7E13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A060B03D-3DEF-4826-888F-1B80059B7E13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A060B03D-3DEF-4826-888F-1B80059B7E13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C08E79E6-FAF0-4B21-AAEF-3D0191865F03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C08E79E6-FAF0-4B21-AAEF-3D0191865F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C08E79E6-FAF0-4B21-AAEF-3D0191865F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C08E79E6-FAF0-4B21-AAEF-3D0191865F03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +111,7 @@ Global
 		{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF} = {AB865795-450F-4980-B7C9-238E49C2D5E0}
 		{27F28F3A-17FE-4EE3-ABF4-1A13EA1ABFF5} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{A060B03D-3DEF-4826-888F-1B80059B7E13} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
+		{C08E79E6-FAF0-4B21-AAEF-3D0191865F03} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

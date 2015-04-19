@@ -11,5 +11,6 @@ namespace VideoPlayer.Services
         void Save(ObjectsWrapper wrapper);
         void Save(String filePath, ObjectsWrapper wrapper);
         void Clean(ObservableCollection<Directory> directoryCollection, ObservableCollection<Video> videoCollection);
+        void Update();
     }
 }

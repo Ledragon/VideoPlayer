@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -37,34 +36,61 @@ namespace VideoPlayer.Services
             this.Save(FileSystemHelper.GetDefaultFileName(), wrapper);
         }
 
-        public void Save(String filePath, ObjectsWrapper wrapper)
+        public void Save(string filePath, ObjectsWrapper wrapper)
         {
             var repository = DependencyFactory.Resolve<IVideoRepository>();
             repository.Save(filePath, wrapper);
         }
-
 
         public void Clean(ObservableCollection<Directory> directoryCollection,
             ObservableCollection<Video> videoCollection)
         {
             this.BackupLibrary();
             this.Logger().Info("Cleaning files.");
-            List<String> existingFiles =
+            var existingFiles =
                 directoryCollection
                     .SelectMany(
                         d => DirectoryHelper.GetVideoFiles(d.DirectoryPath, d.IsIncludeSubdirectories))
                     .ToList();
-            List<String> videosToRemove = videoCollection
+            var videosToRemove = videoCollection
                 .Select(t => t.FileName)
                 .Except(existingFiles)
                 .ToList();
-            foreach (String file in videosToRemove)
+            foreach (var file in videosToRemove)
             {
-                Video video = videoCollection.Single(v => v.FileName == file);
+                var video = videoCollection.Single(v => v.FileName == file);
                 videoCollection.Remove(video);
                 this.Logger().DebugFormat("File '{0}' removed.", video.FileName);
             }
             this.Logger().InfoFormat("'{0}' files removed.", videosToRemove.Count);
+        }
+
+        public void Update()
+        {
+            this.Logger().DebugFormat("Updating library.");
+            var wrapper = this.GetObjectsFromFile();
+            var videoList = wrapper.Videos;
+            var categories =
+                videoList.Where(v => v.Category != null).Select(v => v.Category.ToLower()).OrderBy(c => c).ToList();
+            foreach (var directory in wrapper.Directories)
+            {
+                var files = DirectoryHelper.GetVideoFiles(directory.DirectoryPath, directory.IsIncludeSubdirectories)
+                    .Where(videoFile => videoList.All(s => s.FileName != videoFile))
+                    .ToList();
+                this.Logger().DebugFormat("'{0}' new files found.", files.Count());
+                foreach (var videoFile in files)
+                {
+                    var newVideo = new Video(videoFile);
+                    var firstCategory = categories.FirstOrDefault(c => newVideo.Title.ToLower().Contains(c));
+                    if (firstCategory != null)
+                    {
+                        newVideo.Category = firstCategory;
+                    }
+                    newVideo.DateAdded = DateTime.Now;
+                    this.Logger().DebugFormat("File '{0}' added.", newVideo.FileName);
+                }
+            }
+            this.Save();
         }
 
         private void BackupLibrary()
@@ -72,17 +98,17 @@ namespace VideoPlayer.Services
             this.BackupLibrary(FileSystemHelper.GetDefaultFileName());
         }
 
-        private void BackupLibrary(String filePath)
+        private void BackupLibrary(string filePath)
         {
             this.Logger().Debug("Automatic backup of library.");
-            String fileName = Path.GetFileNameWithoutExtension(filePath);
-            String directory = Path.GetDirectoryName(filePath);
-            String destionationFileName = fileName + "(0)";
-            String destinationPath = Path.Combine(directory, destionationFileName + ".xml");
-            Int32 i = 1;
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            var directory = Path.GetDirectoryName(filePath);
+            var destionationFileName = fileName + "(0)";
+            var destinationPath = Path.Combine(directory, destionationFileName + ".xml");
+            var i = 1;
             while (File.Exists(destinationPath))
             {
-                destinationPath = Path.Combine(directory, String.Format("{0}({1}).xml", fileName, i));
+                destinationPath = Path.Combine(directory, string.Format("{0}({1}).xml", fileName, i));
                 i++;
             }
             File.Copy(filePath, destinationPath);

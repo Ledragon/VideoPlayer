@@ -33,7 +33,7 @@ namespace VideoPlayer
 
         private void backgroundWorker_DoWork(Object sender, DoWorkEventArgs e)
         {
-            var viewModel = new ViewModel();
+            var viewModel = ViewModel.GetInstance();
             this._viewModel = viewModel;
             this._videos = viewModel.VideoCollection;
             this._directories = viewModel.DirectoryCollection;
@@ -102,7 +102,10 @@ namespace VideoPlayer
 
         private void _uiHomePage_LoadClick(Object sender, RoutedEventArgs e)
         {
-            this._viewModel.Load(this.Dispatcher);
+
+            var libraryService = DependencyFactory.Resolve<ILibraryService>();
+            libraryService.Update();
+            //this._viewModel.Load(this.Dispatcher);
         }
     }
 }

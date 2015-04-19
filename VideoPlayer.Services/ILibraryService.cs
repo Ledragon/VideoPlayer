@@ -8,10 +8,10 @@ namespace VideoPlayer.Services
     {
         ObjectsWrapper GetObjectsFromFile();
         void Save();
-        void Save(ObjectsWrapper wrapper);
-        void Save(String filePath, ObjectsWrapper wrapper);
+        //void Save(ObjectsWrapper wrapper);
+        //void Save(String filePath, ObjectsWrapper wrapper);
         void Clean();
-        void Clean(ObservableCollection<Directory> directoryCollection, ObservableCollection<Video> videoCollection);
+        //void Clean(ObservableCollection<Directory> directoryCollection, ObservableCollection<Video> videoCollection);
         void Update();
     }
 }

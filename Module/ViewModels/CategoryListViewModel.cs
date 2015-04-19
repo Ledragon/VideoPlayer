@@ -33,6 +33,7 @@ namespace Module
             this._eventAggregator = eventAggregator;
             this.InitCollection(libraryService);
             this._eventAggregator.GetEvent<VideoEdited>().Subscribe(this.Refresh);
+            this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.Refresh);
         }
 
         public ICommand FilterByCategoryCommand

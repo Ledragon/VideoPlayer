@@ -1,12 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Classes;
+using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Common;
+using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
-using VideoPlayer.ViewModels;
 
 namespace VideoPlayer
 {
@@ -16,8 +15,7 @@ namespace VideoPlayer
     public partial class MainWindow
     {
         private ILibraryService _libraryService;
-        //private ObservableCollection<Directory> _directories;
-        //private ObservableCollection<Video> _videos;
+        private IEventAggregator _eventAggregator;
 
         public MainWindow()
         {
@@ -26,18 +24,12 @@ namespace VideoPlayer
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            //this._uiSettingsView.Directories = this._directories;
-            //this._uiSettingsView.DataContext = this._directories;
         }
 
         private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-
             this._libraryService = DependencyFactory.Resolve<ILibraryService>();
-            this._libraryService.Update();
-            //var wrapper = this._libraryService.GetObjectsFromFile();
-            //this._videos = wrapper.Videos;
-            //this._directories = wrapper.Directories;
+            //this._libraryService.Update();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -46,6 +38,8 @@ namespace VideoPlayer
             backgroundWorker.DoWork += this.backgroundWorker_DoWork;
             backgroundWorker.RunWorkerCompleted += this.backgroundWorker_RunWorkerCompleted;
             backgroundWorker.RunWorkerAsync();
+
+            this._eventAggregator = DependencyFactory.Resolve<IEventAggregator>();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -93,7 +87,7 @@ namespace VideoPlayer
         private void _uiHomePage_CleanClick(object sender, RoutedEventArgs e)
         {
             this._libraryService.Clean();
-            //this._libraryService.Clean(this._directories, this._videos);
+            this._eventAggregator.GetEvent<LibraryUpdated>().Publish(null);
         }
 
         private void _uiHomePage_SettingsClick(object sender, RoutedEventArgs e)
@@ -104,6 +98,7 @@ namespace VideoPlayer
         private void _uiHomePage_LoadClick(object sender, RoutedEventArgs e)
         {
             this._libraryService.Update();
+            this._eventAggregator.GetEvent<LibraryUpdated>().Publish(null);
         }
     }
 }

@@ -167,7 +167,6 @@
     <Compile Include="Views\VideosPage.xaml.cs">
       <DependentUpon>VideosPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="Views\DirectoryBrowser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

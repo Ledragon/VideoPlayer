@@ -71,6 +71,10 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
+    public class LibraryUpdated : PubSubEvent<Object>
+    {
+    }
+
     public class PlayAllEvent : PubSubEvent<Object>
     {
     }

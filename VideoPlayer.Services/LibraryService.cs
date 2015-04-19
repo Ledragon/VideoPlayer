@@ -41,7 +41,7 @@ namespace VideoPlayer.Services
             var repository = DependencyFactory.Resolve<IVideoRepository>();
             repository.Save(filePath, wrapper);
         }
-        
+
         public void Clean()
         {
             this.Clean(this.GetObjectsFromFile().Directories, this.GetObjectsFromFile().Videos);
@@ -72,30 +72,40 @@ namespace VideoPlayer.Services
 
         public void Update()
         {
-            this.Logger().DebugFormat("Updating library.");
-            var wrapper = this.GetObjectsFromFile();
-            var videoList = wrapper.Videos;
-            var categories =
-                videoList.Where(v => v.Category != null).Select(v => v.Category.ToLower()).OrderBy(c => c).ToList();
-            foreach (var directory in wrapper.Directories)
+            try
             {
-                var files = DirectoryHelper.GetVideoFiles(directory.DirectoryPath, directory.IsIncludeSubdirectories)
-                    .Where(videoFile => videoList.All(s => s.FileName != videoFile))
-                    .ToList();
-                this.Logger().DebugFormat("'{0}' new files found.", files.Count());
-                foreach (var videoFile in files)
+                this.Logger().DebugFormat("Updating library.");
+                var wrapper = this.GetObjectsFromFile();
+                var videoList = wrapper.Videos;
+                var categories =
+                    videoList.Where(v => v.Category != null).Select(v => v.Category.ToLower()).OrderBy(c => c).ToList();
+                foreach (var directory in wrapper.Directories)
                 {
-                    var newVideo = new Video(videoFile);
-                    var firstCategory = categories.FirstOrDefault(c => newVideo.Title.ToLower().Contains(c));
-                    if (firstCategory != null)
+                    var files =
+                        DirectoryHelper.GetVideoFiles(directory.DirectoryPath, directory.IsIncludeSubdirectories)
+                            .Where(videoFile => videoList.All(s => s.FileName != videoFile))
+                            .ToList();
+                    this.Logger().DebugFormat("'{0}' new files found.", files.Count());
+                    foreach (var videoFile in files)
                     {
-                        newVideo.Category = firstCategory;
+                        var newVideo = new Video(videoFile);
+                        var firstCategory = categories.FirstOrDefault(c => newVideo.Title.ToLower().Contains(c));
+                        if (firstCategory != null)
+                        {
+                            newVideo.Category = firstCategory;
+                        }
+                        newVideo.DateAdded = DateTime.Now;
+                        videoList.Add(newVideo);
+                        this.Logger().DebugFormat("File '{0}' added.", newVideo.FileName);
                     }
-                    newVideo.DateAdded = DateTime.Now;
-                    this.Logger().DebugFormat("File '{0}' added.", newVideo.FileName);
                 }
+                this.Save();
             }
-            this.Save();
+            catch (Exception e)
+            {
+                this.Logger().ErrorFormat(e.Message);
+                throw;
+            }
         }
 
         private void BackupLibrary()

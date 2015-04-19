@@ -41,6 +41,11 @@ namespace VideoPlayer.Services
             var repository = DependencyFactory.Resolve<IVideoRepository>();
             repository.Save(filePath, wrapper);
         }
+        
+        public void Clean()
+        {
+            this.Clean(this.GetObjectsFromFile().Directories, this.GetObjectsFromFile().Videos);
+        }
 
         public void Clean(ObservableCollection<Directory> directoryCollection,
             ObservableCollection<Video> videoCollection)

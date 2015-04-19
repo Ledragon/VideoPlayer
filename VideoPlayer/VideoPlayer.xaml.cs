@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,30 +15,32 @@ namespace VideoPlayer
     /// </summary>
     public partial class MainWindow
     {
-        private ObservableCollection<Directory> _directories;
-        private ObservableCollection<Video> _videos;
-        private ViewModel _viewModel;
+        private ILibraryService _libraryService;
+        //private ObservableCollection<Directory> _directories;
+        //private ObservableCollection<Video> _videos;
 
         public MainWindow()
         {
             this.InitializeComponent();
         }
 
-        private void backgroundWorker_RunWorkerCompleted(Object sender, RunWorkerCompletedEventArgs e)
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            this._uiSettingsView.Directories = this._directories;
-            this._uiSettingsView.DataContext = this._directories;
+            //this._uiSettingsView.Directories = this._directories;
+            //this._uiSettingsView.DataContext = this._directories;
         }
 
-        private void backgroundWorker_DoWork(Object sender, DoWorkEventArgs e)
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var viewModel = ViewModel.GetInstance();
-            this._viewModel = viewModel;
-            this._videos = viewModel.VideoCollection;
-            this._directories = viewModel.DirectoryCollection;
+
+            this._libraryService = DependencyFactory.Resolve<ILibraryService>();
+            this._libraryService.Update();
+            //var wrapper = this._libraryService.GetObjectsFromFile();
+            //this._videos = wrapper.Videos;
+            //this._directories = wrapper.Directories;
         }
 
-        private void Window_Loaded(Object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var backgroundWorker = new BackgroundWorker();
             backgroundWorker.DoWork += this.backgroundWorker_DoWork;
@@ -47,7 +48,7 @@ namespace VideoPlayer
             backgroundWorker.RunWorkerAsync();
         }
 
-        private void Window_KeyDown(Object sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (!(e.OriginalSource is TextBox))
             {
@@ -68,7 +69,7 @@ namespace VideoPlayer
                 }
                 else if (e.Key == Key.S)
                 {
-                    MessageBoxResult mbr = MessageBox.Show("Do you really want to exit?", "Exit?",
+                    var mbr = MessageBox.Show("Do you really want to exit?", "Exit?",
                         MessageBoxButton.YesNo);
                     if (mbr == MessageBoxResult.Yes)
                     {
@@ -79,33 +80,30 @@ namespace VideoPlayer
             }
         }
 
-        private void Window_Closing(Object sender, CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
-            this._viewModel.Save();
+            this._libraryService.Save();
         }
 
-        private void _uiHomePage_VideoClick(Object sender, RoutedEventArgs e)
+        private void _uiHomePage_VideoClick(object sender, RoutedEventArgs e)
         {
             this._uiTabs.SelectedItem = this._uiVideoTab;
         }
 
-        private void _uiHomePage_CleanClick(Object sender, RoutedEventArgs e)
+        private void _uiHomePage_CleanClick(object sender, RoutedEventArgs e)
         {
-            var libraryService = DependencyFactory.Resolve<ILibraryService>();
-            libraryService.Clean(this._directories, this._videos);
+            this._libraryService.Clean();
+            //this._libraryService.Clean(this._directories, this._videos);
         }
 
-        private void _uiHomePage_SettingsClick(Object sender, RoutedEventArgs e)
+        private void _uiHomePage_SettingsClick(object sender, RoutedEventArgs e)
         {
             this._uiTabs.SelectedItem = this._uiSettingsTab;
         }
 
-        private void _uiHomePage_LoadClick(Object sender, RoutedEventArgs e)
+        private void _uiHomePage_LoadClick(object sender, RoutedEventArgs e)
         {
-
-            var libraryService = DependencyFactory.Resolve<ILibraryService>();
-            libraryService.Update();
-            //this._viewModel.Load(this.Dispatcher);
+            this._libraryService.Update();
         }
     }
 }

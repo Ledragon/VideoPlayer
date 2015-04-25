@@ -29,6 +29,9 @@
             <Setter Property="Visibility" Value="Collapsed" />
             <Setter Property="Padding" Value="0" />
         </Style>
+        <Storyboard x:Key="test" x:Name="MyAnimation" >
+            <DoubleAnimation From="0" To="50" Storyboard.TargetName="Michel" Storyboard.TargetProperty="Width"></DoubleAnimation>
+        </Storyboard>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Command="{Binding GoToHomePageCommand}" Key="Back" />
@@ -60,8 +63,22 @@
                                     x:Name="_uiSettingsView" />
             </TabItem>
         </TabControl>
-        <TextBlock Text="Loading" HorizontalAlignment="Right" Margin="10" FontSize="32" Background="Gray"
-                   VerticalAlignment="Top" Width="150" TextAlignment="Right" Visibility="{Binding IsLoading}"
-                   Name="LoadingTextBlock" />
+        <!--<Canvas Width="100" Height="100" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Ellipse Height="5" Width="5" Fill="White" Canvas.Top="5" x:Name="Michel">
+                <Ellipse.Triggers>
+                    <EventTrigger RoutedEvent="Ellipse.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                            <DoubleAnimation From="1.0" To="0.0" Storyboard.TargetProperty="Opacity"></DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Ellipse.Triggers>
+            </Ellipse>
+            <Ellipse Height="5" Width="5" Fill="White" Canvas.Top="15"></Ellipse>
+            <Ellipse Height="5" Width="5" Fill="White" Canvas.Top="25"></Ellipse>
+            <Ellipse Height="5" Width="5" Fill="White" Canvas.Top="35"></Ellipse>
+            
+        </Canvas>-->
     </Grid>
 </Window>

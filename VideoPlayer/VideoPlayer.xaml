@@ -44,9 +44,7 @@
                 <!--<ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}"></ContentControl>-->
 
                 <local:HomePage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"
-                                x:Name="_uiHomePage" 
-                                CleanClick="_uiHomePage_CleanClick" 
-                                LoadClick="_uiHomePage_LoadClick" />
+                                x:Name="_uiHomePage" />
             </TabItem>
             <TabItem Name="_uiVideoTab">
                 <local:VideosPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"

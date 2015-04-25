@@ -5,9 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using HomeModule;
 using Log;
-using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Common;
-using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
 
 namespace VideoPlayer
@@ -17,7 +15,6 @@ namespace VideoPlayer
     /// </summary>
     public partial class MainWindow
     {
-        private IEventAggregator _eventAggregator;
         private ILibraryService _libraryService;
 
         public MainWindow()
@@ -49,8 +46,6 @@ namespace VideoPlayer
             backgroundWorker.DoWork += this.backgroundWorker_DoWork;
             backgroundWorker.RunWorkerCompleted += this.backgroundWorker_RunWorkerCompleted;
             backgroundWorker.RunWorkerAsync();
-
-            this._eventAggregator = DependencyFactory.Resolve<IEventAggregator>();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -73,30 +68,6 @@ namespace VideoPlayer
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             this._libraryService.Save();
-        }
-
-        //private void _uiHomePage_VideoClick(object sender, RoutedEventArgs e)
-        //{
-        //    this._uiTabs.SelectedItem = this._uiVideoTab;
-        //}
-
-        private void _uiHomePage_CleanClick(object sender, RoutedEventArgs e)
-        {
-            this._libraryService.Clean();
-            this._eventAggregator.GetEvent<LibraryUpdated>().Publish(null);
-        }
-
-        //private void _uiHomePage_SettingsClick(object sender, RoutedEventArgs e)
-        //{
-        //    this._uiTabs.SelectedItem = this._uiSettingsTab;
-        //}
-
-        private void _uiHomePage_LoadClick(object sender, RoutedEventArgs e)
-        {
-            this.LoadingTextBlock.Visibility = Visibility.Visible;
-            this._libraryService.Update();
-            this._eventAggregator.GetEvent<LibraryUpdated>().Publish(null);
-            this.LoadingTextBlock.Visibility = Visibility.Hidden;
         }
     }
 }

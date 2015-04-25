@@ -15,7 +15,6 @@ namespace VideoPlayer
     /// </summary>
     public partial class MainWindow
     {
-        private ILibraryService _libraryService;
 
         public MainWindow()
         {
@@ -30,22 +29,22 @@ namespace VideoPlayer
             }
         }
 
-        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-        }
+        //private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
+        //}
 
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            this._libraryService = DependencyFactory.Resolve<ILibraryService>();
-            //this._libraryService.Update();
-        }
+        //private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    //this._libraryService = DependencyFactory.Resolve<ILibraryService>();
+        //    //this._libraryService.Update();
+        //}
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var backgroundWorker = new BackgroundWorker();
-            backgroundWorker.DoWork += this.backgroundWorker_DoWork;
-            backgroundWorker.RunWorkerCompleted += this.backgroundWorker_RunWorkerCompleted;
-            backgroundWorker.RunWorkerAsync();
+            //var backgroundWorker = new BackgroundWorker();
+            //backgroundWorker.DoWork += this.backgroundWorker_DoWork;
+            //backgroundWorker.RunWorkerCompleted += this.backgroundWorker_RunWorkerCompleted;
+            //backgroundWorker.RunWorkerAsync();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -63,11 +62,6 @@ namespace VideoPlayer
                     e.Handled = true;
                 }
             }
-        }
-
-        private void Window_Closing(object sender, CancelEventArgs e)
-        {
-            this._libraryService.Save();
         }
     }
 }

@@ -4,13 +4,12 @@
     xmlns:local="clr-namespace:VideoPlayer"
     xmlns:prism="http://www.codeplex.com/prism"
     xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     x:Class="VideoPlayer.MainWindow"
     Title="VideoPlayer" Height="768" Width="1024" Background="Black" Foreground="White" FontFamily="Iskoola Pota"
-    WindowStyle="{Binding WindowStyle}" 
-    KeyDown="Window_KeyDown" 
-    Loaded="Window_Loaded" 
-    Closing="Window_Closing"
-    WindowStartupLocation="CenterScreen" 
+    WindowStyle="{Binding WindowStyle}"
+    KeyDown="Window_KeyDown"
+    WindowStartupLocation="CenterScreen"
     WindowState="Maximized">
     <Window.Resources>
         <Style TargetType="StatusBar">
@@ -32,9 +31,14 @@
         </Style>
     </Window.Resources>
     <Window.InputBindings>
-        <KeyBinding Command="{Binding GoToHomePageCommand}" Key="Back"></KeyBinding>
-        <KeyBinding Command="{Binding ToggleStyleCommand}" Key="Return" Modifiers="Alt"></KeyBinding>
+        <KeyBinding Command="{Binding GoToHomePageCommand}" Key="Back" />
+        <KeyBinding Command="{Binding ToggleStyleCommand}" Key="Return" Modifiers="Alt" />
     </Window.InputBindings>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <prism:InvokeCommandAction Command="{Binding WindowClosingCommand}"></prism:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid x:Name="MainGrid">
         <Grid.Background>
             <ImageBrush ImageSource=".\TheaterCurtains.jpg" />
@@ -56,6 +60,8 @@
                                     x:Name="_uiSettingsView" />
             </TabItem>
         </TabControl>
-        <TextBlock Text="Loading" HorizontalAlignment="Right" Margin="10" FontSize="32" Background="Gray" VerticalAlignment="Top" Width="150" TextAlignment="Right" Visibility="{Binding IsLoading}" Name="LoadingTextBlock"></TextBlock>
+        <TextBlock Text="Loading" HorizontalAlignment="Right" Margin="10" FontSize="32" Background="Gray"
+                   VerticalAlignment="Top" Width="150" TextAlignment="Right" Visibility="{Binding IsLoading}"
+                   Name="LoadingTextBlock" />
     </Grid>
 </Window>

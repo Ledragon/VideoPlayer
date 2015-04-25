@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using HomeModule;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
@@ -17,6 +18,13 @@ namespace VideoPlayer
             this.Container.RegisterType<IVideoRepository, FileVideoRepository>();
             this.Container.RegisterType<ILibraryService, LibraryService>();
             this.Container.RegisterType<VideosTabControlViewModel>();
+            this.Container.RegisterType<IHomePageViewModel, HomePageViewModel>();
+            this.Container.RegisterType<IHomePage, HomePage>();
+
+            //TEMP
+            this.Container.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
+            this.Container.RegisterType<IVideoPlayer, HomeModule.VideoPlayer>();
+
             Locator.Container = this.Container;
             return this.Container.Resolve<MainWindow>();
         }
@@ -46,6 +54,14 @@ namespace VideoPlayer
                 ModuleType = vlcPlayerModuleType.AssemblyQualifiedName,
                 InitializationMode = InitializationMode.WhenAvailable
             });
+
+            //Type homeModuleType = typeof(HomeModule.VideoPlayerModule);
+            //this.ModuleCatalog.AddModule(new ModuleInfo()
+            //{
+            //    ModuleName = homeModuleType.Name,
+            //    ModuleType = homeModuleType.AssemblyQualifiedName,
+            //    InitializationMode = InitializationMode.WhenAvailable
+            //});
         }
     }
 }

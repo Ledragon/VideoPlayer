@@ -82,4 +82,8 @@ namespace VideoPlayer.Infrastructure
     public class ClearPlaylistEvent : PubSubEvent<Object>
     {
     }
+
+    public class GoToPage : PubSubEvent<Int32>
+    {
+    }
 }

@@ -153,6 +153,8 @@
     <Compile Include="DataProvider.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\HomePageViewModel.cs" />
+    <Compile Include="ViewModels\IHomePageViewModel.cs" />
     <Compile Include="ViewModels\VideosTabControlViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\DirectoryBrowser.xaml.cs">
@@ -164,6 +166,7 @@
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\IHomePage.cs" />
     <Compile Include="Views\VideosPage.xaml.cs">
       <DependentUpon>VideosPage.xaml</DependentUpon>
     </Compile>
@@ -233,6 +236,10 @@
     <ProjectReference Include="..\Classes\Classes.csproj">
       <Project>{ffb9c128-ca7e-40bb-bbcd-7b28707c6719}</Project>
       <Name>Classes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HomeModule\HomeModule.csproj">
+      <Project>{36E21D50-504F-4AE2-946E-B4693F23C905}</Project>
+      <Name>HomeModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\Log\Log.csproj">
       <Project>{02c8e3b1-3796-49b2-aba2-67d0e8644871}</Project>

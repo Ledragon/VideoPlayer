@@ -1,7 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using HomeModule;
+using Log;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Common;
 using VideoPlayer.Infrastructure;
@@ -14,12 +17,20 @@ namespace VideoPlayer
     /// </summary>
     public partial class MainWindow
     {
-        private ILibraryService _libraryService;
         private IEventAggregator _eventAggregator;
+        private ILibraryService _libraryService;
 
         public MainWindow()
         {
             this.InitializeComponent();
+            try
+            {
+                this.DataContext = DependencyFactory.Resolve<IVideoPlayerViewModel>();
+            }
+            catch (Exception e)
+            {
+                this.Logger().ErrorFormat(e.Message);
+            }
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -46,22 +57,7 @@ namespace VideoPlayer
         {
             if (!(e.OriginalSource is TextBox))
             {
-                if (e.Key == Key.Escape)
-                {
-                    this.WindowStyle = WindowStyle.SingleBorderWindow;
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.Back)
-                {
-                    this._uiTabs.SelectedItem = this._uiHomeTab;
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.Return && Keyboard.Modifiers == ModifierKeys.Alt)
-                {
-                    this.WindowStyle = WindowStyle.None;
-                    e.Handled = true;
-                }
-                else if (e.Key == Key.S)
+                if (e.Key == Key.S)
                 {
                     var mbr = MessageBox.Show("Do you really want to exit?", "Exit?",
                         MessageBoxButton.YesNo);
@@ -79,10 +75,10 @@ namespace VideoPlayer
             this._libraryService.Save();
         }
 
-        private void _uiHomePage_VideoClick(object sender, RoutedEventArgs e)
-        {
-            this._uiTabs.SelectedItem = this._uiVideoTab;
-        }
+        //private void _uiHomePage_VideoClick(object sender, RoutedEventArgs e)
+        //{
+        //    this._uiTabs.SelectedItem = this._uiVideoTab;
+        //}
 
         private void _uiHomePage_CleanClick(object sender, RoutedEventArgs e)
         {
@@ -90,15 +86,17 @@ namespace VideoPlayer
             this._eventAggregator.GetEvent<LibraryUpdated>().Publish(null);
         }
 
-        private void _uiHomePage_SettingsClick(object sender, RoutedEventArgs e)
-        {
-            this._uiTabs.SelectedItem = this._uiSettingsTab;
-        }
+        //private void _uiHomePage_SettingsClick(object sender, RoutedEventArgs e)
+        //{
+        //    this._uiTabs.SelectedItem = this._uiSettingsTab;
+        //}
 
         private void _uiHomePage_LoadClick(object sender, RoutedEventArgs e)
         {
+            this.LoadingTextBlock.Visibility = Visibility.Visible;
             this._libraryService.Update();
             this._eventAggregator.GetEvent<LibraryUpdated>().Publish(null);
+            this.LoadingTextBlock.Visibility = Visibility.Hidden;
         }
     }
 }

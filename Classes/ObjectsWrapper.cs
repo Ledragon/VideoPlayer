@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 //using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -17,7 +18,7 @@ namespace Classes
 
         public ObjectsWrapper()
         {
-            this.Directories = new ObservableCollection<Directory>();
+            this.Directories = new ObservableCollection<Directory>();//<Directory>();
             this.Videos = new ObservableCollection<Video>();
         }
     }

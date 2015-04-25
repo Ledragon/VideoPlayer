@@ -66,8 +66,8 @@
         <Rectangle Grid.Row="1" Fill="#CC000000" />
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" CanHorizontallyScroll="True">
 
-            <Button Content="Settings" Style="{StaticResource ToolbarStyle}" Click="_uiSettingsButton_Click" x:Name="_uiSettingsButton" TabIndex="0"/>
-            <Button Content="Videos" Style="{StaticResource ToolbarStyle}" x:Name="_uiVideosButton" Click="_uiVideosButton_Click" TabIndex="1" IsDefault="True"/>
+            <Button Content="Settings" Style="{StaticResource ToolbarStyle}" x:Name="_uiSettingsButton" TabIndex="0" Command="{Binding GoToSettingsCommand}"/>
+            <Button Content="Videos" Style="{StaticResource ToolbarStyle}" x:Name="_uiVideosButton" TabIndex="1" IsDefault="True" Command="{Binding GoToVideosCommand}"/>
             <Button Content="Load" Style="{StaticResource ToolbarStyle}" x:Name="_uiLoadButton" Click="_uiLoadButton_Click" TabIndex="3"/>
             <Button Content="Clean" Style="{StaticResource ToolbarStyle}" x:Name="_uiCleanButton" Click="_uiCleanButton_Click" TabIndex="4"/>
             <!--<Button Content="Export" Style="{StaticResource ToolbarStyle}" x:Name="UiExportButton" Click="UiExportButton_OnClick" TabIndex="4" Visibility="Collapsed"/>-->

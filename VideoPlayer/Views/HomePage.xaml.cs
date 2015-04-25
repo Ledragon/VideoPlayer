@@ -1,19 +1,22 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using VideoPlayer.Common;
+using VideoPlayer.Infrastructure;
+using VideoPlayer.ViewModels;
 
 namespace VideoPlayer
 {
     /// <summary>
     ///     Interaction logic for HomePage.xaml
     /// </summary>
-    public partial class HomePage
+    public partial class HomePage:IHomePage
     {
-        public static RoutedEvent VideoClickEvent = EventManager.RegisterRoutedEvent("VideoClick",
-            RoutingStrategy.Bubble, typeof (RoutedEventHandler), typeof (HomePage));
+        //public static RoutedEvent VideoClickEvent = EventManager.RegisterRoutedEvent("VideoClick",
+        //    RoutingStrategy.Bubble, typeof (RoutedEventHandler), typeof (HomePage));
 
-        public static RoutedEvent SettingsClickEvent = EventManager.RegisterRoutedEvent("SettingsClick",
-            RoutingStrategy.Bubble, typeof (RoutedEventHandler), typeof (HomePage));
+        //public static RoutedEvent SettingsClickEvent = EventManager.RegisterRoutedEvent("SettingsClick",
+        //    RoutingStrategy.Bubble, typeof (RoutedEventHandler), typeof (HomePage));
 
         public static RoutedEvent CleanClickEvent = EventManager.RegisterRoutedEvent("CleanClick",
             RoutingStrategy.Bubble, typeof (RoutedEventHandler), typeof (HomePage));
@@ -24,42 +27,43 @@ namespace VideoPlayer
         public HomePage()
         {
             this.InitializeComponent();
+            this.DataContext = DependencyFactory.Resolve<IHomePageViewModel>();
         }
 
-        public event RoutedEventHandler VideoClick
-        {
-            add { this.AddHandler(VideoClickEvent, value); }
-            remove { this.RemoveHandler(VideoClickEvent, value); }
-        }
+        //public event RoutedEventHandler VideoClick
+        //{
+        //    add { this.AddHandler(VideoClickEvent, value); }
+        //    remove { this.RemoveHandler(VideoClickEvent, value); }
+        //}
 
-        protected virtual void RaiseVideoClickEvent()
-        {
-            var args = new RoutedEventArgs(VideoClickEvent);
-            this.RaiseEvent(args);
-        }
+        //protected virtual void RaiseVideoClickEvent()
+        //{
+        //    var args = new RoutedEventArgs(VideoClickEvent);
+        //    this.RaiseEvent(args);
+        //}
 
-        private void _uiVideosButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.RaiseVideoClickEvent();
-        }
+        //private void _uiVideosButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //this.RaiseVideoClickEvent();
+        //}
 
-        private void _uiSettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.RaiseSettingsClickEvent();
-        }
+        //private void _uiSettingsButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //this.RaiseSettingsClickEvent();
+        //}
 
 
-        public event RoutedEventHandler SettingsClick
-        {
-            add { this.AddHandler(SettingsClickEvent, value); }
-            remove { this.RemoveHandler(SettingsClickEvent, value); }
-        }
+        //public event RoutedEventHandler SettingsClick
+        //{
+        //    add { this.AddHandler(SettingsClickEvent, value); }
+        //    remove { this.RemoveHandler(SettingsClickEvent, value); }
+        //}
 
-        protected virtual void RaiseSettingsClickEvent()
-        {
-            var args = new RoutedEventArgs(SettingsClickEvent);
-            this.RaiseEvent(args);
-        }
+        //protected virtual void RaiseSettingsClickEvent()
+        //{
+        //    var args = new RoutedEventArgs(SettingsClickEvent);
+        //    this.RaiseEvent(args);
+        //}
 
 
         public event RoutedEventHandler CleanClick
@@ -102,5 +106,6 @@ namespace VideoPlayer
         //    var mainWindow = ((((this.Parent as TabItem).Parent as TabControl).Parent as Grid).Parent as MainWindow);
         //    InfoExporter.ExportImageResolutions(mainWindow.Videos.OrderByDescending(v => v.PreviewImage.Width));
         //}
+        public IViewModel ViewModel { get; set; }
     }
 }

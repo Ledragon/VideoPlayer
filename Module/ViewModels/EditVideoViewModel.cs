@@ -110,13 +110,13 @@ namespace Module
         private void CreateTags(ILibraryService libraryService)
         {
             this.Tags.Clear();
-            ObservableCollection<Video> videos = libraryService.GetObjectsFromFile()
+            var videos = libraryService.GetObjectsFromFile()
                 .Videos;
             IEnumerable<Tag> tags = videos
                 .SelectMany(v => v.Tags)
                 .Distinct()
                 .OrderBy(t=>t.Value);
-            foreach (Tag tag in tags)
+            foreach (var tag in tags)
             {
                 this.Tags.Add(tag);
             }

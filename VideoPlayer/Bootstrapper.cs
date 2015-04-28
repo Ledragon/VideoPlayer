@@ -18,8 +18,6 @@ namespace VideoPlayer
             this.Container.RegisterType<IVideoRepository, FileVideoRepository>();
             this.Container.RegisterType<ILibraryService, LibraryService>();
             this.Container.RegisterType<VideosTabControlViewModel>();
-            this.Container.RegisterType<IHomePageViewModel, HomePageViewModel>();
-            this.Container.RegisterType<IHomePage, HomePage>();
 
             //TEMP
             this.Container.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
@@ -55,13 +53,13 @@ namespace VideoPlayer
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
-            //Type homeModuleType = typeof(HomeModule.VideoPlayerModule);
-            //this.ModuleCatalog.AddModule(new ModuleInfo()
-            //{
-            //    ModuleName = homeModuleType.Name,
-            //    ModuleType = homeModuleType.AssemblyQualifiedName,
-            //    InitializationMode = InitializationMode.WhenAvailable
-            //});
+            Type homeModuleType = typeof(HomeModule.HomeModule);
+            this.ModuleCatalog.AddModule(new ModuleInfo()
+            {
+                ModuleName = homeModuleType.Name,
+                ModuleType = homeModuleType.AssemblyQualifiedName,
+                InitializationMode = InitializationMode.WhenAvailable
+            });
         }
     }
 }

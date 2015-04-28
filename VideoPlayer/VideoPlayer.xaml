@@ -5,6 +5,7 @@
     xmlns:prism="http://www.codeplex.com/prism"
     xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:homeModule="clr-namespace:HomeModule;assembly=HomeModule"
     x:Class="VideoPlayer.MainWindow"
     Title="VideoPlayer" Height="768" Width="1024" Background="Black" Foreground="White" FontFamily="Iskoola Pota"
     WindowStyle="{Binding WindowStyle}"
@@ -45,10 +46,10 @@
         </Grid.Background>
         <TabControl Name="_uiTabs" SelectedIndex="{Binding SelectedTab}">
             <TabItem Name="_uiHomeTab">
-                <!--<ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}"></ContentControl>-->
+                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.HomeRegion}"></ContentControl>
 
-                <local:HomePage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"
-                                x:Name="_uiHomePage" />
+                <!--<homeModule:HomePage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"
+                                x:Name="_uiHomePage" />-->
             </TabItem>
             <TabItem Name="_uiVideoTab">
                 <local:VideosPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"

@@ -28,7 +28,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <DisallowUrlActivation>true</DisallowUrlActivation>
-    <ApplicationRevision>81</ApplicationRevision>
+    <ApplicationRevision>82</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
@@ -155,28 +155,18 @@
     <Compile Include="DataProvider.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="ViewModels\HomePageViewModel.cs" />
-    <Compile Include="ViewModels\IHomePageViewModel.cs" />
     <Compile Include="ViewModels\VideosTabControlViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\DirectoryBrowser.xaml.cs">
       <DependentUpon>DirectoryBrowser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\IHomePage.cs" />
     <Compile Include="Views\VideosPage.xaml.cs">
       <DependentUpon>VideosPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\DirectoryBrowser.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

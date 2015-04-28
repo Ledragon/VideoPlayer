@@ -20,9 +20,8 @@ namespace VideoPlayer
             InitializeComponent();
         }
 
-        public DirectoryBrowser(Classes.Directory directory)
+        public DirectoryBrowser(Classes.Directory directory):base()
         {
-            InitializeComponent();
             this._logger = LogManager.GetLogger(typeof (DirectoryBrowser));
             this.Directory = directory;
             this._uiNameTextBox.Text = this.Directory.DirectoryName;

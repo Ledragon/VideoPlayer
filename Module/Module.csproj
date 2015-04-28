@@ -85,10 +85,8 @@
   <ItemGroup>
     <Compile Include="ViewModels\CategoryListViewModel.cs" />
     <Compile Include="ViewModels\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\IEditVideoViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ICategoryListViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IHomeViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IVideosListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IVideoFilterGridViewModel.cs" />
@@ -107,9 +105,6 @@
     <Compile Include="Views\EditVideo.xaml.cs">
       <DependentUpon>EditVideo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Home.xaml.cs">
-      <DependentUpon>Home.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ModuleModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -126,7 +121,6 @@
     </Compile>
     <Compile Include="Views\ICategoryListView.cs" />
     <Compile Include="Views\IEditView.cs" />
-    <Compile Include="Views\IHomeView.cs" />
     <Compile Include="Views\ITagsListView.cs" />
     <Compile Include="Views\IVideoFilterGrid.cs" />
     <Compile Include="Views\IVideosList.cs" />
@@ -172,10 +166,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\EditVideo.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Home.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -148,11 +148,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Commands\AddToPlaylistCommand.cs" />
-    <Compile Include="Commands\FilterByCategoryCommand.cs" />
-    <Compile Include="Commands\FilterCommand.cs" />
     <Compile Include="Commands\PlayCommand.cs" />
-    <Compile Include="DataProvider.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\VideosTabControlViewModel.cs" />

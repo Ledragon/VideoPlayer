@@ -21,8 +21,6 @@ namespace Module
 
         public void Initialize()
         {
-            this._container.RegisterType<IHomeViewModel, HomeViewModel>();
-            this._container.RegisterType<IHomeView, Home>();
             this._container.RegisterType<VideoInfo>();
             this._container.RegisterType<IVideosList, VideosList>();
             this._container.RegisterType<IVideosListViewModel, VideosListViewModel>();
@@ -37,7 +35,6 @@ namespace Module
             this._container.RegisterType<IEditView, EditVideo>();
             this._container.RegisterType<IEditVideoViewModel, EditVideoViewModel>();
 
-            //this.ReferenceRegion<IHomeView>(RegionNames.ContentRegion);
             this.ReferenceRegion<IVideosListViewModel>(RegionNames.VideosListRegion);
             this.ReferenceRegion<ICategoryListViewModel>(RegionNames.CategoriesListRegion);
             this.ReferenceRegion<IVideoFilterGridViewModel>(RegionNames.FilterRegion);

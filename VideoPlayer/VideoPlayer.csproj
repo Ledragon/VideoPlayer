@@ -148,7 +148,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Commands\PlayCommand.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModels\VideosTabControlViewModel.cs" />

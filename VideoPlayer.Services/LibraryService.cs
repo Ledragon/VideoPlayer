@@ -21,7 +21,7 @@ namespace VideoPlayer.Services
         {
             if (_objectsWrapper == null)
             {
-                var repository = DependencyFactory.Resolve<IVideoRepository>();
+                 var repository = DependencyFactory.Resolve<IVideoRepository>();
                 _objectsWrapper = repository.Load(FileSystemHelper.GetDefaultFileName());
             }
             return _objectsWrapper;

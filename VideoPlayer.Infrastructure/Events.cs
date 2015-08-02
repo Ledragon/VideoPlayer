@@ -71,6 +71,10 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
+    public class LibraryUpdating : PubSubEvent<Object>
+    {
+    }
+
     public class LibraryUpdated : PubSubEvent<Object>
     {
     }
@@ -86,4 +90,10 @@ namespace VideoPlayer.Infrastructure
     public class GoToPage : PubSubEvent<Int32>
     {
     }
+
+    public class CloseRequestedEvent : PubSubEvent<Object>
+    {
+    }
+
+
 }

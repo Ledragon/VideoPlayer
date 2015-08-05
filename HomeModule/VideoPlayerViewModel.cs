@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -44,7 +42,7 @@ namespace HomeModule
 
         public DelegateCommand GoToHomePageCommand { get; private set; }
         public DelegateCommand ToggleStyleCommand { get; private set; }
-        public DelegateCommand WindowLoadedCommand { get; private set; }
+        //public DelegateCommand WindowLoadedCommand { get; private set; }
         public DelegateCommand CloseCommand { get; private set; }
 
         public Int32 SelectedTab

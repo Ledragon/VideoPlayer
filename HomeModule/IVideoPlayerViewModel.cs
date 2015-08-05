@@ -12,7 +12,7 @@ namespace HomeModule
         Visibility IsLoading { get; set; }
         DelegateCommand GoToHomePageCommand { get; }
         DelegateCommand ToggleStyleCommand { get; }
-        DelegateCommand WindowLoadedCommand { get; }
+        //DelegateCommand WindowLoadedCommand { get; }
         DelegateCommand CloseCommand { get; }
         WindowStyle WindowStyle { get; set; }
         Visibility IsExitMenuVisible { get; set; }

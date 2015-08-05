@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -28,8 +29,7 @@ namespace HomeModule
             this._libraryService = libraryService;
             this.GoToHomePageCommand = new DelegateCommand(this.SetHomePage);
             this.ToggleStyleCommand = new DelegateCommand(this.ToggleWindowStyle);
-            this.WindowClosingCommand = new DelegateCommand(this.WindowClosing);
-            this.ToggleExitMenuCommand = new DelegateCommand(this.ToggleExitMenu);
+            this.CloseCommand = new DelegateCommand(this.CloseAsync);
 
             this._eventAggregator.GetEvent<GoToPage>().Subscribe(this.SetSelectedTab);
             this._eventAggregator.GetEvent<LibraryUpdating>()
@@ -44,9 +44,8 @@ namespace HomeModule
 
         public DelegateCommand GoToHomePageCommand { get; private set; }
         public DelegateCommand ToggleStyleCommand { get; private set; }
-        public DelegateCommand WindowClosingCommand { get; private set; }
         public DelegateCommand WindowLoadedCommand { get; private set; }
-        public DelegateCommand ToggleExitMenuCommand { get; private set; }
+        public DelegateCommand CloseCommand { get; private set; }
 
         public Int32 SelectedTab
         {
@@ -81,7 +80,6 @@ namespace HomeModule
             }
         }
 
-
         public WindowStyle WindowStyle
         {
             get { return this._windowStyle; }
@@ -104,22 +102,11 @@ namespace HomeModule
             }
         }
 
-        private void ToggleExitMenu()
+        private async void CloseAsync()
         {
-            if (this.IsExitMenuVisible == Visibility.Visible)
-            {
-                this.IsExitMenuVisible = Visibility.Hidden;
-            }
-            else
-            {
-                this.IsExitMenuVisible = Visibility.Visible;
-                this._eventAggregator.GetEvent<CloseRequestedEvent>().Publish(null);
-            }
-        }
-
-        private void WindowClosing()
-        {
-            this._libraryService.Save();
+            this.IsExitMenuVisible = Visibility.Visible;
+            await this._libraryService.SaveAsync();
+            this._eventAggregator.GetEvent<CloseRequestedEvent>().Publish(null);
         }
 
         private void SetHomePage()

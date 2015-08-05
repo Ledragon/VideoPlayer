@@ -34,13 +34,9 @@
     <Window.InputBindings>
         <KeyBinding Command="{Binding GoToHomePageCommand}" Key="Back" />
         <KeyBinding Command="{Binding ToggleStyleCommand}" Key="Return" Modifiers="Alt" />
-        <KeyBinding Command="{Binding ToggleExitMenuCommand}" Key="S" />
+        <KeyBinding Command="{Binding CloseCommand}" Key="S" />
     </Window.InputBindings>
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closing">
-            <prism:InvokeCommandAction Command="{Binding WindowClosingCommand}"></prism:InvokeCommandAction>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+
     <Grid x:Name="MainGrid">
         <Grid.Background>
             <ImageBrush ImageSource=".\TheaterCurtains.jpg" />
@@ -62,14 +58,14 @@
                                     x:Name="_uiSettingsView" />
             </TabItem>
         </TabControl>
-        <!--<Grid Visibility="{Binding IsExitMenuVisible}" Background="#cc000000">
+        <Grid Visibility="{Binding IsExitMenuVisible}" Background="#cc000000">
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32">
                 VideoPlayer will now close...
             </TextBlock>
-        </Grid>-->
+        </Grid>
         
         <Grid Visibility="{Binding IsLoading}">
-            <TextBlock HorizontalAlignment="Right" FontSize="32" Margin="5" VerticalAlignment="Top" Foreground="#afafaf" FontFamily="Segoe UI" Text="{Binding LoadingMessage}"></TextBlock>
+            <TextBlock HorizontalAlignment="Right" FontSize="32" Margin="5" VerticalAlignment="Top" Foreground="#afafaf" FontFamily="Leelawadee" Text="{Binding LoadingMessage}"></TextBlock>
         </Grid>
     </Grid>
 </Window>

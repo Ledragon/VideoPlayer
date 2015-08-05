@@ -7,6 +7,7 @@ namespace VideoPlayer.Services
     {
         ObjectsWrapper GetObjectsFromFile();
         void Save();
+        Task SaveAsync();
         void Clean();
         void Update();
         Task UpdateAsync();

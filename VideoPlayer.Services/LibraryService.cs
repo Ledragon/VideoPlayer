@@ -32,6 +32,11 @@ namespace VideoPlayer.Services
             this.Save(this.GetObjectsFromFile());
         }
 
+        public async Task SaveAsync()
+        {
+            await Task.Factory.StartNew(this.Save);
+        }
+
         public void Clean()
         {
             this.Clean(this.GetObjectsFromFile().Directories, this.GetObjectsFromFile().Videos);

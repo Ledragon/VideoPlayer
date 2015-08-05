@@ -18,7 +18,7 @@ namespace HomeModule
             this._libraryService = libraryService;
             this.GoToSettingsCommand = new DelegateCommand(this.GoToSettings);
             this.GoToVideosCommand = new DelegateCommand(this.GoToVideos);
-            this.CleanCommand = new DelegateCommand(this.CleanAsync);
+            this.CleanCommand = new DelegateCommand(this.Clean);
             this.LoadCommand = new DelegateCommand(this.LoadAsync);
         }
 

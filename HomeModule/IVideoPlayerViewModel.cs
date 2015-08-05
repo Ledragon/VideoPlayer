@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using VideoPlayer.Infrastructure;
@@ -17,7 +16,6 @@ namespace HomeModule
         DelegateCommand WindowLoadedCommand { get; }
         DelegateCommand ToggleExitMenuCommand { get; }
         WindowStyle WindowStyle { get; set; }
-        ObservableCollection<Object> ExitMenu { get; set; }
         Visibility IsExitMenuVisible { get; set; }
     }
 }

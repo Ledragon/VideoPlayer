@@ -12,16 +12,10 @@ namespace HomeModule
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly ILibraryService _libraryService;
-        private ObservableCollection<Object> _exitMenu;
-        private DelegateCommand _goToHomePageCommand;
         private Visibility _isExitMenuVisible;
         private Visibility _isLoading;
         private String _loadingMessage;
         private Int32 _selectedTab;
-        private DelegateCommand _toggleExitMenuCommand;
-        private DelegateCommand _toggleStyleCommand;
-        private DelegateCommand _windowClosingCommand;
-        private DelegateCommand _windowLoadedCommand;
         private WindowStyle _windowStyle;
 
         public VideoPlayerViewModel(IVideoPlayer videoPlayer, IEventAggregator eventAggregator,
@@ -48,8 +42,11 @@ namespace HomeModule
                 .Subscribe(payload => { this.IsLoading = Visibility.Hidden; });
         }
 
-        public DelegateCommand LoadCommand { get; set; }
-        public DelegateCommand CleanCommand { get; set; }
+        public DelegateCommand GoToHomePageCommand { get; private set; }
+        public DelegateCommand ToggleStyleCommand { get; private set; }
+        public DelegateCommand WindowClosingCommand { get; private set; }
+        public DelegateCommand WindowLoadedCommand { get; private set; }
+        public DelegateCommand ToggleExitMenuCommand { get; private set; }
 
         public Int32 SelectedTab
         {
@@ -84,60 +81,6 @@ namespace HomeModule
             }
         }
 
-        public DelegateCommand GoToHomePageCommand
-        {
-            get { return this._goToHomePageCommand; }
-            set
-            {
-                if (Equals(value, this._goToHomePageCommand)) return;
-                this._goToHomePageCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public DelegateCommand ToggleStyleCommand
-        {
-            get { return this._toggleStyleCommand; }
-            set
-            {
-                if (Equals(value, this._toggleStyleCommand)) return;
-                this._toggleStyleCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public DelegateCommand WindowClosingCommand
-        {
-            get { return this._windowClosingCommand; }
-            set
-            {
-                if (Equals(value, this._windowClosingCommand)) return;
-                this._windowClosingCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public DelegateCommand WindowLoadedCommand
-        {
-            get { return this._windowLoadedCommand; }
-            set
-            {
-                if (Equals(value, this._windowLoadedCommand)) return;
-                this._windowLoadedCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public DelegateCommand ToggleExitMenuCommand
-        {
-            get { return this._toggleExitMenuCommand; }
-            set
-            {
-                if (Equals(value, this._toggleExitMenuCommand)) return;
-                this._toggleExitMenuCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
 
         public WindowStyle WindowStyle
         {
@@ -146,17 +89,6 @@ namespace HomeModule
             {
                 if (value == this._windowStyle) return;
                 this._windowStyle = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<Object> ExitMenu
-        {
-            get { return this._exitMenu; }
-            set
-            {
-                if (Equals(value, this._exitMenu)) return;
-                this._exitMenu = value;
                 this.OnPropertyChanged();
             }
         }

@@ -2,7 +2,7 @@
 
 namespace HomeModule
 {
-    public class VideoPlayer:IVideoPlayer
+    public class VideoPlayer : IVideoPlayer
     {
         public IViewModel ViewModel { get; set; }
     }

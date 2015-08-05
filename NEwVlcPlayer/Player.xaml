@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="NEwVlcPlayer.Player"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <wpf:VlcControl x:Name="_VLCcontrol"/>
+
+        <!--<Image Grid.Row="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform" />-->
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Click="Button_Click">Play</Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

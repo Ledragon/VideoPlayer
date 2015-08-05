@@ -1,0 +1,42 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <FontFamily x:Key="TextFontFamily">Leelawadee</FontFamily>
+    <Style x:Key="FilterListBox" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="#FF494949" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="UseLayoutRounding" Value="False" />
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="{Binding Path=Name}" Margin="5" Foreground="White"
+                                   FontSize="14" FontFamily="{StaticResource TextFontFamily}" />
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Text="{Binding Path=Count}"
+                                   Margin="5" Foreground="#FF999999" FontSize="10"
+                                   FontFamily="{StaticResource TextFontFamily}" />
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

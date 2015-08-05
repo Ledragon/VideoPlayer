@@ -69,7 +69,7 @@
         </Grid>-->
         
         <Grid Visibility="{Binding IsLoading}">
-            <TextBlock HorizontalAlignment="Right" FontSize="32" Margin="5" VerticalAlignment="Top" Foreground="#afafaf" FontFamily="Segoe UI">Loading</TextBlock>
+            <TextBlock HorizontalAlignment="Right" FontSize="32" Margin="5" VerticalAlignment="Top" Foreground="#afafaf" FontFamily="Segoe UI" Text="{Binding LoadingMessage}"></TextBlock>
         </Grid>
     </Grid>
 </Window>

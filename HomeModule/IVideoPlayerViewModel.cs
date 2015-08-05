@@ -9,12 +9,13 @@ namespace HomeModule
     public interface IVideoPlayerViewModel : IViewModel
     {
         Int32 SelectedTab { get; set; }
+        String LoadingMessage { get; }
         Visibility IsLoading { get; set; }
-        DelegateCommand GoToHomePageCommand { get; set; }
-        DelegateCommand ToggleStyleCommand { get; set; }
-        DelegateCommand WindowClosingCommand { get; set; }
-        DelegateCommand WindowLoadedCommand { get; set; }
-        DelegateCommand ToggleExitMenuCommand { get; set; }
+        DelegateCommand GoToHomePageCommand { get; }
+        DelegateCommand ToggleStyleCommand { get; }
+        DelegateCommand WindowClosingCommand { get; }
+        DelegateCommand WindowLoadedCommand { get; }
+        DelegateCommand ToggleExitMenuCommand { get; }
         WindowStyle WindowStyle { get; set; }
         ObservableCollection<Object> ExitMenu { get; set; }
         Visibility IsExitMenuVisible { get; set; }

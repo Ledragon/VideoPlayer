@@ -10,5 +10,6 @@ namespace VideoPlayer.Services
         void Clean();
         void Update();
         Task UpdateAsync();
+        Task CleanAsync();
     }
 }

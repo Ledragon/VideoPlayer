@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Classes;
 using Log;
@@ -23,7 +21,7 @@ namespace VideoPlayer.Services
         {
             if (_objectsWrapper == null)
             {
-                 var repository = DependencyFactory.Resolve<IVideoRepository>();
+                var repository = DependencyFactory.Resolve<IVideoRepository>();
                 _objectsWrapper = repository.Load(FileSystemHelper.GetDefaultFileName());
             }
             return _objectsWrapper;
@@ -34,43 +32,14 @@ namespace VideoPlayer.Services
             this.Save(this.GetObjectsFromFile());
         }
 
-        public void Save(ObjectsWrapper wrapper)
-        {
-            this.Save(FileSystemHelper.GetDefaultFileName(), wrapper);
-        }
-
-        public void Save(string filePath, ObjectsWrapper wrapper)
-        {
-            var repository = DependencyFactory.Resolve<IVideoRepository>();
-            repository.Save(filePath, wrapper);
-        }
-
         public void Clean()
         {
             this.Clean(this.GetObjectsFromFile().Directories, this.GetObjectsFromFile().Videos);
         }
 
-        public void Clean(ObservableCollection<Directory> directoryCollection,
-            ObservableCollection<Video> videoCollection)
+        public async Task CleanAsync()
         {
-            this.BackupLibrary();
-            this.Logger().Info("Cleaning files.");
-            var existingFiles =
-                directoryCollection
-                    .SelectMany(
-                        d => DirectoryHelper.GetVideoFiles(d.DirectoryPath, d.IsIncludeSubdirectories))
-                    .ToList();
-            var videosToRemove = videoCollection
-                .Select(t => t.FileName)
-                .Except(existingFiles)
-                .ToList();
-            foreach (var file in videosToRemove)
-            {
-                var video = videoCollection.Single(v => v.FileName == file);
-                videoCollection.Remove(video);
-                this.Logger().DebugFormat("File '{0}' removed.", video.FileName);
-            }
-            this.Logger().InfoFormat("'{0}' files removed.", videosToRemove.Count);
+            await Task.Factory.StartNew(this.Clean);
         }
 
         public void Update()
@@ -116,12 +85,46 @@ namespace VideoPlayer.Services
             await Task.Factory.StartNew(this.Update);
         }
 
+        public void Save(ObjectsWrapper wrapper)
+        {
+            this.Save(FileSystemHelper.GetDefaultFileName(), wrapper);
+        }
+
+        public void Save(String filePath, ObjectsWrapper wrapper)
+        {
+            var repository = DependencyFactory.Resolve<IVideoRepository>();
+            repository.Save(filePath, wrapper);
+        }
+
+        public void Clean(ObservableCollection<Directory> directoryCollection,
+            ObservableCollection<Video> videoCollection)
+        {
+            this.BackupLibrary();
+            this.Logger().Info("Cleaning files.");
+            var existingFiles =
+                directoryCollection
+                    .SelectMany(
+                        d => DirectoryHelper.GetVideoFiles(d.DirectoryPath, d.IsIncludeSubdirectories))
+                    .ToList();
+            var videosToRemove = videoCollection
+                .Select(t => t.FileName)
+                .Except(existingFiles)
+                .ToList();
+            foreach (var file in videosToRemove)
+            {
+                var video = videoCollection.Single(v => v.FileName == file);
+                videoCollection.Remove(video);
+                this.Logger().DebugFormat("File '{0}' removed.", video.FileName);
+            }
+            this.Logger().InfoFormat("'{0}' files removed.", videosToRemove.Count);
+        }
+
         private void BackupLibrary()
         {
             this.BackupLibrary(FileSystemHelper.GetDefaultFileName());
         }
 
-        private void BackupLibrary(string filePath)
+        private void BackupLibrary(String filePath)
         {
             this.Logger().Debug("Automatic backup of library.");
             var fileName = Path.GetFileNameWithoutExtension(filePath);
@@ -131,7 +134,7 @@ namespace VideoPlayer.Services
             var i = 1;
             while (File.Exists(destinationPath))
             {
-                destinationPath = Path.Combine(directory, string.Format("{0}({1}).xml", fileName, i));
+                destinationPath = Path.Combine(directory, String.Format("{0}({1}).xml", fileName, i));
                 i++;
             }
             File.Copy(filePath, destinationPath);

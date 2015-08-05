@@ -16,6 +16,7 @@ namespace HomeModule
         private DelegateCommand _goToHomePageCommand;
         private Visibility _isExitMenuVisible;
         private Visibility _isLoading;
+        private String _loadingMessage;
         private Int32 _selectedTab;
         private DelegateCommand _toggleExitMenuCommand;
         private DelegateCommand _toggleStyleCommand;
@@ -38,7 +39,11 @@ namespace HomeModule
 
             this._eventAggregator.GetEvent<GoToPage>().Subscribe(this.SetSelectedTab);
             this._eventAggregator.GetEvent<LibraryUpdating>()
-                .Subscribe(payload => { this.IsLoading = Visibility.Visible; });
+                .Subscribe(message =>
+                {
+                    this.LoadingMessage = message;
+                    this.IsLoading = Visibility.Visible;
+                });
             this._eventAggregator.GetEvent<LibraryUpdated>()
                 .Subscribe(payload => { this.IsLoading = Visibility.Hidden; });
         }
@@ -53,6 +58,17 @@ namespace HomeModule
             {
                 if (value == this._selectedTab) return;
                 this._selectedTab = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public String LoadingMessage
+        {
+            get { return this._loadingMessage; }
+            private set
+            {
+                if (value == this._loadingMessage) return;
+                this._loadingMessage = value;
                 this.OnPropertyChanged();
             }
         }

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Classes;
 
 namespace VideoPlayer.Services
@@ -8,5 +9,6 @@ namespace VideoPlayer.Services
         void Save();
         void Clean();
         void Update();
+        Task UpdateAsync();
     }
 }

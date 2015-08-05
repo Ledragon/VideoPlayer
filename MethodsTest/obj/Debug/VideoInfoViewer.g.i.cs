@@ -9,8 +9,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using MethodsTest;
-using NEwVlcPlayer;
 using System;
 using System.Diagnostics;
 using System.Windows;

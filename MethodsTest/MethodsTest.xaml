@@ -20,7 +20,7 @@
             </Grid.ColumnDefinitions>
             <TextBox Name="_uiVideosCount"/>
         </Grid>
-        <NEwVlcPlayer:UserControl1 />
+        <!--<NEwVlcPlayer:UserControl1 />-->
         <!--<MediaElement Name="_me" HorizontalAlignment="Left" Height="176" Margin="385,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="237" MediaFailed="_me_MediaFailed"/>-->
         <Button Name="_uiPlayButton" Content="Play" HorizontalAlignment="Left" Margin="305,153,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="_uiPlayButton_Click"/>
     </Grid>

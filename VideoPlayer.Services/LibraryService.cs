@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Classes;
 using Log;
 using VideoPlayer.Common;
@@ -107,6 +109,11 @@ namespace VideoPlayer.Services
                 this.Logger().ErrorFormat(e.Message);
                 throw;
             }
+        }
+
+        public async Task UpdateAsync()
+        {
+            await Task.Factory.StartNew(this.Update);
         }
 
         private void BackupLibrary()

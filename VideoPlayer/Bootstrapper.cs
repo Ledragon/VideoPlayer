@@ -1,17 +1,18 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using HomeModule;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
+using Module;
 using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Services;
 using VideoPlayer.ViewModels;
+using VlcPlayer;
 
 namespace VideoPlayer
 {
-    public class Bootstrapper:UnityBootstrapper
+    public class Bootstrapper : UnityBootstrapper
     {
         protected override DependencyObject CreateShell()
         {
@@ -37,24 +38,24 @@ namespace VideoPlayer
         protected override void ConfigureModuleCatalog()
         {
             //base.ConfigureModuleCatalog();
-            Type moduleType = typeof(Module.ModuleModule);
-            this.ModuleCatalog.AddModule(new ModuleInfo()
+            var moduleType = typeof (ModuleModule);
+            this.ModuleCatalog.AddModule(new ModuleInfo
             {
                 ModuleName = moduleType.Name,
                 ModuleType = moduleType.AssemblyQualifiedName,
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
-            Type vlcPlayerModuleType = typeof(VlcPlayer.VlcPlayerModule);
-            this.ModuleCatalog.AddModule(new ModuleInfo()
+            var vlcPlayerModuleType = typeof (VlcPlayerModule);
+            this.ModuleCatalog.AddModule(new ModuleInfo
             {
                 ModuleName = vlcPlayerModuleType.Name,
                 ModuleType = vlcPlayerModuleType.AssemblyQualifiedName,
                 InitializationMode = InitializationMode.WhenAvailable
             });
 
-            Type homeModuleType = typeof(HomeModule.HomeModule);
-            this.ModuleCatalog.AddModule(new ModuleInfo()
+            var homeModuleType = typeof (HomeModule.HomeModule);
+            this.ModuleCatalog.AddModule(new ModuleInfo
             {
                 ModuleName = homeModuleType.Name,
                 ModuleType = homeModuleType.AssemblyQualifiedName,

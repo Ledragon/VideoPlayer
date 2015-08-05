@@ -13,36 +13,16 @@ namespace Module
 {
     public class VideoFilterGridViewModel : ViewModelBase, IVideoFilterGridViewModel
     {
-        //private readonly SortingViewModel _categorySortingViewModel = new SortingViewModel
-        //{
-        //    Name = "Category",
-        //    SortDescription = new SortDescription("Category", ListSortDirection.Ascending)
-        //};
 
         private readonly IEventAggregator _eventAggregator;
-
-        //private readonly SortingViewModel _lengthSortingViewModel = new SortingViewModel
-        //{
-        //    Name = "Length",
-        //    SortDescription = new SortDescription("Length", ListSortDirection.Ascending)
-        //};
-
         private readonly ILibraryService _libraryService;
-
-        //private readonly SortingViewModel _titleSortingViewModel = new SortingViewModel
-        //{
-        //    Name = "Title",
-        //    SortDescription = new SortDescription("Title", ListSortDirection.Ascending)
-        //};
 
 
         private DelegateCommand _addTagCommand;
-        private string _nameFilter;
-        //private SortingViewModel _selectedSorting;
+        private String _nameFilter;
         private CategoryViewModel _selectedTag;
         private CategoryViewModel _selectedTagToDelete;
         private ObservableCollection<CategoryViewModel> _selectedTags;
-        //private ObservableCollection<SortingViewModel> _sortings;
         private ObservableCollection<CategoryViewModel> _tags;
 
         public VideoFilterGridViewModel(IVideoFilterGrid videoFilterGrid, IEventAggregator eventAggregator,
@@ -56,9 +36,6 @@ namespace Module
             this.AddTagCommand = new DelegateCommand(this.AddTag);
             this.RemoveTagCommand = new DelegateCommand(this.RemoveTag);
             this.ClearTagsCommand = new DelegateCommand(this.ClearTags);
-            //this.SortByLengthCommand = new DelegateCommand(this.SortByLength);
-            //this.SortByTitleCommand = new DelegateCommand(this.SortByTitle);
-            //this.SortByCategoryCommand = new DelegateCommand(this.SortByCategory);
             this.CreateTagsList(null);
 
             this._eventAggregator.GetEvent<VideoEdited>().Subscribe(this.CreateTagsList);
@@ -102,62 +79,6 @@ namespace Module
                 this.OnPropertyChanged();
             }
         }
-
-        //public SortingViewModel SelectedSorting
-        //{
-        //    get { return this._selectedSorting; }
-        //    set
-        //    {
-        //        if (Equals(value, this._selectedSorting)) return;
-        //        this._selectedSorting = value;
-        //        this._eventAggregator.GetEvent<SortingChangedEvent>().Publish(this._selectedSorting.SortDescription);
-        //        this.OnPropertyChanged();
-        //    }
-        //}
-
-        //public ObservableCollection<SortingViewModel> Sortings
-        //{
-        //    get
-        //    {
-        //        if (this._sortings == null)
-        //        {
-        //            this._sortings = new ObservableCollection<SortingViewModel>
-        //            {
-        //                this._titleSortingViewModel,
-        //                this._categorySortingViewModel,
-        //                this._lengthSortingViewModel,
-        //                new SortingViewModel
-        //                {
-        //                    Name = "Oldest",
-        //                    SortDescription = new SortDescription("DateAdded", ListSortDirection.Ascending)
-        //                },
-        //                new SortingViewModel
-        //                {
-        //                    Name = "Newest",
-        //                    SortDescription = new SortDescription("DateAdded", ListSortDirection.Descending)
-        //                },
-        //                new SortingViewModel
-        //                {
-        //                    Name = "Most viewed",
-        //                    SortDescription = new SortDescription("NumberOfViews", ListSortDirection.Descending)
-        //                },
-        //                new SortingViewModel
-        //                {
-        //                    Name = "Least viewed",
-        //                    SortDescription = new SortDescription("NumberOfViews", ListSortDirection.Ascending)
-        //                }
-        //            };
-        //            this.SelectedSorting = this._sortings[0];
-        //        }
-        //        return this._sortings;
-        //    }
-        //    set
-        //    {
-        //        if (Equals(value, this._sortings)) return;
-        //        this._sortings = value;
-        //        this.OnPropertyChanged();
-        //    }
-        //}
 
         public String NameFilter
         {
@@ -211,10 +132,10 @@ namespace Module
         private void CreateTagsList(Object dummy)
         {
             this.Tags.Clear();
-            ObservableCollection<Video> videos = this._libraryService.GetObjectsFromFile().Videos;
+            var videos = this._libraryService.GetObjectsFromFile().Videos;
             IEnumerable<string> tags =
                 videos.SelectMany(v => v.Tags).Select(t => t.Value).Distinct().OrderBy(t => t);
-            foreach (string tag in tags)
+            foreach (var tag in tags)
             {
                 this.Tags.Add(new CategoryViewModel
                 {

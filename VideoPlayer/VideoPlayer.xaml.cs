@@ -1,14 +1,9 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using HomeModule;
 using Log;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Common;
 using VideoPlayer.Infrastructure;
-using VideoPlayer.Services;
 
 namespace VideoPlayer
 {
@@ -34,23 +29,6 @@ namespace VideoPlayer
             {
                 this.Logger().ErrorFormat(e.Message);
             }
-        }
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            //if (!(e.OriginalSource is TextBox))
-            //{
-            //    if (e.Key == Key.S)
-            //    {
-            //        var mbr = MessageBox.Show("Do you really want to exit?", "Exit?",
-            //            MessageBoxButton.YesNo);
-            //        if (mbr == MessageBoxResult.Yes)
-            //        {
-            //            this.Close();
-            //        }
-            //        e.Handled = true;
-            //    }
-            //}
         }
     }
 }

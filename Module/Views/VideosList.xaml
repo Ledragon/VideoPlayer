@@ -96,8 +96,13 @@
                                 </Path.RenderTransform>
                             </Path>
                         </Canvas>
-                        <TextBlock Grid.Row="1" Text="{Binding Title}" VerticalAlignment="Center" Width="300"
-                                   TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" FontSize="14" FontFamily="Leelawadee"
+                        <TextBlock Grid.Row="1" Text="{Binding Title}" 
+                                   VerticalAlignment="Center" 
+                                   Width="300"
+                                   TextWrapping="NoWrap" 
+                                   TextTrimming="CharacterEllipsis" 
+                                   FontSize="14" 
+                                   FontFamily="Leelawadee"
                                    Margin="5" />
                         <!--<Canvas Grid.Row="2" Height="30">-->
 

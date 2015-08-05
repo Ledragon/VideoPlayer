@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -18,47 +17,28 @@ namespace Module
 {
     public class VideosListViewModel : ViewModelBase, IVideosListViewModel
     {
-        private readonly IEventAggregator _eventAggregator;
         private String _categoryFilter;
         private Video _currentVideo;
-        private int _editIndex;
+        private Int32 _editIndex;
+        private IEventAggregator _eventAggregator;
+        private ICollectionView _filteredVideos;
         private String _filterName;
         private List<String> _filterTags;
-        private ICollectionView _filteredVideos;
         private Visibility _infoVisibility;
         private SortDescription _sortDescription;
-        private ObservableCollection<Video> _videoCollection;
+        private IEnumerable<Video> _videoCollection;
 
         public VideosListViewModel(ILibraryService libraryService, IVideosList videosList,
             IEventAggregator eventAggregator)
             : base(videosList)
         {
-            this._eventAggregator = eventAggregator;
-            this._categoryFilter = "All";
-            this._eventAggregator.GetEvent<SelectedCategoryChangedEvent>().Subscribe(this.FilterCategory);
-            this._eventAggregator.GetEvent<NameFilterChangedEvent>().Subscribe(this.FilterName);
-            this._eventAggregator.GetEvent<TagFilterChangedEvent>().Subscribe(this.FilterTag);
-            this._eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
-            this._eventAggregator.GetEvent<SortingChangedEvent>().Subscribe(this.Sort);
-
-            this.VideoCollection = libraryService.GetObjectsFromFile().Videos;
-            this._sortDescription = new SortDescription("Title", ListSortDirection.Ascending);
-            ICollectionView view = CollectionViewSource.GetDefaultView(this.VideoCollection);
-            view.SortDescriptions.Add(this._sortDescription);
-            this.FilteredVideos = view;
-            this.InfoVisibility = Visibility.Visible;
-
-            this.EditCommand = new DelegateCommand(this.Edit, this.CanEdit);
-            this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
-            this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
-            this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
+            this.Init(libraryService, eventAggregator);
         }
 
-        public DelegateCommand AddVideoCommand { get; set; }
-
-        public DelegateCommand PlayOneCommand { get; set; }
-
-        public DelegateCommand PlayPlaylistCommand { get; set; }
+        public DelegateCommand AddVideoCommand { get; private set; }
+        public DelegateCommand EditCommand { get; private set; }
+        public DelegateCommand PlayOneCommand { get; private set; }
+        public DelegateCommand PlayPlaylistCommand { get; private set; }
 
         public Visibility InfoVisibility
         {
@@ -71,8 +51,6 @@ namespace Module
             }
         }
 
-        public DelegateCommand EditCommand { get; set; }
-
         public ICollectionView FilteredVideos
         {
             get { return this._filteredVideos; }
@@ -83,10 +61,7 @@ namespace Module
                     return;
                 }
                 this._filteredVideos = value;
-                if (this.CurrentVideo == null)
-                {
-                    this.CurrentVideo = this.VideoCollection.OrderBy(t => t.Title).First();
-                }
+
                 this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
                 this.OnPropertyChanged();
             }
@@ -120,16 +95,45 @@ namespace Module
             }
         }
 
-        public ObservableCollection<Video> VideoCollection
+        private void Init(ILibraryService libraryService, IEventAggregator eventAggregator)
         {
-            get { return this._videoCollection; }
-            set
+            try
             {
-                if (!Equals(value, this._videoCollection))
-                {
-                    this._videoCollection = value;
-                    this.OnPropertyChanged();
-                }
+                this._eventAggregator = eventAggregator;
+                this._categoryFilter = "All";
+
+                this._eventAggregator.GetEvent<SelectedCategoryChangedEvent>().Subscribe(this.FilterCategory);
+                this._eventAggregator.GetEvent<NameFilterChangedEvent>().Subscribe(this.FilterName);
+                this._eventAggregator.GetEvent<TagFilterChangedEvent>().Subscribe(this.FilterTag);
+                this._eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
+                this._eventAggregator.GetEvent<SortingChangedEvent>().Subscribe(this.Sort);
+                this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.UpdateVideoListView);
+                this._eventAggregator.GetEvent<VideoEdited>().Subscribe(dummy => this.SetFilter());
+
+                this.UpdateVideoListView(libraryService.GetObjectsFromFile().Videos);
+                this.InfoVisibility = Visibility.Visible;
+
+                this.EditCommand = new DelegateCommand(this.Edit, this.CanEdit);
+                this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
+                this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
+                this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
+            }
+            catch (Exception e)
+            {
+                this.Logger().ErrorFormat(e.Message);
+                throw;
+            }
+        }
+
+        private void UpdateVideoListView(IEnumerable<Video> videos)
+        {
+            this._sortDescription = new SortDescription("Title", ListSortDirection.Ascending);
+            var view = CollectionViewSource.GetDefaultView(videos);
+            view.SortDescriptions.Add(this._sortDescription);
+            this.FilteredVideos = view;
+            if (this.CurrentVideo == null)
+            {
+                this.CurrentVideo = videos.OrderBy(v => v.Title).First();
             }
         }
 
@@ -185,13 +189,13 @@ namespace Module
         {
             return item =>
             {
-                Boolean result = true;
+                var result = true;
                 try
                 {
                     var video = item as Video;
-                    Boolean isNameOk = this.IsNameOk(video);
-                    Boolean isCategoryOk = this.IsCategoryOk(video, this._categoryFilter);
-                    Boolean isTagOk = this.IsTagOK(video);
+                    var isNameOk = this.IsNameOk(video);
+                    var isCategoryOk = this.IsCategoryOk(video, this._categoryFilter);
+                    var isTagOk = this.IsTagOK(video);
                     result = isNameOk && isCategoryOk && isTagOk;
                 }
                 catch (Exception e)
@@ -202,11 +206,11 @@ namespace Module
             };
         }
 
-        private void PlayAll(object obj)
+        private void PlayAll(Object obj)
         {
             this._eventAggregator.GetEvent<ClearPlaylistEvent>().Publish(null);
             var videoAddedEvent = this._eventAggregator.GetEvent<VideoAddedEvent>();
-            foreach (Video video in this.FilteredVideos.Cast<Video>())
+            foreach (var video in this.FilteredVideos.Cast<Video>())
             {
                 videoAddedEvent.Publish(video);
             }
@@ -277,7 +281,7 @@ namespace Module
 
         private Boolean IsNameOk(Video video)
         {
-            Boolean result = true;
+            var result = true;
             if (!String.IsNullOrEmpty(this._filterName))
             {
                 result = video.Title.ToLower().Contains(this._filterName.ToLower());
@@ -287,7 +291,7 @@ namespace Module
 
         private Boolean IsTagOK(Video video)
         {
-            Boolean result = true;
+            var result = true;
             if (this._filterTags != null && this._filterTags.Any())
             {
                 result =

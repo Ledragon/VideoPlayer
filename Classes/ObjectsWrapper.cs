@@ -14,12 +14,12 @@ namespace Classes
 
         [XmlArray("Videos")]
         [XmlArrayItem("Video")]
-        public ObservableCollection<Video> Videos { get; set; }
+        public List<Video> Videos { get; set; }
 
         public ObjectsWrapper()
         {
             this.Directories = new ObservableCollection<Directory>();//<Directory>();
-            this.Videos = new ObservableCollection<Video>();
+            this.Videos = new List<Video>();
         }
     }
 }

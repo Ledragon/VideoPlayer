@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Classes;
 
@@ -9,8 +10,8 @@ namespace VideoPlayer.Services
         void Save();
         Task SaveAsync();
         void Clean();
-        void Update();
-        Task UpdateAsync();
+        IEnumerable<Video> Update();
+        Task<IEnumerable<Video>> UpdateAsync();
         Task CleanAsync();
     }
 }

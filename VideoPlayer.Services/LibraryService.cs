@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -47,8 +48,9 @@ namespace VideoPlayer.Services
             await Task.Factory.StartNew(this.Clean);
         }
 
-        public void Update()
+        public IEnumerable<Video> Update()
         {
+            IEnumerable<Video> result = new List<Video>();
             try
             {
                 this.Logger().DebugFormat("Updating library.");
@@ -77,17 +79,19 @@ namespace VideoPlayer.Services
                     }
                 }
                 this.Save();
+                result = videoList;
             }
             catch (Exception e)
             {
                 this.Logger().ErrorFormat(e.Message);
                 throw;
             }
+            return result;
         }
 
-        public async Task UpdateAsync()
+        public async Task<IEnumerable<Video>>  UpdateAsync()
         {
-            await Task.Factory.StartNew(this.Update);
+            return await Task.Factory.StartNew(() => this.Update());
         }
 
         public void Save(ObjectsWrapper wrapper)
@@ -102,7 +106,7 @@ namespace VideoPlayer.Services
         }
 
         public void Clean(ObservableCollection<Directory> directoryCollection,
-            ObservableCollection<Video> videoCollection)
+            List<Video> videoCollection)
         {
             this.BackupLibrary();
             this.Logger().Info("Cleaning files.");

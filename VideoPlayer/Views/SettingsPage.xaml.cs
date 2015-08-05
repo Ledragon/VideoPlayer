@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,7 +26,7 @@ namespace VideoPlayer
 
         public ObservableCollection<Directory> Directories { get; set; }
 
-        private void _uiAddDirectoryButton_Click(object sender, RoutedEventArgs e)
+        private void _uiAddDirectoryButton_Click(Object sender, RoutedEventArgs e)
         {
             var directoryBrowser = new DirectoryBrowser();
             if (directoryBrowser.ShowDialog() ?? false)
@@ -34,7 +35,7 @@ namespace VideoPlayer
             }
         }
 
-        private void ListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ListBoxItem_MouseDoubleClick(Object sender, MouseButtonEventArgs e)
         {
             var directoryBrowser = new DirectoryBrowser(this._uiDirectoriesListBox.SelectedItem as Directory);
             directoryBrowser.ShowDialog();

@@ -32,7 +32,7 @@ namespace Module
             this._eventAggregator = eventAggregator;
             this.SelectedTags = new ObservableCollection<CategoryViewModel>();
             this.Tags = new ObservableCollection<CategoryViewModel>();
-            ObservableCollection<Video> videos = libraryService.GetObjectsFromFile().Videos;
+            var videos = libraryService.GetObjectsFromFile().Videos;
             IEnumerable<string> tags =
                 videos.SelectMany(v => v.Tags).Select(t => t.Value).Distinct().OrderBy(t => t);
             foreach (string tag in tags)

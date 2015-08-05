@@ -30,17 +30,18 @@ namespace HomeModule
         private void Load()
         {
             this._eventAggregator.GetEvent<LibraryUpdating>().Publish(null);
-            this._libraryService.Update();
+            var videos = this._libraryService.Update();
             this._eventAggregator.GetEvent<LibraryUpdated>()
-                .Publish(null);
+                .Publish(videos);
         }
 
         private async void LoadAsync()
         {
             this._eventAggregator.GetEvent<LibraryUpdating>().Publish("Loading");
-            await this._libraryService.UpdateAsync();
-            this._eventAggregator.GetEvent<LibraryUpdated>()
-                .Publish(null);
+            var videos = await this._libraryService.UpdateAsync();
+            this._eventAggregator
+                .GetEvent<LibraryUpdated>()
+                .Publish(videos);
         }
 
         private void Clean()

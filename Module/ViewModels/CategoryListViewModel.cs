@@ -17,14 +17,6 @@ namespace Module
         private readonly IEventAggregator _eventAggregator;
         private readonly ILibraryService _libraryService;
 
-        #region Private members
-
-        private ObservableCollection<CategoryViewModel> _categoryViewModels;
-        private ICommand _filterByCategoryCommand;
-        private CategoryViewModel _selectedCategory;
-
-        #endregion
-
         public CategoryListViewModel(ILibraryService libraryService, ICategoryListView categoryListView,
             IEventAggregator eventAggregator)
             : base(categoryListView)
@@ -33,7 +25,7 @@ namespace Module
             this._eventAggregator = eventAggregator;
             this.InitCollection(libraryService);
             this._eventAggregator.GetEvent<VideoEdited>().Subscribe(this.Refresh);
-            this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.Refresh);
+            this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.BuildCategoryList);
         }
 
         public ICommand FilterByCategoryCommand
@@ -75,11 +67,7 @@ namespace Module
 
         private void Refresh(Object dummy)
         {
-            string selectedCategoryName = this.SelectedCategory.Name;
-            this.CategoryViewModels.Clear();
             this.BuildCategorylist(this._libraryService);
-            this.SelectedCategory = this.CategoryViewModels.SingleOrDefault(c => c.Name == selectedCategoryName) ??
-                                    this.CategoryViewModels.First();
         }
 
         private void InitCollection(ILibraryService libraryService)
@@ -103,9 +91,19 @@ namespace Module
 
         private void BuildCategorylist(ILibraryService libraryService)
         {
-            ObjectsWrapper wrapper = libraryService.GetObjectsFromFile();
-            IEnumerable<IGrouping<string, Video>> grouped =
-                wrapper.Videos.OrderBy(v => v.Category).GroupBy(v => v.Category);
+            var wrapper = libraryService.GetObjectsFromFile();
+            var videos = wrapper.Videos;
+            this.BuildCategoryList(videos);
+        }
+
+        private void BuildCategoryList(IEnumerable<Video> videos)
+        {
+            var selectedCategoryName = this.SelectedCategory == null ? String.Empty : this.SelectedCategory.Name;
+
+            this.CategoryViewModels.Clear();
+            var enumerable = videos.ToList();
+            var grouped =
+                enumerable.OrderBy(v => v.Category).GroupBy(v => v.Category);
             foreach (var grouping in grouped)
             {
                 this.CategoryViewModels.Add(new CategoryViewModel
@@ -116,9 +114,20 @@ namespace Module
             }
             this.CategoryViewModels.Insert(0, new CategoryViewModel
             {
-                Count = wrapper.Videos.Count,
+                Count = enumerable.Count,
                 Name = "All"
             });
+
+            this.SelectedCategory = this.CategoryViewModels.SingleOrDefault(c => c.Name == selectedCategoryName) ??
+                                    this.CategoryViewModels.First();
         }
+
+        #region Private members
+
+        private ObservableCollection<CategoryViewModel> _categoryViewModels;
+        private ICommand _filterByCategoryCommand;
+        private CategoryViewModel _selectedCategory;
+
+        #endregion
     }
 }

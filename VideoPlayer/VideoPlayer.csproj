@@ -152,7 +152,9 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="PlayListManagementModule.cs" />
     <Compile Include="ViewModels\IPlayListManagementViewModel.cs" />
+    <Compile Include="ViewModels\IVideosListInteractionViewModel.cs" />
     <Compile Include="ViewModels\PlayListManagementViewModel.cs" />
+    <Compile Include="ViewModels\VideosListInteractionViewModel.cs" />
     <Compile Include="ViewModels\VideosTabControlViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\DirectoryBrowser.xaml.cs">
@@ -161,8 +163,15 @@
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\IVideosListInteractionView.cs" />
     <Compile Include="Views\PlayListManagementView.xaml.cs">
       <DependentUpon>PlayListManagementView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusBar.xaml.cs">
+      <DependentUpon>StatusBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VideosListInteractionView.xaml.cs">
+      <DependentUpon>VideosListInteractionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\VideosPage.xaml.cs">
       <DependentUpon>VideosPage.xaml</DependentUpon>
@@ -195,6 +204,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\PlayListManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VideosListInteractionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

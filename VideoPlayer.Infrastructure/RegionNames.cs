@@ -16,5 +16,6 @@ namespace VideoPlayer.Infrastructure
         public const String HomeRegion = "HomeRegion";
         public const String PlayListRegion = "PlayListRegion";
         public const String PlayListManagementRegion = "PlayListManagementRegion";
+        public const String VideosListInteraction = "VideosListInteraction";
     }
 }

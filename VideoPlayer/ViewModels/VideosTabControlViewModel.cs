@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -9,43 +8,29 @@ namespace VideoPlayer.ViewModels
 {
     public class VideosTabControlViewModel : ViewModelBase
     {
-        private readonly IEventAggregator _eventAggregator;
         private Cursor _cursor;
         private Boolean _filterGridVisibility;
-        private Boolean _isPlayListVisible;
-        private Int32 _numberOfVideos;
-        private Int32 _selectedIndex;
-
-        private ICommand _clearFilterCommand;
-        private ICommand _playAllCommand;
-        private ICommand _switchFilterGridVisibilityCommand;
-        private ICommand _switchToFullScreenCommand;
-        private ICommand _switchToWindowCommand;
         private Boolean _isCategoryGridVisible;
+        private Boolean _isPlayListVisible;
+        private Int32 _selectedIndex;
 
         public VideosTabControlViewModel(IEventAggregator eventAggregator)
         {
-            this._eventAggregator = eventAggregator;
-
             this.FilterGridVisibility = false;
             this.IsPlayListVisible = false;
             this.IsCategoryGridVisible = true;
 
-            this.SwitchFilterGridVisibilityCommand = new DelegateCommand(this.ShowFilterGrid);
-            this.SwitchToFullScreenCommand = new DelegateCommand(this.SwitchToFullScreen);
-            this.SwitchToWindowCommand = new DelegateCommand(this.SwitchToWindowMode);
-            this.PlayAllCommand = new DelegateCommand(this.PlayAll);
-            this.AddAllCommand = new DelegateCommand(this.AddRange);
-            this.SwitchPlaylistVisibilityCommand = new DelegateCommand(this.SwitchPlayListVisibility);
-            this.SwitchCategoryGridVisibilityCommand  =new DelegateCommand(()=>this.IsCategoryGridVisible = !this.IsCategoryGridVisible);
+            this.InitCommands();
 
-            this._eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
-            this._eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
-            this._eventAggregator.GetEvent<FilterChangedEvent>().Subscribe(i => { this.NumberOfVideos = i; });
+            eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
+            eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
         }
 
         public ICommand SwitchCategoryGridVisibilityCommand { get; private set; }
         public ICommand SwitchPlaylistVisibilityCommand { get; private set; }
+        public ICommand SwitchToWindowCommand { get; private set; }
+        public ICommand SwitchToFullScreenCommand { get; private set; }
+        public ICommand SwitchFilterGridVisibilityCommand { get; private set; }
 
         public Boolean IsCategoryGridVisible
         {
@@ -69,63 +54,6 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-        public ICommand PlayAllCommand
-        {
-            get { return this._playAllCommand; }
-            set
-            {
-                if (Equals(value, this._playAllCommand)) return;
-                this._playAllCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public Int32 NumberOfVideos
-        {
-            get { return this._numberOfVideos; }
-            set
-            {
-                if (value == this._numberOfVideos) return;
-                this._numberOfVideos = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ICommand ClearFilterCommand
-        {
-            get { return this._clearFilterCommand; }
-            set
-            {
-                if (Equals(value, this._clearFilterCommand)) return;
-                this._clearFilterCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ICommand SwitchToWindowCommand
-        {
-            get { return this._switchToWindowCommand; }
-            set
-            {
-                if (Equals(value, this._switchToWindowCommand)) return;
-                this._switchToWindowCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ICommand SwitchToFullScreenCommand
-        {
-            get { return this._switchToFullScreenCommand; }
-            set
-            {
-                if (Equals(value, this._switchToFullScreenCommand)) return;
-                this._switchToFullScreenCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ICommand AddAllCommand { get; private set; }
-
         public Cursor Cursor
         {
             get { return this._cursor; }
@@ -133,17 +61,6 @@ namespace VideoPlayer.ViewModels
             {
                 if (Equals(value, this._cursor)) return;
                 this._cursor = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ICommand SwitchFilterGridVisibilityCommand
-        {
-            get { return this._switchFilterGridVisibilityCommand; }
-            set
-            {
-                if (Equals(value, this._switchFilterGridVisibilityCommand)) return;
-                this._switchFilterGridVisibilityCommand = value;
                 this.OnPropertyChanged();
             }
         }
@@ -172,22 +89,22 @@ namespace VideoPlayer.ViewModels
             }
         }
 
+        private void InitCommands()
+        {
+            this.SwitchFilterGridVisibilityCommand = new DelegateCommand(this.SwitchFilterGridVisibility);
+            this.SwitchToFullScreenCommand = new DelegateCommand(this.SwitchToFullScreen);
+            this.SwitchToWindowCommand = new DelegateCommand(this.SwitchToWindowMode);
+            this.SwitchPlaylistVisibilityCommand = new DelegateCommand(this.SwitchPlayListVisibility);
+            this.SwitchCategoryGridVisibilityCommand =
+                new DelegateCommand(() => this.IsCategoryGridVisible = !this.IsCategoryGridVisible);
+        }
+
         private void SwitchPlayListVisibility()
         {
             this.IsPlayListVisible = !this.IsPlayListVisible;
         }
 
-        private void PlayAll()
-        {
-            this._eventAggregator.GetEvent<PlayAllEvent>().Publish(null);
-        }
-
-        private void AddRange()
-        {
-            this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Publish(null);
-        }
-
-        private void ShowFilterGrid()
+        private void SwitchFilterGridVisibility()
         {
             this.FilterGridVisibility = !this.FilterGridVisibility;
         }

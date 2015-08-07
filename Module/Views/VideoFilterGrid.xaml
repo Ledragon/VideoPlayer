@@ -4,21 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="600">
+             d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Label}" x:Key="Label">
-            <Setter Property="Foreground" Value="White" />
-        </Style>
-        <Style TargetType="{x:Type StackPanel}" x:Key="FilterStackPanelStyle">
-            <Setter Property="Margin" Value="5" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Label}" x:Key="Label">
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+            <Style TargetType="{x:Type StackPanel}" x:Key="FilterStackPanelStyle">
+                <Setter Property="Margin" Value="5" />
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Left" Background="#cc330000" Margin="0">
+    <Grid Background="{StaticResource VideoMenusSolidBrush}">
         <StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center">
             <StackPanel Style="{StaticResource FilterStackPanelStyle}">
                 <Label Content="Name:" Style="{StaticResource Label}" />
-                <TextBox HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding NameFilter}"
-                         VerticalAlignment="Center" Width="120"/>
+                <TextBox HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{Binding NameFilter}"
+                         VerticalAlignment="Center" />
             </StackPanel>
             <StackPanel Style="{StaticResource FilterStackPanelStyle}">
                 <Label Content="Tag:" Style="{StaticResource Label}" />
@@ -37,8 +42,8 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" Margin="5"/>
-                                <TextBlock Text="{Binding Count}" Margin="5"/>
+                                <TextBlock Text="{Binding Name}" Margin="5" />
+                                <TextBlock Text="{Binding Count}" Margin="5" />
                                 <!--<Button Command="{Binding Path=Parent.RemoveTagCommand}">-</Button>-->
                             </StackPanel>
                         </DataTemplate>

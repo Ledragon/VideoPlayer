@@ -6,32 +6,39 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <Style TargetType="Label" x:Key="Label">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="5" />
-        </Style>
-        <Style TargetType="Label" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
-            <Setter Property="BorderBrush" Value="Gray" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Height" Value="25" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Label" x:Key="Label">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>
+            </Style>
+            <Style TargetType="Label" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
+                <Setter Property="BorderBrush" Value="Gray" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Height" Value="25" />
+            </Style>
 
-        <Style TargetType="ListBox">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Margin" Value="5" />
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="White" />
-        </Style>
-        <Style TargetType="DataGrid">
-            <Setter Property="Background" Value="Black" />
-            <Setter Property="ColumnWidth" Value="*" />
-        </Style>
-        <Style TargetType="DataGridRow">
-            <Setter Property="Background" Value="Black" />
-            <Setter Property="Foreground" Value="White" />
-        </Style>
+            <Style TargetType="ListBox">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>
+            </Style>
+            <Style TargetType="DataGrid">
+                <Setter Property="Background" Value="Black" />
+                <Setter Property="ColumnWidth" Value="*" />
+            </Style>
+            <Style TargetType="DataGridRow">
+                <Setter Property="Background" Value="Black" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

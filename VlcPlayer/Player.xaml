@@ -11,50 +11,55 @@
              Cursor="{Binding Cursor}"
              MouseMove="Player_OnMouseMove">
     <UserControl.Resources>
-        <infrastructure:ImageConverter x:Key="imageConverter" />
-        <infrastructure:VisibilityBooleanConverter x:Key="BooleanConverter" />
-        <Style TargetType="{x:Type Button}" x:Key="MediaControl">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Width" Value="20" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Margin" Value="5" />
-            <!--<Setter Property="Foreground" Value="Wheat" />-->
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
-                                <Setter Property="Background" Value="DarkGray" />
-                            </Trigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="Transparent" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="Ellipse" x:Key="ButtonContainer">
-            <Setter Property="Fill">
-                <Setter.Value>
-                    <RadialGradientBrush>
-                        <GradientStop Offset="0" Color="#eee" />
-                        <GradientStop Offset="1" Color="#999" />
-                    </RadialGradientBrush>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="{x:Type TextBlock}" x:Key="MediaInfo">
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Foreground" Value="Beige" />
-            <Setter Property="IsEnabled" Value="False" />
-            <Setter Property="Margin" Value="5" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <infrastructure:ImageConverter x:Key="imageConverter" />
+            <infrastructure:VisibilityBooleanConverter x:Key="BooleanConverter" />
+            <Style TargetType="{x:Type Button}" x:Key="MediaControl">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Width" Value="20" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
+                                    <Setter Property="Background" Value="DarkGray" />
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="Transparent" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="Ellipse" x:Key="ButtonContainer">
+                <Setter Property="Fill">
+                    <Setter.Value>
+                        <RadialGradientBrush>
+                            <GradientStop Offset="0" Color="#eee" />
+                            <GradientStop Offset="1" Color="#999" />
+                        </RadialGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type TextBlock}" x:Key="MediaInfo">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="Beige" />
+                <Setter Property="IsEnabled" Value="False" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding StopCommand}" Key="X" />
@@ -65,21 +70,21 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <wpf:VlcControl x:Name="_VLCcontrol" 
+        <wpf:VlcControl x:Name="_VLCcontrol"
                         VideoSource="{Binding Source, Mode=TwoWay}"
                         PositionChanged="_VLCcontrol_OnPositionChanged"
                         SnapshotTaken="_VLCcontrol_OnSnapshotTaken"
                         LengthChanged="_VLCcontrol_OnLengthChanged"
                         EndReached="_VLCcontrol_OnEndReached" />
 
-        <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform"/>
-        <Grid Grid.Column="0" 
-              x:Name="UiControlsGrid" 
-              HorizontalAlignment="Stretch" 
+        <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform" />
+        <Grid Grid.Column="0"
+              x:Name="UiControlsGrid"
+              HorizontalAlignment="Stretch"
               VerticalAlignment="Bottom"
-              Background="#B23E3E3E" 
-              Margin="20,0,20,0" 
-              Visibility="{Binding ControlsVisibility, Converter={StaticResource BooleanConverter}}" 
+              Background="#B23E3E3E"
+              Margin="20,0,20,0"
+              Visibility="{Binding ControlsVisibility, Converter={StaticResource BooleanConverter}}"
               MaxWidth="800"
               ZIndex="10">
             <Grid.RowDefinitions>
@@ -92,10 +97,10 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Style="{StaticResource MediaControl}" 
+                <Button Grid.Column="0" Style="{StaticResource MediaControl}"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        x:Name="UiSlowerButton" 
+                        x:Name="UiSlowerButton"
                         Command="{Binding DecreaseRateCommand}">
                     <Viewbox>
                         <Grid>
@@ -119,21 +124,21 @@
                     </Viewbox>
                 </Button>
 
-                <Slider Grid.Column="1" 
-                        HorizontalAlignment="Stretch" 
+                <Slider Grid.Column="1"
+                        HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
-                        Margin="5,0,5,0" 
-                        Maximum="1" 
-                        x:Name="UiPositionSlider" 
-                        LargeChange="0.05" 
+                        Margin="5,0,5,0"
+                        Maximum="1"
+                        x:Name="UiPositionSlider"
+                        LargeChange="0.05"
                         Value="{Binding Position}"
                         PreviewMouseLeftButtonDown="UiPositionSlider_PreviewMouseLeftButtonDown"
                         PreviewMouseLeftButtonUp="UiPositionSlider_PreviewMouseLeftButtonUp" />
-                <Button Grid.Column="2" 
-                        Style="{StaticResource MediaControl}" 
+                <Button Grid.Column="2"
+                        Style="{StaticResource MediaControl}"
                         HorizontalAlignment="Right"
-                        VerticalAlignment="Center" 
-                        x:Name="UiFasterButton" 
+                        VerticalAlignment="Center"
+                        x:Name="UiFasterButton"
                         Command="{Binding IncreaseRateCommand}">
                     <Viewbox>
                         <Grid>
@@ -162,8 +167,8 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" 
-                            Orientation="Horizontal" 
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
                     <Button Style="{StaticResource MediaControl}"
@@ -239,7 +244,7 @@
                         </Viewbox>
                     </Button>
                     <Button Style="{StaticResource MediaControl}"
-                            VerticalAlignment="Center" 
+                            VerticalAlignment="Center"
                             x:Name="UiMuteButton"
                             Click="UiMuteButton_OnClick">
                         <Viewbox>
@@ -263,10 +268,10 @@
                             </Grid>
                         </Viewbox>
                     </Button>
-                    <Button Style="{StaticResource MediaControl}" 
+                    <Button Style="{StaticResource MediaControl}"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Center" 
-                            x:Name="UiSnapshotButton" 
+                            VerticalAlignment="Center"
+                            x:Name="UiSnapshotButton"
                             Click="UiSnapshotButton_OnClick">
                         <Viewbox>
                             <Grid>
@@ -289,9 +294,9 @@
                             </Grid>
                         </Viewbox>
                     </Button>
-                    <Button Style="{StaticResource MediaControl}" 
+                    <Button Style="{StaticResource MediaControl}"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Center" 
+                            VerticalAlignment="Center"
                             x:Name="UiPreviousButton"
                             Command="{Binding PreviousCommand}">
                         <Viewbox>
@@ -315,8 +320,8 @@
                             </Grid>
                         </Viewbox>
                     </Button>
-                    <Button Style="{StaticResource MediaControl}" 
-                            x:Name="UiNextButton" 
+                    <Button Style="{StaticResource MediaControl}"
+                            x:Name="UiNextButton"
                             Command="{Binding NextCommand}">
                         <Viewbox>
                             <Grid>
@@ -353,12 +358,12 @@
             </Grid>
 
         </Grid>
-        <ListBox Grid.Column="0" 
-                 VerticalAlignment="Stretch" 
+        <ListBox Grid.Column="0"
+                 VerticalAlignment="Stretch"
                  HorizontalAlignment="Right"
-                 Width="250" 
+                 Width="250"
                  Visibility="{Binding ControlsVisibility, Converter={StaticResource BooleanConverter}}"
-                 ItemsSource="{Binding Playlist}" 
+                 ItemsSource="{Binding Playlist}"
                  SelectedItem="{Binding CurrentVideo}"
                  Margin="0,5,5,70" Background="#3F808080">
             <ListBox.ItemTemplate>
@@ -366,7 +371,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding PreviewImage, Converter={StaticResource imageConverter}}" Width="50"
                                Margin="3" />
-                        <TextBlock Text="{Binding Title}" Margin="3" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Title}" Margin="3" Style="{StaticResource TrimmedTextBlock}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

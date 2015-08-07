@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
              xmlns:wpf="clr-namespace:Vlc.DotNet.Wpf;assembly=Vlc.DotNet.Wpf"
+             xmlns:regions="http://www.codeplex.com/CompositeWPF"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800"
              Cursor="{Binding Cursor}"

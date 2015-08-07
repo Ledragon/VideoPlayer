@@ -121,6 +121,7 @@
         <ContentControl Grid.Row="0"
                         Grid.Column="1"
                         Grid.RowSpan="3"
+                        Margin="5"
                         prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListRegion}" />
     </Grid>
 </UserControl>

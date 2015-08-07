@@ -39,9 +39,9 @@ namespace VideoPlayer
         protected override void ConfigureModuleCatalog()
         {
             this.AddModule<ModuleModule>();
+            this.AddModule<PlayListModule>();
             this.AddModule<VlcPlayerModule>();
             this.AddModule<HomeModule.HomeModule>();
-            this.AddModule<PlayListModule>();
         }
 
         private void AddModule<T>()

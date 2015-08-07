@@ -345,7 +345,9 @@
     <Resource Include="Icons\add.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="XMLFile1.xml" />
+    <Resource Include="XMLFile1.xml">
+      <SubType>Designer</SubType>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="TheaterCurtains.jpg" />

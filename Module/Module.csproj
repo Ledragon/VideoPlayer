@@ -126,9 +126,6 @@
     <Compile Include="Views\ITagsListView.cs" />
     <Compile Include="Views\IVideoFilterGrid.cs" />
     <Compile Include="Views\IVideosList.cs" />
-    <Compile Include="Views\Playlist.xaml.cs">
-      <DependentUpon>Playlist.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\SortGrid.xaml.cs">
       <DependentUpon>SortGrid.xaml</DependentUpon>
     </Compile>
@@ -170,10 +167,6 @@
     <Page Include="Views\EditVideo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Playlist.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SortGrid.xaml">
       <SubType>Designer</SubType>

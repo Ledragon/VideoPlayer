@@ -26,7 +26,6 @@ namespace Module
         private List<String> _filterTags;
         private Visibility _infoVisibility;
         private SortDescription _sortDescription;
-        private IEnumerable<Video> _videoCollection;
 
         public VideosListViewModel(ILibraryService libraryService, IVideosList videosList,
             IEventAggregator eventAggregator)

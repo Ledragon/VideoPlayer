@@ -56,7 +56,9 @@ E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.
 E:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.pdb
 D:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.csprojResolveAssemblyReference.cache
 D:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\VideoInfoViewer.baml
+D:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest.g.cs
 D:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\VideoInfoViewer.g.cs
 D:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\App.g.cs
 D:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\GeneratedInternalTypeHelper.g.cs
 D:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest_MarkupCompile.cache
+D:\Development\VisualStudio\VideoPlayer\trunk\MethodsTest\obj\Debug\MethodsTest_MarkupCompile.lref

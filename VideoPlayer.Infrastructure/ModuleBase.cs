@@ -6,8 +6,8 @@ namespace VideoPlayer.Infrastructure
 {
     public abstract class ModuleBase
     {
-        private readonly IUnityContainer _unityContainer;
         private readonly IRegionManager _regionManager;
+        private readonly IUnityContainer _unityContainer;
 
         public ModuleBase(IUnityContainer unityContainer, IRegionManager regionManager)
         {
@@ -19,15 +19,19 @@ namespace VideoPlayer.Infrastructure
         {
             if (this._regionManager.Regions.ContainsRegionWithName(regionName))
             {
-                IRegion region = this._regionManager.Regions[regionName];
+                var region = this._regionManager.Regions[regionName];
                 var viewModel = this._unityContainer.Resolve<T>();
                 region.Add(viewModel.View);
             }
         }
 
+        protected void RegisterType<T, U>() where U : T
+        {
+            this._unityContainer.RegisterType<T, U>();
+        }
+
         public virtual void Initalize()
         {
-
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Modularity;
+﻿using System;
+using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using VideoPlayer.Infrastructure;
@@ -23,7 +24,7 @@ namespace VlcPlayer
             this.ReferenceRegion<IPlayerViewModel>(RegionNames.PlayerRegion);
         }
 
-        private void ReferenceRegion<T>(string regionName) where T : IViewModel
+        private void ReferenceRegion<T>(String regionName) where T : IViewModel
         {
             if (this._regionManager.Regions.ContainsRegionWithName(regionName))
             {

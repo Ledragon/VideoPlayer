@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer", "VideoPlayer\VideoPlayer.csproj", "{94B19A70-3F0D-4E7F-9249-4CBDC97D92F9}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MethodsTest", "MethodsTest\MethodsTest.csproj", "{A6BA87C3-DCFD-48DB-B895-041365E496E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers", "Controler\Controllers.csproj", "{0856C528-64CF-413D-95CB-0DE13D4DA228}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolLib", "..\CSharp\ToolLib\ToolLib.csproj", "{9E0EAE63-B58B-4E6D-B556-9DED50CD798D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Log\Log.csproj", "{02C8E3B1-3796-49B2-ABA2-67D0E8644871}"
 EndProject
@@ -43,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{8C06431A-4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNewPlayer", "TestNewPlayer\TestNewPlayer.csproj", "{E6051A79-16CC-4D3C-A5A1-9C8DC95E6865}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaylistModule", "Modules\PlaylistModule\PlaylistModule.csproj", "{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,10 +65,6 @@ Global
 		{0856C528-64CF-413D-95CB-0DE13D4DA228}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0856C528-64CF-413D-95CB-0DE13D4DA228}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0856C528-64CF-413D-95CB-0DE13D4DA228}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E0EAE63-B58B-4E6D-B556-9DED50CD798D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E0EAE63-B58B-4E6D-B556-9DED50CD798D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E0EAE63-B58B-4E6D-B556-9DED50CD798D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E0EAE63-B58B-4E6D-B556-9DED50CD798D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -117,6 +113,10 @@ Global
 		{E6051A79-16CC-4D3C-A5A1-9C8DC95E6865}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6051A79-16CC-4D3C-A5A1-9C8DC95E6865}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6051A79-16CC-4D3C-A5A1-9C8DC95E6865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +129,7 @@ Global
 		{C08E79E6-FAF0-4B21-AAEF-3D0191865F03} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{36E21D50-504F-4AE2-946E-B4693F23C905} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{E6051A79-16CC-4D3C-A5A1-9C8DC95E6865} = {8C06431A-4DBC-4E1B-8EAD-B925CD72A3EC}
+		{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 	EndGlobalSection
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true

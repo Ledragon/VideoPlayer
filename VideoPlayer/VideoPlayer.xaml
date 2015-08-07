@@ -11,23 +11,39 @@
     WindowStartupLocation="CenterScreen"
     WindowState="Maximized">
     <Window.Resources>
-        <Style TargetType="StatusBar">
-            <Setter Property="Background" Value="Black" />
-            <Setter Property="Foreground" Value="White" />
-        </Style>
-        <Style TargetType="StatusBarItem">
-            <Setter Property="BorderBrush" Value="Gray" />
-            <Setter Property="BorderThickness" Value="1" />
-        </Style>
-        <Style TargetType="TabControl">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="BorderThickness" Value="0" />
-        </Style>
-        <Style TargetType="TabItem">
-            <Setter Property="Visibility" Value="Collapsed" />
-            <Setter Property="Padding" Value="0" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="StatusBar">
+                <Setter Property="Background" Value="Black" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+            <Style TargetType="StatusBarItem">
+                <Setter Property="BorderBrush" Value="Gray" />
+                <Setter Property="BorderThickness" Value="1" />
+            </Style>
+            <Style TargetType="TabControl">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+            <Style TargetType="TabItem">
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Setter Property="Padding" Value="0" />
+            </Style>
+            <Style TargetType="TextBlock" x:Key="ExitMessage" BasedOn="{StaticResource TrimmedTextBlock}">
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="FontSize" Value="32" />
+            </Style>
+            <Style TargetType="TextBlock" x:Key="LoadingMessage" BasedOn="{StaticResource TrimmedTextBlock}">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="VerticalAlignment" Value="Top" />
+                <Setter Property="FontSize" Value="32" />
+                <Setter Property="Margin" Value="5" />
+                
+            </Style>
+        </ResourceDictionary>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Command="{Binding GoToHomePageCommand}" Key="Back" />
@@ -41,7 +57,7 @@
         </Grid.Background>
         <TabControl Name="_uiTabs" SelectedIndex="{Binding SelectedTab}">
             <TabItem Name="_uiHomeTab">
-                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.HomeRegion}"></ContentControl>
+                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.HomeRegion}" />
 
                 <!--<homeModule:HomePage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"
                                 x:Name="_uiHomePage" />-->
@@ -57,13 +73,13 @@
             </TabItem>
         </TabControl>
         <Grid Visibility="{Binding IsExitMenuVisible}" Background="#cc000000">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32">
+            <TextBlock Style="{StaticResource ExitMessage}">
                 VideoPlayer will now close...
             </TextBlock>
         </Grid>
-        
+
         <Grid Visibility="{Binding IsLoading}">
-            <TextBlock HorizontalAlignment="Right" FontSize="32" Margin="5" VerticalAlignment="Top" Foreground="#afafaf" FontFamily="Leelawadee" Text="{Binding LoadingMessage}"></TextBlock>
+            <TextBlock Style="{StaticResource LoadingMessage}" Text="{Binding LoadingMessage}" />
         </Grid>
     </Grid>
 </Window>

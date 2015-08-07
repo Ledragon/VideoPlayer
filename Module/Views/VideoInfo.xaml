@@ -63,7 +63,7 @@
         <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Content="Duration:" VerticalAlignment="Top"
                HorizontalAlignment="Left" />
         <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueLabel}" VerticalAlignment="Top"
-               HorizontalAlignment="Stretch" Content="{Binding Length}" ContentStringFormat="HH:mm:ss" />
+               HorizontalAlignment="Stretch" Content="{Binding Length}" ContentStringFormat="HH:mm:ss"/>
         <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Label}" Content="Rating:" VerticalAlignment="Top"
                HorizontalAlignment="Left" />
         <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource Label}" VerticalAlignment="Top"
@@ -84,9 +84,9 @@
                HorizontalAlignment="Left" />-->
         <DataGrid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Tags}"
                   CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Margin="5"
-                  CanUserSortColumns="True" AutoGenerateColumns="False">
+                  CanUserSortColumns="True" AutoGenerateColumns="False" FontFamily="{StaticResource DefaultFont}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Value}" Header="Tags" Width="*" CanUserSort="True"/>
+                <DataGridTextColumn Binding="{Binding Value}" Header="Tags" Width="*" CanUserSort="True" FontFamily="{StaticResource DefaultFont}"/>
             </DataGrid.Columns>
         </DataGrid>
         <!--<StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">

@@ -4,6 +4,7 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 using Module;
+using PlaylistModule;
 using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Services;
@@ -37,26 +38,10 @@ namespace VideoPlayer
 
         protected override void ConfigureModuleCatalog()
         {
-            //base.ConfigureModuleCatalog();
             this.AddModule<ModuleModule>();
             this.AddModule<VlcPlayerModule>();
-            //var moduleType = typeof (ModuleModule);
-            //this.ModuleCatalog.AddModule(new ModuleInfo
-            //{
-            //    ModuleName = moduleType.Name,
-            //    ModuleType = moduleType.AssemblyQualifiedName,
-            //    InitializationMode = InitializationMode.WhenAvailable
-            //});
-
-            //var vlcPlayerModuleType = typeof (VlcPlayerModule);
-            //this.ModuleCatalog.AddModule(new ModuleInfo
-            //{
-            //    ModuleName = vlcPlayerModuleType.Name,
-            //    ModuleType = vlcPlayerModuleType.AssemblyQualifiedName,
-            //    InitializationMode = InitializationMode.WhenAvailable
-            //});
-
             this.AddModule<HomeModule.HomeModule>();
+            this.AddModule<PlayListModule>();
         }
 
         private void AddModule<T>()

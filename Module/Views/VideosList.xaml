@@ -22,22 +22,27 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="30" Background="#CC000000">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Margin="30" Background="#CC000000">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-            <Image Grid.Row="0"
-                   Source="{Binding Path=CurrentVideo.PreviewImage, Converter={StaticResource imageConverter}}"
-                   Stretch="Uniform"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   Margin="20" />
+                <Image Grid.Row="0"
+                       Source="{Binding Path=CurrentVideo.PreviewImage, Converter={StaticResource imageConverter}}"
+                       Stretch="Uniform"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch"
+                       Margin="20" />
                 <!--<TextBlock Grid.Row="1" Text="{Binding CurrentVideo.Resolution.Width}" FontSize="24" Margin="10" HorizontalAlignment="Center" Foreground="DimGray"></TextBlock>-->
             </Grid>
             <TabControl Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
@@ -52,9 +57,8 @@
                 </TabItem>
             </TabControl>
         </Grid>
-        <ContentControl Grid.Row="2"
-                        prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SortGridRegion}" />
         <ListBox Grid.Row="1"
+                 Grid.Column="0"
                  SelectionMode="Single"
                  IsSynchronizedWithCurrentItem="True"
                  ItemsSource="{Binding FilteredVideos}"
@@ -96,12 +100,12 @@
                                 </Path.RenderTransform>
                             </Path>
                         </Canvas>
-                        <TextBlock Grid.Row="1" Text="{Binding Title}" 
-                                   VerticalAlignment="Center" 
+                        <TextBlock Grid.Row="1" Text="{Binding Title}"
+                                   VerticalAlignment="Center"
                                    Width="300"
-                                   TextWrapping="NoWrap" 
-                                   TextTrimming="CharacterEllipsis" 
-                                   FontSize="14" 
+                                   TextWrapping="NoWrap"
+                                   TextTrimming="CharacterEllipsis"
+                                   FontSize="14"
                                    FontFamily="Leelawadee"
                                    Margin="5" />
                         <!--<Canvas Grid.Row="2" Height="30">-->
@@ -111,6 +115,12 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-
+        <ContentControl Grid.Row="2"
+                        Grid.Column="0"
+                        prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SortGridRegion}" />
+        <ContentControl Grid.Row="0"
+                        Grid.Column="1"
+                        Grid.RowSpan="3"
+                        prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListRegion}" />
     </Grid>
 </UserControl>

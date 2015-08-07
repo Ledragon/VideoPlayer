@@ -254,7 +254,7 @@ namespace Module
 
         private void Add()
         {
-            if (File.Exists(this.CurrentVideo.FileName))
+            if (this.CurrentVideo != null && File.Exists(this.CurrentVideo.FileName))
             {
                 this._eventAggregator.GetEvent<VideoAddedEvent>().Publish(this.CurrentVideo);
             }

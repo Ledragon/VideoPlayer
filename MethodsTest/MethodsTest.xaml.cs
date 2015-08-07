@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Linq;
 //using VideoPlayer;
 using Controllers;
 
@@ -49,7 +50,7 @@ namespace MethodsTest
         {
             //String filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             ObjectsWrapper wrapper = new ObjectsWrapper();
-            wrapper.Videos = this._videos;
+            wrapper.Videos = this._videos.ToList();
             //this._controller.Save(filePath, wrapper);
         }
 

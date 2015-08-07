@@ -1,10 +1,11 @@
 ﻿using System;
+using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 
 namespace VideoPlayer.Infrastructure
 {
-    public abstract class ModuleBase
+    public abstract class ModuleBase:IModule
     {
         private readonly IRegionManager _regionManager;
         private readonly IUnityContainer _unityContainer;
@@ -30,8 +31,9 @@ namespace VideoPlayer.Infrastructure
             this._unityContainer.RegisterType<T, U>();
         }
 
-        public virtual void Initalize()
+        public virtual void Initialize()
         {
+            throw new NotImplementedException();
         }
     }
 }

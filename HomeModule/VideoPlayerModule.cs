@@ -6,17 +6,14 @@ namespace HomeModule
 {
     public class VideoPlayerModule : ModuleBase
     {
-        private readonly IUnityContainer _unityContainer;
-
         public VideoPlayerModule(IUnityContainer unityContainer, IRegionManager regionManager)
             : base(unityContainer, regionManager)
         {
-            this._unityContainer = unityContainer;
         }
 
-        public override void Initalize()
+        public override void Initialize()
         {
-            this._unityContainer.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
+            this.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
         }
     }
 }

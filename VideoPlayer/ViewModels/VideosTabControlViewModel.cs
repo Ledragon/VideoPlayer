@@ -13,6 +13,7 @@ namespace VideoPlayer.ViewModels
         private ICommand _clearFilterCommand;
         private Cursor _cursor;
         private Visibility _filterGridVisibility;
+        private Visibility _isPlayListVisible;
         private Int32 _numberOfVideos;
         private ICommand _playAllCommand;
         private Int32 _selectedIndex;
@@ -24,19 +25,31 @@ namespace VideoPlayer.ViewModels
         {
             this._eventAggregator = eventAggregator;
             this.FilterGridVisibility = Visibility.Collapsed;
+            this.IsPlayListVisible = Visibility.Collapsed;
 
             this.ShowFilterGridCommand = new DelegateCommand(this.ShowFilterGrid);
             this.SwitchToFullScreenCommand = new DelegateCommand(this.SwitchToFullScreen);
             this.SwitchToWindowCommand = new DelegateCommand(this.SwitchToWindowMode);
             this.PlayAllCommand = new DelegateCommand(this.PlayAll);
             this.AddAllCommand = new DelegateCommand(this.AddRange);
+            this.SwitchPlaylistVisibilityCommand = new DelegateCommand(this.SwitchPlayListVisibility);
 
             this._eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
             this._eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
-            this._eventAggregator.GetEvent<FilterChangedEvent>().Subscribe(i =>
+            this._eventAggregator.GetEvent<FilterChangedEvent>().Subscribe(i => { this.NumberOfVideos = i; });
+        }
+
+        public ICommand SwitchPlaylistVisibilityCommand { get; private set; }
+
+        public Visibility IsPlayListVisible
+        {
+            get { return this._isPlayListVisible; }
+            set
             {
-                this.NumberOfVideos = i;
-            });
+                if (value == this._isPlayListVisible) return;
+                this._isPlayListVisible = value;
+                this.OnPropertyChanged();
+            }
         }
 
         public ICommand PlayAllCommand
@@ -52,10 +65,7 @@ namespace VideoPlayer.ViewModels
 
         public Int32 NumberOfVideos
         {
-            get
-            {
-                return this._numberOfVideos;
-            }
+            get { return this._numberOfVideos; }
             set
             {
                 if (value == this._numberOfVideos) return;
@@ -145,6 +155,18 @@ namespace VideoPlayer.ViewModels
             }
         }
 
+        private void SwitchPlayListVisibility()
+        {
+            if (this.IsPlayListVisible == Visibility.Collapsed)
+            {
+                this.IsPlayListVisible = Visibility.Visible;
+            }
+            else
+            {
+                this.IsPlayListVisible = Visibility.Collapsed;
+            }
+        }
+
         private void PlayAll()
         {
             this._eventAggregator.GetEvent<PlayAllEvent>().Publish(null);
@@ -154,7 +176,6 @@ namespace VideoPlayer.ViewModels
         {
             this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Publish(null);
         }
-
 
         private void ShowFilterGrid()
         {
@@ -173,7 +194,7 @@ namespace VideoPlayer.ViewModels
             this.SwitchToWindowMode(null);
         }
 
-        private void SwitchToWindowMode(object dummy)
+        private void SwitchToWindowMode(Object dummy)
         {
             if (this.SelectedIndex != 0)
             {

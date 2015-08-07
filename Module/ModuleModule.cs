@@ -15,7 +15,7 @@ namespace Module
         public override void Initialize()
         {
             this.RegisterType<VideoInfo>();
-            this.RegisterType<IVideosList, VideosList>();
+            this.RegisterType<IVideosListView, VideosListView>();
             this.RegisterType<IVideosListViewModel, VideosListViewModel>();
             this.RegisterType<ICategoryListViewModel, CategoryListViewModel>();
             this.RegisterType<ICategoryListView, CategoryList>();

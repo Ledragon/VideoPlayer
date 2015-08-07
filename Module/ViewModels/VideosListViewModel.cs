@@ -27,9 +27,9 @@ namespace Module
         private Visibility _infoVisibility;
         private SortDescription _sortDescription;
 
-        public VideosListViewModel(ILibraryService libraryService, IVideosList videosList,
+        public VideosListViewModel(ILibraryService libraryService, IVideosListView videosListView,
             IEventAggregator eventAggregator)
-            : base(videosList)
+            : base(videosListView)
         {
             this.Init(libraryService, eventAggregator);
         }

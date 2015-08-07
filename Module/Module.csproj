@@ -125,7 +125,7 @@
     <Compile Include="Views\IEditView.cs" />
     <Compile Include="Views\ITagsListView.cs" />
     <Compile Include="Views\IVideoFilterGrid.cs" />
-    <Compile Include="Views\IVideosList.cs" />
+    <Compile Include="Views\IVideosListView.cs" />
     <Compile Include="Views\SortGrid.xaml.cs">
       <DependentUpon>SortGrid.xaml</DependentUpon>
     </Compile>
@@ -138,8 +138,8 @@
     <Compile Include="Views\VideoInfo.xaml.cs">
       <DependentUpon>VideoInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\VideosList.xaml.cs">
-      <DependentUpon>VideosList.xaml</DependentUpon>
+    <Compile Include="Views\VideosListView.xaml.cs">
+      <DependentUpon>VideosListView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -184,7 +184,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\VideosList.xaml">
+    <Page Include="Views\VideosListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

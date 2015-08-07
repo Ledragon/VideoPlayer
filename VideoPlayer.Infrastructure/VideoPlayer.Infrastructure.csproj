@@ -75,6 +75,7 @@
     <Compile Include="CommandBase.cs" />
     <Compile Include="Events.cs" />
     <Compile Include="GenericCommand.cs" />
+    <Compile Include="IContainer.cs" />
     <Compile Include="ImageConverter.cs" />
     <Compile Include="ModuleBase.cs" />
     <Compile Include="Properties\Annotations.cs" />

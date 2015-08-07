@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Timers;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Classes;
@@ -19,26 +18,21 @@ namespace VlcPlayer
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly Timer _timer = new Timer();
-        private Visibility _controlsVisibility;
+        private Boolean _controlsVisibility;
         private Video _currentVideo;
         private Cursor _cursor;
-        private ICommand _decreaseRateCommand;
         private TimeSpan _duration;
-        private ICommand _increaseRateCommand;
         private Int32 _index;
         private Boolean _isMouseDown;
         private Boolean _isMute;
         private Boolean _isPaused;
         private Boolean _isRepeat;
         private DateTime _mouseLastMouveDateTime = DateTime.Now;
-        private ICommand _mouseMoveCommand;
-        private ICommand _nextCommand;
+        private ObservableCollection<Video> _playlist;
         private Single _position;
         private TimeSpan _positionTimeSpan;
-        private ICommand _previousCommand;
         private Single _rate;
         private ImageSource _source;
-        private ICommand _stopCommand;
         private TimeSpan _timePosition;
         private String _title;
 
@@ -48,7 +42,7 @@ namespace VlcPlayer
             this.Rate = 1;
             this.Playlist = new ObservableCollection<Video>();
             this.IsRepeat = true;
-            this.ControlsVisibility = Visibility.Visible;
+            this.ControlsVisibility = true;
             this._timer.Interval = 500;
             this._timer.Elapsed += this.TimerOnElapsed;
             this._timer.Start();
@@ -73,18 +67,7 @@ namespace VlcPlayer
             }
         }
 
-        public ICommand MouseMoveCommand
-        {
-            get { return this._mouseMoveCommand; }
-            set
-            {
-                if (Equals(value, this._mouseMoveCommand)) return;
-                this._mouseMoveCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public Visibility ControlsVisibility
+        public Boolean ControlsVisibility
         {
             get { return this._controlsVisibility; }
             set
@@ -95,60 +78,12 @@ namespace VlcPlayer
             }
         }
 
-        public ICommand StopCommand
-        {
-            get { return this._stopCommand; }
-            set
-            {
-                if (Equals(value, this._stopCommand)) return;
-                this._stopCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ICommand PreviousCommand
-        {
-            get { return this._previousCommand; }
-            set
-            {
-                if (Equals(value, this._previousCommand)) return;
-                this._previousCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ICommand IncreaseRateCommand
-        {
-            get { return this._increaseRateCommand; }
-            set
-            {
-                if (Equals(value, this._increaseRateCommand)) return;
-                this._increaseRateCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ICommand DecreaseRateCommand
-        {
-            get { return this._decreaseRateCommand; }
-            set
-            {
-                if (Equals(value, this._decreaseRateCommand)) return;
-                this._decreaseRateCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ICommand NextCommand
-        {
-            get { return this._nextCommand; }
-            set
-            {
-                if (Equals(value, this._nextCommand)) return;
-                this._nextCommand = value;
-                this.OnPropertyChanged();
-            }
-        }
+        public ICommand MouseMoveCommand { get; private set; }
+        public ICommand StopCommand { get; private set; }
+        public ICommand PreviousCommand { get; private set; }
+        public ICommand IncreaseRateCommand { get; private set; }
+        public ICommand DecreaseRateCommand { get; private set; }
+        public ICommand NextCommand { get; private set; }
 
         public Boolean IsRepeat
         {
@@ -161,7 +96,16 @@ namespace VlcPlayer
             }
         }
 
-        public ObservableCollection<Video> Playlist { get; set; }
+        public ObservableCollection<Video> Playlist
+        {
+            get { return this._playlist; }
+            set
+            {
+                if (Equals(value, this._playlist)) return;
+                this._playlist = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public TimeSpan TimePosition
         {
@@ -314,61 +258,11 @@ namespace VlcPlayer
             }
         }
 
-        private void ClearPlaylist(Object obj)
-        {
-            this.ClearPlaylist();
-        }
-
-        private void VideoDurationChanged(TimeSpan span)
-        {
-            if (this.CurrentVideo.Length == TimeSpan.Zero)
-            {
-                this.CurrentVideo.Length = span;
-                this.Duration = span;
-            }
-        }
-
-        private void TimerOnElapsed(Object sender, ElapsedEventArgs elapsedEventArgs)
-        {
-            if (DateTime.Now - this._mouseLastMouveDateTime > new TimeSpan(0, 0, 2))
-            {
-                this.Cursor = Cursors.None;
-                this.ControlsVisibility = Visibility.Hidden;
-            }
-        }
-
-        private void InitCommands()
-        {
-            this.IncreaseRateCommand = new DelegateCommand(this.IncreaseRate);
-            this.DecreaseRateCommand = new DelegateCommand(this.DecreaseRate);
-            this.NextCommand = new DelegateCommand(this.Next);
-            this.PreviousCommand = new DelegateCommand(this.Previous);
-            this.StopCommand = new DelegateCommand(this.Stop);
-            this.MouseMoveCommand = new DelegateCommand(this.MouseMove);
-        }
-
         public void MouseMove()
         {
             this._mouseLastMouveDateTime = DateTime.Now;
             this.Cursor = Cursors.Arrow;
-            this.ControlsVisibility = Visibility.Visible;
-        }
-
-        private void Stop()
-        {
-            this.IsPaused = false;
-            this.Playlist.Clear();
-            this._eventAggregator.GetEvent<OnStop>().Publish(null);
-        }
-
-        private void DecreaseRate()
-        {
-            this.Rate /= 2;
-        }
-
-        private void IncreaseRate()
-        {
-            this.Rate *= 2;
+            this.ControlsVisibility = true;
         }
 
         public void AddVideo(String path)
@@ -453,6 +347,56 @@ namespace VlcPlayer
                 this._index = this.Playlist.Count - 1;
             }
             this.CurrentVideo = this.Playlist[this._index];
+        }
+
+        private void ClearPlaylist(Object obj)
+        {
+            this.ClearPlaylist();
+        }
+
+        private void VideoDurationChanged(TimeSpan span)
+        {
+            if (this.CurrentVideo.Length == TimeSpan.Zero)
+            {
+                this.CurrentVideo.Length = span;
+                this.Duration = span;
+            }
+        }
+
+        private void TimerOnElapsed(Object sender, ElapsedEventArgs elapsedEventArgs)
+        {
+            if (DateTime.Now - this._mouseLastMouveDateTime > new TimeSpan(0, 0, 2))
+            {
+                this.Cursor = Cursors.None;
+                this.ControlsVisibility = false;
+            }
+        }
+
+        private void InitCommands()
+        {
+            this.IncreaseRateCommand = new DelegateCommand(this.IncreaseRate);
+            this.DecreaseRateCommand = new DelegateCommand(this.DecreaseRate);
+            this.NextCommand = new DelegateCommand(this.Next);
+            this.PreviousCommand = new DelegateCommand(this.Previous);
+            this.StopCommand = new DelegateCommand(this.Stop);
+            this.MouseMoveCommand = new DelegateCommand(this.MouseMove);
+        }
+
+        private void Stop()
+        {
+            this.IsPaused = false;
+            this.Playlist.Clear();
+            this._eventAggregator.GetEvent<OnStop>().Publish(null);
+        }
+
+        private void DecreaseRate()
+        {
+            this.Rate /= 2;
+        }
+
+        private void IncreaseRate()
+        {
+            this.Rate *= 2;
         }
     }
 }

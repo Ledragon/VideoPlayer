@@ -12,6 +12,7 @@
              MouseMove="Player_OnMouseMove">
     <UserControl.Resources>
         <infrastructure:ImageConverter x:Key="imageConverter" />
+        <infrastructure:VisibilityBooleanConverter x:Key="BooleanConverter" />
         <Style TargetType="{x:Type Button}" x:Key="MediaControl">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Width" Value="20" />
@@ -71,14 +72,14 @@
                         LengthChanged="_VLCcontrol_OnLengthChanged"
                         EndReached="_VLCcontrol_OnEndReached" />
 
-        <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform" />
+        <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform"/>
         <Grid Grid.Column="0" 
               x:Name="UiControlsGrid" 
               HorizontalAlignment="Stretch" 
               VerticalAlignment="Bottom"
               Background="#B23E3E3E" 
               Margin="20,0,20,0" 
-              Visibility="{Binding ControlsVisibility}" 
+              Visibility="{Binding ControlsVisibility, Converter={StaticResource BooleanConverter}}" 
               MaxWidth="800"
               ZIndex="10">
             <Grid.RowDefinitions>
@@ -91,9 +92,11 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Style="{StaticResource MediaControl}" HorizontalAlignment="Left"
+                <Button Grid.Column="0" Style="{StaticResource MediaControl}" 
+                        HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        x:Name="UiSlowerButton" Command="{Binding DecreaseRateCommand}">
+                        x:Name="UiSlowerButton" 
+                        Command="{Binding DecreaseRateCommand}">
                     <Viewbox>
                         <Grid>
                             <Grid Width="24" Height="24" Visibility="Visible">
@@ -260,8 +263,11 @@
                             </Grid>
                         </Viewbox>
                     </Button>
-                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left"
-                            VerticalAlignment="Center" x:Name="UiSnapshotButton" Click="UiSnapshotButton_OnClick">
+                    <Button Style="{StaticResource MediaControl}" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" 
+                            x:Name="UiSnapshotButton" 
+                            Click="UiSnapshotButton_OnClick">
                         <Viewbox>
                             <Grid>
                                 <Grid Width="24" Height="24" Visibility="Visible">
@@ -309,7 +315,9 @@
                             </Grid>
                         </Viewbox>
                     </Button>
-                    <Button Style="{StaticResource MediaControl}" x:Name="UiNextButton" Command="{Binding NextCommand}">
+                    <Button Style="{StaticResource MediaControl}" 
+                            x:Name="UiNextButton" 
+                            Command="{Binding NextCommand}">
                         <Viewbox>
                             <Grid>
                                 <Grid Width="24" Height="24" Visibility="Visible">
@@ -345,9 +353,13 @@
             </Grid>
 
         </Grid>
-        <ListBox Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right"
-                 Width="250" Visibility="{Binding ControlsVisibility}"
-                 ItemsSource="{Binding Playlist}" SelectedItem="{Binding CurrentVideo}"
+        <ListBox Grid.Column="0" 
+                 VerticalAlignment="Stretch" 
+                 HorizontalAlignment="Right"
+                 Width="250" 
+                 Visibility="{Binding ControlsVisibility, Converter={StaticResource BooleanConverter}}"
+                 ItemsSource="{Binding Playlist}" 
+                 SelectedItem="{Binding CurrentVideo}"
                  Margin="0,5,5,70" Background="#3F808080">
             <ListBox.ItemTemplate>
                 <DataTemplate>

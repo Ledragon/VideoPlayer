@@ -10,38 +10,55 @@ namespace VideoPlayer.ViewModels
     public class VideosTabControlViewModel : ViewModelBase
     {
         private readonly IEventAggregator _eventAggregator;
-        private ICommand _clearFilterCommand;
         private Cursor _cursor;
-        private Visibility _filterGridVisibility;
-        private Visibility _isPlayListVisible;
+        private Boolean _filterGridVisibility;
+        private Boolean _isPlayListVisible;
         private Int32 _numberOfVideos;
-        private ICommand _playAllCommand;
         private Int32 _selectedIndex;
-        private ICommand _showFilterGridCommand;
+
+        private ICommand _clearFilterCommand;
+        private ICommand _playAllCommand;
+        private ICommand _switchFilterGridVisibilityCommand;
         private ICommand _switchToFullScreenCommand;
         private ICommand _switchToWindowCommand;
+        private Boolean _isCategoryGridVisible;
 
         public VideosTabControlViewModel(IEventAggregator eventAggregator)
         {
             this._eventAggregator = eventAggregator;
-            this.FilterGridVisibility = Visibility.Collapsed;
-            this.IsPlayListVisible = Visibility.Collapsed;
 
-            this.ShowFilterGridCommand = new DelegateCommand(this.ShowFilterGrid);
+            this.FilterGridVisibility = false;
+            this.IsPlayListVisible = false;
+            this.IsCategoryGridVisible = true;
+
+            this.SwitchFilterGridVisibilityCommand = new DelegateCommand(this.ShowFilterGrid);
             this.SwitchToFullScreenCommand = new DelegateCommand(this.SwitchToFullScreen);
             this.SwitchToWindowCommand = new DelegateCommand(this.SwitchToWindowMode);
             this.PlayAllCommand = new DelegateCommand(this.PlayAll);
             this.AddAllCommand = new DelegateCommand(this.AddRange);
             this.SwitchPlaylistVisibilityCommand = new DelegateCommand(this.SwitchPlayListVisibility);
+            this.SwitchCategoryGridVisibilityCommand  =new DelegateCommand(()=>this.IsCategoryGridVisible = !this.IsCategoryGridVisible);
 
             this._eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
             this._eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
             this._eventAggregator.GetEvent<FilterChangedEvent>().Subscribe(i => { this.NumberOfVideos = i; });
         }
 
+        public ICommand SwitchCategoryGridVisibilityCommand { get; private set; }
         public ICommand SwitchPlaylistVisibilityCommand { get; private set; }
 
-        public Visibility IsPlayListVisible
+        public Boolean IsCategoryGridVisible
+        {
+            get { return this._isCategoryGridVisible; }
+            set
+            {
+                if (value == this._isCategoryGridVisible) return;
+                this._isCategoryGridVisible = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public Boolean IsPlayListVisible
         {
             get { return this._isPlayListVisible; }
             set
@@ -120,18 +137,18 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-        public ICommand ShowFilterGridCommand
+        public ICommand SwitchFilterGridVisibilityCommand
         {
-            get { return this._showFilterGridCommand; }
+            get { return this._switchFilterGridVisibilityCommand; }
             set
             {
-                if (Equals(value, this._showFilterGridCommand)) return;
-                this._showFilterGridCommand = value;
+                if (Equals(value, this._switchFilterGridVisibilityCommand)) return;
+                this._switchFilterGridVisibilityCommand = value;
                 this.OnPropertyChanged();
             }
         }
 
-        public Visibility FilterGridVisibility
+        public Boolean FilterGridVisibility
         {
             get { return this._filterGridVisibility; }
             set
@@ -157,14 +174,7 @@ namespace VideoPlayer.ViewModels
 
         private void SwitchPlayListVisibility()
         {
-            if (this.IsPlayListVisible == Visibility.Collapsed)
-            {
-                this.IsPlayListVisible = Visibility.Visible;
-            }
-            else
-            {
-                this.IsPlayListVisible = Visibility.Collapsed;
-            }
+            this.IsPlayListVisible = !this.IsPlayListVisible;
         }
 
         private void PlayAll()
@@ -179,14 +189,7 @@ namespace VideoPlayer.ViewModels
 
         private void ShowFilterGrid()
         {
-            if (this.FilterGridVisibility == Visibility.Collapsed)
-            {
-                this.FilterGridVisibility = Visibility.Visible;
-            }
-            else
-            {
-                this.FilterGridVisibility = Visibility.Collapsed;
-            }
+            this.FilterGridVisibility = !this.FilterGridVisibility;
         }
 
         private void SwitchToWindowMode()

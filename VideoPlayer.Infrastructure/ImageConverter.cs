@@ -5,7 +5,6 @@ using System.IO;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Log;
 
 namespace VideoPlayer.Infrastructure
 {
@@ -15,8 +14,7 @@ namespace VideoPlayer.Infrastructure
     [ValueConversion(typeof (Image), typeof (ImageSource))]
     public class ImageConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             var bitmap = new BitmapImage();
             // empty images are empty...
@@ -27,7 +25,7 @@ namespace VideoPlayer.Infrastructure
                     return null;
                 }
 
-                var image = (Image)value;
+                var image = (Image) value;
                 // Winforms Image we want to get the WPF Image from...
                 bitmap.BeginInit();
                 var memoryStream = new MemoryStream();
@@ -44,8 +42,7 @@ namespace VideoPlayer.Infrastructure
             return bitmap;
         }
 
-        public object ConvertBack(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             return null;
         }

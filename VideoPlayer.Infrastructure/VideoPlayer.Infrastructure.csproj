@@ -84,6 +84,7 @@
     <Compile Include="ViewModelBase.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="IViewModel.cs" />
+    <Compile Include="VisibilityBooleanConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

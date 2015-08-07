@@ -13,17 +13,13 @@
     <UserControl.Resources>
         <ResourceDictionary Source="Resources.xaml" />
     </UserControl.Resources>
-    <UserControl.InputBindings>
-        <KeyBinding Command="{Binding ShowFilterGridCommand}" Key="F" Modifiers="Control" />
-        <KeyBinding Command="{Binding SwitchEditCommand}" Key="E" Modifiers="Control" />
-    </UserControl.InputBindings>
     <TabControl x:Name="_uiVideosTabControl" SelectedIndex="{Binding SelectedIndex}">
         <TabItem x:Name="_uiVideosList">
             <!--<ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListManagementRegion}" />-->
-            <Views:PlayListManagementView />
+            <Views:PlayListManagementView/>
         </TabItem>
         <TabItem>
-            <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}" />
+            <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}"  Margin="0"/>
         </TabItem>
     </TabControl>
 </UserControl>

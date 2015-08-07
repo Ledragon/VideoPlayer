@@ -128,6 +128,11 @@ namespace VideoPlayer.Services
             this.Logger().InfoFormat("'{0}' files removed.", videosToRemove.Count);
         }
 
+        public void AddPlaylist(Playlist playlist)
+        {
+            this.GetObjectsFromFile().PlayLists.Add(playlist);
+        }
+
         private void BackupLibrary()
         {
             this.BackupLibrary(FileSystemHelper.GetDefaultFileName());

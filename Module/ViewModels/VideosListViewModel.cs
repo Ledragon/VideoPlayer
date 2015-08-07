@@ -127,13 +127,14 @@ namespace Module
 
         private void UpdateVideoListView(IEnumerable<Video> videos)
         {
+            var vids = videos.ToList();
             this._sortDescription = new SortDescription("Title", ListSortDirection.Ascending);
-            var view = CollectionViewSource.GetDefaultView(videos);
+            var view = CollectionViewSource.GetDefaultView(vids);
             view.SortDescriptions.Add(this._sortDescription);
             this.FilteredVideos = view;
-            if (this.CurrentVideo == null)
+            if (this.CurrentVideo == null && vids.Any())
             {
-                this.CurrentVideo = videos.OrderBy(v => v.Title).First();
+                this.CurrentVideo = vids.OrderBy(v => v.Title).First();
             }
         }
 

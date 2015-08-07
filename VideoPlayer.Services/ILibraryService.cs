@@ -13,5 +13,6 @@ namespace VideoPlayer.Services
         IEnumerable<Video> Update();
         Task<IEnumerable<Video>> UpdateAsync();
         Task CleanAsync();
+        void AddPlaylist(Playlist playlist);
     }
 }

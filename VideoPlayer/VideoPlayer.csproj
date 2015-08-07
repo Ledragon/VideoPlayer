@@ -150,6 +150,9 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="PlayListManagementModule.cs" />
+    <Compile Include="ViewModels\IPlayListManagementViewModel.cs" />
+    <Compile Include="ViewModels\PlayListManagementViewModel.cs" />
     <Compile Include="ViewModels\VideosTabControlViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\DirectoryBrowser.xaml.cs">
@@ -158,10 +161,17 @@
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Views\PlayListManagementView.xaml.cs">
+      <DependentUpon>PlayListManagementView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VideosPage.xaml.cs">
       <DependentUpon>VideosPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\DirectoryBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Resources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -184,6 +194,10 @@
       <DependentUpon>VideoPlayer.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\PlayListManagementView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\VideosPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

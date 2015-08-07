@@ -33,7 +33,7 @@ namespace VlcPlayer
             this.InitializeComponent();
             this._eventAggregator = DependencyFactory.Resolve<IEventAggregator>();
 
-            this._eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.Stop);
+            this._eventAggregator.GetEvent<OnStop>().Subscribe(this.Stop);
             this._eventAggregator.GetEvent<RateChanged>().Subscribe(this.RateChanged);
             this._eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.Play);
             this._eventAggregator.GetEvent<VideoPositionChanged>().Subscribe(this.PositionChanged);

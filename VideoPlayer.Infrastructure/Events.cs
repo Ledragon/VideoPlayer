@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Documents;
 using Classes;
 using Microsoft.Practices.Prism.PubSubEvents;
 
@@ -18,24 +17,32 @@ namespace VideoPlayer.Infrastructure
     public class TagFilterChangedEvent : PubSubEvent<List<String>>
     {
     }
-    
+
     public class SortingChangedEvent : PubSubEvent<SortDescription>
     {
     }
-    
+
     public class FilterChangedEvent : PubSubEvent<Int32>
     {
     }
 
-    public class VideoAddedEvent : PubSubEvent<Video>
+    public class OnAddVideo : PubSubEvent<Video>
     {
     }
 
-    public class PlayPlaylistRequestedEvent : PubSubEvent<Object>
+    public class OnAddVideoRange : PubSubEvent<IEnumerable<Video>>
     {
     }
 
-    public class PlayPlaylistEvent : PubSubEvent<IEnumerable<Video>>
+    public class OnAddVideoRangeRequest : PubSubEvent<Object>
+    {
+    }
+
+    public class OnPlayPlaylistRequest : PubSubEvent<Object>
+    {
+    }
+
+    public class OnPlayPlaylist : PubSubEvent<IEnumerable<Video>>
     {
     }
 
@@ -47,7 +54,7 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class StoppedEvent : PubSubEvent<Object>
+    public class OnStop : PubSubEvent<Object>
     {
     }
 
@@ -59,7 +66,7 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class VideoEnded : PubSubEvent<object>
+    public class VideoEnded : PubSubEvent<Object>
     {
     }
 
@@ -69,8 +76,8 @@ namespace VideoPlayer.Infrastructure
 
     public class VideoEditing : PubSubEvent<Video>
     {
-        
     }
+
     public class VideoEdited : PubSubEvent<Object>
     {
     }
@@ -80,6 +87,10 @@ namespace VideoPlayer.Infrastructure
     }
 
     public class LibraryUpdated : PubSubEvent<IEnumerable<Video>>
+    {
+    }
+
+    public class AddAllEvent : PubSubEvent<IEnumerable<Video>>
     {
     }
 
@@ -98,6 +109,4 @@ namespace VideoPlayer.Infrastructure
     public class CloseRequestedEvent : PubSubEvent<Object>
     {
     }
-
-
 }

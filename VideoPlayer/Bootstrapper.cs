@@ -24,7 +24,6 @@ namespace VideoPlayer
             //TEMP
             this.Container.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
             this.Container.RegisterType<IVideoPlayer, HomeModule.VideoPlayer>();
-
             Locator.Container = this.Container;
             return this.Container.Resolve<MainWindow>();
         }
@@ -42,17 +41,19 @@ namespace VideoPlayer
             this.AddModule<PlayListModule>();
             this.AddModule<VlcPlayerModule>();
             this.AddModule<HomeModule.HomeModule>();
+            this.AddModule<PlayListManagementModule>();
         }
 
         private void AddModule<T>()
         {
             var moduleType = typeof (T);
-            this.ModuleCatalog.AddModule(new ModuleInfo
+            var moduleInfo = new ModuleInfo
             {
                 ModuleName = moduleType.Name,
                 ModuleType = moduleType.AssemblyQualifiedName,
                 InitializationMode = InitializationMode.WhenAvailable
-            });
+            };
+            this.ModuleCatalog.AddModule(moduleInfo);
         }
     }
 }

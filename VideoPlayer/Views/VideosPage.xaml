@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<UserControl xmlns:Views="clr-namespace:VideoPlayer.Views" 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,80 +11,7 @@
     Background="#00000000"
     Cursor="{Binding Cursor}">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Button}" x:Key="PlayAll">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Width" Value="64" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Margin" Value="5" />
-            <!--<Setter Property="Foreground" Value="Wheat" />-->
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
-                                <Setter Property="Background" Value="DarkGray" />
-                            </Trigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="Transparent" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="Ellipse" x:Key="ButtonContainer">
-            <Setter Property="Fill">
-                <Setter.Value>
-                    <RadialGradientBrush>
-                        <GradientStop Offset="0" Color="#eee" />
-                        <GradientStop Offset="1" Color="#999" />
-                    </RadialGradientBrush>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="{x:Type ListBoxItem}">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Padding" Value="0,5,0,5" />
-            <Setter Property="BorderThickness" Value="0.2" />
-            <Setter Property="BorderBrush" Value="Gray" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <TextBlock Name="TheBGControl">
-                            <ContentPresenter />
-                        </TextBlock>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="#55004499" TargetName="TheBGControl" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="{x:Type Image}">
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="Stretch" Value="None" />
-        </Style>
-        <Style TargetType="{x:Type ListBox}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="0" />
-        </Style>
-        <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="White" />
-        </Style>
-        <Style TargetType="{x:Type TextBlock}" x:Key="StatusBarStyle" BasedOn="{StaticResource {x:Type TextBlock}}">
-            <Setter Property="Foreground" Value="LightGray" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="5,0,10,0" />
-        </Style>
+        <ResourceDictionary Source="Resources.xaml" />
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Command="{Binding ShowFilterGridCommand}" Key="F" Modifiers="Control" />
@@ -92,61 +19,8 @@
     </UserControl.InputBindings>
     <TabControl x:Name="_uiVideosTabControl" SelectedIndex="{Binding SelectedIndex}">
         <TabItem x:Name="_uiVideosList">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                
-                <ContentControl Grid.Column="0"
-                                prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.CategoriesListRegion}"
-                                />
-                <!--<ContentControl Grid.Column="1"
-                        prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.TagsRegion}" />-->
-
-                <Grid Grid.Column="1" VerticalAlignment="Stretch" Background="#cc000000"
-                      HorizontalAlignment="Stretch" ZIndex="10" Name="_uiFilterGrid"
-                      Visibility="{Binding FilterGridVisibility}">
-                    <ContentControl
-                        prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.FilterRegion}" />
-                </Grid>
-                
-                <Grid Grid.Column="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <ContentControl Grid.Row="0"
-                                    prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosListRegion}" x:Name="VideoListControl"/>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" Background="#33D3D3D3" x:Name="_uiStatusBar">
-                        <TextBlock Text="{Binding NumberOfVideos, StringFormat=Videos: {0} }"
-                                   Style="{StaticResource StatusBarStyle}" />
-                        <Button Command="{Binding PlayAllCommand}" ToolTip="Play all" Style="{StaticResource PlayAll}">
-                            <Viewbox>
-                                <Grid>
-                                    <Grid Width="48" Height="48" Visibility="Visible">
-                                        <Ellipse Style="{StaticResource ButtonContainer}" />
-                                    </Grid>
-                                    <Path Data="M48.00922,49.362999C51.186989,49.362999,53.762001,51.117016,53.762001,53.274704L53.762001,57.866001 42.256001,57.866001 42.256001,53.274704C42.256001,51.117016,44.833462,49.362999,48.00922,49.362999z M32.508339,49.362999C35.684731,49.362999,38.261002,51.112968,38.261002,53.274384L38.261002,57.864002 26.757,57.864002 26.757,53.274384C26.757,51.112968,29.331949,49.362999,32.508339,49.362999z M15.99059,49.362999C19.170095,49.362999,21.744999,51.112968,21.744999,53.274384L21.744999,57.864002 10.238,57.864002 10.238,53.274384C10.238,51.112968,12.816765,49.362999,15.99059,49.362999z M48.154602,40.026001C50.45908,40.026001 52.323002,41.891827 52.323002,44.19516 52.323002,46.498615 50.45908,48.367001 48.154602,48.367001 45.853271,48.367001 43.985001,46.498615 43.985001,44.19516 43.985001,41.891827 45.853271,40.026001 48.154602,40.026001z M32.654629,40.026001C34.957329,40.026001 36.821999,41.891876 36.821999,44.19405 36.821999,46.498783 34.957329,48.366001 32.654629,48.366001 30.351231,48.366001 28.483999,46.498783 28.483999,44.19405 28.483999,41.891876 30.351231,40.026001 32.654629,40.026001z M16.1376,40.026001C18.44146,40.026001 20.306,41.891876 20.306,44.19405 20.306,46.498783 18.44146,48.366001 16.1376,48.366001 13.836289,48.366001 11.968,46.498783 11.968,44.19405 11.968,41.891876 13.836289,40.026001 16.1376,40.026001z M26.070999,7.4309998L26.070999,16.890345 26.070999,26.351 32.00005,21.619423 37.927002,16.890345 32.00005,12.161267z M0,0L64,0 64,33.348999 0,33.348999z" Stretch="Uniform" Fill="#FF333333" Width="12" Height="12" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
-                                        <Path.RenderTransform>
-                                            <TransformGroup>
-                                                <TransformGroup.Children>
-                                                    <RotateTransform Angle="0" />
-                                                    <ScaleTransform ScaleX="2" ScaleY="2" />
-                                                </TransformGroup.Children>
-                                            </TransformGroup>
-                                        </Path.RenderTransform>
-                                    </Path>
-                                </Grid>
-                            </Viewbox>
-
-                        </Button>
-                    </StackPanel>
-                </Grid>
-            </Grid>
-
+            <!--<ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListManagementRegion}" />-->
+            <Views:PlayListManagementView />
         </TabItem>
         <TabItem>
             <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}" />

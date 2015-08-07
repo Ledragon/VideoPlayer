@@ -13,7 +13,7 @@ namespace VideoPlayer.ViewModels
         private ICommand _clearFilterCommand;
         private Cursor _cursor;
         private Visibility _filterGridVisibility;
-        private int _numberOfVideos;
+        private Int32 _numberOfVideos;
         private ICommand _playAllCommand;
         private Int32 _selectedIndex;
         private ICommand _showFilterGridCommand;
@@ -29,9 +29,10 @@ namespace VideoPlayer.ViewModels
             this.SwitchToFullScreenCommand = new DelegateCommand(this.SwitchToFullScreen);
             this.SwitchToWindowCommand = new DelegateCommand(this.SwitchToWindowMode);
             this.PlayAllCommand = new DelegateCommand(this.PlayAll);
+            this.AddAllCommand = new DelegateCommand(this.AddRange);
 
             this._eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
-            this._eventAggregator.GetEvent<StoppedEvent>().Subscribe(this.SwitchToWindowMode);
+            this._eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
             this._eventAggregator.GetEvent<FilterChangedEvent>().Subscribe(i =>
             {
                 this.NumberOfVideos = i;
@@ -54,7 +55,6 @@ namespace VideoPlayer.ViewModels
             get
             {
                 return this._numberOfVideos;
-                //return this.FilteredVideos.Cast<Video>().Count();
             }
             set
             {
@@ -96,6 +96,8 @@ namespace VideoPlayer.ViewModels
                 this.OnPropertyChanged();
             }
         }
+
+        public ICommand AddAllCommand { get; private set; }
 
         public Cursor Cursor
         {
@@ -147,6 +149,12 @@ namespace VideoPlayer.ViewModels
         {
             this._eventAggregator.GetEvent<PlayAllEvent>().Publish(null);
         }
+
+        private void AddRange()
+        {
+            this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Publish(null);
+        }
+
 
         private void ShowFilterGrid()
         {

@@ -9,8 +9,7 @@
         <ResourceDictionary Source="../Resources.xaml" />
     </UserControl.Resources>
     <Grid>
-        <ListBox Width="150"
-                 Name="UiCategoriesListBox"
+        <ListBox Name="UiCategoriesListBox"
                  ItemsSource="{Binding CategoryViewModels}"
                  SelectedItem="{Binding SelectedCategory}"
                  Style="{StaticResource FilterListBox}">

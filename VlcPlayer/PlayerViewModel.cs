@@ -54,8 +54,8 @@ namespace VlcPlayer
             this._timer.Start();
             this.InitCommands();
 
-            eventAggregator.GetEvent<VideoAddedEvent>().Subscribe(this.AddVideo);
-            eventAggregator.GetEvent<PlayPlaylistEvent>().Subscribe(this.PlayAll);
+            eventAggregator.GetEvent<OnAddVideo>().Subscribe(this.AddVideo);
+            eventAggregator.GetEvent<OnPlayPlaylist>().Subscribe(this.PlayAll);
             eventAggregator.GetEvent<PlayOneEvent>().Subscribe(this.PlayVideo);
             eventAggregator.GetEvent<VideoDurationChanged>().Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>().Subscribe(this.Next);
@@ -358,7 +358,7 @@ namespace VlcPlayer
         {
             this.IsPaused = false;
             this.Playlist.Clear();
-            this._eventAggregator.GetEvent<StoppedEvent>().Publish(null);
+            this._eventAggregator.GetEvent<OnStop>().Publish(null);
         }
 
         private void DecreaseRate()

@@ -20,14 +20,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
 
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" Margin="30" Background="#CC000000">
+        <Grid Grid.Row="0" Grid.Column="0" Background="#CC000000" Margin="0,0,0,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -45,7 +44,9 @@
                        Margin="20" />
                 <!--<TextBlock Grid.Row="1" Text="{Binding CurrentVideo.Resolution.Width}" FontSize="24" Margin="10" HorizontalAlignment="Center" Foreground="DimGray"></TextBlock>-->
             </Grid>
-            <TabControl Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+            <TabControl Grid.Column="1" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
                         SelectedIndex="{Binding EditIndex}">
                 <TabItem>
                     <Module:VideoInfo DataContext="{Binding CurrentVideo}" />
@@ -65,7 +66,8 @@
                  SelectedItem="{Binding CurrentVideo}"
                  IsHitTestVisible="True"
                  IsTextSearchEnabled="False"
-                 Background="#CC000000">
+                 Background="#CC000000"
+                  Margin="0,5,0,0">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -115,13 +117,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ContentControl Grid.Row="2"
-                        Grid.Column="0"
-                        prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SortGridRegion}" />
-        <ContentControl Grid.Row="0"
-                        Grid.Column="1"
-                        Grid.RowSpan="3"
-                        Margin="5"
-                        prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListRegion}" />
+        
     </Grid>
 </UserControl>

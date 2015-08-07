@@ -108,6 +108,7 @@ namespace Module
                 this._eventAggregator.GetEvent<SortingChangedEvent>().Subscribe(this.Sort);
                 this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.UpdateVideoListView);
                 this._eventAggregator.GetEvent<VideoEdited>().Subscribe(dummy => this.SetFilter());
+                this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Subscribe(this.AddRange);
 
                 this.UpdateVideoListView(libraryService.GetObjectsFromFile().Videos);
                 this.InfoVisibility = Visibility.Visible;
@@ -208,12 +209,17 @@ namespace Module
         private void PlayAll(Object obj)
         {
             this._eventAggregator.GetEvent<ClearPlaylistEvent>().Publish(null);
-            var videoAddedEvent = this._eventAggregator.GetEvent<VideoAddedEvent>();
+            var videoAddedEvent = this._eventAggregator.GetEvent<OnAddVideo>();
             foreach (var video in this.FilteredVideos.Cast<Video>())
             {
                 videoAddedEvent.Publish(video);
             }
             this.PlayPlaylist();
+        }
+        
+        private void AddRange(Object obj)
+        {
+            this._eventAggregator.GetEvent<OnAddVideoRange>().Publish(this.FilteredVideos.Cast<Video>());
         }
 
         private void PlayOne()
@@ -230,7 +236,7 @@ namespace Module
 
         private void PlayPlaylist()
         {
-            this._eventAggregator.GetEvent<PlayPlaylistRequestedEvent>().Publish(null);
+            this._eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(null);
         }
 
         private Boolean CanEdit()
@@ -256,7 +262,7 @@ namespace Module
         {
             if (this.CurrentVideo != null && File.Exists(this.CurrentVideo.FileName))
             {
-                this._eventAggregator.GetEvent<VideoAddedEvent>().Publish(this.CurrentVideo);
+                this._eventAggregator.GetEvent<OnAddVideo>().Publish(this.CurrentVideo);
             }
         }
 

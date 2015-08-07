@@ -9,8 +9,7 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="800"
              Cursor="{Binding Cursor}"
-             MouseMove="Player_OnMouseMove"
-             >
+             MouseMove="Player_OnMouseMove">
     <UserControl.Resources>
         <infrastructure:ImageConverter x:Key="imageConverter" />
         <Style TargetType="{x:Type Button}" x:Key="MediaControl">
@@ -57,24 +56,31 @@
         </Style>
     </UserControl.Resources>
     <UserControl.InputBindings>
-        <KeyBinding Command="{Binding StopCommand}" Key="X"></KeyBinding>
-        <KeyBinding Command="{Binding NextCommand}" Key="N"></KeyBinding>
-        <KeyBinding Command="{Binding PreviousCommand}" Key="P"></KeyBinding>
+        <KeyBinding Command="{Binding StopCommand}" Key="X" />
+        <KeyBinding Command="{Binding NextCommand}" Key="N" />
+        <KeyBinding Command="{Binding PreviousCommand}" Key="P" />
     </UserControl.InputBindings>
     <Grid Background="Black">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <wpf:VlcControl x:Name="_VLCcontrol" VideoSource="{Binding Source, Mode=TwoWay}"
+        <wpf:VlcControl x:Name="_VLCcontrol" 
+                        VideoSource="{Binding Source, Mode=TwoWay}"
                         PositionChanged="_VLCcontrol_OnPositionChanged"
                         SnapshotTaken="_VLCcontrol_OnSnapshotTaken"
                         LengthChanged="_VLCcontrol_OnLengthChanged"
-                        EndReached="_VLCcontrol_OnEndReached"
-                        />
+                        EndReached="_VLCcontrol_OnEndReached" />
 
         <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform" />
-        <Grid Grid.Column="0" x:Name="UiControlsGrid" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
-              Background="#B23E3E3E" Margin="20,0,20,0" Visibility="{Binding ControlsVisibility}" MaxWidth="800" ZIndex="10">
+        <Grid Grid.Column="0" 
+              x:Name="UiControlsGrid" 
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Bottom"
+              Background="#B23E3E3E" 
+              Margin="20,0,20,0" 
+              Visibility="{Binding ControlsVisibility}" 
+              MaxWidth="800"
+              ZIndex="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -110,10 +116,22 @@
                     </Viewbox>
                 </Button>
 
-                <Slider Grid.Column="1" HorizontalAlignment="Stretch" Maximum="1" VerticalAlignment="Center"
-                        x:Name="UiPositionSlider" LargeChange="0.05" Margin="5,0,5,0" Value="{Binding Position}" PreviewMouseLeftButtonDown="UiPositionSlider_PreviewMouseLeftButtonDown" PreviewMouseLeftButtonUp="UiPositionSlider_PreviewMouseLeftButtonUp" />
-                <Button Grid.Column="2" Style="{StaticResource MediaControl}" HorizontalAlignment="Right"
-                        VerticalAlignment="Center" x:Name="UiFasterButton" Command="{Binding IncreaseRateCommand}">
+                <Slider Grid.Column="1" 
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Center"
+                        Margin="5,0,5,0" 
+                        Maximum="1" 
+                        x:Name="UiPositionSlider" 
+                        LargeChange="0.05" 
+                        Value="{Binding Position}"
+                        PreviewMouseLeftButtonDown="UiPositionSlider_PreviewMouseLeftButtonDown"
+                        PreviewMouseLeftButtonUp="UiPositionSlider_PreviewMouseLeftButtonUp" />
+                <Button Grid.Column="2" 
+                        Style="{StaticResource MediaControl}" 
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center" 
+                        x:Name="UiFasterButton" 
+                        Command="{Binding IncreaseRateCommand}">
                     <Viewbox>
                         <Grid>
                             <Grid Width="24" Height="24" Visibility="Visible">
@@ -134,7 +152,6 @@
                             </Path>
                         </Grid>
                     </Viewbox>
-
                 </Button>
             </Grid>
             <Grid Grid.Row="1">
@@ -142,10 +159,13 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Stretch"
+                <StackPanel Grid.Column="0" 
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch">
                     <Button Style="{StaticResource MediaControl}"
-                            VerticalAlignment="Center" x:Name="UiPlayButton"
+                            VerticalAlignment="Center"
+                            x:Name="UiPlayButton"
                             Click="UiPlayButton_OnClick">
                         <Viewbox>
                             <Grid>
@@ -169,8 +189,9 @@
                         </Viewbox>
                     </Button>
                     <Button Style="{StaticResource MediaControl}"
-                            VerticalAlignment="Center" x:Name="UiPauseButton"
-                            Click="UiPauseButton_OnClick" IsEnabled="{Binding IsPlaying}">
+                            VerticalAlignment="Center"
+                            x:Name="UiPauseButton"
+                            Click="UiPauseButton_OnClick">
                         <Viewbox>
                             <Grid>
                                 <Grid Width="24" Height="24" Visibility="Visible">
@@ -193,8 +214,8 @@
                         </Viewbox>
                     </Button>
                     <Button Style="{StaticResource MediaControl}"
-                            VerticalAlignment="Center" x:Name="UiStopButton"
-                            IsEnabled="{Binding IsPlaying}" Command="{Binding StopCommand}">
+                            VerticalAlignment="Center"
+                            Command="{Binding StopCommand}">
                         <Viewbox>
                             <Grid>
                                 <Grid Width="24" Height="24" Visibility="Visible">
@@ -215,7 +236,9 @@
                         </Viewbox>
                     </Button>
                     <Button Style="{StaticResource MediaControl}"
-                            VerticalAlignment="Center" x:Name="UiMuteButton" Click="UiMuteButton_OnClick">
+                            VerticalAlignment="Center" 
+                            x:Name="UiMuteButton"
+                            Click="UiMuteButton_OnClick">
                         <Viewbox>
                             <Grid>
                                 <Grid Width="24" Height="24" Visibility="Visible">
@@ -236,7 +259,6 @@
                                 </Path>
                             </Grid>
                         </Viewbox>
-
                     </Button>
                     <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left"
                             VerticalAlignment="Center" x:Name="UiSnapshotButton" Click="UiSnapshotButton_OnClick">
@@ -260,10 +282,12 @@
                                 </Path>
                             </Grid>
                         </Viewbox>
-
                     </Button>
-                    <Button Style="{StaticResource MediaControl}" HorizontalAlignment="Left"
-                            VerticalAlignment="Center" x:Name="UiPreviousButton" Command="{Binding PreviousCommand}">
+                    <Button Style="{StaticResource MediaControl}" 
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center" 
+                            x:Name="UiPreviousButton"
+                            Command="{Binding PreviousCommand}">
                         <Viewbox>
                             <Grid>
                                 <Grid Width="24" Height="24" Visibility="Visible">
@@ -310,7 +334,8 @@
                 </StackPanel>
                 <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal">
                     <TextBlock Text="{Binding Title}" Style="{StaticResource MediaInfo}" />
-                    <TextBlock Style="{StaticResource MediaInfo}" Text="{Binding PositionTimeSpan, StringFormat=hh\\:mm\\:ss}"/>
+                    <TextBlock Style="{StaticResource MediaInfo}"
+                               Text="{Binding PositionTimeSpan, StringFormat=hh\\:mm\\:ss}" />
                     <TextBlock Text="{Binding Duration, StringFormat=hh\\:mm\\:ss}"
                                Style="{StaticResource MediaInfo}" />
                     <TextBlock Text="{Binding Rate, StringFormat= Rate: {0} }"
@@ -320,15 +345,16 @@
             </Grid>
 
         </Grid>
-        <ListBox Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right" 
-                 Width="250"  Visibility="{Binding ControlsVisibility}" 
+        <ListBox Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right"
+                 Width="250" Visibility="{Binding ControlsVisibility}"
                  ItemsSource="{Binding Playlist}" SelectedItem="{Binding CurrentVideo}"
-                 Margin="0,5,5,70" Background="#3F808080" >
+                 Margin="0,5,5,70" Background="#3F808080">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding PreviewImage, Converter={StaticResource imageConverter}}" Width="50" Margin="3"></Image>
-                        <TextBlock Text="{Binding Title}" Margin="3" VerticalAlignment="Center"></TextBlock>
+                        <Image Source="{Binding PreviewImage, Converter={StaticResource imageConverter}}" Width="50"
+                               Margin="3" />
+                        <TextBlock Text="{Binding Title}" Margin="3" VerticalAlignment="Center" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

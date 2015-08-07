@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -406,11 +407,12 @@ namespace VlcPlayer
             }
         }
 
-        public void PlayAll(Object dummy)
+        public void PlayAll(IEnumerable<Video> playlist)
         {
             if (this.Playlist.Any())
             {
                 this.Logger().DebugFormat("Playing created playlist.");
+                this.Playlist = new ObservableCollection<Video>(playlist);
                 this.CurrentVideo = this.Playlist.First();
                 this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
             }

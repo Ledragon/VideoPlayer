@@ -31,7 +31,11 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class PlayPlaylistEvent : PubSubEvent<Object>
+    public class PlayPlaylistRequestedEvent : PubSubEvent<Object>
+    {
+    }
+
+    public class PlayPlaylistEvent : PubSubEvent<IEnumerable<Video>>
     {
     }
 

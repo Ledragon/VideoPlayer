@@ -230,7 +230,7 @@ namespace Module
 
         private void PlayPlaylist()
         {
-            this._eventAggregator.GetEvent<PlayPlaylistEvent>().Publish(null);
+            this._eventAggregator.GetEvent<PlayPlaylistRequestedEvent>().Publish(null);
         }
 
         private Boolean CanEdit()

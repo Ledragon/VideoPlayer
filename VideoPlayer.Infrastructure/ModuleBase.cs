@@ -26,6 +26,10 @@ namespace VideoPlayer.Infrastructure
             }
         }
 
+        protected void RegisterType<T>()
+        {
+            this._unityContainer.RegisterType<T>();
+        }
         protected void RegisterType<T, U>() where U : T
         {
             this._unityContainer.RegisterType<T, U>();

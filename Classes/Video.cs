@@ -8,7 +8,6 @@ using System.Xml.Serialization;
 using Classes.Annotations;
 using Log;
 using Microsoft.WindowsAPICodePack.Shell;
-using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using ToolLib;
 
 namespace Classes
@@ -41,19 +40,19 @@ namespace Classes
                     //this.NumberOfViews = 0;
                     this.Rating = 0;
                     this.Tags = new ObservableCollection<Tag>();
-                    using (ShellFile shellFile = ShellFile.FromFilePath(videoPath))
+                    using (var shellFile = ShellFile.FromFilePath(videoPath))
                     {
-                        Bitmap thumbnail = shellFile.Thumbnail.ExtraLargeBitmap;
+                        var thumbnail = shellFile.Thumbnail.ExtraLargeBitmap;
                         this.PreviewImage = thumbnail;
-                        ulong? duration = shellFile.Properties.System.Media.Duration.Value;
+                        var duration = shellFile.Properties.System.Media.Duration.Value;
 
                         Double nanoSeconds = 0;
                         if (Double.TryParse(duration.ToString(), out nanoSeconds))
                         {
-                            double milliSeconds = nanoSeconds*0.0001;
+                            var milliSeconds = nanoSeconds*0.0001;
                             this.Length = TimeSpan.FromMilliseconds(milliSeconds);
                         }
-                        uint? rating = shellFile.Properties.System.Rating.Value;
+                        var rating = shellFile.Properties.System.Rating.Value;
                         UInt32 myRating = 0;
                         if (UInt32.TryParse(rating.ToString(), out myRating))
                         {
@@ -62,8 +61,10 @@ namespace Classes
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                this.Logger().ErrorFormat(e.Message);
+                this.Logger().ErrorFormat(e.StackTrace);
             }
         }
 
@@ -217,7 +218,7 @@ namespace Classes
             get
             {
                 var modifier = new ImageModifier();
-                Image image = modifier.DeserializeFromBase64String(this.SerializedImage);
+                var image = modifier.DeserializeFromBase64String(this.SerializedImage);
                 //image = modifier.ResizeImage(image, 640, 480);
                 return image;
 
@@ -226,18 +227,17 @@ namespace Classes
             set
             {
                 var modifier = new ImageModifier();
-                Image resized = value;
+                var resized = value;
                 if (resized.Width > 640)
                 {
-                    Double ratio = (Double) value.Width/value.Height;
-                    string newHeight = (640/ratio).ToString("0");
+                    var ratio = (Double) value.Width/value.Height;
+                    var newHeight = (640/ratio).ToString("0");
                     resized = modifier.ResizeImage(value, 640, Int32.Parse(newHeight));
                 }
                 this.SerializedImage = modifier.SerializeToBase64String(resized);
                 this.OnPropertyChanged();
             }
         }
-
 
         public Size Resolution
         {
@@ -247,9 +247,9 @@ namespace Classes
                 {
                     try
                     {
-                        using (ShellFile shellFile = ShellFile.FromFilePath(this.FileName))
+                        using (var shellFile = ShellFile.FromFilePath(this.FileName))
                         {
-                            ShellProperties.PropertySystemVideo video = shellFile.Properties.System.Video;
+                            var video = shellFile.Properties.System.Video;
                             this._resolution = new Size(Convert.ToInt32(video.FrameWidth.Value),
                                 Convert.ToInt32(video.FrameHeight.Value));
                         }
@@ -296,9 +296,9 @@ namespace Classes
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] String propertyName = null)
         {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
+            var handler = this.PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }

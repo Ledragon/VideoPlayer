@@ -138,6 +138,9 @@
     <Compile Include="Views\VideoInfo.xaml.cs">
       <DependentUpon>VideoInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VideosList.xaml.cs">
+      <DependentUpon>VideosList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VideosListView.xaml.cs">
       <DependentUpon>VideosListView.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
     <Page Include="Views\VideoInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\VideosList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\VideosListView.xaml">
       <SubType>Designer</SubType>

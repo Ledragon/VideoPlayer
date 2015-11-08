@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Module.Views
+namespace VideoPlayer.Views
 {
     /// <summary>
-    /// Interaction logic for Playlist.xaml
+    /// Interaction logic for StatusBar.xaml
     /// </summary>
-    public partial class Playlist : UserControl
+    public partial class StatusBar : UserControl
     {
-        public Playlist()
+        public StatusBar()
         {
             InitializeComponent();
         }

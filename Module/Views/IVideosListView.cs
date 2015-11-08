@@ -2,7 +2,7 @@
 
 namespace Module
 {
-    public interface IVideosList : IView
+    public interface IVideosListView : IView
     {
     }
 }

@@ -74,17 +74,17 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Vlc.DotNet.Core, Version=1.2.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\dll\Vlc.DotNet.Core.dll</HintPath>
+    <Reference Include="Vlc.DotNet.Core">
+      <HintPath>..\_dll\Vlc.DotNet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Vlc.DotNet.Core.Interops, Version=1.2.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\dll\Vlc.DotNet.Core.Interops.dll</HintPath>
+    <Reference Include="Vlc.DotNet.Core.Interops">
+      <HintPath>..\_dll\Vlc.DotNet.Core.Interops.dll</HintPath>
     </Reference>
-    <Reference Include="Vlc.DotNet.Wpf, Version=1.2.0.0, Culture=neutral, PublicKeyToken=84529da31f4eb963, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\dll\Vlc.DotNet.Wpf.dll</HintPath>
+    <Reference Include="Vlc.DotNet.Forms">
+      <HintPath>..\_dll\Vlc.DotNet.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Vlc.DotNet.Wpf">
+      <HintPath>..\_dll\Vlc.DotNet.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>

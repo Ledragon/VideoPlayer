@@ -42,6 +42,7 @@ namespace VideoPlayer
             this.AddModule<VlcPlayerModule>();
             this.AddModule<HomeModule.HomeModule>();
             this.AddModule<PlayListManagementModule>();
+            this.AddModule<VideosListModule.VideosListModule>();
         }
 
         private void AddModule<T>()

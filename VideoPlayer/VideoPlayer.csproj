@@ -292,6 +292,10 @@
       <Project>{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}</Project>
       <Name>VideoPlayer.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideosListModule\VideosListModule.csproj">
+      <Project>{57309725-0F3D-4A63-B876-05366E0DE7DF}</Project>
+      <Name>VideosListModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VlcPlayer\VlcPlayer.csproj">
       <Project>{a060b03d-3def-4826-888f-1b80059b7e13}</Project>
       <Name>VlcPlayer</Name>

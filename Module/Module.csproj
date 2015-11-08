@@ -90,7 +90,6 @@
     <Compile Include="ViewModels\IEditVideoViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ICategoryListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\ISettingsViewModel.cs" />
-    <Compile Include="ViewModels\Interfaces\IVideosListViewModel.cs" />
     <Compile Include="ViewModels\Interfaces\IVideoFilterGridViewModel.cs" />
     <Compile Include="ViewModels\ISortGridViewModel.cs" />
     <Compile Include="ViewModels\ITagsListViewModel.cs" />
@@ -99,7 +98,6 @@
     <Compile Include="ViewModels\SortingViewModel.cs" />
     <Compile Include="ViewModels\TagsListViewModel.cs" />
     <Compile Include="ViewModels\VideoFilterGridViewModel.cs" />
-    <Compile Include="ViewModels\VideosListViewModel.cs" />
     <Compile Include="ViewModels\EditVideoViewModel.cs" />
     <Compile Include="Views\CategoryList.xaml.cs">
       <DependentUpon>CategoryList.xaml</DependentUpon>
@@ -125,7 +123,6 @@
     <Compile Include="Views\IEditView.cs" />
     <Compile Include="Views\ITagsListView.cs" />
     <Compile Include="Views\IVideoFilterGrid.cs" />
-    <Compile Include="Views\IVideosListView.cs" />
     <Compile Include="Views\SortGrid.xaml.cs">
       <DependentUpon>SortGrid.xaml</DependentUpon>
     </Compile>
@@ -140,9 +137,6 @@
     </Compile>
     <Compile Include="Views\VideosList.xaml.cs">
       <DependentUpon>VideosList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\VideosListView.xaml.cs">
-      <DependentUpon>VideosListView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -188,10 +182,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\VideosList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\VideosListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

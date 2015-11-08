@@ -15,8 +15,7 @@ namespace Module
         public override void Initialize()
         {
             this.RegisterType<VideoInfo>();
-            this.RegisterType<IVideosListView, VideosListView>();
-            this.RegisterType<IVideosListViewModel, VideosListViewModel>();
+            //this.RegisterType<IVideosListView, VideosListView>();
             this.RegisterType<ICategoryListViewModel, CategoryListViewModel>();
             this.RegisterType<ICategoryListView, CategoryList>();
             this.RegisterType<IVideoFilterGrid, VideoFilterGrid>();
@@ -28,7 +27,6 @@ namespace Module
             this.RegisterType<IEditView, EditVideo>();
             this.RegisterType<IEditVideoViewModel, EditVideoViewModel>();
 
-            this.ReferenceRegion<IVideosListViewModel>(RegionNames.VideosListRegion);
             this.ReferenceRegion<ICategoryListViewModel>(RegionNames.CategoriesListRegion);
             this.ReferenceRegion<IVideoFilterGridViewModel>(RegionNames.FilterRegion);
             this.ReferenceRegion<ITagsListViewModel>(RegionNames.TagsRegion);

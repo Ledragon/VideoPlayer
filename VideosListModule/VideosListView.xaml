@@ -31,7 +31,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
-
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0"
               Grid.Column="0"
@@ -55,18 +54,18 @@
                        VerticalAlignment="Stretch"
                        Margin="20" />
             </Grid>
-            <TabControl Grid.Column="1"
+            <module:VideoInfo Grid.Column="1" DataContext="{Binding CurrentVideo}" />
+            <!--<TabControl Grid.Column="1"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         SelectedIndex="{Binding EditIndex}">
                 <TabItem>
-                    <module:VideoInfo DataContext="{Binding CurrentVideo}" />
                 </TabItem>
                 <TabItem>
                     <ContentControl
                         prism:RegionManager.RegionName="{x:Static infrastructure11:RegionNames.EditVideoInfoRegion}" />
                 </TabItem>
-            </TabControl>
+            </TabControl>-->
         </Grid>
 
         <views:VideosList Grid.Row="1" Grid.Column="0" />

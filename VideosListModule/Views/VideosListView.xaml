@@ -3,9 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:prism="http://www.codeplex.com/prism"
-             xmlns:infrastructure11="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
-             xmlns:module="clr-namespace:Module;assembly=Module"
              xmlns:views="clr-namespace:VideosListModule.Views"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1024"> 

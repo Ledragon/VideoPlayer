@@ -20,12 +20,14 @@ namespace HomeModule
             this.GoToVideosCommand = new DelegateCommand(this.GoToVideos);
             this.CleanCommand = new DelegateCommand(this.Clean);
             this.LoadCommand = new DelegateCommand(this.LoadAsync);
+            this.ManageCommand = new DelegateCommand(this.GoToManage);
         }
 
         public ICommand GoToSettingsCommand { get; private set; }
         public ICommand GoToVideosCommand { get; private set; }
         public ICommand LoadCommand { get; private set; }
         public ICommand CleanCommand { get; private set; }
+        public ICommand ManageCommand { get; private set; }
 
         private void Load()
         {
@@ -61,6 +63,12 @@ namespace HomeModule
         private void GoToSettings()
         {
             this._eventAggregator.GetEvent<GoToPage>().Publish(2);
+        }
+
+        private void GoToManage()
+        {
+            this._eventAggregator.GetEvent<GoToPage>().Publish(3);
+
         }
 
         private void GoToVideos()

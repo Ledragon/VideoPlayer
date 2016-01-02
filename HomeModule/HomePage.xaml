@@ -79,6 +79,7 @@
                     Command="{Binding GoToVideosCommand}" />
             <Button Content="Load" Style="{StaticResource ToolbarStyle}" TabIndex="3" Command="{Binding LoadCommand}" />
             <Button Content="Clean" Style="{StaticResource ToolbarStyle}" TabIndex="4" Command="{Binding CleanCommand}" />
+            <Button Content="Manage" Style="{StaticResource ToolbarStyle}" TabIndex="5" Command="{Binding ManageCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>

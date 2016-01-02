@@ -9,5 +9,6 @@ namespace HomeModule
         ICommand GoToVideosCommand { get; }
         ICommand LoadCommand { get; }
         ICommand CleanCommand { get; }
+        ICommand ManageCommand { get; }
     }
 }

@@ -148,6 +148,7 @@
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="PlayListManagementModule.cs" />
+    <Compile Include="ViewModels\EditViewModel.cs" />
     <Compile Include="ViewModels\IPlayListManagementViewModel.cs" />
     <Compile Include="ViewModels\IVideosListInteractionViewModel.cs" />
     <Compile Include="ViewModels\PlayListManagementViewModel.cs" />
@@ -159,6 +160,9 @@
     </Compile>
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\EditView.xaml.cs">
+      <DependentUpon>EditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IVideosListInteractionView.cs" />
     <Compile Include="Views\PlayListManagementView.xaml.cs">
@@ -174,6 +178,10 @@
       <DependentUpon>VideosPage.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\DirectoryBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

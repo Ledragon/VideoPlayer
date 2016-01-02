@@ -24,6 +24,7 @@ namespace VideoPlayer
             //TEMP
             this.Container.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
             this.Container.RegisterType<IVideoPlayer, HomeModule.VideoPlayer>();
+            this.Container.RegisterType<IEditViewModel, EditViewModel>();
             Locator.Container = this.Container;
             return this.Container.Resolve<MainWindow>();
         }

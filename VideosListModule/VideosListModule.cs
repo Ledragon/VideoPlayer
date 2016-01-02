@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using VideoPlayer.Infrastructure;
+using VideosListModule.Views;
 
 namespace VideosListModule
 {
@@ -13,6 +14,7 @@ namespace VideosListModule
 
         public override void Initialize()
         {
+            this.RegisterType<VideoInfo>();
             this.RegisterType<IVideosListView, VideosListView>();
             this.RegisterType<IVideosListViewModel, VideosListViewModel>();
             this.ReferenceRegion<IVideosListViewModel>(RegionNames.VideosListRegion);

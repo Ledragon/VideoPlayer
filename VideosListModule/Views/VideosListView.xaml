@@ -6,13 +6,13 @@
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:infrastructure11="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
              xmlns:module="clr-namespace:Module;assembly=Module"
-             xmlns:views="clr-namespace:Module.Views;assembly=Module"
+             xmlns:views="clr-namespace:VideosListModule.Views"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1024"> 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources.xaml" />
+                <ResourceDictionary Source="../Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Color x:Key="BackgroundColor">#CC000000</Color>
             <SolidColorBrush x:Key="BackgroundColorBrush" Color="{StaticResource BackgroundColor}" />
@@ -54,7 +54,7 @@
                        VerticalAlignment="Stretch"
                        Margin="20" />
             </Grid>
-            <module:VideoInfo Grid.Column="1" DataContext="{Binding CurrentVideo}" />
+            <views:VideoInfo Grid.Column="1" DataContext="{Binding CurrentVideo}" />
             <!--<TabControl Grid.Column="1"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"

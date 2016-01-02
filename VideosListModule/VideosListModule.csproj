@@ -90,13 +90,19 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IVideosListView.cs" />
-    <Compile Include="IVideosListViewModel.cs" />
+    <Compile Include="Views\IVideosListView.cs" />
+    <Compile Include="ViewModels\IVideosListViewModel.cs" />
     <Compile Include="VideosListModule.cs" />
-    <Compile Include="VideosListView.xaml.cs">
+    <Compile Include="Views\VideoInfo.xaml.cs">
+      <DependentUpon>VideoInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VideosList.xaml.cs">
+      <DependentUpon>VideosList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VideosListView.xaml.cs">
       <DependentUpon>VideosListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VideosListViewModel.cs" />
+    <Compile Include="ViewModels\VideosListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -129,7 +135,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VideosListView.xaml">
+    <Page Include="Views\VideoInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\VideosList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\VideosListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

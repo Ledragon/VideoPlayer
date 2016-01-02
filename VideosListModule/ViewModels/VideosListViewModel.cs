@@ -106,13 +106,13 @@ namespace VideosListModule
                 this._eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
                 this._eventAggregator.GetEvent<SortingChangedEvent>().Subscribe(this.Sort);
                 this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.UpdateVideoListView);
-                this._eventAggregator.GetEvent<VideoEdited>().Subscribe(dummy => this.SetFilter());
+                //this._eventAggregator.GetEvent<VideoEdited>().Subscribe(dummy => this.SetFilter());
                 this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Subscribe(this.AddRange);
 
                 this.UpdateVideoListView(libraryService.GetObjectsFromFile().Videos);
                 this.InfoVisibility = Visibility.Visible;
 
-                this.EditCommand = new DelegateCommand(this.Edit, this.CanEdit);
+                //this.EditCommand = new DelegateCommand(this.Edit, this.CanEdit);
                 this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
                 this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
                 this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
@@ -239,24 +239,24 @@ namespace VideosListModule
             this._eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(null);
         }
 
-        private Boolean CanEdit()
-        {
-            return true;
-        }
+        //private Boolean CanEdit()
+        //{
+        //    return true;
+        //}
 
-        private void Edit()
-        {
-            if (this.EditIndex == 0)
-            {
-                this._eventAggregator.GetEvent<VideoEditing>().Publish(this.CurrentVideo);
-                this.EditIndex = 1;
-            }
-            else
-            {
-                this._eventAggregator.GetEvent<VideoEdited>().Publish(null);
-                this.EditIndex = 0;
-            }
-        }
+        //private void Edit()
+        //{
+        //    if (this.EditIndex == 0)
+        //    {
+        //        this._eventAggregator.GetEvent<VideoEditing>().Publish(this.CurrentVideo);
+        //        this.EditIndex = 1;
+        //    }
+        //    else
+        //    {
+        //        this._eventAggregator.GetEvent<VideoEdited>().Publish(null);
+        //        this.EditIndex = 0;
+        //    }
+        //}
 
         private void Add()
         {

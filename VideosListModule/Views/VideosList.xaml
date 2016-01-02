@@ -20,9 +20,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.InputBindings>
-        <KeyBinding Key="E" Command="{Binding EditCommand}" Modifiers="Control" />
-        <KeyBinding Key="A" Command="{Binding AddVideoCommand}" Modifiers="Alt" />
-        <KeyBinding Key="P" Command="{Binding PlayPlaylistCommand}" Modifiers="Control" />
+        <KeyBinding Key="A" Command="{Binding AddVideoCommand}" />
+        <KeyBinding Key="P" Command="{Binding PlayPlaylistCommand}" />
     </UserControl.InputBindings>
     <Grid>
         <ListBox SelectionMode="Single"

@@ -149,6 +149,7 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="PlayListManagementModule.cs" />
     <Compile Include="ViewModels\EditViewModel.cs" />
+    <Compile Include="ViewModels\IEditViewModel.cs" />
     <Compile Include="ViewModels\IPlayListManagementViewModel.cs" />
     <Compile Include="ViewModels\IVideosListInteractionViewModel.cs" />
     <Compile Include="ViewModels\PlayListManagementViewModel.cs" />

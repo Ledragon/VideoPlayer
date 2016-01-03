@@ -74,25 +74,32 @@ namespace VlcPlayer
 
         private void InitializeVlc()
         {
-            //TODO problem with 64bit version of VLC
-            //String programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles).Replace(" (x86)", "");
-            //VlcContext.LibVlcDllsPath = Path.Combine(programFilesPath, @"VideoLan\VLC");
-            String programFilesPath = @"D:\Development\VisualStudio\dll\vlc-2.1.5";
-            VlcContext.LibVlcDllsPath = programFilesPath;
+            try
+            {
+                //TODO problem with 64bit version of VLC
+                //String programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles).Replace(" (x86)", "");
+                //VlcContext.LibVlcDllsPath = Path.Combine(programFilesPath, @"VideoLan\VLC");
+                String programFilesPath = @"D:\Development\VisualStudio\dll\vlc-2.1.5";
+                VlcContext.LibVlcDllsPath = programFilesPath;
 
-            // Set the vlc plugins directory path
-            VlcContext.LibVlcPluginsPath = Path.Combine(VlcContext.LibVlcDllsPath, "plugins");
+                // Set the vlc plugins directory path
+                VlcContext.LibVlcPluginsPath = Path.Combine(VlcContext.LibVlcDllsPath, "plugins");
 
-            // refer to http://wiki.videolan.org/VLC_command-line_help for more information
-            VlcContext.StartupOptions.IgnoreConfig = true;
-            VlcContext.StartupOptions.AddOption("--no-video-title-show");
-            VlcContext.StartupOptions.ScreenSaverEnabled = false;
-            VlcContext.StartupOptions.AddOption("--no-snapshot-preview");
-            VlcContext.StartupOptions.AddOption("--no-mouse-events");
-            VlcContext.StartupOptions.AddOption("--no-keyboard-events");
-            VlcContext.StartupOptions.AddOption("--disable-screensaver");
-            // Initialize the VlcContext
-            //VlcContext.Initialize();
+                // refer to http://wiki.videolan.org/VLC_command-line_help for more information
+                VlcContext.StartupOptions.IgnoreConfig = true;
+                VlcContext.StartupOptions.AddOption("--no-video-title-show");
+                VlcContext.StartupOptions.ScreenSaverEnabled = false;
+                VlcContext.StartupOptions.AddOption("--no-snapshot-preview");
+                VlcContext.StartupOptions.AddOption("--no-mouse-events");
+                VlcContext.StartupOptions.AddOption("--no-keyboard-events");
+                VlcContext.StartupOptions.AddOption("--disable-screensaver");
+                // Initialize the VlcContext
+                //VlcContext.Initialize();
+            }
+            catch (Exception e)
+            {
+                this.Logger().Error(e);
+            }
         }
 
         private void Stop(Object dummy)

@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Log;
 
 namespace VideoPlayer.Infrastructure
 {
@@ -38,6 +39,7 @@ namespace VideoPlayer.Infrastructure
             }
             catch (Exception e)
             {
+                this.Logger().ErrorFormat(e.Message);
             }
             return bitmap;
         }

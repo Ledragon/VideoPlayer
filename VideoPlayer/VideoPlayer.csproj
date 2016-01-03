@@ -28,7 +28,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <DisallowUrlActivation>true</DisallowUrlActivation>
-    <ApplicationRevision>83</ApplicationRevision>
+    <ApplicationRevision>87</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
@@ -276,10 +276,6 @@
     <ProjectReference Include="..\Module\Module.csproj">
       <Project>{27f28f3a-17fe-4ee3-abf4-1a13ea1abff5}</Project>
       <Name>Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VideoPlayer.Bootstrapper\VideoPlayer.Bootstrapper.csproj">
-      <Project>{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}</Project>
-      <Name>VideoPlayer.Bootstrapper</Name>
     </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Common\VideoPlayer.Common.csproj">
       <Project>{85D3796A-9536-460E-8FF0-F96ACD68878F}</Project>

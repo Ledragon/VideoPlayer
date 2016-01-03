@@ -70,7 +70,6 @@ D:\Development\VisualStudio\VideoPlayer\trunk\VideoPlayer.Services\bin\Debug\Mic
 D:\Development\VisualStudio\VideoPlayer\trunk\VideoPlayer.Services\obj\Debug\VideoPlayer.Services.csprojResolveAssemblyReference.cache
 D:\Development\VisualStudio\VideoPlayer\trunk\VideoPlayer.Services\obj\Debug\VideoPlayer.Services.dll
 D:\Development\VisualStudio\VideoPlayer\trunk\VideoPlayer.Services\obj\Debug\VideoPlayer.Services.pdb
-D:\Development\Migration\VideoPlayer\VideoPlayer.Services\obj\Debug\VideoPlayer.Services.csprojResolveAssemblyReference.cache
 D:\Development\Migration\VideoPlayer\VideoPlayer.Services\bin\Debug\VideoPlayer.Services.dll
 D:\Development\Migration\VideoPlayer\VideoPlayer.Services\bin\Debug\VideoPlayer.Services.pdb
 D:\Development\Migration\VideoPlayer\VideoPlayer.Services\bin\Debug\Classes.dll
@@ -92,5 +91,6 @@ D:\Development\Migration\VideoPlayer\VideoPlayer.Services\bin\Debug\log4net.xml
 D:\Development\Migration\VideoPlayer\VideoPlayer.Services\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
 D:\Development\Migration\VideoPlayer\VideoPlayer.Services\bin\Debug\Microsoft.Practices.Unity.xml
 D:\Development\Migration\VideoPlayer\VideoPlayer.Services\bin\Debug\Microsoft.WindowsAPICodePack.pdb
+D:\Development\Migration\VideoPlayer\VideoPlayer.Services\obj\Debug\VideoPlayer.Services.csprojResolveAssemblyReference.cache
 D:\Development\Migration\VideoPlayer\VideoPlayer.Services\obj\Debug\VideoPlayer.Services.dll
 D:\Development\Migration\VideoPlayer\VideoPlayer.Services\obj\Debug\VideoPlayer.Services.pdb

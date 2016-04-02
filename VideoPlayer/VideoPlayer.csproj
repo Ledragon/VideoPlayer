@@ -28,7 +28,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <DisallowUrlActivation>true</DisallowUrlActivation>
-    <ApplicationRevision>87</ApplicationRevision>
+    <ApplicationRevision>88</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <ExcludeDeploymentUrl>true</ExcludeDeploymentUrl>
@@ -310,6 +310,11 @@
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

@@ -20,28 +20,28 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ListBox SelectionMode="Single"
-                 IsSynchronizedWithCurrentItem="True"
-                 ItemsSource="{Binding Videos}"
-                 SelectedItem="{Binding SelectedVideo}"
-                 IsHitTestVisible="True"
-                 IsTextSearchEnabled="False"
-                 Margin="5">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0"
-                               Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
-                               VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
-                        <Label Grid.Column="1" Content="{Binding Title}" Foreground="White" />
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <DataGrid AutoGenerateColumns="False"
+                  ItemsSource="{Binding Videos}"
+                  SelectedItem="{Binding SelectedVideo}"
+                  IsSynchronizedWithCurrentItem="True"
+                  SelectionMode="Single"
+                  Margin="5"
+                  Background="Transparent"
+                  IsReadOnly="True"
+                  CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Width="Auto" Header="Preview">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
+                                   VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" Height="50" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Title}" Width="*" Header="Title"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Category}" Width="Auto" Header="Category"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
         <ContentControl Grid.Column="1"
                         regions:RegionManager.RegionName="{x:Static infrastructure:RegionNames.EditVideoInfoRegion}" />
 

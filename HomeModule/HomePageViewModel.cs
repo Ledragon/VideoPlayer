@@ -50,7 +50,8 @@ namespace HomeModule
         {
             this._eventAggregator.GetEvent<LibraryUpdating>().Publish("Cleaning");
             this._libraryService.Clean();
-            this._eventAggregator.GetEvent<LibraryUpdated>().Publish(null);
+            var videos =  this._libraryService.Update();
+            this._eventAggregator.GetEvent<LibraryUpdated>().Publish(videos);
         }
 
         private async void CleanAsync()

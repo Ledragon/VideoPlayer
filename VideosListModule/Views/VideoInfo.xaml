@@ -89,6 +89,7 @@
                 <DataGridTextColumn Binding="{Binding Value}" Header="Tags" Width="*" CanUserSort="True" FontFamily="{StaticResource DefaultFont}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding FileName}" Grid.ColumnSpan="2"></TextBlock>
         <!--<StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
             <TextBlock Text="{Binding Path=Resolution.Width}"></TextBlock>
         </StackPanel>-->

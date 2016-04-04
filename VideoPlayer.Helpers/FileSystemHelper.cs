@@ -15,8 +15,9 @@ namespace VideoPlayer.Helpers
 
         public static String GetDefaultFolder()
         {
-            String myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            String videoPlayerPath = Path.Combine(myDocumentsPath, "VideoPlayer");
+            var videoPlayerPath = "./Files";
+            //String myDocumentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            //String videoPlayerPath = Path.Combine(myDocumentsPath, "VideoPlayer");
             if (!Directory.Exists(videoPlayerPath))
             {
                 Directory.CreateDirectory(videoPlayerPath);

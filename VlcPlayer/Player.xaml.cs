@@ -79,7 +79,7 @@ namespace VlcPlayer
                 //TODO problem with 64bit version of VLC
                 //String programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles).Replace(" (x86)", "");
                 //VlcContext.LibVlcDllsPath = Path.Combine(programFilesPath, @"VideoLan\VLC");
-                String programFilesPath = @"D:\Development\VisualStudio\dll\vlc-2.1.5";
+                String programFilesPath = @"..\dll\vlc-2.1.5";
                 VlcContext.LibVlcDllsPath = programFilesPath;
 
                 // Set the vlc plugins directory path

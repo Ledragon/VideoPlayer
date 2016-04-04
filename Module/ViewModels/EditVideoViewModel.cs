@@ -143,12 +143,15 @@ namespace Module
                     Count = category.Count()
                 });
             }
-            CategoryViewModel vm = this.CategoryViewModels.First();
-            if (this.Video != null && !String.IsNullOrEmpty(this.Video.Category))
+            if (this.CategoryViewModels.Any())
             {
-                vm = this.CategoryViewModels.FirstOrDefault(c => c.Name == this.Video.Category);
+                CategoryViewModel vm = this.CategoryViewModels.First();
+                if (this.Video != null && !String.IsNullOrEmpty(this.Video.Category))
+                {
+                    vm = this.CategoryViewModels.FirstOrDefault(c => c.Name == this.Video.Category);
+                }
+                this.SelectedCategory = vm;
             }
-            this.SelectedCategory = vm;
         }
 
         private void CreateCategory()

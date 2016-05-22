@@ -5,11 +5,17 @@
     <SolidColorBrush x:Key="LightGraySolidBrush" Color="{StaticResource LightGray}" />
     <SolidColorBrush x:Key="VideoMenusSolidBrush" Color="{StaticResource LightGray}" Opacity="0.75" />
     <FontFamily x:Key="DefaultFont">Lao UI</FontFamily>
-    <Style TargetType="TextBlock" x:Key="TrimmedTextBlock">
-        <Setter Property="VerticalAlignment" Value="Center"></Setter>
-        <Setter Property="TextWrapping" Value="NoWrap"></Setter>
-        <Setter Property="TextTrimming" Value="WordEllipsis"></Setter>
-        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>
-    </Style>
 
+    <Style TargetType="TextBlock">
+        <Setter Property="Margin" Value="5" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="TrimmedTextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="NoWrap" />
+        <Setter Property="TextTrimming" Value="WordEllipsis" />
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="Light" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Foreground" Value="Gray"></Setter>
+    </Style>
 </ResourceDictionary>

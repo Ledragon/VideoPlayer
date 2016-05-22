@@ -90,6 +90,8 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mocks\MockVideo.cs" />
+    <Compile Include="ViewModels\VideoInfoViewModel.cs" />
     <Compile Include="Views\IVideosListView.cs" />
     <Compile Include="ViewModels\IVideosListViewModel.cs" />
     <Compile Include="VideosListModule.cs" />

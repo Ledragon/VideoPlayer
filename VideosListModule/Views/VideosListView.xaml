@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:VideosListModule.Views"
+             xmlns:infrastructure11="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
+             xmlns:regions="http://www.codeplex.com/CompositeWPF"
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1024"> 
     <UserControl.Resources>
@@ -25,46 +27,9 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0"
-              Grid.Column="0"
-              Background="{StaticResource BackgroundColorBrush}"
-              Margin="0,0,0,5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Image Grid.Row="0"
-                       Source="{Binding Path=CurrentVideo.PreviewImage, Converter={StaticResource ImageConverter}}"
-                       Stretch="Uniform"
-                       HorizontalAlignment="Stretch"
-                       VerticalAlignment="Stretch"
-                       Margin="20" />
-            </Grid>
-            <views:VideoInfo Grid.Column="1" DataContext="{Binding CurrentVideo}" />
-            <!--<TabControl Grid.Column="1"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        SelectedIndex="{Binding EditIndex}">
-                <TabItem>
-                </TabItem>
-                <TabItem>
-                    <ContentControl
-                        prism:RegionManager.RegionName="{x:Static infrastructure11:RegionNames.EditVideoInfoRegion}" />
-                </TabItem>
-            </TabControl>-->
+        <Grid Grid.Row="0"  Background="{StaticResource BackgroundColorBrush}" Margin="0,0,0,5">
+        <ContentControl Grid.Row="0" regions:RegionManager.RegionName="{x:Static infrastructure11:RegionNames.VideoInfoRegion}"/>
         </Grid>
-
         <views:VideosList Grid.Row="1" Grid.Column="0" />
     </Grid>
 </UserControl>

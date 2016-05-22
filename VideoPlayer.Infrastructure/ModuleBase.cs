@@ -5,7 +5,7 @@ using Microsoft.Practices.Unity;
 
 namespace VideoPlayer.Infrastructure
 {
-    public abstract class ModuleBase:IModule
+    public abstract class ModuleBase : IModule
     {
         private readonly IRegionManager _regionManager;
         private readonly IUnityContainer _unityContainer;
@@ -14,6 +14,11 @@ namespace VideoPlayer.Infrastructure
         {
             this._unityContainer = unityContainer;
             this._regionManager = regionManager;
+        }
+
+        public virtual void Initialize()
+        {
+            throw new NotImplementedException();
         }
 
         protected void ReferenceRegion<T>(String regionName) where T : IViewModel
@@ -30,14 +35,10 @@ namespace VideoPlayer.Infrastructure
         {
             this._unityContainer.RegisterType<T>();
         }
+
         protected void RegisterType<T, U>() where U : T
         {
             this._unityContainer.RegisterType<T, U>();
-        }
-
-        public virtual void Initialize()
-        {
-            throw new NotImplementedException();
         }
     }
 }

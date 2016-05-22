@@ -3,17 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mocks="clr-namespace:VideosListModule.Mocks"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="400" d:DesignWidth="1024">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Resources.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="../Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="Label" x:Key="Label">
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="Margin" Value="5" />
-                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>
+                <!--<Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>-->
+                <Setter Property="FontFamily" Value="Lucida Calligraphy" />
             </Style>
             <Style TargetType="Label" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
                 <Setter Property="BorderBrush" Value="Gray" />
@@ -26,9 +28,10 @@
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Margin" Value="5" />
             </Style>
-            <Style TargetType="TextBlock">
+            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="Current">
                 <Setter Property="Foreground" Value="White" />
-                <Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>
+                <!--<Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>-->
+                <Setter Property="FontFamily" Value="Lucida Handwriting" />
             </Style>
             <Style TargetType="DataGrid">
                 <Setter Property="Background" Value="Black" />
@@ -38,60 +41,72 @@
                 <Setter Property="Background" Value="Black" />
                 <Setter Property="Foreground" Value="White" />
             </Style>
+
+            <Style TargetType="TextBlock" x:Key="Title" BasedOn="{StaticResource Current}">
+                <Setter Property="FontSize" Value="40" />
+                <Setter Property="Foreground" Value="LightGray" />
+            </Style>
+            <Style TargetType="TextBlock" x:Key="Subtitle" BasedOn="{StaticResource Current}">
+                <Setter Property="FontSize" Value="32" />
+                <Setter Property="Foreground" Value="DarkGray" />
+            </Style>
+            <Style TargetType="TextBlock" x:Key="Tag" BasedOn="{StaticResource Current}">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Foreground" Value="Gray" />
+            </Style>
+            <mocks:MockVideo x:Key="MockVideo" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid d:DataContext="{Binding Source={StaticResource MockVideo}, Path=Video}" DataContext="{Binding Video}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Label}" Content="Title:" VerticalAlignment="Top"
-               HorizontalAlignment="Left" />
-        <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource ValueLabel}" VerticalAlignment="Top"
-               HorizontalAlignment="Stretch" Content="{Binding Title}" Name="_uiTitleLabel" />
-        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Content="Duration:" VerticalAlignment="Top"
-               HorizontalAlignment="Left" />
-        <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource ValueLabel}" VerticalAlignment="Top"
-               HorizontalAlignment="Stretch" Content="{Binding Length}" ContentStringFormat="HH:mm:ss"/>
-        <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Label}" Content="Rating:" VerticalAlignment="Top"
-               HorizontalAlignment="Left" />
-        <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource Label}" VerticalAlignment="Top"
-               HorizontalAlignment="Stretch" Content="{Binding Rating}" />
-        <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Label}" Content="Views:" VerticalAlignment="Top"
-               HorizontalAlignment="Left" />
-        <Label Grid.Row="3" Grid.Column="1" Style="{StaticResource ValueLabel}" VerticalAlignment="Top"
-               HorizontalAlignment="Stretch" Content="{Binding NumberOfViews}" />
-        <Label Grid.Row="4" Grid.Column="0" Style="{StaticResource Label}" Content="Date added:"
-               VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <Label Grid.Row="4" Grid.Column="1" Style="{StaticResource ValueLabel}" VerticalAlignment="Top"
-               HorizontalAlignment="Stretch" Content="{Binding DateAdded}" ContentStringFormat="dd/MM/yyy HH:mm" />
-        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource Label}" Content="Category:" VerticalAlignment="Top"
-               HorizontalAlignment="Left" />
-        <Label Grid.Row="5" Grid.Column="1" Style="{StaticResource ValueLabel}" VerticalAlignment="Top"
-               HorizontalAlignment="Stretch" Content="{Binding Category}" ContentStringFormat="dd/MM/yyy HH:mm" />
-        <!--<Label Grid.Row="6" Grid.Column="0" Style="{StaticResource Label}" Content="Tags:" VerticalAlignment="Top"
-               HorizontalAlignment="Left" />-->
-        <DataGrid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Tags}"
-                  CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Margin="5"
-                  CanUserSortColumns="True" AutoGenerateColumns="False" FontFamily="{StaticResource DefaultFont}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Value}" Header="Tags" Width="*" CanUserSort="True" FontFamily="{StaticResource DefaultFont}"/>
-            </DataGrid.Columns>
-        </DataGrid>
-        <TextBlock Grid.Column="0" Grid.Row="8" Text="{Binding FileName}" Grid.ColumnSpan="2"></TextBlock>
-        <!--<StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <TextBlock Text="{Binding Path=Resolution.Width}"></TextBlock>
-        </StackPanel>-->
+        <Image Grid.Column="0"
+               Source="{Binding Path=PreviewImage, Converter={StaticResource ImageConverter}}"
+               Stretch="UniformToFill"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Stretch" 
+               Margin="5"/>
+        <Grid Grid.Column="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}"
+                       Style="{StaticResource Title}" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Category}"
+                       Style="{StaticResource Subtitle}" />
+            <ListBox Grid.Row="2"
+                     ItemsSource="{Binding Tags}"
+                     HorizontalAlignment="Stretch"
+                     Margin="0">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Margin="0" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Value}" Style="{StaticResource Tag}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding Length}"
+                       Style="{StaticResource Current}" />
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding Rating, StringFormat={}{0:0}/5}"
+                       Style="{StaticResource Current}" />
+            <TextBlock Grid.Row="5" Grid.Column="0" 
+                       Text="{Binding NumberOfViews, StringFormat=Viewed {0} times}" Style="{StaticResource Current}" />
+            <TextBlock Grid.Row="6" Grid.Column="0" 
+                       Text="{Binding DateAdded, StringFormat=Added on {0:dd/MM/yyy HH:mm}}"
+                       Style="{StaticResource Current}" />
+            
+        </Grid>
     </Grid>
 </UserControl>

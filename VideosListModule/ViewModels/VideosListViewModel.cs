@@ -89,6 +89,7 @@ namespace VideosListModule
                         this._eventAggregator.GetEvent<VideoEditing>().Publish(this.CurrentVideo);
                     }
                     this.OnPropertyChanged();
+                    this._eventAggregator.GetEvent<VideoSelected>().Publish(value);
                 }
             }
         }

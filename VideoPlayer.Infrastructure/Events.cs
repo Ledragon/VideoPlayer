@@ -109,4 +109,6 @@ namespace VideoPlayer.Infrastructure
     public class CloseRequestedEvent : PubSubEvent<Object>
     {
     }
+
+    public class VideoSelected : PubSubEvent<Video> { }
 }

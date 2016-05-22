@@ -84,7 +84,8 @@ namespace PlaylistModule
                 this.OnPropertyChanged();
                 this.Playlist.Clear();
                 this.Playlist.AddRange(this._libraryService.GetVideosByFilePath(this._selectedPlayList.Files));
-                this.TotalDuration = this.Playlist.Aggregate(TimeSpan.Zero, (current, video) => current.Add(video.Length));
+                this.TotalDuration = this.Playlist.Aggregate(TimeSpan.Zero,
+                    (current, video) => current.Add(video.Length));
             }
         }
 
@@ -120,10 +121,7 @@ namespace PlaylistModule
 
         public TimeSpan TotalDuration
         {
-            get
-            {
-                return this._totalDuration;
-            }
+            get { return this._totalDuration; }
             set
             {
                 if (value.Equals(this._totalDuration))

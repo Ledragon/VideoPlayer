@@ -22,7 +22,7 @@
                 <Setter Property="Background" Value="{StaticResource VideoMenusSolidBrush}" />
             </Style>
             <Style TargetType="TextBlock" x:Key="PlayListElement" BasedOn="{StaticResource TrimmedTextBlock}">
-                <Setter Property="Margin" Value="3"></Setter>
+                <Setter Property="Margin" Value="3" />
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -33,10 +33,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ListBox ItemsSource="{Binding Playlist}"
-                 SelectedItem="{Binding CurrentVideo}"
-                 Margin="5">
+                 SelectedItem="{Binding CurrentVideo}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
@@ -45,20 +46,27 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="50" />
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding PreviewImage, Converter={StaticResource imageConverter}}" 
+                        <Image Source="{Binding PreviewImage, Converter={StaticResource imageConverter}}"
                                Height="40"
                                Margin="3" />
-                        <TextBlock Grid.Column="1" Text="{Binding Title}" Style="{StaticResource PlayListElement}" Width="150" />
-                        <TextBlock Grid.Column="2" Text="{Binding Length}" Style="{StaticResource PlayListElement}"  />
+                        <TextBlock Grid.Column="1" Text="{Binding Title}" Style="{StaticResource PlayListElement}"
+                                   Width="150" />
+                        <TextBlock Grid.Column="2" Text="{Binding Length}" Style="{StaticResource PlayListElement}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
-        
         </ListBox>
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Grid.Row="1" Text="{Binding TotalDuration}" />
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{Binding PlayListName}" HorizontalAlignment="Stretch" />
+            <Button Grid.Column="1" Content="Save" Command="{Binding SavePlaylistCommand}" />
+        </Grid>
+        <ComboBox Grid.Row="3" ItemsSource="{Binding PlayListCollection}" SelectedItem="{Binding SelectedPlayList}">
             
-        <TextBlock Text="{Binding TotalDuration}" Margin="5" />
-        <!--<Button Content="Save" Command="{Binding SavePlaylistCommand}" Margin="5" />-->
-        </StackPanel>
+        </ComboBox>
     </Grid>
 </UserControl>

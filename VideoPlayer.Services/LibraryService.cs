@@ -154,5 +154,10 @@ namespace VideoPlayer.Services
             File.Copy(filePath, destinationPath);
             this.Logger().DebugFormat("Library backed up to '{0}'.", destinationPath);
         }
+
+        public List<Video> GetVideosByFilePath(IEnumerable<String> fileNames)
+        {
+            return this.GetObjectsFromFile().Videos.Where(v => fileNames.Contains(v.FileName)).ToList();
+        }
     }
 }

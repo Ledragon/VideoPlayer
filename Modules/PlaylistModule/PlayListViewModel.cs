@@ -17,9 +17,13 @@ namespace PlaylistModule
         private readonly ILibraryService _libraryService;
         private Video _currentVideo;
         private ObservableCollection<Video> _playlist;
+        private ObservableCollection<Playlist> _playListCollection;
+        private String _playListName;
+        private Playlist _selectedPlayList;
         private TimeSpan _totalDuration;
 
-        public PlayListViewModel(IPlayListView view, IEventAggregator eventAggregator, ILibraryService libraryService) : base(view)
+        public PlayListViewModel(IPlayListView view, IEventAggregator eventAggregator, ILibraryService libraryService)
+            : base(view)
         {
             this._libraryService = libraryService;
             this.Playlist = new ObservableCollection<Video>();
@@ -35,14 +39,66 @@ namespace PlaylistModule
 
             eventAggregator.GetEvent<OnPlayPlaylistRequest>()
                 .Subscribe(dummy => { eventAggregator.GetEvent<OnPlayPlaylist>().Publish(this.Playlist); }, true);
+
+            this._playListCollection = new ObservableCollection<Playlist>(libraryService.GetObjectsFromFile().PlayLists);
         }
+
+        public String PlayListName
+        {
+            get { return this._playListName; }
+            set
+            {
+                if (value == this._playListName)
+                {
+                    return;
+                }
+                this._playListName = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Playlist> PlayListCollection
+        {
+            get { return this._playListCollection; }
+            set
+            {
+                if (Equals(value, this._playListCollection))
+                {
+                    return;
+                }
+                this._playListCollection = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public Playlist SelectedPlayList
+        {
+            get { return this._selectedPlayList; }
+            set
+            {
+                if (Equals(value, this._selectedPlayList))
+                {
+                    return;
+                }
+                this._selectedPlayList = value;
+                this.OnPropertyChanged();
+                this.Playlist.Clear();
+                this.Playlist.AddRange(this._libraryService.GetVideosByFilePath(this._selectedPlayList.Files));
+                this.TotalDuration = this.Playlist.Aggregate(TimeSpan.Zero, (current, video) => current.Add(video.Length));
+            }
+        }
+
+        public ICommand SavePlaylistCommand { get; private set; }
 
         public ObservableCollection<Video> Playlist
         {
             get { return this._playlist; }
             set
             {
-                if (Equals(value, this._playlist)) return;
+                if (Equals(value, this._playlist))
+                {
+                    return;
+                }
                 this._playlist = value;
                 this.OnPropertyChanged();
             }
@@ -53,7 +109,10 @@ namespace PlaylistModule
             get { return this._currentVideo; }
             set
             {
-                if (Equals(value, this._currentVideo)) return;
+                if (Equals(value, this._currentVideo))
+                {
+                    return;
+                }
                 this._currentVideo = value;
                 this.OnPropertyChanged();
             }
@@ -61,19 +120,24 @@ namespace PlaylistModule
 
         public TimeSpan TotalDuration
         {
-            get { return this._totalDuration; }
+            get
+            {
+                return this._totalDuration;
+            }
             set
             {
-                if (value.Equals(this._totalDuration)) return;
+                if (value.Equals(this._totalDuration))
+                {
+                    return;
+                }
                 this._totalDuration = value;
                 this.OnPropertyChanged();
             }
         }
 
-        public ICommand RemoveCommand { get; private set; }
-        public ICommand AddCommand { get; private set; }
-        public ICommand AddRangeCommand { get; private set; }
-        public ICommand SavePlaylistCommand { get; private set; }
+        public ICommand RemoveCommand { get; }
+        public ICommand AddCommand { get; }
+        public ICommand AddRangeCommand { get; }
 
         private void Add(IEnumerable<Video> videos)
         {
@@ -103,11 +167,10 @@ namespace PlaylistModule
         {
             var playlist = new Playlist
             {
-                Title = "default",
+                Title = this.PlayListName,
                 Files = this.Playlist.Select(v => v.FileName).ToList()
             };
             this._libraryService.AddPlaylist(playlist);
-
         }
     }
 }

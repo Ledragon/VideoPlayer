@@ -17,9 +17,10 @@ namespace VideoPlayer
     {
         protected override DependencyObject CreateShell()
         {
-            this.Container.RegisterType<IVideoRepository, FileVideoRepository>();
-            this.Container.RegisterType<ILibraryService, LibraryService>();
-            this.Container.RegisterType<VideosTabControlViewModel>();
+            this.Container.RegisterType<IVideoRepository, FileVideoRepository>(new ContainerControlledLifetimeManager())
+                .RegisterType<ILibraryService, LibraryService>(new ContainerControlledLifetimeManager())
+                .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager())
+                .RegisterType<VideosTabControlViewModel>();
 
             //TEMP
             this.Container.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();

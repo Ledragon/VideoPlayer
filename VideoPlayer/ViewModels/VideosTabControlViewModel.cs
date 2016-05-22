@@ -17,7 +17,7 @@ namespace VideoPlayer.ViewModels
         public VideosTabControlViewModel(IEventAggregator eventAggregator)
         {
             this.FilterGridVisibility = false;
-            this.IsPlayListVisible = false;
+            this.IsPlayListVisible = true;
             this.IsCategoryGridVisible = true;
 
             this.InitCommands();

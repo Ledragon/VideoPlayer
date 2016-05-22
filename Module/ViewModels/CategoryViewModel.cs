@@ -7,15 +7,18 @@ namespace Module
 {
     public class CategoryViewModel : INotifyPropertyChanged
     {
-        private int _count;
-        private string _name;
+        private Int32 _count;
+        private String _name;
 
         public String Name
         {
             get { return this._name; }
             set
             {
-                if (value == this._name) return;
+                if (value == this._name)
+                {
+                    return;
+                }
                 this._name = value;
                 this.OnPropertyChanged();
             }
@@ -26,7 +29,10 @@ namespace Module
             get { return this._count; }
             set
             {
-                if (value == this._count) return;
+                if (value == this._count)
+                {
+                    return;
+                }
                 this._count = value;
                 this.OnPropertyChanged();
             }
@@ -35,10 +41,13 @@ namespace Module
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] String propertyName = null)
         {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            var handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

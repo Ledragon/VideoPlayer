@@ -7,3 +7,5 @@
 packages
 *.cache
 *.DotSettings
+bin
+obj

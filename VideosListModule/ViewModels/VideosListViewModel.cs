@@ -43,7 +43,10 @@ namespace VideosListModule
             get { return this._infoVisibility; }
             set
             {
-                if (value == this._infoVisibility) return;
+                if (value == this._infoVisibility)
+                {
+                    return;
+                }
                 this._infoVisibility = value;
                 this.OnPropertyChanged();
             }
@@ -70,7 +73,10 @@ namespace VideosListModule
             get { return this._editIndex; }
             set
             {
-                if (value == this._editIndex) return;
+                if (value == this._editIndex)
+                {
+                    return;
+                }
                 this._editIndex = value;
                 this.OnPropertyChanged();
             }
@@ -217,7 +223,7 @@ namespace VideosListModule
             }
             this.PlayPlaylist();
         }
-        
+
         private void AddRange(Object obj)
         {
             this._eventAggregator.GetEvent<OnAddVideoRange>().Publish(this.FilteredVideos.Cast<Video>());
@@ -280,7 +286,8 @@ namespace VideosListModule
             }
             else
             {
-                isCategoryOk = !String.IsNullOrEmpty(video.Category) && video.Category == category;
+                isCategoryOk = !String.IsNullOrEmpty(video.Category) &&
+                               String.Equals(video.Category, category, StringComparison.InvariantCultureIgnoreCase);
             }
             return isCategoryOk;
         }

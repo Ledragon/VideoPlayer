@@ -15,10 +15,9 @@
             </ResourceDictionary.MergedDictionaries>
             <Color x:Key="BackgroundColor">#CC000000</Color>
             <SolidColorBrush x:Key="BackgroundColorBrush" Color="{StaticResource BackgroundColor}" />
-            <Style TargetType="{x:Type TextBlock}" x:Key="VideoLabel" BasedOn="{StaticResource TrimmedTextBlock}">
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TrimmedTextBlock}">
                 <Setter Property="Width" Value="300" />
                 <Setter Property="FontSize" Value="14" />
-                <Setter Property="Margin" Value="5" />
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>

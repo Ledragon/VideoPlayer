@@ -32,7 +32,10 @@ namespace Module
             this.InitCollection();
             this._eventAggregator.GetEvent<VideoEdited>().Subscribe(this.Refresh);
             this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.BuildCategoryList);
+            this.RefreshCommand = new GenericCommand(() => this.BuildCategoryList());
         }
+
+        public ICommand RefreshCommand { get; }
 
         public ICommand FilterByCategoryCommand
         {

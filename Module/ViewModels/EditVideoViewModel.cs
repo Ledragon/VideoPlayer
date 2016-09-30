@@ -32,7 +32,7 @@ namespace Module
             this.CreateCategories(libraryService);
             this.CreateTags(libraryService);
             eventAggregator.GetEvent<VideoEditing>().Subscribe(v => { this.Video = v; });
-            eventAggregator.GetEvent<VideoEdited>().Subscribe(this.VideoEdited);
+            //eventAggregator.GetEvent<VideoEdited>().Subscribe(this.VideoEdited);
             this.CreateCategoryCommand = new DelegateCommand(this.CreateCategory);
         }
 
@@ -68,6 +68,13 @@ namespace Module
                 if (Equals(value, this._video)) return;
                 this._video = value;
                 this.SelectedCategory = this.CategoryViewModels.FirstOrDefault(c => c.Name == this.Video.Category);
+                //if (value.PropertyChanged)
+                //{
+                    value.PropertyChanged += (s, e) =>
+                    {
+                        this._eventAggregator.GetEvent<VideoEdited>().Publish(value);
+                    };
+                //}
                 this.OnPropertyChanged();
             }
         }
@@ -159,7 +166,8 @@ namespace Module
             try
             {
                 this.Video.Category = this.NewCategory;
-                this._eventAggregator.GetEvent<VideoEdited>().Publish(this.Video);
+                //this._eventAggregator.GetEvent<VideoEdited>().Publish(this.Video);
+                this.VideoEdited(this.Video);
                 this.NewCategory = String.Empty;
             }
             catch (Exception e)

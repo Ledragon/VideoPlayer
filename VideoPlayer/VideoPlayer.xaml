@@ -48,7 +48,7 @@
     <Window.InputBindings>
         <KeyBinding Command="{Binding GoToHomePageCommand}" Key="Back" />
         <KeyBinding Command="{Binding ToggleStyleCommand}" Key="Return" Modifiers="Alt" />
-        <KeyBinding Command="{Binding CloseCommand}" Key="S" />
+        <KeyBinding Command="{Binding CloseCommand}" Key="S" Modifiers="Control"/>
     </Window.InputBindings>
 
     <Grid x:Name="MainGrid">

@@ -27,7 +27,7 @@ namespace HomeModule
             this._libraryService = libraryService;
             this.GoToHomePageCommand = new DelegateCommand(this.SetHomePage);
             this.ToggleStyleCommand = new DelegateCommand(this.ToggleWindowStyle);
-            this.CloseCommand = new DelegateCommand(this.CloseAsync);
+            this.CloseCommand = new DelegateCommand(this.CloseAsync, () =>this.SelectedTab != 3);
 
             this._eventAggregator.GetEvent<GoToPage>().Subscribe(this.SetSelectedTab);
             this._eventAggregator.GetEvent<LibraryUpdating>()

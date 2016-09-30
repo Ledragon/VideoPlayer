@@ -6,8 +6,9 @@
              xmlns:views="clr-namespace:VideosListModule.Views"
              xmlns:infrastructure11="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
              xmlns:regions="http://www.codeplex.com/CompositeWPF"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="1024"> 
+             d:DesignHeight="600" d:DesignWidth="1024">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,13 +23,22 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding LoadDataAsyncCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0"  Background="{StaticResource BackgroundColorBrush}" Margin="0,0,0,5">
-        <ContentControl Grid.Row="0" regions:RegionManager.RegionName="{x:Static infrastructure11:RegionNames.VideoInfoRegion}"/>
+        <Grid Grid.Row="0" Background="{StaticResource BackgroundColorBrush}" Margin="0,0,0,5">
+            <ContentControl Grid.Row="0"
+                            regions:RegionManager.RegionName="{x:Static infrastructure11:RegionNames.VideoInfoRegion}" />
         </Grid>
         <views:VideosList Grid.Row="1" Grid.Column="0" />
+        <Grid Grid.Row="0" Grid.RowSpan="2" Visibility="{Binding IsLoading}" Background="#BFCCCCCC">
+            <TextBlock FontSize="64" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">Loading</TextBlock>
+        </Grid>
     </Grid>
 </UserControl>

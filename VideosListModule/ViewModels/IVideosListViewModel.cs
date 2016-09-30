@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using Classes;
 using Microsoft.Practices.Prism.Commands;
@@ -18,5 +19,7 @@ namespace VideosListModule
         Visibility InfoVisibility { get; set; }
         ICollectionView FilteredVideos { get; set; }
         Int32 EditIndex { get; set; }
+        Visibility IsLoading { get; set; }
+        Task Init();
     }
 }

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using Classes;
 using Log;
 using Microsoft.Practices.Prism.Commands;
@@ -25,6 +27,24 @@ namespace VideosListModule
         private List<String> _filterTags;
         private Visibility _infoVisibility;
         private SortDescription _sortDescription;
+        private ILibraryService _libraryService;
+        private Visibility _isLoading;
+
+        public Visibility IsLoading
+        {
+            get { return this._isLoading; }
+            set
+            {
+                if (value == this._isLoading)
+                {
+                    return;
+                }
+                this._isLoading = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public ICommand LoadDataAsyncCommand { get; private set; }
 
         public VideosListViewModel(ILibraryService libraryService, IVideosListView videosListView,
             IEventAggregator eventAggregator)
@@ -54,7 +74,10 @@ namespace VideosListModule
 
         public ICollectionView FilteredVideos
         {
-            get { return this._filteredVideos; }
+            get
+            {
+                return this._filteredVideos;
+            }
             set
             {
                 if (Equals(value, this._filteredVideos))
@@ -90,18 +113,15 @@ namespace VideosListModule
                 if (!Equals(value, this._currentVideo))
                 {
                     this._currentVideo = value;
-                    if (this.EditIndex == 1)
-                    {
-                        this._eventAggregator.GetEvent<VideoEditing>().Publish(this.CurrentVideo);
-                    }
-                    this.OnPropertyChanged();
                     this._eventAggregator.GetEvent<VideoSelected>().Publish(value);
+                    this.OnPropertyChanged();
                 }
             }
         }
 
         private void Init(ILibraryService libraryService, IEventAggregator eventAggregator)
         {
+            this._libraryService = libraryService;
             try
             {
                 this._eventAggregator = eventAggregator;
@@ -115,14 +135,16 @@ namespace VideosListModule
                 this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.UpdateVideoListView);
                 //this._eventAggregator.GetEvent<VideoEdited>().Subscribe(dummy => this.SetFilter());
                 this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Subscribe(this.AddRange);
-
-                this.UpdateVideoListView(libraryService.GetObjectsFromFile().Videos);
+                //this.UpdateVideoListView(libraryService.GetObjectsFromFile().Videos);
                 this.InfoVisibility = Visibility.Visible;
 
                 //this.EditCommand = new DelegateCommand(this.Edit, this.CanEdit);
                 this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
                 this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
                 this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
+                //this.LoadAsync().Wait();
+                this.LoadDataAsyncCommand = new DelegateCommand(async ()=>await this.Init());
+
             }
             catch (Exception e)
             {
@@ -131,16 +153,24 @@ namespace VideosListModule
             }
         }
 
+        public async Task Init()
+        {
+            this.IsLoading = Visibility.Visible;
+            var wrapper = await this._libraryService.LoadAsync();
+            this.UpdateVideoListView(wrapper.Videos);
+            this.IsLoading = Visibility.Hidden;
+        }
+
         private void UpdateVideoListView(IEnumerable<Video> videos)
         {
-            var vids = videos.ToList();
+            var vids = videos.OrderBy(v => v.Title).ToList();
             this._sortDescription = new SortDescription("Title", ListSortDirection.Ascending);
             var view = CollectionViewSource.GetDefaultView(vids);
             view.SortDescriptions.Add(this._sortDescription);
             this.FilteredVideos = view;
             if (this.CurrentVideo == null && vids.Any())
             {
-                this.CurrentVideo = vids.OrderBy(v => v.Title).First();
+                this.CurrentVideo = vids.First();
             }
         }
 

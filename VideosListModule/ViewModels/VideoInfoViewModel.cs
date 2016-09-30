@@ -30,9 +30,4 @@ namespace VideosListModule
             }
         }
     }
-
-    public interface IVideoInfoViewModel : IViewModel
-    {
-        Video Video { get; set; }
-    }
 }

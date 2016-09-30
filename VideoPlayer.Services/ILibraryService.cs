@@ -16,5 +16,6 @@ namespace VideoPlayer.Services
         Task CleanAsync();
         void AddPlaylist(Playlist playlist);
         List<Video> GetVideosByFilePath(IEnumerable<String> fileNames);
+        Task<ObjectsWrapper> LoadAsync();
     }
 }

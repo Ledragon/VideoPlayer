@@ -15,7 +15,9 @@ namespace VideoPlayer.ViewModels
         public EditViewModel(ILibraryService libraryService, IEventAggregator eventAggregator)
         {
             this._eventAggregator = eventAggregator;
-            this.Videos = new ObservableCollection<Video>(libraryService.GetObjectsFromFile().Videos.OrderBy(v=>v.Title));
+            var orderedEnumerable = libraryService.GetObjectsFromFile().Videos.OrderBy(v=>v.Category).ToList();
+            this.Videos = new ObservableCollection<Video>(orderedEnumerable);
+            this.SelectedVideo = this.Videos.FirstOrDefault();
         }
 
         public ObservableCollection<Video> Videos { get; private set; }

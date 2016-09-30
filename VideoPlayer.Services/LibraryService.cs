@@ -28,6 +28,11 @@ namespace VideoPlayer.Services
             return _objectsWrapper;
         }
 
+        public async Task<ObjectsWrapper> LoadAsync()
+        {
+            return await Task.Factory.StartNew(this.GetObjectsFromFile).ConfigureAwait(false);
+        }
+
         public void Save()
         {
             this.Save(this.GetObjectsFromFile());

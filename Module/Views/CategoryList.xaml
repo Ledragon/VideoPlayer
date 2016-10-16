@@ -16,7 +16,8 @@
         <ListBox Name="UiCategoriesListBox"
                  ItemsSource="{Binding CategoryViewModels}"
                  SelectedItem="{Binding SelectedCategory}"
-                 Style="{StaticResource FilterListBox}">
+                 Style="{StaticResource FilterListBox}"
+                HorizontalContentAlignment="Stretch">
         </ListBox>
     </Grid>
 </UserControl>

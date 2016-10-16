@@ -28,9 +28,9 @@ namespace VideosListModule
         private Visibility _infoVisibility;
         private SortDescription _sortDescription;
         private ILibraryService _libraryService;
-        private Visibility _isLoading;
+        private Boolean _isLoading;
 
-        public Visibility IsLoading
+        public Boolean IsLoading
         {
             get { return this._isLoading; }
             set
@@ -155,10 +155,10 @@ namespace VideosListModule
 
         public async Task Init()
         {
-            this.IsLoading = Visibility.Visible;
+            this.IsLoading = true;
             var wrapper = await this._libraryService.LoadAsync();
             this.UpdateVideoListView(wrapper.Videos);
-            this.IsLoading = Visibility.Hidden;
+            this.IsLoading = false;
         }
 
         private void UpdateVideoListView(IEnumerable<Video> videos)

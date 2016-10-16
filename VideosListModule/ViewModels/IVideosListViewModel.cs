@@ -19,7 +19,7 @@ namespace VideosListModule
         Visibility InfoVisibility { get; set; }
         ICollectionView FilteredVideos { get; set; }
         Int32 EditIndex { get; set; }
-        Visibility IsLoading { get; set; }
+        Boolean IsLoading { get; set; }
         Task Init();
     }
 }

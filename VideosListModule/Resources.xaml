@@ -5,6 +5,7 @@
         <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <infrastructure:ImageConverter x:Key="ImageConverter" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
     <Style x:Key="FilterListBox" TargetType="{x:Type ListBox}">
         <Setter Property="Background" Value="{StaticResource VideoMenusSolidBrush}" />
         <Setter Property="Margin" Value="5" />

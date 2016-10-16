@@ -157,6 +157,10 @@
       <Project>{FFB9C128-CA7E-40BB-BBCD-7B28707C6719}</Project>
       <Name>Classes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LeDragon.Controls\LeDragon.Controls.csproj">
+      <Project>{3b7b2ca0-a0e1-44eb-ad21-2b15919aa62d}</Project>
+      <Name>LeDragon.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Log\Log.csproj">
       <Project>{02C8E3B1-3796-49B2-ABA2-67D0E8644871}</Project>
       <Name>Log</Name>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer", "VideoPlayer\VideoPlayer.csproj", "{94B19A70-3F0D-4E7F-9249-4CBDC97D92F9}"
 EndProject
@@ -46,6 +46,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideosListModule", "VideosListModule\VideosListModule.csproj", "{57309725-0F3D-4A63-B876-05366E0DE7DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformationEditionModule", "InformationEditionModule\InformationEditionModule.csproj", "{5638EDFA-60FA-49B9-A7D3-99B043BF7EF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeDragon.Controls", "LeDragon.Controls\LeDragon.Controls.csproj", "{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -129,6 +131,10 @@ Global
 		{5638EDFA-60FA-49B9-A7D3-99B043BF7EF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5638EDFA-60FA-49B9-A7D3-99B043BF7EF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5638EDFA-60FA-49B9-A7D3-99B043BF7EF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

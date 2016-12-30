@@ -6,7 +6,7 @@
              xmlns:infrastructure11="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
              xmlns:regions="http://www.codeplex.com/CompositeWPF"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             xmlns:Controls="clr-namespace:LeDragon.Controls;assembly=LeDragon.Controls"
+             xmlns:controls="clr-namespace:LeDragon.Controls;assembly=LeDragon.Controls"
              x:Class="VideosListModule.VideosListView"
              mc:Ignorable="d"
              d:DesignHeight="600"
@@ -79,7 +79,7 @@
         <views:VideosList Grid.Row="1"
                           Grid.Column="0" />
 
-        <Controls:LoadingPanel  Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+        <controls:LoadingPanel  Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
         <!--<Grid Grid.Row="0"

@@ -53,6 +53,13 @@ namespace VideosListModule.Mocks
             }
         }
 
+        public String ContactSheetPath
+        {
+            get { return @"D:\Hugues\Documents\_mine\Vids\Amateure-Deutsche Teens.mp4.png"; }
+        }
+
+        public Boolean HasContactSheet { get { return true; } }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

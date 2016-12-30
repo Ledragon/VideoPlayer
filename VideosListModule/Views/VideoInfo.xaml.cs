@@ -19,8 +19,4 @@ namespace VideosListModule.Views
             set { this.DataContext = value; }
         }
     }
-
-    public interface IVideoInfoView : IView
-    {
-    }
 }

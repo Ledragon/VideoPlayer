@@ -269,6 +269,8 @@ namespace Classes
             }
         }
 
+
+
         //[XmlIgnore]
         //public Size Resolution
         //{

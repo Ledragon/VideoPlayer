@@ -55,6 +55,7 @@
                 <Setter Property="Foreground" Value="Gray" />
             </Style>
             <mocks:MockVideo x:Key="MockVideo" />
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid d:DataContext="{Binding Source={StaticResource MockVideo}, Path=Video}" DataContext="{Binding Video}">
@@ -62,12 +63,27 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image Grid.Column="0"
-               Source="{Binding Path=PreviewImage, Converter={StaticResource ImageConverter}}"
-               Stretch="UniformToFill"
-               HorizontalAlignment="Stretch"
-               VerticalAlignment="Stretch" 
-               Margin="5"/>
+        <TabControl Grid.Column="0"
+                    TabStripPlacement="Bottom">
+            <TabItem Header="Preview" Visibility="Visible">
+                <Image
+                    Source="{Binding Path=PreviewImage, Converter={StaticResource ImageConverter}}"
+                    Stretch="Uniform"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="5" />
+            </TabItem>
+            <TabItem Header="Contact sheet"
+                     Visibility="{Binding Path=DataContext.HasContactSheet, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource BoolToVis}}">
+                <Image
+                    Source="{Binding Path=DataContext.ContactSheetPath, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                    Stretch="Uniform"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="5" />
+            </TabItem>
+
+        </TabControl>
         <Grid Grid.Column="1" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -101,12 +117,12 @@
                        Style="{StaticResource Current}" />
             <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding Rating, StringFormat={}{0:0}/5}"
                        Style="{StaticResource Current}" />
-            <TextBlock Grid.Row="5" Grid.Column="0" 
+            <TextBlock Grid.Row="5" Grid.Column="0"
                        Text="{Binding NumberOfViews, StringFormat=Viewed {0} times}" Style="{StaticResource Current}" />
-            <TextBlock Grid.Row="6" Grid.Column="0" 
+            <TextBlock Grid.Row="6" Grid.Column="0"
                        Text="{Binding DateAdded, StringFormat=Added on {0:dd/MM/yyy HH:mm}}"
                        Style="{StaticResource Current}" />
-            
+
         </Grid>
     </Grid>
 </UserControl>

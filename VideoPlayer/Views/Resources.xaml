@@ -9,7 +9,7 @@
     </Style>
     <Style TargetType="{x:Type Button}" x:Key="PlayAll">
         <Setter Property="Background" Value="Transparent" />
-        
+
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="Margin" Value="5" />
         <!--<Setter Property="Foreground" Value="Wheat" />-->
@@ -82,11 +82,29 @@
         <Setter Property="Margin" Value="5,0,10,0" />
     </Style>
     <Style TargetType="Path" x:Key="StatusBarButton">
-        <Setter Property="Fill" Value="#FF333333"></Setter>
-        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"></Setter>
-        <Setter Property="Stretch" Value="Uniform"></Setter>
+        <Setter Property="Fill" Value="#FF333333" />
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+        <Setter Property="Stretch" Value="Uniform" />
     </Style>
     <Style TargetType="ContentControl" x:Key="VideosViewControl">
-        <Setter Property="Width" Value="200"></Setter>
+        <Setter Property="Width" Value="200" />
+    </Style>
+
+
+    <Style TargetType="TabItem" x:Key="HiddenTabItem">
+        <Setter Property="Visibility"
+                Value="Collapsed" />
+        <Setter Property="Padding"
+                Value="0" />
+    </Style>
+    <Style TargetType="TabControl"
+           x:Key="HiddenTabControl">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource HiddenTabItem}"></Setter>
     </Style>
 </ResourceDictionary>

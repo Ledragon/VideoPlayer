@@ -14,6 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
+                <ResourceDictionary Source="Views/Resources.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="StatusBar">
                 <Setter Property="Background" Value="Black" />
@@ -22,15 +23,6 @@
             <Style TargetType="StatusBarItem">
                 <Setter Property="BorderBrush" Value="Gray" />
                 <Setter Property="BorderThickness" Value="1" />
-            </Style>
-            <Style TargetType="TabControl">
-                <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Padding" Value="0" />
-                <Setter Property="BorderThickness" Value="0" />
-            </Style>
-            <Style TargetType="TabItem">
-                <Setter Property="Visibility" Value="Collapsed" />
-                <Setter Property="Padding" Value="0" />
             </Style>
             <Style TargetType="TextBlock" x:Key="ExitMessage" BasedOn="{StaticResource TrimmedTextBlock}">
                 <Setter Property="HorizontalAlignment" Value="Center" />
@@ -41,21 +33,21 @@
                 <Setter Property="VerticalAlignment" Value="Top" />
                 <Setter Property="FontSize" Value="32" />
                 <Setter Property="Margin" Value="5" />
-                
+
             </Style>
         </ResourceDictionary>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Command="{Binding GoToHomePageCommand}" Key="Back" />
         <KeyBinding Command="{Binding ToggleStyleCommand}" Key="Return" Modifiers="Alt" />
-        <KeyBinding Command="{Binding CloseCommand}" Key="S" Modifiers="Control"/>
+        <KeyBinding Command="{Binding CloseCommand}" Key="S" Modifiers="Control" />
     </Window.InputBindings>
 
     <Grid x:Name="MainGrid">
         <Grid.Background>
             <ImageBrush ImageSource=".\TheaterCurtains.jpg" />
         </Grid.Background>
-        <TabControl Name="_uiTabs" SelectedIndex="{Binding SelectedTab}">
+        <TabControl Name="_uiTabs" SelectedIndex="{Binding SelectedTab}" Style="{StaticResource HiddenTabControl}">
             <TabItem Name="_uiHomeTab">
                 <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.HomeRegion}" />
 
@@ -72,7 +64,7 @@
                                     x:Name="_uiSettingsView" />
             </TabItem>
             <TabItem>
-                <views:EditView></views:EditView>
+                <views:EditView />
             </TabItem>
         </TabControl>
         <Grid Visibility="{Binding IsExitMenuVisible}" Background="#cc000000">

@@ -1,9 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using Classes;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
+using VideosListModule.ViewModels;
 
 namespace VideoPlayer.ViewModels
 {
@@ -16,11 +18,11 @@ namespace VideoPlayer.ViewModels
         {
             this._eventAggregator = eventAggregator;
             var orderedEnumerable = libraryService.GetObjectsFromFile().Videos.OrderBy(v=>v.Category).ToList();
-            this.Videos = new ObservableCollection<Video>(orderedEnumerable);
-            this.SelectedVideo = this.Videos.FirstOrDefault();
+            this.Videos = new VideosCollectionView(new ObservableCollection<Video>(orderedEnumerable),0);
+            //this.SelectedVideo = this.Videos.FirstOrDefault();
         }
 
-        public ObservableCollection<Video> Videos { get; private set; }
+        public VideosCollectionView Videos { get; }
 
         public Video SelectedVideo
         {
@@ -33,5 +35,6 @@ namespace VideoPlayer.ViewModels
                 this.OnPropertyChanged();
             }
         }
+
     }
 }

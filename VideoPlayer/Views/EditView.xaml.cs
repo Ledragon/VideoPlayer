@@ -1,6 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Classes;
 using VideoPlayer.Common;
-using VideoPlayer.Services;
 using VideoPlayer.ViewModels;
 
 namespace VideoPlayer.Views

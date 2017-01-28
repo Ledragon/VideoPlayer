@@ -43,16 +43,24 @@ namespace VideosListModule.ViewModels
         // Overriding count allows for paging.
         public override Int32 Count
         {
-            get { return Math.Min(this.PageSize, this.CurrentItems.Length); }
+            get
+            {
+                return this.PageSize > 0 ? Math.Min(this.PageSize, this.CurrentItems.Length) : this.CurrentItems.Length;
+            }
         }
 
         private Video[] CurrentItems
         {
             get
             {
-                return this.Cast<Video>()
-                    .Skip(this._pageNumber*this.PageSize)
-                    .Take(this.PageSize)
+                var enumerable = this.Cast<Video>();
+                if (this.PageSize > 0)
+                {
+                    enumerable = enumerable
+                        .Skip(this._pageNumber*this.PageSize)
+                        .Take(this.PageSize);
+                }
+                return enumerable
                     .ToArray();
             }
         }
@@ -61,14 +69,14 @@ namespace VideosListModule.ViewModels
         {
             get
             {
-                return this.Cast<Video>().Count() > this.PageSize*(this._pageNumber + 1);
+                return this.PageSize > 0 && this.Cast<Video>().Count() > this.PageSize*(this._pageNumber + 1);
                 ;
             }
         }
 
         public Boolean CanMoveToPreviousPage
         {
-            get { return this._pageNumber > 0; }
+            get { return this.PageSize > 0 && this._pageNumber > 0; }
         }
 
         public override Object GetItemAt(Int32 index)

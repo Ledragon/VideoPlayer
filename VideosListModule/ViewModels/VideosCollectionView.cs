@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows.Data;
 using Classes;
 using Classes.Annotations;
@@ -12,14 +11,14 @@ namespace VideosListModule
 {
     public sealed class VideosCollectionView : ListCollectionView
     {
+        private readonly List<Video> _list;
+        private readonly Int32 _pageSize = 20;
         private String _categoryFilter;
         private String _filterName;
         private List<String> _filterTags;
 
         private Int32 _pageNumber;
-        private Int32 _pageSize = 20;
         private SortDescription _sortDescription;
-        private readonly List<Video> _list;
 
         public VideosCollectionView([NotNull] List<Video> collection) : base(collection)
         {
@@ -42,16 +41,6 @@ namespace VideosListModule
             get { return Math.Min(this._pageSize, this.CurrentItems.Length); }
         }
 
-        public override Object GetItemAt(Int32 index)
-        {
-            var currentItems = this.CurrentItems;
-            if (index >= currentItems.Count())
-            {
-                throw new IndexOutOfRangeException();
-            }
-            return currentItems[index];
-        }
-
         private Video[] CurrentItems
         {
             get
@@ -63,6 +52,25 @@ namespace VideosListModule
             }
         }
 
+        public Boolean CanMoveToNextPage
+        {
+            get { return this.Cast<Video>().Count() > (this._pageSize) * (this._pageNumber+1); ; }
+        }
+
+        public Boolean CanMoveToPreviousPage
+        {
+            get { return this._pageNumber > 0; }
+        }
+
+        public override Object GetItemAt(Int32 index)
+        {
+            var currentItems = this.CurrentItems;
+            if (index >= currentItems.Count())
+            {
+                throw new IndexOutOfRangeException();
+            }
+            return currentItems[index];
+        }
 
         public void Sort(SortDescription obj)
         {
@@ -74,7 +82,6 @@ namespace VideosListModule
                 this.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
             }
         }
-
 
         public void FilterTag(List<String> tags)
         {
@@ -100,8 +107,30 @@ namespace VideosListModule
             }
         }
 
-        private void RefreshView()
+        public void NextPage()
         {
+            if (this.CanMoveToNextPage)
+            {
+                this._pageNumber++;
+                this.RefreshView(false);
+            }
+        }
+
+        public void PreviousPage()
+        {
+            if (this.CanMoveToPreviousPage)
+            {
+                this._pageNumber++;
+                this.RefreshView(false);
+            }
+        }
+
+        private void RefreshView(Boolean reset = true)
+        {
+            if (reset)
+            {
+                this._pageNumber = 0;
+            }
             this.Refresh();
             this.MoveCurrentToFirst();
         }

@@ -144,7 +144,48 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <!--<Button Grid.Column="2"
-                Command="{Binding NextCommand}">Next</Button>-->
+        <Button Grid.Column="2"
+                Command="{Binding NextCommand}">
+            <Viewbox>
+                <Viewbox.LayoutTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="0.5"
+                                        ScaleY="0.5" />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Viewbox.LayoutTransform>
+                <Grid>
+                    <Grid
+                          Width="48"
+                          Height="48"
+                          Visibility="Visible">
+                        <Rectangle Fill="#FF000000"
+                                  
+                                   Visibility="Visible" />
+                    </Grid>
+                    <Path Data="M0,0L197.27686,0 397.76401,246.9906 399.46771,249.06265 400.3573,247.99635 498.99997,369.51013 400.3573,491.05371 199.85071,738 2.5647115,738 230.11415,457.75143 300.80618,370.59119 299.12131,368.50436 227.49289,280.29288z"
+                          Stretch="Uniform"
+                          Fill="#FFFFFFFF"
+                          Width="26"
+                          Height="26"
+                          Margin="0,0,0,0"
+                          RenderTransformOrigin="0.5,0.5">
+                        <Path.RenderTransform>
+                            <TransformGroup>
+                                <TransformGroup.Children>
+                                    <RotateTransform Angle="0" />
+                                    <ScaleTransform ScaleX="1"
+                                                    ScaleY="1" />
+                                </TransformGroup.Children>
+                            </TransformGroup>
+                        </Path.RenderTransform>
+                    </Path>
+                </Grid>
+            </Viewbox>
+
+
+        </Button>
     </Grid>
 </UserControl>

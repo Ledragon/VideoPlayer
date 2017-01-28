@@ -82,6 +82,7 @@ namespace VideosListModule.ViewModels
                 this._filteredVideos = value;
 
                 this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
+                this.Raise();
                 this.OnPropertyChanged();
             }
         }
@@ -142,21 +143,20 @@ namespace VideosListModule.ViewModels
                 this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
                 this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
                 this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
-                //this.NextCommand = new DelegateCommand(() =>
-                //{
-                //    this._pageNumber++;
-                //    this.UpdateVideoListView(this._videos);
-                //    //this.Raise();
-                //},
-                //    () => this._videos != null && this._pageNumber*this._pageSize < this._videos.Count);
+                this.NextCommand = new DelegateCommand(() =>
+                {
+                    this.FilteredVideos.NextPage();
+                    //this.UpdateVideoListView(this._videos);
+                    this.Raise();
+                },
+                    () => this.FilteredVideos != null && this.FilteredVideos.CanMoveToNextPage);
 
-                //this.PreviousCommand = new DelegateCommand(() =>
-                //{
-                //    this._pageNumber--;
-                //    this.UpdateVideoListView(this._videos);
-                //    //this.Raise();
-                //},
-                //    () => this._pageNumber > 0);
+                this.PreviousCommand = new DelegateCommand(() =>
+                {
+                    this.FilteredVideos.PreviousPage();
+                    this.Raise();
+                },
+                    () => this.FilteredVideos != null && this.FilteredVideos.CanMoveToPreviousPage);
                 //this._videos = new ObservableCollection<Video>();
                 this.LoadDataAsyncCommand = new DelegateCommand(async () => await this.Init());
             }
@@ -183,16 +183,19 @@ namespace VideosListModule.ViewModels
         private void FilterTag(List<String> tags)
         {
             this.FilteredVideos.FilterTag(tags);
+            this.Raise();
         }
 
         private void FilterName(String obj)
         {
             this.FilteredVideos.FilterName(obj);
+            this.Raise();
         }
 
         private void FilterCategory(String category)
         {
             this.FilteredVideos.FilterCategory(category);
+            this.Raise();
         }
 
         private Boolean CanCommandsExecute()

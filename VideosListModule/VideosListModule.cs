@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using VideoPlayer.Infrastructure;
+using VideosListModule.ViewModels;
 using VideosListModule.Views;
 
 namespace VideosListModule

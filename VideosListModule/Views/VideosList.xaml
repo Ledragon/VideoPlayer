@@ -5,25 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              xmlns:mocks="clr-namespace:VideosListModule.Mocks"
-             d:DesignHeight="400" d:DesignWidth="1024">
+             d:DesignHeight="400"
+             d:DesignWidth="1024">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Color x:Key="BackgroundColor">#CC000000</Color>
-            <SolidColorBrush x:Key="BackgroundColorBrush" Color="{StaticResource BackgroundColor}" />
-            <Style TargetType="{x:Type TextBlock}" x:Key="VideoLabel" BasedOn="{StaticResource TrimmedTextBlock}">
-                <Setter Property="Width" Value="300" />
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="Margin" Value="5" />
+            <SolidColorBrush x:Key="BackgroundColorBrush"
+                             Color="{StaticResource BackgroundColor}" />
+            <Style TargetType="{x:Type TextBlock}"
+                   x:Key="VideoLabel"
+                   BasedOn="{StaticResource TrimmedTextBlock}">
+                <Setter Property="Width"
+                        Value="300" />
+                <Setter Property="FontSize"
+                        Value="14" />
+                <Setter Property="Margin"
+                        Value="5" />
             </Style>
             <mocks:MockVideoList x:Key="DesignViewModel"></mocks:MockVideoList>
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.InputBindings>
-        <KeyBinding Key="A" Command="{Binding AddVideoCommand}" />
-        <KeyBinding Key="P" Command="{Binding PlayPlaylistCommand}" />
+        <KeyBinding Key="A"
+                    Command="{Binding AddVideoCommand}" />
+        <KeyBinding Key="P"
+                    Command="{Binding PlayPlaylistCommand}" />
     </UserControl.InputBindings>
     <Grid d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
         <Grid.ColumnDefinitions>
@@ -31,8 +40,49 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <!--<Button Grid.Column="0" Command="{Binding PreviousCommand}">Previous</Button>-->
-        <ListBox Grid.Column="1" SelectionMode="Single"
+        <Button Grid.Column="0"
+                Command="{Binding PreviousCommand}">
+            <Viewbox>
+                <Viewbox.LayoutTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="0.5"
+                                        ScaleY="0.5" />
+                        <SkewTransform />
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Viewbox.LayoutTransform>
+                <Grid>
+                    <Grid Name="backgroundGrid"
+                          Width="48"
+                          Height="48"
+                          Visibility="Visible">
+                        <Rectangle Fill="#FF000000"
+                                   Name="Rect"
+                                   Visibility="Visible" />
+                    </Grid>
+                    <Path Data="M299.152955025434,0L496.426178902388,0 268.890046089888,280.247772216797 198.190201729536,367.407897949219 199.87503144145,369.495361328125 271.502137154341,457.706451416016 498.999970406294,738 301.717621773481,738 101.234124153852,491.008697509766 99.5304498374462,488.936553955078 98.6409082114697,490.003173828125 0,368.488952636719 98.6409082114697,246.945526123047z"
+                          Stretch="Uniform"
+                          Fill="#FFFFFFFF"
+                          Width="26"
+                          Height="26"
+                          Margin="0,0,0,0"
+                          RenderTransformOrigin="0.5,0.5">
+                        <Path.RenderTransform>
+                            <TransformGroup>
+                                <TransformGroup.Children>
+                                    <RotateTransform Angle="0" />
+                                    <ScaleTransform ScaleX="1"
+                                                    ScaleY="1" />
+                                </TransformGroup.Children>
+                            </TransformGroup>
+                        </Path.RenderTransform>
+                    </Path>
+                </Grid>
+            </Viewbox>
+        </Button>
+        <ListBox Grid.Column="1"
+                 SelectionMode="Single"
                  IsSynchronizedWithCurrentItem="True"
                  ItemsSource="{Binding FilteredVideos}"
                  SelectedItem="{Binding CurrentVideo}"
@@ -44,35 +94,44 @@
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal">
                         <StackPanel.InputBindings>
-                            <MouseBinding Gesture="LeftDoubleClick" Command="{Binding PlayOneCommand}" />
-                            <KeyBinding Key="Return" Command="{Binding PlayOneCommand}" />
+                            <MouseBinding Gesture="LeftDoubleClick"
+                                          Command="{Binding PlayOneCommand}" />
+                            <KeyBinding Key="Return"
+                                        Command="{Binding PlayOneCommand}" />
                         </StackPanel.InputBindings>
                     </StackPanel>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="300" Height="300" Margin="5">
+                    <Grid Width="300"
+                          Height="300"
+                          Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Image Grid.Row="0" Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
-                               VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="5" />
-                        <Canvas Grid.Row="0" ZIndex="10" Visibility="Collapsed">
-                            <Path
-                                Data="F1M1737.61,7339.85C1720.49,7342.44 1709.83,7334.36 1709.83,7334.36 1701.44,7341.47 1682.84,7340.17 1682.84,7340.17 1682.66,7388.31 1709.83,7397.03 1709.83,7397.03 1741.17,7386.37 1737.61,7339.85 1737.61,7339.85 M1709.54,7386.88C1707.5,7386.88 1705.85,7385.23 1705.85,7383.18 1705.85,7381.14 1707.5,7379.49 1709.54,7379.49 1711.58,7379.49 1713.23,7381.14 1713.23,7383.18 1713.23,7385.23 1711.58,7386.88 1709.54,7386.88 M1712.37,7367.58C1712.37,7367.58 1712.28,7370.72 1710.94,7372.06 1710.94,7372.06 1709.33,7373.48 1707.54,7371.61 1707.54,7371.61 1707.09,7370.31 1706.47,7366.75L1705.48,7352.56 1705.48,7348.72C1705.48,7348.72 1705.59,7345.14 1709.61,7344.51 1709.61,7344.51 1713.36,7344.34 1713.53,7348.27 1713.53,7348.27 1713.98,7352.56 1712.37,7367.58"
-                                Stretch="Uniform"
-                                Fill="#FF333333"
-                                Width="12"
-                                Height="12"
-                                Margin="0,0,0,0"
-                                RenderTransformOrigin="0.5,0.5">
+                        <Image Grid.Row="0"
+                               Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
+                               VerticalAlignment="Stretch"
+                               HorizontalAlignment="Stretch"
+                               Margin="5" />
+                        <Canvas Grid.Row="0"
+                                ZIndex="10"
+                                Visibility="Collapsed">
+                            <Path Data="F1M1737.61,7339.85C1720.49,7342.44 1709.83,7334.36 1709.83,7334.36 1701.44,7341.47 1682.84,7340.17 1682.84,7340.17 1682.66,7388.31 1709.83,7397.03 1709.83,7397.03 1741.17,7386.37 1737.61,7339.85 1737.61,7339.85 M1709.54,7386.88C1707.5,7386.88 1705.85,7385.23 1705.85,7383.18 1705.85,7381.14 1707.5,7379.49 1709.54,7379.49 1711.58,7379.49 1713.23,7381.14 1713.23,7383.18 1713.23,7385.23 1711.58,7386.88 1709.54,7386.88 M1712.37,7367.58C1712.37,7367.58 1712.28,7370.72 1710.94,7372.06 1710.94,7372.06 1709.33,7373.48 1707.54,7371.61 1707.54,7371.61 1707.09,7370.31 1706.47,7366.75L1705.48,7352.56 1705.48,7348.72C1705.48,7348.72 1705.59,7345.14 1709.61,7344.51 1709.61,7344.51 1713.36,7344.34 1713.53,7348.27 1713.53,7348.27 1713.98,7352.56 1712.37,7367.58"
+                                  Stretch="Uniform"
+                                  Fill="#FF333333"
+                                  Width="12"
+                                  Height="12"
+                                  Margin="0,0,0,0"
+                                  RenderTransformOrigin="0.5,0.5">
                                 <Path.RenderTransform>
                                     <TransformGroup>
                                         <TransformGroup.Children>
                                             <RotateTransform Angle="0" />
-                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                            <ScaleTransform ScaleX="1"
+                                                            ScaleY="1" />
                                         </TransformGroup.Children>
                                     </TransformGroup>
                                 </Path.RenderTransform>

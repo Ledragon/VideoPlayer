@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 using Classes;
 using Log;
@@ -14,21 +14,26 @@ using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
 
-namespace VideosListModule
+namespace VideosListModule.ViewModels
 {
     public class VideosListViewModel : ViewModelBase, IVideosListViewModel
     {
-        private String _categoryFilter;
         private Video _currentVideo;
         private Int32 _editIndex;
         private IEventAggregator _eventAggregator;
-        private ICollectionView _filteredVideos;
-        private String _filterName;
-        private List<String> _filterTags;
+        private VideosCollectionView _filteredVideos;
         private Visibility _infoVisibility;
-        private SortDescription _sortDescription;
-        private ILibraryService _libraryService;
         private Boolean _isLoading;
+        private ILibraryService _libraryService;
+
+        public VideosListViewModel(ILibraryService libraryService, IVideosListView videosListView,
+            IEventAggregator eventAggregator)
+            : base(videosListView)
+        {
+            this.Init(libraryService, eventAggregator);
+        }
+
+        public ICommand LoadDataAsyncCommand { get; private set; }
 
         public Boolean IsLoading
         {
@@ -44,19 +49,11 @@ namespace VideosListModule
             }
         }
 
-        public ICommand LoadDataAsyncCommand { get; private set; }
-
-        public VideosListViewModel(ILibraryService libraryService, IVideosListView videosListView,
-            IEventAggregator eventAggregator)
-            : base(videosListView)
-        {
-            this.Init(libraryService, eventAggregator);
-        }
-
         public DelegateCommand AddVideoCommand { get; private set; }
-        public DelegateCommand EditCommand { get; private set; }
         public DelegateCommand PlayOneCommand { get; private set; }
         public DelegateCommand PlayPlaylistCommand { get; private set; }
+        public DelegateCommand NextCommand { get; private set; }
+        public DelegateCommand PreviousCommand { get; private set; }
 
         public Visibility InfoVisibility
         {
@@ -72,12 +69,9 @@ namespace VideosListModule
             }
         }
 
-        public ICollectionView FilteredVideos
+        public VideosCollectionView FilteredVideos
         {
-            get
-            {
-                return this._filteredVideos;
-            }
+            get { return this._filteredVideos; }
             set
             {
                 if (Equals(value, this._filteredVideos))
@@ -87,6 +81,7 @@ namespace VideosListModule
                 this._filteredVideos = value;
 
                 this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
+                this.Raise();
                 this.OnPropertyChanged();
             }
         }
@@ -119,13 +114,21 @@ namespace VideosListModule
             }
         }
 
+        public async Task Init()
+        {
+            this.IsLoading = true;
+            var wrapper = await this._libraryService.LoadAsync();
+            var videos = wrapper.Videos;
+            this.UpdateVideoListView(videos);
+            this.IsLoading = false;
+        }
+
         private void Init(ILibraryService libraryService, IEventAggregator eventAggregator)
         {
             this._libraryService = libraryService;
             try
             {
                 this._eventAggregator = eventAggregator;
-                this._categoryFilter = "All";
 
                 this._eventAggregator.GetEvent<SelectedCategoryChangedEvent>().Subscribe(this.FilterCategory);
                 this._eventAggregator.GetEvent<NameFilterChangedEvent>().Subscribe(this.FilterName);
@@ -133,18 +136,26 @@ namespace VideosListModule
                 this._eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
                 this._eventAggregator.GetEvent<SortingChangedEvent>().Subscribe(this.Sort);
                 this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.UpdateVideoListView);
-                //this._eventAggregator.GetEvent<VideoEdited>().Subscribe(dummy => this.SetFilter());
                 this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Subscribe(this.AddRange);
-                //this.UpdateVideoListView(libraryService.GetObjectsFromFile().Videos);
                 this.InfoVisibility = Visibility.Visible;
 
-                //this.EditCommand = new DelegateCommand(this.Edit, this.CanEdit);
                 this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
                 this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
                 this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
-                //this.LoadAsync().Wait();
-                this.LoadDataAsyncCommand = new DelegateCommand(async ()=>await this.Init());
+                this.NextCommand = new DelegateCommand(() =>
+                {
+                    this.FilteredVideos.NextPage();
+                    this.Raise();
+                },
+                    () => this.FilteredVideos != null && this.FilteredVideos.CanMoveToNextPage);
 
+                this.PreviousCommand = new DelegateCommand(() =>
+                {
+                    this.FilteredVideos.PreviousPage();
+                    this.Raise();
+                },
+                    () => this.FilteredVideos != null && this.FilteredVideos.CanMoveToPreviousPage);
+                this.LoadDataAsyncCommand = new DelegateCommand(async () => await this.Init());
             }
             catch (Exception e)
             {
@@ -153,31 +164,46 @@ namespace VideosListModule
             }
         }
 
-        public async Task Init()
-        {
-            this.IsLoading = true;
-            var wrapper = await this._libraryService.LoadAsync();
-            this.UpdateVideoListView(wrapper.Videos);
-            this.IsLoading = false;
-        }
-
         private void UpdateVideoListView(IEnumerable<Video> videos)
         {
-            var vids = videos.OrderBy(v => v.Title).ToList();
-            this._sortDescription = new SortDescription("Title", ListSortDirection.Ascending);
-            var view = CollectionViewSource.GetDefaultView(vids);
-            view.SortDescriptions.Add(this._sortDescription);
-            this.FilteredVideos = view;
-            if (this.CurrentVideo == null && vids.Any())
+            FilterParameters filter = null;
+            if (this.FilteredVideos != null)
             {
-                this.CurrentVideo = vids.First();
+                filter = this.FilteredVideos.GetFilter();
             }
+            this.FilteredVideos = new VideosCollectionView(new ObservableCollection<Video>(videos),5);
+            if (filter != null)
+            {
+                this.FilteredVideos.FilterTag(filter.Tags);
+                this.FilteredVideos.FilterCategory(filter.Category);
+                this.FilteredVideos.FilterName(filter.Name);
+                this.FilteredVideos.Sort(filter.SortDescription);
+            }
+            this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
+        }
+
+        private void Raise()
+        {
+            this.NextCommand.RaiseCanExecuteChanged();
+            this.PreviousCommand.RaiseCanExecuteChanged();
         }
 
         private void FilterTag(List<String> tags)
         {
-            this._filterTags = tags;
-            this.SetFilter();
+            this.FilteredVideos.FilterTag(tags);
+            this.Raise();
+        }
+
+        private void FilterName(String obj)
+        {
+            this.FilteredVideos.FilterName(obj);
+            this.Raise();
+        }
+
+        private void FilterCategory(String category)
+        {
+            this.FilteredVideos.FilterCategory(category);
+            this.Raise();
         }
 
         private Boolean CanCommandsExecute()
@@ -187,60 +213,7 @@ namespace VideosListModule
 
         private void Sort(SortDescription obj)
         {
-            if (this._sortDescription != obj)
-            {
-                this._sortDescription = obj;
-                //this.FilteredVideos.DeferRefresh();
-                this.FilteredVideos.SortDescriptions.Clear();
-                this.FilteredVideos.SortDescriptions.Add(obj);
-                this.FilteredVideos.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
-                //this.FilteredVideos.Refresh();
-            }
-        }
-
-        private void FilterName(String obj)
-        {
-            if (this._filterName != obj)
-            {
-                this._filterName = obj;
-                this.SetFilter();
-            }
-        }
-
-        private void FilterCategory(String category)
-        {
-            if (this._categoryFilter != category)
-            {
-                this._categoryFilter = category;
-                this.SetFilter();
-            }
-        }
-
-        private void SetFilter()
-        {
-            this.FilteredVideos.Filter = this.Filter();
-            this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
-        }
-
-        private Predicate<Object> Filter()
-        {
-            return item =>
-            {
-                var result = true;
-                try
-                {
-                    var video = item as Video;
-                    var isNameOk = this.IsNameOk(video);
-                    var isCategoryOk = this.IsCategoryOk(video, this._categoryFilter);
-                    var isTagOk = this.IsTagOK(video);
-                    result = isNameOk && isCategoryOk && isTagOk;
-                }
-                catch (Exception e)
-                {
-                    this.Logger().ErrorFormat(e.Message);
-                }
-                return result;
-            };
+            this.FilteredVideos.Sort(obj);
         }
 
         private void PlayAll(Object obj)
@@ -276,74 +249,12 @@ namespace VideosListModule
             this._eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(null);
         }
 
-        //private Boolean CanEdit()
-        //{
-        //    return true;
-        //}
-
-        //private void Edit()
-        //{
-        //    if (this.EditIndex == 0)
-        //    {
-        //        this._eventAggregator.GetEvent<VideoEditing>().Publish(this.CurrentVideo);
-        //        this.EditIndex = 1;
-        //    }
-        //    else
-        //    {
-        //        this._eventAggregator.GetEvent<VideoEdited>().Publish(null);
-        //        this.EditIndex = 0;
-        //    }
-        //}
-
         private void Add()
         {
             if (this.CurrentVideo != null && File.Exists(this.CurrentVideo.FileName))
             {
                 this._eventAggregator.GetEvent<OnAddVideo>().Publish(this.CurrentVideo);
             }
-        }
-
-        private Boolean IsCategoryOk(Video video, String category)
-        {
-            Boolean isCategoryOk;
-            if (String.Compare(category, "all", StringComparison.InvariantCultureIgnoreCase) == 0)
-            {
-                isCategoryOk = true;
-            }
-            else if (String.IsNullOrEmpty(category))
-            {
-                isCategoryOk = String.IsNullOrEmpty(video.Category);
-            }
-            else
-            {
-                isCategoryOk = !String.IsNullOrEmpty(video.Category) &&
-                               String.Equals(video.Category, category, StringComparison.InvariantCultureIgnoreCase);
-            }
-            return isCategoryOk;
-        }
-
-        private Boolean IsNameOk(Video video)
-        {
-            var result = true;
-            if (!String.IsNullOrEmpty(this._filterName))
-            {
-                result = video.Title.ToLower().Contains(this._filterName.ToLower());
-            }
-            return result;
-        }
-
-        private Boolean IsTagOK(Video video)
-        {
-            var result = true;
-            if (this._filterTags != null && this._filterTags.Any())
-            {
-                result =
-                    this._filterTags.Any(
-                        filterTag =>
-                            video.Tags.Any(
-                                t => String.Equals(t.Value, filterTag, StringComparison.CurrentCultureIgnoreCase)));
-            }
-            return result;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -171,7 +170,7 @@ namespace VideosListModule.ViewModels
             {
                 filter = this.FilteredVideos.GetFilter();
             }
-            this.FilteredVideos = new VideosCollectionView(new ObservableCollection<Video>(videos),5);
+            this.FilteredVideos = new VideosCollectionView(videos.ToList(), 5);
             if (filter != null)
             {
                 this.FilteredVideos.FilterTag(filter.Tags);

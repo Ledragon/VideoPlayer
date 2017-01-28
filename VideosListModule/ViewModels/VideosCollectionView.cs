@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using Classes;
 using Classes.Annotations;
 using Log;
-using Microsoft.Practices.Prism;
 
 namespace VideosListModule.ViewModels
 {
     public sealed class VideosCollectionView : ListCollectionView
     {
-        private readonly ObservableCollection<Video> _collection;
+        //private readonly ObservableCollection<Video> _collection;
         private String _categoryFilter;
         private String _filterName;
         private List<String> _filterTags;
@@ -21,11 +19,11 @@ namespace VideosListModule.ViewModels
         private Int32 _pageNumber;
         private SortDescription _sortDescription;
 
-        public VideosCollectionView([NotNull] ObservableCollection<Video> collection, Int32 pageSize = 20)
+        public VideosCollectionView([NotNull] List<Video> collection, Int32 pageSize = 20)
             : base(collection)
         {
             this.PageSize = pageSize;
-            this._collection = collection;
+            //this._collection = collection;
             this._pageNumber = 0;
             this.Filter = this.GetFilterPredicate();
             this._categoryFilter = "All";
@@ -216,11 +214,11 @@ namespace VideosListModule.ViewModels
             return result;
         }
 
-        public void Update(IEnumerable<Video> videos)
-        {
-            this._collection.Clear();
-            this._collection.AddRange(videos);
-        }
+        //public void Update(IEnumerable<Video> videos)
+        //{
+        //    this._collection.Clear();
+        //    this._collection.AddRange(videos);
+        //}
 
         public FilterParameters GetFilter()
         {

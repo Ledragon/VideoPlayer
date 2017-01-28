@@ -31,7 +31,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button Grid.Column="0" Command="{Binding PreviousCommand}">Previous</Button>
+        <!--<Button Grid.Column="0" Command="{Binding PreviousCommand}">Previous</Button>-->
         <ListBox Grid.Column="1" SelectionMode="Single"
                  IsSynchronizedWithCurrentItem="True"
                  ItemsSource="{Binding FilteredVideos}"
@@ -85,7 +85,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Column="2"
-                Command="{Binding NextCommand}">Next</Button>
+        <!--<Button Grid.Column="2"
+                Command="{Binding NextCommand}">Next</Button>-->
     </Grid>
 </UserControl>

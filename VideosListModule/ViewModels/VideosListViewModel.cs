@@ -34,7 +34,7 @@ namespace VideosListModule
 
         private Int32 _pageNumber;
         private SortDescription _sortDescription;
-        private ObservableCollection<Video> _videos;
+        //private ObservableCollection<Video> _videos;
 
         public VideosListViewModel(ILibraryService libraryService, IVideosListView videosListView,
             IEventAggregator eventAggregator)
@@ -129,8 +129,8 @@ namespace VideosListModule
             this.IsLoading = true;
             var wrapper = await this._libraryService.LoadAsync();
             var videos = wrapper.Videos;
-            this._videos.Clear();
-            this._videos.AddRange(videos);
+            //this._videos.Clear();
+            //this._videos.AddRange(videos);
             this.UpdateVideoListView(videos);
             this.IsLoading = false;
         }
@@ -159,22 +159,22 @@ namespace VideosListModule
                 this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
                 this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
                 this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
-                this.NextCommand = new DelegateCommand(() =>
-                {
-                    this._pageNumber++;
-                    this.UpdateVideoListView(this._videos);
-                    //this.Raise();
-                },
-                    () => this._videos != null && this._pageNumber*this._pageSize < this._videos.Count);
+                //this.NextCommand = new DelegateCommand(() =>
+                //{
+                //    this._pageNumber++;
+                //    this.UpdateVideoListView(this._videos);
+                //    //this.Raise();
+                //},
+                //    () => this._videos != null && this._pageNumber*this._pageSize < this._videos.Count);
 
-                this.PreviousCommand = new DelegateCommand(() =>
-                {
-                    this._pageNumber--;
-                    this.UpdateVideoListView(this._videos);
-                    //this.Raise();
-                },
-                    () => this._pageNumber > 0);
-                this._videos = new ObservableCollection<Video>();
+                //this.PreviousCommand = new DelegateCommand(() =>
+                //{
+                //    this._pageNumber--;
+                //    this.UpdateVideoListView(this._videos);
+                //    //this.Raise();
+                //},
+                //    () => this._pageNumber > 0);
+                //this._videos = new ObservableCollection<Video>();
                 //this.LoadAsync().Wait();
                 this.LoadDataAsyncCommand = new DelegateCommand(async () => await this.Init());
             }
@@ -187,19 +187,22 @@ namespace VideosListModule
 
         private void UpdateVideoListView(IEnumerable<Video> videos)
         {
-            var vids = videos.OrderBy(v => v.Title)
-                .Skip(this._pageNumber*this._pageSize)
-                .Take(this._pageSize)
+            var vids = videos//.OrderBy(v => v.Title)
+                //.Skip(this._pageNumber*this._pageSize)
+                //.Take(this._pageSize)
                 .ToList();
-            this.Raise();
+            //this.Raise();
             this._sortDescription = new SortDescription("Title", ListSortDirection.Ascending);
             var view = CollectionViewSource.GetDefaultView(vids);
             view.SortDescriptions.Add(this._sortDescription);
             this.FilteredVideos = view;
-            if (this.CurrentVideo == null && vids.Any())
-            {
-                this.CurrentVideo = vids.First();
-            }
+            this.FilteredVideos.Filter = this.Filter();
+            this.FilteredVideos.MoveCurrentToFirst();
+            this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
+            //if (this.CurrentVideo == null && vids.Any())
+            //{
+            //    this.CurrentVideo = vids.First();
+            //}
         }
 
         private void Raise()
@@ -211,7 +214,28 @@ namespace VideosListModule
         private void FilterTag(List<String> tags)
         {
             this._filterTags = tags;
-            this.SetFilter();
+            this.FilteredVideos.Refresh();
+            //this.SetFilter();
+        }
+
+        private void FilterName(String obj)
+        {
+            if (this._filterName != obj)
+            {
+                this._filterName = obj;
+                this.FilteredVideos.Refresh();
+                //this.SetFilter();
+            }
+        }
+
+        private void FilterCategory(String category)
+        {
+            if (this._categoryFilter != category)
+            {
+                this._categoryFilter = category;
+                this.FilteredVideos.Refresh();
+                //this.SetFilter();
+            }
         }
 
         private Boolean CanCommandsExecute()
@@ -232,29 +256,11 @@ namespace VideosListModule
             }
         }
 
-        private void FilterName(String obj)
-        {
-            if (this._filterName != obj)
-            {
-                this._filterName = obj;
-                this.SetFilter();
-            }
-        }
-
-        private void FilterCategory(String category)
-        {
-            if (this._categoryFilter != category)
-            {
-                this._categoryFilter = category;
-                this.SetFilter();
-            }
-        }
-
-        private void SetFilter()
-        {
-            this.FilteredVideos.Filter = this.Filter();
-            this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
-        }
+        //private void SetFilter()
+        //{
+        //    this.FilteredVideos.Filter = this.Filter();
+        //    this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
+        //}
 
         private Predicate<Object> Filter()
         {
@@ -309,26 +315,7 @@ namespace VideosListModule
         {
             this._eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(null);
         }
-
-        //private Boolean CanEdit()
-        //{
-        //    return true;
-        //}
-
-        //private void Edit()
-        //{
-        //    if (this.EditIndex == 0)
-        //    {
-        //        this._eventAggregator.GetEvent<VideoEditing>().Publish(this.CurrentVideo);
-        //        this.EditIndex = 1;
-        //    }
-        //    else
-        //    {
-        //        this._eventAggregator.GetEvent<VideoEdited>().Publish(null);
-        //        this.EditIndex = 0;
-        //    }
-        //}
-
+        
         private void Add()
         {
             if (this.CurrentVideo != null && File.Exists(this.CurrentVideo.FileName))

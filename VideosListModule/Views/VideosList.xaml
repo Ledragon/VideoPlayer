@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              xmlns:mocks="clr-namespace:VideosListModule.Mocks"
-             d:DesignHeight="400">
+             d:DesignHeight="400"
+             d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,11 +21,9 @@
                 <Setter Property="Width"
                         Value="300" />
                 <Setter Property="FontSize"
-                        Value="14" />
-                <Setter Property="Margin"
-                        Value="5" />
+                        Value="12" />
             </Style>
-            <mocks:MockVideoList x:Key="DesignViewModel"></mocks:MockVideoList>
+            <mocks:MockVideoList x:Key="DesignViewModel" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.InputBindings>
@@ -34,20 +33,21 @@
                     Command="{Binding PlayPlaylistCommand}" />
     </UserControl.InputBindings>
     <Grid d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Button Grid.Column="0"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0"
                 Command="{Binding PreviousCommand}">
-            <Viewbox>
+            Previous
+            <!--<Viewbox>
                 <Viewbox.LayoutTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="0.5"
                                         ScaleY="0.5" />
                         <SkewTransform />
-                        <RotateTransform />
+                        <RotateTransform Angle="90" />
                         <TranslateTransform />
                     </TransformGroup>
                 </Viewbox.LayoutTransform>
@@ -77,9 +77,9 @@
                         </Path.RenderTransform>
                     </Path>
                 </Grid>
-            </Viewbox>
+            </Viewbox>-->
         </Button>
-        <ListBox Grid.Column="1"
+        <ListBox Grid.Row="1"
                  SelectionMode="Single"
                  IsSynchronizedWithCurrentItem="True"
                  ItemsSource="{Binding FilteredVideos}"
@@ -87,70 +87,54 @@
                  IsHitTestVisible="True"
                  IsTextSearchEnabled="False"
                  Background="{StaticResource BackgroundColorBrush}"
-                 Margin="0,5,0,0">
+                 Margin="0,5,0,0"
+                 ScrollViewer.CanContentScroll="False"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal" CanHorizontallyScroll="False">
-                        <StackPanel.InputBindings>
+                    <WrapPanel Orientation="Horizontal">
+                        <WrapPanel.InputBindings>
                             <MouseBinding Gesture="LeftDoubleClick"
                                           Command="{Binding PlayOneCommand}" />
                             <KeyBinding Key="Return"
                                         Command="{Binding PlayOneCommand}" />
-                        </StackPanel.InputBindings>
-                    </StackPanel>
+                        </WrapPanel.InputBindings>
+                    </WrapPanel>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Width="250"
-                          Height="250"
-                          Margin="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Image Grid.Row="0"
-                               Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
-                               VerticalAlignment="Stretch"
-                               HorizontalAlignment="Stretch"
-                               Margin="5" />
-                        <Canvas Grid.Row="0"
-                                ZIndex="10"
-                                Visibility="Collapsed">
-                            <Path Data="F1M1737.61,7339.85C1720.49,7342.44 1709.83,7334.36 1709.83,7334.36 1701.44,7341.47 1682.84,7340.17 1682.84,7340.17 1682.66,7388.31 1709.83,7397.03 1709.83,7397.03 1741.17,7386.37 1737.61,7339.85 1737.61,7339.85 M1709.54,7386.88C1707.5,7386.88 1705.85,7385.23 1705.85,7383.18 1705.85,7381.14 1707.5,7379.49 1709.54,7379.49 1711.58,7379.49 1713.23,7381.14 1713.23,7383.18 1713.23,7385.23 1711.58,7386.88 1709.54,7386.88 M1712.37,7367.58C1712.37,7367.58 1712.28,7370.72 1710.94,7372.06 1710.94,7372.06 1709.33,7373.48 1707.54,7371.61 1707.54,7371.61 1707.09,7370.31 1706.47,7366.75L1705.48,7352.56 1705.48,7348.72C1705.48,7348.72 1705.59,7345.14 1709.61,7344.51 1709.61,7344.51 1713.36,7344.34 1713.53,7348.27 1713.53,7348.27 1713.98,7352.56 1712.37,7367.58"
-                                  Stretch="Uniform"
-                                  Fill="#FF333333"
-                                  Width="12"
-                                  Height="12"
-                                  Margin="0,0,0,0"
-                                  RenderTransformOrigin="0.5,0.5">
-                                <Path.RenderTransform>
-                                    <TransformGroup>
-                                        <TransformGroup.Children>
-                                            <RotateTransform Angle="0" />
-                                            <ScaleTransform ScaleX="1"
-                                                            ScaleY="1" />
-                                        </TransformGroup.Children>
-                                    </TransformGroup>
-                                </Path.RenderTransform>
-                            </Path>
-                        </Canvas>
+                    <StackPanel Margin="5" Width="220">
+                        <Grid Height="145"
+                              Margin="5">
+                            <Image Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
+                                   VerticalAlignment="Stretch"
+                                   HorizontalAlignment="Stretch"
+                                   Stretch="UniformToFill"/>
+                            <TextBlock Text="{Binding Length}" Foreground="White"
+                                       Background="#3FD3D3D3"
+                                       HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5"></TextBlock>
+                        </Grid>
+                        <TextBlock Grid.Row="1"
+                                   Text="{Binding Category}"
+                                   FontSize="14"
+                                   Style="{StaticResource VideoLabel}" />
                         <TextBlock Grid.Row="1"
                                    Text="{Binding Title}"
                                    Style="{StaticResource VideoLabel}" />
-                    </Grid>
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button Grid.Column="2"
+        <Button Grid.Row="2"
                 Command="{Binding NextCommand}">
-            <Viewbox>
+            <!--<Viewbox>
                 <Viewbox.LayoutTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="0.5"
                                         ScaleY="0.5" />
                         <SkewTransform />
-                        <RotateTransform />
+                        <RotateTransform Angle="90"/>
                         <TranslateTransform />
                     </TransformGroup>
                 </Viewbox.LayoutTransform>
@@ -181,8 +165,8 @@
                         </Path.RenderTransform>
                     </Path>
                 </Grid>
-            </Viewbox>
-
+            </Viewbox>-->
+            Next
 
         </Button>
     </Grid>

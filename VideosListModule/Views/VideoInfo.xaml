@@ -31,7 +31,7 @@
             <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="Current">
                 <Setter Property="Foreground" Value="White" />
                 <!--<Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>-->
-                <Setter Property="FontFamily" Value="Lucida Handwriting" />
+                <!--<Setter Property="FontFamily" Value="Lucida Handwriting" />-->
             </Style>
             <Style TargetType="DataGrid">
                 <Setter Property="Background" Value="Black" />
@@ -54,18 +54,23 @@
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="Foreground" Value="Gray" />
             </Style>
+            <Style TargetType="TabItem" x:Key="HiddenHeader">
+                <Setter Property="Background" Value="LightGray"></Setter>
+                <!--<Setter Property="Foreground" Value="DarkRed"></Setter>-->
+            </Style>
             <mocks:MockVideo x:Key="MockVideo" />
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid d:DataContext="{Binding Source={StaticResource MockVideo}, Path=Video}" DataContext="{Binding Video}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <TabControl Grid.Column="0"
-                    TabStripPlacement="Bottom">
-            <TabItem Header="Preview" Visibility="Visible">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="1"
+                    TabStripPlacement="Bottom"
+                    Background="Transparent">
+            <TabItem Header="Preview" Visibility="Visible" Style="{StaticResource HiddenHeader}">
                 <Image
                     Source="{Binding Path=PreviewImage, Converter={StaticResource ImageConverter}}"
                     Stretch="Uniform"
@@ -74,6 +79,7 @@
                     Margin="5" />
             </TabItem>
             <TabItem Header="Contact sheet"
+                     Style="{StaticResource HiddenHeader}"
                      Visibility="{Binding Path=DataContext.HasContactSheet, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource BoolToVis}}">
                 <Image
                     Source="{Binding Path=DataContext.ContactSheetPath, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
@@ -84,7 +90,7 @@
             </TabItem>
 
         </TabControl>
-        <Grid Grid.Column="1" Margin="5">
+        <Grid Grid.Row="0" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

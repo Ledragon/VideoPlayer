@@ -30,10 +30,6 @@ namespace VideosListModule.ViewModels
             this._sortDescription = new SortDescription("Title", ListSortDirection.Ascending);
             this.SortDescriptions.Add(this._sortDescription);
             this.RefreshView();
-            if (collection.Any())
-            {
-                this.MoveCurrentToFirst();
-            }
         }
 
         public Int32 PageSize { get; set; }
@@ -95,6 +91,7 @@ namespace VideosListModule.ViewModels
                 this.SortDescriptions.Clear();
                 this.SortDescriptions.Add(obj);
                 this.SortDescriptions.Add(new SortDescription("Title", ListSortDirection.Ascending));
+                this.MoveCurrentToFirst();
             }
         }
 
@@ -147,7 +144,8 @@ namespace VideosListModule.ViewModels
                 this._pageNumber = 0;
             }
             this.Refresh();
-            this.MoveCurrentToFirst();
+            //this.MoveCurrentToFirst();
+            this.MoveCurrentToPosition(this._pageNumber * this.PageSize);
         }
 
         private Predicate<Object> GetFilterPredicate()

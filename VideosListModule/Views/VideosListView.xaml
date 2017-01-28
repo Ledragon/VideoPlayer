@@ -34,20 +34,19 @@
                 <i:InvokeCommandAction Command="{Binding LoadDataAsyncCommand}" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0"
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0"
               Background="{StaticResource BackgroundColorBrush}"
               Margin="0,0,0,5">
             <ContentControl Grid.Row="0"
                             regions:RegionManager.RegionName="{x:Static infrastructure11:RegionNames.VideoInfoRegion}" />
         </Grid>
-        <views:VideosList Grid.Row="1"
-                          Grid.Column="0" />
+        <views:VideosList Grid.Column="1" />
 
-        <controls:LoadingPanel  Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+        <controls:LoadingPanel  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
     </Grid>

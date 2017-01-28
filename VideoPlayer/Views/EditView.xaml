@@ -45,7 +45,7 @@
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate >
-                            <TextBlock Text="{Binding Name}" Background="Red" Foreground="Azure" FontSize="16" Margin="5"></TextBlock>
+                            <TextBlock Text="{Binding Name}" Background="DarkGray" Foreground="White" FontSize="16" Margin="5"></TextBlock>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>

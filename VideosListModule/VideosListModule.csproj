@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mocks\MockVideo.cs" />
+    <Compile Include="Mocks\MockVideoList.cs" />
     <Compile Include="ViewModels\IVideoInfoViewModel.cs" />
     <Compile Include="ViewModels\VideoInfoViewModel.cs" />
     <Compile Include="Views\IVideoInfoView.cs" />

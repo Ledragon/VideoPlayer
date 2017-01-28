@@ -20,6 +20,8 @@ namespace VideosListModule
         ICollectionView FilteredVideos { get; set; }
         Int32 EditIndex { get; set; }
         Boolean IsLoading { get; set; }
+        DelegateCommand NextCommand { get; }
+        DelegateCommand PreviousCommand { get; }
         Task Init();
     }
 }

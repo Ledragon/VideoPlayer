@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             xmlns:mocks="clr-namespace:VideosListModule.Mocks"
+             d:DesignHeight="400" d:DesignWidth="1024">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,14 +18,21 @@
                 <Setter Property="FontSize" Value="14" />
                 <Setter Property="Margin" Value="5" />
             </Style>
+            <mocks:MockVideoList x:Key="DesignViewModel"></mocks:MockVideoList>
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="A" Command="{Binding AddVideoCommand}" />
         <KeyBinding Key="P" Command="{Binding PlayPlaylistCommand}" />
     </UserControl.InputBindings>
-    <Grid>
-        <ListBox SelectionMode="Single"
+    <Grid d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Command="{Binding PreviousCommand}">Previous</Button>
+        <ListBox Grid.Column="1" SelectionMode="Single"
                  IsSynchronizedWithCurrentItem="True"
                  ItemsSource="{Binding FilteredVideos}"
                  SelectedItem="{Binding CurrentVideo}"
@@ -77,5 +85,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <Button Grid.Column="2"
+                Command="{Binding NextCommand}">Next</Button>
     </Grid>
 </UserControl>

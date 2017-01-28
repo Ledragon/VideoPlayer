@@ -26,40 +26,8 @@
                 <Setter Property="FontSize"
                         Value="14" />
             </Style>
-            <Style x:Key="LoadingCircle"
-                   TargetType="{x:Type Ellipse}">
-                <Setter Property="Width"
-                        Value="20" />
-                <Setter Property="Height"
-                        Value="20" />
-            </Style>
-            <!--<Storyboard x:Key="LoadingPulse0">
-                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)"
-                                               Storyboard.TargetName="ellipse">
-                    <EasingDoubleKeyFrame KeyTime="0"
-                                          Value="20" />
-                    <EasingDoubleKeyFrame KeyTime="0:0:0.2"
-                                          Value="25" />
-                    <EasingDoubleKeyFrame KeyTime="0:0:0.4"
-                                          Value="20" />
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)"
-                                               Storyboard.TargetName="ellipse">
-                    <EasingDoubleKeyFrame KeyTime="0"
-                                          Value="20" />
-                    <EasingDoubleKeyFrame KeyTime="0:0:0.2"
-                                          Value="25" />
-                    <EasingDoubleKeyFrame KeyTime="0:0:0.4"
-                                          Value="20" />
-                </DoubleAnimationUsingKeyFrames>
-            </Storyboard>-->
         </ResourceDictionary>
     </UserControl.Resources>
-    <!--<UserControl.Triggers>
-        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-            <BeginStoryboard Storyboard="{StaticResource LoadingPulse0}" />
-        </EventTrigger>
-    </UserControl.Triggers>-->
     <Grid>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
@@ -82,50 +50,5 @@
         <controls:LoadingPanel  Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-        <!--<Grid Grid.Row="0"
-              Grid.RowSpan="2"
-              Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
-              Background="#BFCCCCCC">
-            <TextBlock FontSize="64"
-                       Foreground="White"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center">Loading</TextBlock>
-            <Ellipse Fill="#FFF4F4F5"
-                     Stroke="Black"
-                     Style="{DynamicResource LoadingCircle}"
-                     Margin="337,295,667,285" />
-            <Ellipse x:Name="ellipse1"
-                     Fill="#FFF4F4F5"
-                     Stroke="Black"
-                     Style="{DynamicResource LoadingCircle}"
-                     Margin="330.5,272.5,676,310"
-                     Height="Auto"
-                     Width="Auto" />
-            <Ellipse x:Name="ellipse"
-                     Fill="#FFF4F4F5"
-                     Stroke="Black"
-                     Style="{DynamicResource LoadingCircle}"
-                     Margin="308,254,696,326" />
-            <Ellipse Fill="#FFF4F4F5"
-                     Stroke="Black"
-                     Style="{DynamicResource LoadingCircle}"
-                     Margin="328,320,676,260" />
-            <Ellipse Fill="#FFF4F4F5"
-                     Stroke="Black"
-                     Style="{DynamicResource LoadingCircle}"
-                     Margin="308,331,696,249" />
-            <Ellipse Fill="#FFF4F4F5"
-                     Stroke="Black"
-                     Style="{DynamicResource LoadingCircle}"
-                     Margin="283,270,721,310" />
-            <Ellipse Fill="#FFF4F4F5"
-                     Stroke="Black"
-                     Style="{DynamicResource LoadingCircle}"
-                     Margin="271,295,733,285" />
-            <Ellipse Fill="#FFF4F4F5"
-                     Stroke="Black"
-                     Style="{DynamicResource LoadingCircle}"
-                     Margin="288,315,716,265" />
-        </Grid>-->
     </Grid>
 </UserControl>

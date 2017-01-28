@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Classes;
 using Log;
+using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
@@ -18,6 +20,7 @@ namespace VideosListModule
 {
     public class VideosListViewModel : ViewModelBase, IVideosListViewModel
     {
+        private readonly Int32 _pageSize = 20;
         private String _categoryFilter;
         private Video _currentVideo;
         private Int32 _editIndex;
@@ -26,9 +29,21 @@ namespace VideosListModule
         private String _filterName;
         private List<String> _filterTags;
         private Visibility _infoVisibility;
-        private SortDescription _sortDescription;
-        private ILibraryService _libraryService;
         private Boolean _isLoading;
+        private ILibraryService _libraryService;
+
+        private Int32 _pageNumber;
+        private SortDescription _sortDescription;
+        private ObservableCollection<Video> _videos;
+
+        public VideosListViewModel(ILibraryService libraryService, IVideosListView videosListView,
+            IEventAggregator eventAggregator)
+            : base(videosListView)
+        {
+            this.Init(libraryService, eventAggregator);
+        }
+
+        public ICommand LoadDataAsyncCommand { get; private set; }
 
         public Boolean IsLoading
         {
@@ -44,19 +59,12 @@ namespace VideosListModule
             }
         }
 
-        public ICommand LoadDataAsyncCommand { get; private set; }
-
-        public VideosListViewModel(ILibraryService libraryService, IVideosListView videosListView,
-            IEventAggregator eventAggregator)
-            : base(videosListView)
-        {
-            this.Init(libraryService, eventAggregator);
-        }
-
         public DelegateCommand AddVideoCommand { get; private set; }
         public DelegateCommand EditCommand { get; private set; }
         public DelegateCommand PlayOneCommand { get; private set; }
         public DelegateCommand PlayPlaylistCommand { get; private set; }
+        public DelegateCommand NextCommand { get; private set; }
+        public DelegateCommand PreviousCommand { get; private set; }
 
         public Visibility InfoVisibility
         {
@@ -74,10 +82,7 @@ namespace VideosListModule
 
         public ICollectionView FilteredVideos
         {
-            get
-            {
-                return this._filteredVideos;
-            }
+            get { return this._filteredVideos; }
             set
             {
                 if (Equals(value, this._filteredVideos))
@@ -119,8 +124,20 @@ namespace VideosListModule
             }
         }
 
+        public async Task Init()
+        {
+            this.IsLoading = true;
+            var wrapper = await this._libraryService.LoadAsync();
+            var videos = wrapper.Videos;
+            this._videos.Clear();
+            this._videos.AddRange(videos);
+            this.UpdateVideoListView(videos);
+            this.IsLoading = false;
+        }
+
         private void Init(ILibraryService libraryService, IEventAggregator eventAggregator)
         {
+            this._pageNumber = 0;
             this._libraryService = libraryService;
             try
             {
@@ -142,9 +159,24 @@ namespace VideosListModule
                 this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
                 this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
                 this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
-                //this.LoadAsync().Wait();
-                this.LoadDataAsyncCommand = new DelegateCommand(async ()=>await this.Init());
+                this.NextCommand = new DelegateCommand(() =>
+                {
+                    this._pageNumber++;
+                    this.UpdateVideoListView(this._videos);
+                    //this.Raise();
+                },
+                    () => this._videos != null && this._pageNumber*this._pageSize < this._videos.Count);
 
+                this.PreviousCommand = new DelegateCommand(() =>
+                {
+                    this._pageNumber--;
+                    this.UpdateVideoListView(this._videos);
+                    //this.Raise();
+                },
+                    () => this._pageNumber > 0);
+                this._videos = new ObservableCollection<Video>();
+                //this.LoadAsync().Wait();
+                this.LoadDataAsyncCommand = new DelegateCommand(async () => await this.Init());
             }
             catch (Exception e)
             {
@@ -153,17 +185,13 @@ namespace VideosListModule
             }
         }
 
-        public async Task Init()
-        {
-            this.IsLoading = true;
-            var wrapper = await this._libraryService.LoadAsync();
-            this.UpdateVideoListView(wrapper.Videos);
-            this.IsLoading = false;
-        }
-
         private void UpdateVideoListView(IEnumerable<Video> videos)
         {
-            var vids = videos.OrderBy(v => v.Title).ToList();
+            var vids = videos.OrderBy(v => v.Title)
+                .Skip(this._pageNumber*this._pageSize)
+                .Take(this._pageSize)
+                .ToList();
+            this.Raise();
             this._sortDescription = new SortDescription("Title", ListSortDirection.Ascending);
             var view = CollectionViewSource.GetDefaultView(vids);
             view.SortDescriptions.Add(this._sortDescription);
@@ -172,6 +200,12 @@ namespace VideosListModule
             {
                 this.CurrentVideo = vids.First();
             }
+        }
+
+        private void Raise()
+        {
+            this.NextCommand.RaiseCanExecuteChanged();
+            this.PreviousCommand.RaiseCanExecuteChanged();
         }
 
         private void FilterTag(List<String> tags)

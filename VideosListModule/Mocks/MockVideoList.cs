@@ -8,6 +8,7 @@ using System.Windows.Data;
 using Classes;
 using Microsoft.Practices.Prism.Commands;
 using VideoPlayer.Infrastructure;
+using VideosListModule.ViewModels;
 
 namespace VideosListModule.Mocks
 {

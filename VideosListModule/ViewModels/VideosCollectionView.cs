@@ -9,12 +9,11 @@ using Classes.Annotations;
 using Log;
 using Microsoft.Practices.Prism;
 
-namespace VideosListModule
+namespace VideosListModule.ViewModels
 {
     public sealed class VideosCollectionView : ListCollectionView
     {
         private readonly ObservableCollection<Video> _collection;
-        private readonly Int32 _pageSize = 7;
         private String _categoryFilter;
         private String _filterName;
         private List<String> _filterTags;
@@ -22,8 +21,10 @@ namespace VideosListModule
         private Int32 _pageNumber;
         private SortDescription _sortDescription;
 
-        public VideosCollectionView([NotNull] ObservableCollection<Video> collection) : base(collection)
+        public VideosCollectionView([NotNull] ObservableCollection<Video> collection, Int32 pageSize = 20)
+            : base(collection)
         {
+            this.PageSize = pageSize;
             this._collection = collection;
             this._pageNumber = 0;
             this.Filter = this.GetFilterPredicate();
@@ -37,10 +38,12 @@ namespace VideosListModule
             }
         }
 
+        public Int32 PageSize { get; set; }
+
         // Overriding count allows for paging.
         public override Int32 Count
         {
-            get { return Math.Min(this._pageSize, this.CurrentItems.Length); }
+            get { return Math.Min(this.PageSize, this.CurrentItems.Length); }
         }
 
         private Video[] CurrentItems
@@ -48,8 +51,8 @@ namespace VideosListModule
             get
             {
                 return this.Cast<Video>()
-                    .Skip(this._pageNumber*this._pageSize)
-                    .Take(this._pageSize)
+                    .Skip(this._pageNumber*this.PageSize)
+                    .Take(this.PageSize)
                     .ToArray();
             }
         }
@@ -58,7 +61,7 @@ namespace VideosListModule
         {
             get
             {
-                return this.Cast<Video>().Count() > this._pageSize*(this._pageNumber + 1);
+                return this.Cast<Video>().Count() > this.PageSize*(this._pageNumber + 1);
                 ;
             }
         }
@@ -215,21 +218,5 @@ namespace VideosListModule
         {
             return new FilterParameters(this._filterName, this._categoryFilter, this._filterTags, this._sortDescription);
         }
-    }
-
-    public class FilterParameters
-    {
-        public FilterParameters(String name, String category, List<String> tags, SortDescription sortDescription)
-        {
-            this.Name = name;
-            this.Category = category;
-            this.Tags = tags;
-            this.SortDescription = sortDescription;
-        }
-
-        public String Name { get; }
-        public String Category { get; }
-        public List<String> Tags { get; }
-        public SortDescription SortDescription { get; }
     }
 }

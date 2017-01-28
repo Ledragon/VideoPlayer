@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
 using Classes;
 using Classes.Annotations;
 using Log;
+using Microsoft.Practices.Prism;
 
 namespace VideosListModule
 {
     public sealed class VideosCollectionView : ListCollectionView
     {
-        private readonly List<Video> _list;
-        private readonly Int32 _pageSize = 20;
+        private readonly ObservableCollection<Video> _collection;
+        private readonly Int32 _pageSize = 7;
         private String _categoryFilter;
         private String _filterName;
         private List<String> _filterTags;
@@ -20,9 +22,9 @@ namespace VideosListModule
         private Int32 _pageNumber;
         private SortDescription _sortDescription;
 
-        public VideosCollectionView([NotNull] List<Video> collection) : base(collection)
+        public VideosCollectionView([NotNull] ObservableCollection<Video> collection) : base(collection)
         {
-            this._list = collection;
+            this._collection = collection;
             this._pageNumber = 0;
             this.Filter = this.GetFilterPredicate();
             this._categoryFilter = "All";
@@ -54,7 +56,11 @@ namespace VideosListModule
 
         public Boolean CanMoveToNextPage
         {
-            get { return this.Cast<Video>().Count() > (this._pageSize) * (this._pageNumber+1); ; }
+            get
+            {
+                return this.Cast<Video>().Count() > this._pageSize*(this._pageNumber + 1);
+                ;
+            }
         }
 
         public Boolean CanMoveToPreviousPage
@@ -120,7 +126,7 @@ namespace VideosListModule
         {
             if (this.CanMoveToPreviousPage)
             {
-                this._pageNumber++;
+                this._pageNumber--;
                 this.RefreshView(false);
             }
         }
@@ -198,5 +204,32 @@ namespace VideosListModule
             }
             return result;
         }
+
+        public void Update(IEnumerable<Video> videos)
+        {
+            this._collection.Clear();
+            this._collection.AddRange(videos);
+        }
+
+        public FilterParameters GetFilter()
+        {
+            return new FilterParameters(this._filterName, this._categoryFilter, this._filterTags, this._sortDescription);
+        }
+    }
+
+    public class FilterParameters
+    {
+        public FilterParameters(String name, String category, List<String> tags, SortDescription sortDescription)
+        {
+            this.Name = name;
+            this.Category = category;
+            this.Tags = tags;
+            this.SortDescription = sortDescription;
+        }
+
+        public String Name { get; }
+        public String Category { get; }
+        public List<String> Tags { get; }
+        public SortDescription SortDescription { get; }
     }
 }

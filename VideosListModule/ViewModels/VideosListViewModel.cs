@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -25,7 +26,6 @@ namespace VideosListModule.ViewModels
         private Boolean _isLoading;
         private ILibraryService _libraryService;
 
-
         public VideosListViewModel(ILibraryService libraryService, IVideosListView videosListView,
             IEventAggregator eventAggregator)
             : base(videosListView)
@@ -50,7 +50,6 @@ namespace VideosListModule.ViewModels
         }
 
         public DelegateCommand AddVideoCommand { get; private set; }
-        //public DelegateCommand EditCommand { get; }
         public DelegateCommand PlayOneCommand { get; private set; }
         public DelegateCommand PlayPlaylistCommand { get; private set; }
         public DelegateCommand NextCommand { get; private set; }
@@ -146,7 +145,6 @@ namespace VideosListModule.ViewModels
                 this.NextCommand = new DelegateCommand(() =>
                 {
                     this.FilteredVideos.NextPage();
-                    //this.UpdateVideoListView(this._videos);
                     this.Raise();
                 },
                     () => this.FilteredVideos != null && this.FilteredVideos.CanMoveToNextPage);
@@ -157,7 +155,6 @@ namespace VideosListModule.ViewModels
                     this.Raise();
                 },
                     () => this.FilteredVideos != null && this.FilteredVideos.CanMoveToPreviousPage);
-                //this._videos = new ObservableCollection<Video>();
                 this.LoadDataAsyncCommand = new DelegateCommand(async () => await this.Init());
             }
             catch (Exception e)
@@ -169,8 +166,19 @@ namespace VideosListModule.ViewModels
 
         private void UpdateVideoListView(IEnumerable<Video> videos)
         {
-            var view = new VideosCollectionView(videos.ToList());
-            this.FilteredVideos = view;
+            FilterParameters filter = null;
+            if (this.FilteredVideos != null)
+            {
+                filter = this.FilteredVideos.GetFilter();
+            }
+            this.FilteredVideos = new VideosCollectionView(new ObservableCollection<Video>(videos));
+            if (filter != null)
+            {
+                this.FilteredVideos.FilterTag(filter.Tags);
+                this.FilteredVideos.FilterCategory(filter.Category);
+                this.FilteredVideos.FilterName(filter.Name);
+                this.FilteredVideos.Sort(filter.SortDescription);
+            }
             this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
         }
 

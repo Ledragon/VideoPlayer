@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Data;
 using Classes;
 using Classes.Annotations;
@@ -11,16 +12,18 @@ namespace VideosListModule
 {
     public sealed class VideosCollectionView : ListCollectionView
     {
-        private readonly Int32 _pageSize = 20;
         private String _categoryFilter;
         private String _filterName;
         private List<String> _filterTags;
 
         private Int32 _pageNumber;
+        private Int32 _pageSize = 20;
         private SortDescription _sortDescription;
+        private readonly List<Video> _list;
 
         public VideosCollectionView([NotNull] List<Video> collection) : base(collection)
         {
+            this._list = collection;
             this._pageNumber = 0;
             this.Filter = this.GetFilterPredicate();
             this._categoryFilter = "All";
@@ -30,6 +33,33 @@ namespace VideosListModule
             if (collection.Any())
             {
                 this.MoveCurrentToFirst();
+            }
+        }
+
+        // Overriding count allows for paging.
+        public override Int32 Count
+        {
+            get { return Math.Min(this._pageSize, this.CurrentItems.Length); }
+        }
+
+        public override Object GetItemAt(Int32 index)
+        {
+            var currentItems = this.CurrentItems;
+            if (index >= currentItems.Count())
+            {
+                throw new IndexOutOfRangeException();
+            }
+            return currentItems[index];
+        }
+
+        private Video[] CurrentItems
+        {
+            get
+            {
+                return this.Cast<Video>()
+                    .Skip(this._pageNumber*this._pageSize)
+                    .Take(this._pageSize)
+                    .ToArray();
             }
         }
 

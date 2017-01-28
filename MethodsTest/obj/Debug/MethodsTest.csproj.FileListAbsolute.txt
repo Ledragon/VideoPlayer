@@ -97,11 +97,11 @@ D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\Classes.dll
 D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\Controllers.dll
 D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\NEwVlcPlayer.dll
 D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\ToolLib.dll
 D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\Log.dll
 D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\log4net.dll
-D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\ToolLib.dll
-D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\Vlc.DotNet.Forms.dll
 D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\Vlc.DotNet.Wpf.dll
+D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\Vlc.DotNet.Forms.dll
 D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.dll
 D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\Vlc.DotNet.Core.dll
 D:\Development\Migration\VideoPlayer\MethodsTest\bin\Debug\Vlc.DotNet.Core.Interops.dll

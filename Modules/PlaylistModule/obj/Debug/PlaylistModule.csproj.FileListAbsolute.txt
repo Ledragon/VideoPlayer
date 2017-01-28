@@ -13,11 +13,11 @@ D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\Microsoft.
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\VideoPlayer.Infrastructure.dll
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\VideoPlayer.Services.dll
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
+D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\ToolLib.dll
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\Log.dll
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\log4net.dll
-D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\ToolLib.dll
-D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\VideoPlayer.Common.dll
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\VideoPlayer.Database.Repository.dll
+D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\VideoPlayer.Common.dll
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\VideoPlayer.Helpers.dll
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\Microsoft.WindowsAPICodePack.dll
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\Classes.pdb
@@ -34,8 +34,8 @@ D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\Microsoft.
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\Log.pdb
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\log4net.xml
-D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\VideoPlayer.Common.pdb
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\VideoPlayer.Database.Repository.pdb
+D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\VideoPlayer.Common.pdb
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\VideoPlayer.Helpers.pdb
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\bin\Debug\Microsoft.WindowsAPICodePack.pdb
 D:\Development\Migration\VideoPlayer\Modules\PlaylistModule\obj\Debug\PlaylistModule.csprojResolveAssemblyReference.cache

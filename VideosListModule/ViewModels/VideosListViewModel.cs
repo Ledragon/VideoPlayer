@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -10,7 +9,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Classes;
 using Log;
-using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
@@ -129,8 +127,6 @@ namespace VideosListModule
             this.IsLoading = true;
             var wrapper = await this._libraryService.LoadAsync();
             var videos = wrapper.Videos;
-            //this._videos.Clear();
-            //this._videos.AddRange(videos);
             this.UpdateVideoListView(videos);
             this.IsLoading = false;
         }
@@ -150,12 +146,9 @@ namespace VideosListModule
                 this._eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
                 this._eventAggregator.GetEvent<SortingChangedEvent>().Subscribe(this.Sort);
                 this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.UpdateVideoListView);
-                //this._eventAggregator.GetEvent<VideoEdited>().Subscribe(dummy => this.SetFilter());
                 this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Subscribe(this.AddRange);
-                //this.UpdateVideoListView(libraryService.GetObjectsFromFile().Videos);
                 this.InfoVisibility = Visibility.Visible;
 
-                //this.EditCommand = new DelegateCommand(this.Edit, this.CanEdit);
                 this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
                 this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
                 this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
@@ -187,11 +180,7 @@ namespace VideosListModule
 
         private void UpdateVideoListView(IEnumerable<Video> videos)
         {
-            var vids = videos//.OrderBy(v => v.Title)
-                //.Skip(this._pageNumber*this._pageSize)
-                //.Take(this._pageSize)
-                .ToList();
-            //this.Raise();
+            var vids = videos;
             this._sortDescription = new SortDescription("Title", ListSortDirection.Ascending);
             var view = CollectionViewSource.GetDefaultView(vids);
             view.SortDescriptions.Add(this._sortDescription);
@@ -199,10 +188,6 @@ namespace VideosListModule
             this.FilteredVideos.Filter = this.Filter();
             this.FilteredVideos.MoveCurrentToFirst();
             this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
-            //if (this.CurrentVideo == null && vids.Any())
-            //{
-            //    this.CurrentVideo = vids.First();
-            //}
         }
 
         private void Raise()
@@ -214,8 +199,8 @@ namespace VideosListModule
         private void FilterTag(List<String> tags)
         {
             this._filterTags = tags;
-            this.FilteredVideos.Refresh();
-            //this.SetFilter();
+            this.Refresh();
+            //this.FilteredVideos.Refresh();
         }
 
         private void FilterName(String obj)
@@ -223,8 +208,7 @@ namespace VideosListModule
             if (this._filterName != obj)
             {
                 this._filterName = obj;
-                this.FilteredVideos.Refresh();
-                //this.SetFilter();
+                this.Refresh();
             }
         }
 
@@ -234,7 +218,6 @@ namespace VideosListModule
             {
                 this._categoryFilter = category;
                 this.FilteredVideos.Refresh();
-                //this.SetFilter();
             }
         }
 
@@ -256,12 +239,6 @@ namespace VideosListModule
             }
         }
 
-        //private void SetFilter()
-        //{
-        //    this.FilteredVideos.Filter = this.Filter();
-        //    this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
-        //}
-
         private Predicate<Object> Filter()
         {
             return item =>
@@ -272,7 +249,7 @@ namespace VideosListModule
                     var video = item as Video;
                     var isNameOk = this.IsNameOk(video);
                     var isCategoryOk = this.IsCategoryOk(video, this._categoryFilter);
-                    var isTagOk = this.IsTagOK(video);
+                    var isTagOk = this.IsTagOk(video);
                     result = isNameOk && isCategoryOk && isTagOk;
                 }
                 catch (Exception e)
@@ -315,7 +292,7 @@ namespace VideosListModule
         {
             this._eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(null);
         }
-        
+
         private void Add()
         {
             if (this.CurrentVideo != null && File.Exists(this.CurrentVideo.FileName))
@@ -353,7 +330,7 @@ namespace VideosListModule
             return result;
         }
 
-        private Boolean IsTagOK(Video video)
+        private Boolean IsTagOk(Video video)
         {
             var result = true;
             if (this._filterTags != null && this._filterTags.Any())
@@ -365,6 +342,12 @@ namespace VideosListModule
                                 t => String.Equals(t.Value, filterTag, StringComparison.CurrentCultureIgnoreCase)));
             }
             return result;
+        }
+
+        private void Refresh()
+        {
+            this.FilteredVideos.Refresh();
+            this.FilteredVideos.MoveCurrentToFirst();
         }
     }
 }

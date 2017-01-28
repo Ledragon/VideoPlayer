@@ -18,18 +18,18 @@ namespace VideosListModule.Mocks
             {
                 Title = "Michel",
                 Length = TimeSpan.FromMinutes(30),
-                Category = "Porn",
+                Category = "Cat",
                 NumberOfViews = 6,
                 Rating = 5,
                 Tags = new ObservableCollection<Tag>
                 {
                     new Tag
                     {
-                        Value = "12yo"
+                        Value = "abc"
                     },
                     new Tag
                     {
-                        Value = "Bibcam"
+                        Value = "def"
                     }
                 },
                 DateAdded = DateTime.Now,

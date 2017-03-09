@@ -22,6 +22,7 @@ namespace Classes
         private Size _resolution;
         private ObservableCollection<Tag> _tags;
         private String _title;
+        private Image _previewImage;
 
         public Video()
         {
@@ -67,42 +68,6 @@ namespace Classes
                 this.Logger().ErrorFormat(e.StackTrace);
             }
         }
-
-        /*
-        private void GetVideoInfo(String videoPath)
-        {
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.Open(new Uri(videoPath));
-            //Int32 iterCount = 0;
-            //while (!mediaPlayer.NaturalDuration.HasTimeSpan && iterCount < 10)
-            //{
-            //Thread.Sleep(1000);
-            //    iterCount++;
-            //}
-            if (mediaPlayer.NaturalDuration.HasTimeSpan)
-            {
-                this.Length = mediaPlayer.NaturalDuration.TimeSpan;
-            }
-
-            //mediaPlayer.Pause();
-            //mediaPlayer.Position = TimeSpan.FromSeconds(10);
-            //RenderTargetBitmap rtb = new RenderTargetBitmap(60, 60, 72, 72, PixelFormats.Prgba64);
-            //DrawingVisual dv = new DrawingVisual();
-            //using (DrawingContext dc = dv.RenderOpen())
-            //{
-            //    dc.DrawVideo(mediaPlayer,new Rect(0,0,60,60));
-            //}
-            //rtb.Render(dv);
-
-            //BitmapFrame frame = BitmapFrame.Create(rtb).GetCurrentValueAsFrozen() as BitmapFrame;
-            //BitmapEncoder encoder = new JpegBitmapEncoder();
-            //encoder.Frames.Add(frame as BitmapFrame);
-            //MemoryStream memoryStream = new MemoryStream();
-            //encoder.Save(memoryStream);
-
-            mediaPlayer.Close();
-        }
-        */
 
         [XmlAttribute("FileName")]
         public String FileName { get; set; }
@@ -217,12 +182,13 @@ namespace Classes
         {
             get
             {
-                var modifier = new ImageModifier();
-                var image = modifier.DeserializeFromBase64String(this.SerializedImage);
-                //image = modifier.ResizeImage(image, 640, 480);
-                return image;
-
-                //return GetValue(PreviewImageProperty) as System.Drawing.Image;
+                if (this._previewImage == null)
+                {
+                    var modifier = new ImageModifier();
+                    var image = modifier.DeserializeFromBase64String(this.SerializedImage);
+                    this._previewImage = image;
+                }
+                return this._previewImage;
             }
             set
             {
@@ -234,6 +200,7 @@ namespace Classes
                     var newHeight = (640/ratio).ToString("0");
                     resized = modifier.ResizeImage(value, 640, Int32.Parse(newHeight));
                 }
+                this._previewImage = resized;
                 this.SerializedImage = modifier.SerializeToBase64String(resized);
                 this.OnPropertyChanged();
             }

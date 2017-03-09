@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mocks="clr-namespace:VideosListModule.Mocks"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="1024">
+             d:DesignHeight="800" d:DesignWidth="400">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -14,7 +14,6 @@
             <Style TargetType="Label" x:Key="Label">
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="Margin" Value="5" />
-                <!--<Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>-->
                 <Setter Property="FontFamily" Value="Lucida Calligraphy" />
             </Style>
             <Style TargetType="Label" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
@@ -30,8 +29,6 @@
             </Style>
             <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="Current">
                 <Setter Property="Foreground" Value="White" />
-                <!--<Setter Property="FontFamily" Value="{StaticResource DefaultFont}"></Setter>-->
-                <!--<Setter Property="FontFamily" Value="Lucida Handwriting" />-->
             </Style>
             <Style TargetType="DataGrid">
                 <Setter Property="Background" Value="Black" />
@@ -56,7 +53,6 @@
             </Style>
             <Style TargetType="TabItem" x:Key="HiddenHeader">
                 <Setter Property="Background" Value="LightGray"></Setter>
-                <!--<Setter Property="Foreground" Value="DarkRed"></Setter>-->
             </Style>
             <mocks:MockVideo x:Key="MockVideo" />
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
@@ -67,29 +63,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TabControl Grid.Row="1"
-                    TabStripPlacement="Bottom"
-                    Background="Transparent">
-            <TabItem Header="Preview" Visibility="Visible" Style="{StaticResource HiddenHeader}">
-                <Image
-                    Source="{Binding Path=PreviewImage, Converter={StaticResource ImageConverter}}"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Margin="5" />
-            </TabItem>
-            <TabItem Header="Contact sheet"
-                     Style="{StaticResource HiddenHeader}"
-                     Visibility="{Binding Path=DataContext.HasContactSheet, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}, Converter={StaticResource BoolToVis}}">
-                <Image
-                    Source="{Binding Path=DataContext.ContactSheetPath, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                    Stretch="Uniform"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    Margin="5" />
-            </TabItem>
-
-        </TabControl>
+       
         <Grid Grid.Row="0" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -107,7 +81,8 @@
             <ListBox Grid.Row="2"
                      ItemsSource="{Binding Tags}"
                      HorizontalAlignment="Stretch"
-                     Margin="0">
+                     Margin="0"
+                     Height="40">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Margin="0" />
@@ -129,6 +104,22 @@
                        Text="{Binding DateAdded, StringFormat=Added on {0:dd/MM/yyy HH:mm}}"
                        Style="{StaticResource Current}" />
 
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Source="{Binding Path=PreviewImage, Converter={StaticResource ImageConverter}}"
+                   Stretch="Uniform"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Margin="5" />
+            <Image Grid.Row="1" Source="{Binding Path=DataContext.ContactSheetPath, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                   Stretch="Uniform"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"
+                   Margin="5" />
         </Grid>
     </Grid>
 </UserControl>

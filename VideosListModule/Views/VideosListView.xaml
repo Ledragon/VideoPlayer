@@ -38,13 +38,13 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0"
+        <Grid Grid.Column="1"
               Background="{StaticResource BackgroundColorBrush}"
               Margin="0,0,0,5">
             <ContentControl Grid.Row="0"
                             regions:RegionManager.RegionName="{x:Static infrastructure11:RegionNames.VideoInfoRegion}" />
         </Grid>
-        <views:VideosList Grid.Column="1" />
+        <views:VideosList Grid.Column="0" />
 
         <controls:LoadingPanel  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />

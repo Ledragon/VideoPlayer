@@ -103,7 +103,6 @@
             <TextBlock Grid.Row="6" Grid.Column="0"
                        Text="{Binding DateAdded, StringFormat=Added on {0:dd/MM/yyy HH:mm}}"
                        Style="{StaticResource Current}" />
-
         </Grid>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

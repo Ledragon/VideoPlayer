@@ -18,7 +18,7 @@ namespace VideoPlayer.ViewModels
             this._eventAggregator = eventAggregator;
             this.Videos = new VideosCollectionView(libraryService.GetObjectsFromFile().Videos, 0);
             this.Videos.Sort(new SortDescription("Category", ListSortDirection.Ascending));
-            this.Videos.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
+            //this.Videos.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
             //this.SelectedVideo = this.Videos.FirstOrDefault();
         }
 

@@ -7,9 +7,10 @@
     xmlns:views="clr-namespace:VideoPlayer.Views"
     x:Class="VideoPlayer.MainWindow"
     Title="VideoPlayer" Height="768" Width="1024" Background="Black" Foreground="White" FontFamily="Iskoola Pota"
-    WindowStyle="{Binding WindowStyle}"
+    WindowStyle="None"
     WindowStartupLocation="CenterScreen"
-    WindowState="Maximized">
+    WindowState="Maximized"
+    ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

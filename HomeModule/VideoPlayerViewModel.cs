@@ -15,7 +15,7 @@ namespace HomeModule
         private Visibility _isLoading;
         private String _loadingMessage;
         private Int32 _selectedTab;
-        private WindowStyle _windowStyle;
+        //private WindowStyle _windowStyle;
 
         public VideoPlayerViewModel(IVideoPlayer videoPlayer, IEventAggregator eventAggregator,
             ILibraryService libraryService) : base(videoPlayer)
@@ -78,16 +78,16 @@ namespace HomeModule
             }
         }
 
-        public WindowStyle WindowStyle
-        {
-            get { return this._windowStyle; }
-            set
-            {
-                if (value == this._windowStyle) return;
-                this._windowStyle = value;
-                this.OnPropertyChanged();
-            }
-        }
+        //public WindowStyle WindowStyle
+        //{
+        //    get { return this._windowStyle; }
+        //    set
+        //    {
+        //        if (value == this._windowStyle) return;
+        //        this._windowStyle = value;
+        //        this.OnPropertyChanged();
+        //    }
+        //}
 
         public Visibility IsExitMenuVisible
         {
@@ -122,7 +122,7 @@ namespace HomeModule
 
         private void ToggleWindowStyle()
         {
-            this.WindowStyle = this.WindowStyle == WindowStyle.None ? WindowStyle.SingleBorderWindow : WindowStyle.None;
+            //this.WindowStyle = this.WindowStyle == WindowStyle.None ? WindowStyle.SingleBorderWindow : WindowStyle.None;
         }
     }
 }

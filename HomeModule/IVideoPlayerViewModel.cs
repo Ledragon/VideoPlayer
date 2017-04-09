@@ -14,7 +14,7 @@ namespace HomeModule
         DelegateCommand ToggleStyleCommand { get; }
         //DelegateCommand WindowLoadedCommand { get; }
         DelegateCommand CloseCommand { get; }
-        WindowStyle WindowStyle { get; set; }
+        //WindowStyle WindowStyle { get; set; }
         Visibility IsExitMenuVisible { get; set; }
     }
 }

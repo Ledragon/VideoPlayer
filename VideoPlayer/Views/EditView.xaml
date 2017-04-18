@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:regions="http://www.codeplex.com/CompositeWPF"
              xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
+             xmlns:mocks="clr-namespace:VideoPlayer.Mocks"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="800">
     <UserControl.Resources>
@@ -13,9 +14,10 @@
                 <ResourceDictionary Source="Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <infrastructure:ImageConverter x:Key="ImageConverter" />
+            <mocks:MockEditViewModel x:Key="DesignViewModel" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="*" />
@@ -28,7 +30,10 @@
                   Margin="5"
                   Background="Transparent"
                   IsReadOnly="True"
-                  CanUserAddRows="False">
+                  CanUserAddRows="False"
+                  ColumnHeaderStyle="{StaticResource EditPropertyGridHeader}"
+                  RowStyle="{StaticResource EditPropertyGridRow}"
+                   >
             <DataGrid.Columns>
                 <DataGridTemplateColumn Width="Auto" Header="Preview">
                     <DataGridTemplateColumn.CellTemplate>

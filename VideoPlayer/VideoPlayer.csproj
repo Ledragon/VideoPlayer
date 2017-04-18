@@ -148,6 +148,7 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="InfoExporter.cs" />
+    <Compile Include="Mocks\MockEditViewModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="PlayListManagementModule.cs" />
     <Compile Include="ViewModels\EditViewModel.cs" />

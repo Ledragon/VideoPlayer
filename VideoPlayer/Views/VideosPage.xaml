@@ -13,7 +13,9 @@
     <UserControl.Resources>
         <ResourceDictionary Source="Resources.xaml" />
     </UserControl.Resources>
-    <TabControl x:Name="_uiVideosTabControl" SelectedIndex="{Binding SelectedIndex}" Style="{StaticResource HiddenTabControl}">
+    <TabControl x:Name="_uiVideosTabControl"
+                SelectedIndex="{Binding SelectedIndex}" 
+                Style="{StaticResource HiddenTabControl}">
         <TabItem x:Name="_uiVideosList">
             <!--<ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListManagementRegion}" />-->
             <Views:PlayListManagementView/>

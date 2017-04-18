@@ -15,10 +15,10 @@ namespace VideosListModule
 
         public override void Initialize()
         {
-            this.RegisterType<IVideoInfoView, VideoInfo>();
-            this.RegisterType<IVideoInfoViewModel, VideoInfoViewModel>();
-            this.RegisterType<IVideosListView, VideosListView>();
-            this.RegisterType<IVideosListViewModel, VideosListViewModel>();
+            this.RegisterType<IVideoInfoView, VideoInfo>()
+                .RegisterType<IVideoInfoViewModel, VideoInfoViewModel>()
+                .RegisterType<IVideosListView, VideosListView>()
+                .RegisterType<IVideosListViewModel, VideosListViewModel>();
             this.ReferenceRegion<IVideosListViewModel>(RegionNames.VideosListRegion);
             this.ReferenceRegion<IVideoInfoViewModel>(RegionNames.VideoInfoRegion);
         }

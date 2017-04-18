@@ -19,8 +19,8 @@ namespace VideoPlayer
         {
             this.Container.RegisterType<IVideoRepository, FileVideoRepository>(new ContainerControlledLifetimeManager())
                 .RegisterType<ILibraryService, LibraryService>(new ContainerControlledLifetimeManager())
-                .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager())
-                .RegisterType<VideosTabControlViewModel>();
+                .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
+                //.RegisterType<IVideosPageViewModel, VideosPageViewModel>();
 
             //TEMP
             this.Container.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
@@ -39,15 +39,16 @@ namespace VideoPlayer
 
         protected override void ConfigureModuleCatalog()
         {
-            this.AddModule<ModuleModule>();
-            this.AddModule<PlayListModule>();
-            this.AddModule<VlcPlayerModule>();
-            this.AddModule<HomeModule.HomeModule>();
-            this.AddModule<PlayListManagementModule>();
-            this.AddModule<VideosListModule.VideosListModule>();
+            this.AddModule<ModuleModule>()
+                .AddModule<PlayListModule>()
+                .AddModule<VlcPlayerModule>()
+                .AddModule<HomeModule.HomeModule>()
+                .AddModule<PlayListManagementModule>()
+                .AddModule<VideosListModule.VideosListModule>()
+                .AddModule<VideosPageModule>();
         }
 
-        private void AddModule<T>()
+        private Bootstrapper AddModule<T>()
         {
             var moduleType = typeof (T);
             var moduleInfo = new ModuleInfo
@@ -57,6 +58,7 @@ namespace VideoPlayer
                 InitializationMode = InitializationMode.WhenAvailable
             };
             this.ModuleCatalog.AddModule(moduleInfo);
+            return this;
         }
     }
 }

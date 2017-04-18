@@ -151,13 +151,15 @@
     <Compile Include="Mocks\MockEditViewModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="PlayListManagementModule.cs" />
+    <Compile Include="VideosPageModule.cs" />
     <Compile Include="ViewModels\EditViewModel.cs" />
     <Compile Include="ViewModels\IEditViewModel.cs" />
     <Compile Include="ViewModels\IPlayListManagementViewModel.cs" />
     <Compile Include="ViewModels\IVideosListInteractionViewModel.cs" />
+    <Compile Include="ViewModels\IVideosPageViewModel.cs" />
     <Compile Include="ViewModels\PlayListManagementViewModel.cs" />
     <Compile Include="ViewModels\VideosListInteractionViewModel.cs" />
-    <Compile Include="ViewModels\VideosTabControlViewModel.cs" />
+    <Compile Include="ViewModels\VideosPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\DirectoryBrowser.xaml.cs">
       <DependentUpon>DirectoryBrowser.xaml</DependentUpon>
@@ -169,6 +171,7 @@
       <DependentUpon>EditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IVideosListInteractionView.cs" />
+    <Compile Include="Views\IVideosPageView.cs" />
     <Compile Include="Views\PlayListManagementView.xaml.cs">
       <DependentUpon>PlayListManagementView.xaml</DependentUpon>
     </Compile>

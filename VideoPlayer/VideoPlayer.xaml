@@ -54,10 +54,10 @@
                 <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.HomeRegion}" />
             </TabItem>
             <TabItem Name="_uiVideoTab">
-                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosPageRegion}" />
-                <!--<local:VideosPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                <!--<ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosPageRegion}" />-->
+                <local:VideosPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                                   Visibility="Visible"
-                                  x:Name="UiVideosView" />-->
+                                  x:Name="UiVideosView" />
             </TabItem>
             <TabItem Name="_uiSettingsTab">
                 <local:SettingsPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"

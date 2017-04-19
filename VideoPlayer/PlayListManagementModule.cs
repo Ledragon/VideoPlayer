@@ -15,7 +15,7 @@ namespace VideoPlayer
 
         public override void Initialize()
         {
-            //this.RegisterType<IPlayListManagementView, PlayListManagementView>();
+            this.RegisterType<IPlayListManagementView, PlayListManagementView>();
             this.RegisterType<IPlayListManagementViewModel, PlayListManagementViewModel>();
             this.ReferenceRegion<IPlayListManagementViewModel>(RegionNames.PlayListManagementRegion);
 

@@ -9,50 +9,50 @@ namespace VideoPlayer.ViewModels
     public class VideosPageViewModel : Infrastructure.ViewModelBase, IVideosPageViewModel
     {
         private Cursor _cursor;
-        private Boolean _filterGridVisibility;
-        private Boolean _isCategoryGridVisible;
-        private Boolean _isPlayListVisible;
+        //private Boolean _filterGridVisibility;
+        //private Boolean _isCategoryGridVisible;
+        //private Boolean _isPlayListVisible;
         private Int32 _selectedIndex;
 
         public VideosPageViewModel(IEventAggregator eventAggregator, IVideosPageView videosPageView) : base(videosPageView)
         {
-            this.FilterGridVisibility = false;
-            this.IsPlayListVisible = true;
-            this.IsCategoryGridVisible = true;
+            //this.FilterGridVisibility = false;
+            //this.IsPlayListVisible = true;
+            //this.IsCategoryGridVisible = true;
 
             this.InitCommands();
 
-            eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
+            //eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.SwitchToFullScreen);
             eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
         }
 
-        public ICommand SwitchCategoryGridVisibilityCommand { get; private set; }
-        public ICommand SwitchPlaylistVisibilityCommand { get; private set; }
+        //public ICommand SwitchCategoryGridVisibilityCommand { get; private set; }
+        //public ICommand SwitchPlaylistVisibilityCommand { get; private set; }
         public ICommand SwitchToWindowCommand { get; private set; }
         public ICommand SwitchToFullScreenCommand { get; private set; }
-        public ICommand SwitchFilterGridVisibilityCommand { get; private set; }
+        //public ICommand SwitchFilterGridVisibilityCommand { get; private set; }
 
-        public Boolean IsCategoryGridVisible
-        {
-            get { return this._isCategoryGridVisible; }
-            set
-            {
-                if (value == this._isCategoryGridVisible) return;
-                this._isCategoryGridVisible = value;
-                this.OnPropertyChanged();
-            }
-        }
+        //public Boolean IsCategoryGridVisible
+        //{
+        //    get { return this._isCategoryGridVisible; }
+        //    set
+        //    {
+        //        if (value == this._isCategoryGridVisible) return;
+        //        this._isCategoryGridVisible = value;
+        //        this.OnPropertyChanged();
+        //    }
+        //}
 
-        public Boolean IsPlayListVisible
-        {
-            get { return this._isPlayListVisible; }
-            set
-            {
-                if (value == this._isPlayListVisible) return;
-                this._isPlayListVisible = value;
-                this.OnPropertyChanged();
-            }
-        }
+        //public Boolean IsPlayListVisible
+        //{
+        //    get { return this._isPlayListVisible; }
+        //    set
+        //    {
+        //        if (value == this._isPlayListVisible) return;
+        //        this._isPlayListVisible = value;
+        //        this.OnPropertyChanged();
+        //    }
+        //}
 
         public Cursor Cursor
         {
@@ -65,18 +65,18 @@ namespace VideoPlayer.ViewModels
             }
         }
 
-        public Boolean FilterGridVisibility
-        {
-            get { return this._filterGridVisibility; }
-            set
-            {
-                if (!value.Equals(this._filterGridVisibility))
-                {
-                    this._filterGridVisibility = value;
-                    this.OnPropertyChanged();
-                }
-            }
-        }
+        //public Boolean FilterGridVisibility
+        //{
+        //    get { return this._filterGridVisibility; }
+        //    set
+        //    {
+        //        if (!value.Equals(this._filterGridVisibility))
+        //        {
+        //            this._filterGridVisibility = value;
+        //            this.OnPropertyChanged();
+        //        }
+        //    }
+        //}
 
         public Int32 SelectedIndex
         {
@@ -91,23 +91,23 @@ namespace VideoPlayer.ViewModels
 
         private void InitCommands()
         {
-            this.SwitchFilterGridVisibilityCommand = new DelegateCommand(this.SwitchFilterGridVisibility);
+            //this.SwitchFilterGridVisibilityCommand = new DelegateCommand(this.SwitchFilterGridVisibility);
             this.SwitchToFullScreenCommand = new DelegateCommand(this.SwitchToFullScreen);
             this.SwitchToWindowCommand = new DelegateCommand(this.SwitchToWindowMode);
-            this.SwitchPlaylistVisibilityCommand = new DelegateCommand(this.SwitchPlayListVisibility);
-            this.SwitchCategoryGridVisibilityCommand =
-                new DelegateCommand(() => this.IsCategoryGridVisible = !this.IsCategoryGridVisible);
+            //this.SwitchPlaylistVisibilityCommand = new DelegateCommand(this.SwitchPlayListVisibility);
+            //this.SwitchCategoryGridVisibilityCommand =
+            //    new DelegateCommand(() => this.IsCategoryGridVisible = !this.IsCategoryGridVisible);
         }
 
-        private void SwitchPlayListVisibility()
-        {
-            this.IsPlayListVisible = !this.IsPlayListVisible;
-        }
+        //private void SwitchPlayListVisibility()
+        //{
+        //    this.IsPlayListVisible = !this.IsPlayListVisible;
+        //}
 
-        private void SwitchFilterGridVisibility()
-        {
-            this.FilterGridVisibility = !this.FilterGridVisibility;
-        }
+        //private void SwitchFilterGridVisibility()
+        //{
+        //    this.FilterGridVisibility = !this.FilterGridVisibility;
+        //}
 
         private void SwitchToWindowMode()
         {

@@ -8,7 +8,7 @@ namespace VideoPlayer.Views
     /// <summary>
     ///     Interaction logic for PlayListManagementView.xaml
     /// </summary>
-    public partial class PlayListManagementView : UserControl//, IPlayListManagementView
+    public partial class PlayListManagementView : UserControl, IPlayListManagementView
     {
         public PlayListManagementView()
         {
@@ -17,11 +17,11 @@ namespace VideoPlayer.Views
         }
 
 
-        //public IViewModel ViewModel
-        //{
-        //    get { return (IViewModel)this.DataContext; }
-        //    set { this.DataContext = value; }
-        //}
+        public IViewModel ViewModel
+        {
+            get { return (IViewModel)this.DataContext; }
+            set { this.DataContext = value; }
+        }
     }
 
     public interface IPlayListManagementView : IView

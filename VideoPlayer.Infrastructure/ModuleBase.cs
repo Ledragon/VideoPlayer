@@ -16,18 +16,19 @@ namespace VideoPlayer.Infrastructure
             this._regionManager = regionManager;
         }
 
-        public virtual void Initialize()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void Initialize();
 
         protected void ReferenceRegion<T>(String regionName) where T : IViewModel
         {
+            var viewModel = this._unityContainer.Resolve<T>();
             if (this._regionManager.Regions.ContainsRegionWithName(regionName))
             {
                 var region = this._regionManager.Regions[regionName];
-                var viewModel = this._unityContainer.Resolve<T>();
                 region.Add(viewModel.View);
+            }
+            else
+            {
+                this._regionManager.RegisterViewWithRegion(regionName, viewModel.View.GetType());
             }
         }
 

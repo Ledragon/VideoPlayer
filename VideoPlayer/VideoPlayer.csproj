@@ -170,6 +170,7 @@
     <Compile Include="Views\EditView.xaml.cs">
       <DependentUpon>EditView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\IPlayListManagementView.cs" />
     <Compile Include="Views\IVideosListInteractionView.cs" />
     <Compile Include="Views\IVideosPageView.cs" />
     <Compile Include="Views\PlayListManagementView.xaml.cs">

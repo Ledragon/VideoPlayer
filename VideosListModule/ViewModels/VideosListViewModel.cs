@@ -155,6 +155,7 @@ namespace VideosListModule.ViewModels
                 },
                     () => this.FilteredVideos != null && this.FilteredVideos.CanMoveToPreviousPage);
                 this.LoadDataAsyncCommand = new DelegateCommand(async () => await this.Init());
+                //await this.Init();
             }
             catch (Exception e)
             {

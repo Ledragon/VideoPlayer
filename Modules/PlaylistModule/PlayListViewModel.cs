@@ -40,7 +40,7 @@ namespace PlaylistModule
             eventAggregator.GetEvent<OnPlayPlaylistRequest>()
                 .Subscribe(dummy => { eventAggregator.GetEvent<OnPlayPlaylist>().Publish(this.Playlist); }, true);
 
-            this._playListCollection = new ObservableCollection<Playlist>(libraryService.GetObjectsFromFile().PlayLists);
+            this.PlayListCollection = new ObservableCollection<Playlist>(libraryService.GetObjectsFromFile().PlayLists);
         }
 
         public String PlayListName

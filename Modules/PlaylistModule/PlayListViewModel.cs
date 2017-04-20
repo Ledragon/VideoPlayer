@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Classes;
+using Classes.Annotations;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -12,7 +15,7 @@ using VideoPlayer.Services;
 
 namespace PlaylistModule
 {
-    public class PlayListViewModel : ViewModelBase, IPlayListViewModel
+    public class PlayListViewModel : IPlayListViewModel, INotifyPropertyChanged
     {
         private readonly ILibraryService _libraryService;
         private Video _currentVideo;
@@ -22,8 +25,8 @@ namespace PlaylistModule
         private Playlist _selectedPlayList;
         private TimeSpan _totalDuration;
 
-        public PlayListViewModel(IPlayListView view, IEventAggregator eventAggregator, ILibraryService libraryService)
-            : base(view)
+        public PlayListViewModel(IEventAggregator eventAggregator, ILibraryService libraryService)
+            //: base(view)
         {
             this._libraryService = libraryService;
             this.Playlist = new ObservableCollection<Video>();
@@ -169,6 +172,14 @@ namespace PlaylistModule
                 Files = this.Playlist.Select(v => v.FileName).ToList()
             };
             this._libraryService.AddPlaylist(playlist);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] String propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -17,7 +17,13 @@
                 SelectedIndex="{Binding SelectedIndex}"
                 Style="{StaticResource HiddenTabControl}">
         <TabItem x:Name="_uiVideosList">
-            <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListManagementRegion}" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListManagementRegion}" />
+            </Grid>
         </TabItem>
         <TabItem>
             <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}"  Margin="0"/>

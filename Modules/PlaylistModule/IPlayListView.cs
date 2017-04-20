@@ -2,7 +2,7 @@
 
 namespace PlaylistModule
 {
-    public interface IPlayListView : IView
+    public interface IPlayListView //: IView
     {
     }
 }

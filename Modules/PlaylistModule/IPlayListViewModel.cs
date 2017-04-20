@@ -6,7 +6,7 @@ using VideoPlayer.Infrastructure;
 
 namespace PlaylistModule
 {
-    public interface IPlayListViewModel : IViewModel
+    public interface IPlayListViewModel //: IViewModel
     {
         ObservableCollection<Video> Playlist { get; set; }
         Video CurrentVideo { get; set; }

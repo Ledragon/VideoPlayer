@@ -8,14 +8,15 @@ namespace PlaylistModule
     /// </summary>
     public partial class PlayListView : UserControl, IPlayListView
     {
-        public PlayListView()
+        public PlayListView(IPlayListViewModel viewModel)
         {
             this.InitializeComponent();
+            this.ViewModel = viewModel;
         }
 
-        public IViewModel ViewModel
+        public IPlayListViewModel ViewModel
         {
-            get { return (IViewModel) this.DataContext; }
+            get { return (IPlayListViewModel) this.DataContext; }
             set { this.DataContext = value; }
         }
     }

@@ -1,4 +1,5 @@
-﻿<UserControl xmlns:ManageLibraryModule="clr-namespace:ManageLibraryModule"  x:Class="ManageLibraryModule.ManageLibraryView"
+﻿<UserControl xmlns:ManageLibraryModule="clr-namespace:ManageLibraryModule"
+             x:Class="ManageLibraryModule.ManageLibraryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,17 +15,27 @@
                 <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <mocks:MockEditViewModel x:Key="DesignViewModel" />
-            
+
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <ManageLibraryModule:VideoListView />
-        <ContentControl Grid.Column="1"
-                        regions:RegionManager.RegionName="{x:Static infrastructure:RegionNames.EditVideoInfoRegion}" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Button Command="{Binding UpdateCommand}">Load</Button>
+            <Button Command="{Binding CleanCommand}">Clean</Button>
+        </StackPanel>
+        <Grid Grid.Row="1" d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ManageLibraryModule:VideoListView />
+            <ContentControl Grid.Column="1"
+                            regions:RegionManager.RegionName="{x:Static infrastructure:RegionNames.EditVideoInfoRegion}" />
 
+        </Grid>
     </Grid>
 </UserControl>

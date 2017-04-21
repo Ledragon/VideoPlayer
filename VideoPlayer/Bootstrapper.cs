@@ -25,7 +25,6 @@ namespace VideoPlayer
             //TEMP
             this.Container.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
             this.Container.RegisterType<IVideoPlayer, HomeModule.VideoPlayer>();
-            this.Container.RegisterType<IEditViewModel, EditViewModel>();
             Locator.Container = this.Container;
             return this.Container.Resolve<MainWindow>();
         }
@@ -45,7 +44,8 @@ namespace VideoPlayer
                 .AddModule<HomeModule.HomeModule>()
                 .AddModule<PlayListManagementModule>()
                 .AddModule<VideosListModule.VideosListModule>()
-                .AddModule<VideosPageModule.VideosPageModule>();
+                .AddModule<VideosPageModule.VideosPageModule>()
+                .AddModule<ManageLibraryModule.ManageLibraryModule>();
         }
 
         private Bootstrapper AddModule<T>()

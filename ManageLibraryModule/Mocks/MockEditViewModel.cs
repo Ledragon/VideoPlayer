@@ -4,11 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Classes;
-using Classes.Annotations;
-using VideoPlayer.ViewModels;
+using VideoPlayer.Infrastructure.Annotations;
 using VideosListModule.ViewModels;
 
-namespace VideoPlayer.Mocks
+namespace ManageLibraryModule.Mocks
 {
     public class MockEditViewModel : IEditViewModel, INotifyPropertyChanged
     {

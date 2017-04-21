@@ -1,10 +1,10 @@
-using System.Collections.ObjectModel;
 using Classes;
+using VideoPlayer.Infrastructure.ViewFirst;
 using VideosListModule.ViewModels;
 
-namespace VideoPlayer.ViewModels
+namespace ManageLibraryModule
 {
-    public interface IEditViewModel
+    public interface IEditViewModel : IViewModel
     {
         VideosCollectionView Videos { get; }
         Video SelectedVideo { get; set; }

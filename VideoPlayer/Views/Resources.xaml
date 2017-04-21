@@ -90,19 +90,5 @@
     </Style>
 
     
-    <Style TargetType="DataGridColumnHeader"
-           x:Key="EditPropertyGridHeader">
-        <Setter Property="FontSize" Value="14"></Setter>
-        <Setter Property="Padding" Value="10"></Setter>
-    </Style>
-    <Style TargetType="DataGridRow"
-           x:Key="EditPropertyGridRow">
-        <Setter Property="Background"
-                Value="#3FD3D3D3"></Setter>
-        <Setter Property="FontSize"
-                Value="14"></Setter>
-        <Setter Property="Padding"
-                Value="10"></Setter>
-    </Style>
 
 </ResourceDictionary>

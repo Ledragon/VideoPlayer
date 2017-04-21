@@ -1,20 +1,36 @@
-﻿<UserControl x:Class="VideoPlayer.Views.EditView"
+﻿<UserControl x:Class="ManageLibraryModule.EditView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:regions="http://www.codeplex.com/CompositeWPF"
              xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
-             xmlns:mocks="clr-namespace:VideoPlayer.Mocks"
+             xmlns:mocks="clr-namespace:ManageLibraryModule.Mocks"
              mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <infrastructure:ImageConverter x:Key="ImageConverter" />
             <mocks:MockEditViewModel x:Key="DesignViewModel" />
+            <Style TargetType="DataGridColumnHeader"
+                   x:Key="EditPropertyGridHeader">
+                <Setter Property="FontSize"
+                        Value="14"></Setter>
+                <Setter Property="Padding"
+                        Value="10"></Setter>
+            </Style>
+            <Style TargetType="DataGridRow"
+                   x:Key="EditPropertyGridRow">
+                <Setter Property="Background"
+                        Value="#3FD3D3D3"></Setter>
+                <Setter Property="FontSize"
+                        Value="14"></Setter>
+                <Setter Property="Padding"
+                        Value="10"></Setter>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid d:DataContext="{Binding Source={StaticResource DesignViewModel}}">

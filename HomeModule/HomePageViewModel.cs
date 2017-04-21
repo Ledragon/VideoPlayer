@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using ManageLibraryModule;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using PlaylistModule;
@@ -66,7 +67,8 @@ namespace HomeModule
 
         private void GoToManage()
         {
-            this._eventAggregator.GetEvent<GoToPage>().Publish(3);
+            //this._eventAggregator.GetEvent<GoToPage>().Publish(3);
+            ApplicationCommands.NavigateCommand.Execute(typeof(EditView));
 
         }
 

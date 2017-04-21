@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VideoPlayer</RootNamespace>
     <AssemblyName>VideoPlayer</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -148,11 +148,8 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="InfoExporter.cs" />
-    <Compile Include="Mocks\MockEditViewModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="PlayListManagementModule.cs" />
-    <Compile Include="ViewModels\EditViewModel.cs" />
-    <Compile Include="ViewModels\IEditViewModel.cs" />
     <Compile Include="ViewModels\IPlayListManagementViewModel.cs" />
     <Compile Include="ViewModels\IVideosListInteractionViewModel.cs" />
     <Compile Include="ViewModels\PlayListManagementViewModel.cs" />
@@ -163,9 +160,6 @@
     </Compile>
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Views\EditView.xaml.cs">
-      <DependentUpon>EditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IPlayListManagementView.cs" />
     <Compile Include="Views\IVideosListInteractionView.cs" />
@@ -179,10 +173,6 @@
       <DependentUpon>VideosListInteractionView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\DirectoryBrowser.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -268,6 +258,10 @@
     <ProjectReference Include="..\Log\Log.csproj">
       <Project>{02c8e3b1-3796-49b2-aba2-67d0e8644871}</Project>
       <Name>Log</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ManageLibraryModule\ManageLibraryModule.csproj">
+      <Project>{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}</Project>
+      <Name>ManageLibraryModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\Modules\PlaylistModule\PlaylistModule.csproj">
       <Project>{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC}</Project>

@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeDragon.Controls", "LeDrag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideosPageModule", "VideosPageModule\VideosPageModule.csproj", "{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManageLibraryModule", "ManageLibraryModule\ManageLibraryModule.csproj", "{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -141,6 +143,10 @@ Global
 		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -157,6 +163,7 @@ Global
 		{57309725-0F3D-4A63-B876-05366E0DE7DF} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{5638EDFA-60FA-49B9-A7D3-99B043BF7EF5} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
+		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

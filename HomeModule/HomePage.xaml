@@ -8,36 +8,15 @@
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1024">
     <UserControl.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-           
-        </ResourceDictionary>
+        <ResourceDictionary Source="HomePageTheme.xaml"></ResourceDictionary>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="100" />
             <RowDefinition Height="80" />
-            <!--<RowDefinition Height="30"/>-->
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="1" Fill="#CC000000" />
-        <!--<StackPanel Grid.Row="1" 
-                    Orientation="Horizontal" 
-                    HorizontalAlignment="Center"
-                    ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                    ScrollViewer.CanContentScroll="True"
-                    CanHorizontallyScroll="True">
-            <Button Content="Settings" Style="{StaticResource ToolbarStyle}" TabIndex="0"
-                    Command="{Binding GoToSettingsCommand}" />
-            <Button Content="Videos" Style="{StaticResource ToolbarStyle}" TabIndex="1" IsDefault="True"
-                    Command="{Binding GoToVideosCommand}" />
-            <Button Content="Load" Style="{StaticResource ToolbarStyle}" TabIndex="3" Command="{Binding LoadCommand}" />
-            <Button Content="Clean" Style="{StaticResource ToolbarStyle}" TabIndex="4" Command="{Binding CleanCommand}" />
-            <Button Content="Manage" Style="{StaticResource ToolbarStyle}" TabIndex="5"
-                    Command="{Binding ManageCommand}" />
-        </StackPanel>-->
         <StackPanel Grid.Row="1" 
                     Orientation="Horizontal" 
                     HorizontalAlignment="Center"

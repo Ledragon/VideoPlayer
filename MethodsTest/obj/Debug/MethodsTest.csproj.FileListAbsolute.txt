@@ -130,7 +130,6 @@ D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\MethodsTest.exe.config
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\MethodsTest.exe
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\MethodsTest.pdb
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\Classes.dll
-D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\Controllers.dll
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\NEwVlcPlayer.dll
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.dll
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\ToolLib.dll
@@ -142,7 +141,6 @@ D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\Microsoft.WindowsAPICode
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\Vlc.DotNet.Core.dll
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\Vlc.DotNet.Core.Interops.dll
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\Classes.pdb
-D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\Controllers.pdb
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\NEwVlcPlayer.pdb
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\Microsoft.WindowsAPICodePack.Shell.pdb
 D:\Development\GitHub\VideoPlayer\MethodsTest\bin\Debug\Log.pdb

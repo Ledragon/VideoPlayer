@@ -29,7 +29,8 @@
                 </Grid>
             </Viewbox>
         </Button>
-        <Button Style="{StaticResource PlayAll}" ToolTip="Add all to playlist"
+        <Button Style="{StaticResource PlayAll}" 
+                ToolTip="Add all to playlist"
                 Command="{Binding AddAllCommand}">
             <Viewbox>
                 <Grid>

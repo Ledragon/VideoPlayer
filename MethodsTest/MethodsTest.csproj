@@ -106,10 +106,6 @@
       <Project>{ffb9c128-ca7e-40bb-bbcd-7b28707c6719}</Project>
       <Name>Classes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Controler\Controllers.csproj">
-      <Project>{0856c528-64cf-413d-95cb-0de13d4da228}</Project>
-      <Name>Controllers</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NEwVlcPlayer\NewVlcPlayer.csproj">
       <Project>{c08e79e6-faf0-4b21-aaef-3d0191865f03}</Project>
       <Name>NewVlcPlayer</Name>

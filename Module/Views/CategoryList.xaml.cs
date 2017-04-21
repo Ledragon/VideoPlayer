@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
-using VideoPlayer.Infrastructure;
+using Module.Interfaces;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace Module
 {
@@ -8,9 +9,10 @@ namespace Module
     /// </summary>
     public partial class CategoryList : UserControl, ICategoryListView
     {
-        public CategoryList()
+        public CategoryList(ICategoryListViewModel categoryListViewModel)
         {
             this.InitializeComponent();
+            this.ViewModel = categoryListViewModel;
         }
 
         public IViewModel ViewModel

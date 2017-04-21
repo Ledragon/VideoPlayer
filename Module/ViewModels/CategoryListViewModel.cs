@@ -13,7 +13,7 @@ using VideoPlayer.Services;
 
 namespace Module
 {
-    public class CategoryListViewModel : ViewModelBase, ICategoryListViewModel
+    public class CategoryListViewModel : VideoPlayer.Infrastructure.ViewFirst.ViewModelBase, ICategoryListViewModel
     {
         private readonly ICategoryService _categoryService;
         private readonly IEventAggregator _eventAggregator;
@@ -22,9 +22,8 @@ namespace Module
         private ICommand _filterByCategoryCommand;
         private CategoryViewModel _selectedCategory;
 
-        public CategoryListViewModel(ICategoryService categoryService, ICategoryListView categoryListView,
-            IEventAggregator eventAggregator)
-            : base(categoryListView)
+        public CategoryListViewModel(ICategoryService categoryService, IEventAggregator eventAggregator)
+            
         {
             //this._libraryService = libraryService;
             this._categoryService = categoryService;

@@ -7,7 +7,7 @@ namespace VideoPlayer.Views
     /// <summary>
     ///     Interaction logic for VideosListInteractionView.xaml
     /// </summary>
-    public partial class VideosListInteractionView : UserControl, IVideosListInteractionView
+    public partial class VideosListInteractionView : IVideosListInteractionView
     {
         public VideosListInteractionView(IVideosListInteractionViewModel viewModel)
         {

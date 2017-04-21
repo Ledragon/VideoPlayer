@@ -11,7 +11,6 @@ using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
-using VideoPlayer.ViewModels;
 using VlcPlayer;
 
 namespace VideoPlayer
@@ -49,7 +48,8 @@ namespace VideoPlayer
                 .AddModule<PlayListManagementModule>()
                 .AddModule<VideosListModule.VideosListModule>()
                 .AddModule<VideosPageModule.VideosPageModule>()
-                .AddModule<ManageLibraryModule.ManageLibraryModule>();
+                .AddModule<ManageLibraryModule.ManageLibraryModule>()
+                .AddModule<SettingsModule.SettingsModule>();
         }
 
         protected override RegionAdapterMappings ConfigureRegionAdapterMappings()

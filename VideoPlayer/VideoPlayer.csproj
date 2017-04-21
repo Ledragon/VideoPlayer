@@ -155,9 +155,6 @@
     <Compile Include="ViewModels\PlayListManagementViewModel.cs" />
     <Compile Include="ViewModels\VideosListInteractionViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\DirectoryBrowser.xaml.cs">
-      <DependentUpon>DirectoryBrowser.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -172,15 +169,7 @@
     <Compile Include="Views\VideosListInteractionView.xaml.cs">
       <DependentUpon>VideosListInteractionView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Views\DirectoryBrowser.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Resources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,9 +180,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Views\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="VideoPlayer.xaml.cs">
       <DependentUpon>VideoPlayer.xaml</DependentUpon>
@@ -290,6 +276,10 @@
     <ProjectReference Include="..\VideoPlayer.Services\VideoPlayer.Services.csproj">
       <Project>{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}</Project>
       <Name>VideoPlayer.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.SettingsModule\VideoPlayer.SettingsModule.csproj">
+      <Project>{5030B19E-A359-4628-9A56-9930FB0DC429}</Project>
+      <Name>VideoPlayer.SettingsModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\VideosListModule\VideosListModule.csproj">
       <Project>{57309725-0F3D-4A63-B876-05366E0DE7DF}</Project>

@@ -4,11 +4,11 @@ using VideosListModule.ViewModels;
 namespace VideosListModule.Views
 {
     /// <summary>
-    ///     Interaction logic for VideosPageButton.xaml
+    ///     Interaction logic for VideosPageButtonView.xaml
     /// </summary>
-    public partial class VideosPageButton : IVideosPageButtonView
+    public partial class VideosPageButtonView : IVideosPageButtonView
     {
-        public VideosPageButton(IVideosPageButtonViewModel viewModel)
+        public VideosPageButtonView(IVideosPageButtonViewModel viewModel)
         {
             this.InitializeComponent();
             this.ViewModel = viewModel;

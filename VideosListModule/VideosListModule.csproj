@@ -95,6 +95,7 @@
     <Compile Include="Mocks\MockVideoList.cs" />
     <Compile Include="ViewModels\FilterParameters.cs" />
     <Compile Include="ViewModels\IVideoInfoViewModel.cs" />
+    <Compile Include="ViewModels\IVideosPageButtonViewModel.cs" />
     <Compile Include="ViewModels\VideoInfoViewModel.cs" />
     <Compile Include="ViewModels\VideosCollectionView.cs" />
     <Compile Include="ViewModels\VideosPageButtonViewModel.cs" />
@@ -113,8 +114,8 @@
       <DependentUpon>VideosListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\VideosListViewModel.cs" />
-    <Compile Include="Views\VideosPageButton.xaml.cs">
-      <DependentUpon>VideosPageButton.xaml</DependentUpon>
+    <Compile Include="Views\VideosPageButtonView.xaml.cs">
+      <DependentUpon>VideosPageButtonView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -160,7 +161,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\VideosPageButton.xaml">
+    <Page Include="Views\VideosPageButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

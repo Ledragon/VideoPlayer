@@ -24,7 +24,7 @@ namespace VideosListModule
                 .RegisterType<IVideosListView, VideosListView>()
                 .RegisterType<IVideosListViewModel, VideosListViewModel>()
                 .RegisterType<IVideosPageButtonViewModel, VideosPageButtonViewModel>()
-                .RegisterType<IVideosPageButtonView, VideosPageButton>();
+                .RegisterType<IVideosPageButtonView, VideosPageButtonView>();
             this._regionManager.RegisterViewWithRegion(RegionNames.VideosListRegion, typeof (IVideosListView));
             this._regionManager.RegisterViewWithRegion(RegionNames.VideoInfoRegion, typeof (IVideoInfoView));
             this._regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof(IVideosPageButtonView));

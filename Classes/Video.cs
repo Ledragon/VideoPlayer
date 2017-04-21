@@ -182,12 +182,12 @@ namespace Classes
         {
             get
             {
-                if (this._previewImage == null)
-                {
+                //if (this._previewImage == null)
+                //{
                     var modifier = new ImageModifier();
                     var image = modifier.DeserializeFromBase64String(this.SerializedImage);
                     this._previewImage = image;
-                }
+                //}
                 return this._previewImage;
             }
             set
@@ -235,32 +235,6 @@ namespace Classes
                 this.OnPropertyChanged();
             }
         }
-
-
-
-        //[XmlIgnore]
-        //public Size Resolution
-        //{
-        //    get
-        //    {
-        //        //String resolution = String.Empty;
-        //        //try
-        //        //{
-        //        //    using (ShellFile shellFile = ShellFile.FromFilePath(this.FileName))
-        //        //    {
-        //        //        resolution = (shellFile.Properties.System.Video.FrameWidth.Value ?? 0) + "*" +
-        //        //                     (shellFile.Properties.System.Video.FrameHeight.Value ?? 0);
-        //        //    }
-
-        //        //}
-        //        //catch (Exception e)
-        //        //{
-
-        //        //}
-        //        //return resolution;
-        //    }
-        //}
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

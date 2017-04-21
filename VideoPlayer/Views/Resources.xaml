@@ -4,9 +4,9 @@
         <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
 
     </ResourceDictionary.MergedDictionaries>
-    <Style TargetType="ContentControl">
+    <!--<Style TargetType="ContentControl">
         <Setter Property="Margin" Value="5" />
-    </Style>
+    </Style>-->
     
     <Style TargetType="{x:Type ListBoxItem}">
         <Setter Property="Foreground" Value="White" />

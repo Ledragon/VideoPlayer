@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -55,6 +56,17 @@ namespace VlcPlayer
             eventAggregator.GetEvent<VideoDurationChanged>().Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>().Subscribe(this.Next);
             eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
+        }
+
+        public static String AssemblyDirectory
+        {
+            get
+            {
+                var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                var uri = new UriBuilder(codeBase);
+                var path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
         }
 
         public Boolean IsMouseDown
@@ -151,10 +163,7 @@ namespace VlcPlayer
             }
         }
 
-        public String TemporaryImagePath
-        {
-            get { return Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.Title + ".jpg"); }
-        }
+        public String TemporaryImagePath => Path.Combine(AssemblyDirectory, this.Title + ".jpg");
 
         public String Title
         {

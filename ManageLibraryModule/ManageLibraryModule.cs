@@ -19,7 +19,7 @@ namespace ManageLibraryModule
             this.RegisterType<IEditViewModel, EditViewModel>()
                 .RegisterType<IManagePageButtonViewModel, ManagePageButtonViewModel>()
                 .RegisterType<IManagePageButtonView, ManagePageButtonView>();
-            this.RegisterView<EditView>();
+            this.RegisterView<ManageLibraryView>();
             this._regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof(IManagePageButtonView));
         }
     }

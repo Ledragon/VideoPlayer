@@ -10,7 +10,7 @@ namespace ManageLibraryModule
         public ManagePageButtonViewModel()
         {
             this.NavigateCommand = 
-                new DelegateCommand(() => { ApplicationCommands.NavigateCommand.Execute(typeof (EditView)); });
+                new DelegateCommand(() => { ApplicationCommands.NavigateCommand.Execute(typeof (ManageLibraryView)); });
         }
         public ICommand NavigateCommand { get; }
     }

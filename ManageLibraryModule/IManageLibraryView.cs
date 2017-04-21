@@ -2,7 +2,7 @@
 
 namespace ManageLibraryModule
 {
-    public interface IEditView : IView
+    public interface IManageLibraryView : IView
     {
     }
 }

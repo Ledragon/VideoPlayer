@@ -3,11 +3,11 @@
 namespace ManageLibraryModule
 {
     /// <summary>
-    ///     Interaction logic for EditView.xaml
+    ///     Interaction logic for ManageLibraryView.xaml
     /// </summary>
-    public partial class EditView : IEditView
+    public partial class ManageLibraryView : IManageLibraryView
     {
-        public EditView(IEditViewModel viewModel)
+        public ManageLibraryView(IEditViewModel viewModel)
         {
             this.InitializeComponent();
             this.ViewModel = viewModel;

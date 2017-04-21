@@ -5,13 +5,13 @@ using VideoPlayer.Views;
 
 namespace VideoPlayer.ViewModels
 {
-    public class PlayListManagementViewModel : Infrastructure.ViewModelBase, IPlayListManagementViewModel
+    public class PlayListManagementViewModel : Infrastructure.ViewFirst.ViewModelBase, IPlayListManagementViewModel
     {
         private Boolean _filterGridVisibility;
         private Boolean _isCategoryGridVisible;
         private Boolean _isPlayListVisible;
 
-        public PlayListManagementViewModel(IPlayListManagementView view) : base(view)
+        public PlayListManagementViewModel()
         {
             this.FilterGridVisibility = false;
             this.IsPlayListVisible = true;

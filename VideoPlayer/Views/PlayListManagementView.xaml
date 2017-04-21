@@ -53,10 +53,10 @@
                             prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosListInteraction}" />
             
         </Grid>
-        <!--<ContentControl Grid.Column="3"
+        <ContentControl Grid.Column="3"
                         prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListRegion}"
                         Style="{StaticResource VideosViewControl}"
-                        Visibility="{Binding IsPlayListVisible, Converter={StaticResource BooleanConverter}}" />-->
+                        Visibility="{Binding IsPlayListVisible, Converter={StaticResource BooleanConverter}}" />
 
     </Grid>
 </UserControl>

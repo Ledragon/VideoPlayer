@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace VideoPlayer.ViewModels
 {

@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure.ViewFirst;
+using VideoPlayer.ViewModels;
 
 namespace VideoPlayer.Views
 {
@@ -8,9 +8,10 @@ namespace VideoPlayer.Views
     /// </summary>
     public partial class PlayListManagementView : IPlayListManagementView
     {
-        public PlayListManagementView()
+        public PlayListManagementView(IPlayListManagementViewModel playListManagementViewModel)
         {
             this.InitializeComponent();
+            this.ViewModel = playListManagementViewModel;
         }
 
 

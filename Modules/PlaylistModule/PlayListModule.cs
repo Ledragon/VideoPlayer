@@ -18,8 +18,9 @@ namespace PlaylistModule
 
         public override void Initialize()
         {
-            this.RegisterType<IPlayListViewModel, PlayListViewModel>();
-            this._container.RegisterType<Object, PlayListView>(typeof(PlayListView).FullName);
+            this.RegisterType<IPlayListViewModel, PlayListViewModel>()
+                .RegisterType<IPlayListView, PlayListView>();
+            //this._container.RegisterType<Object, PlayListView>(typeof(PlayListView).FullName);
             this._regionManager.RegisterViewWithRegion(RegionNames.PlayListRegion, typeof (IPlayListView));
         }
     }

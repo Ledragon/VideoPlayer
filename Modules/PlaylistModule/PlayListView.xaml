@@ -35,7 +35,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <ListBox ItemsSource="{Binding Playlist}"
                  SelectedItem="{Binding CurrentVideo}">
@@ -69,9 +68,6 @@
         <ComboBox Grid.Row="3" ItemsSource="{Binding PlayListCollection}" SelectedItem="{Binding SelectedPlayList}">
             
         </ComboBox>
-        <TextBlock Grid.Row="4"
-                   ToolTip="{Binding}"
-                   Text="{Binding}"></TextBlock>
 
     </Grid>
 </UserControl>

@@ -1,6 +1,6 @@
 ﻿using System;
 using Classes;
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace VideosListModule
 {

@@ -3,21 +3,19 @@ using System.IO;
 using Classes;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
-using VideosListModule.Views;
+using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
 namespace VideosListModule
 {
     public class VideoInfoViewModel : ViewModelBase, IVideoInfoViewModel
     {
-        private readonly IEventAggregator _eventAggregator;
         private String _contactSheetPath;
         private Boolean _hasContactSheet;
         private Video _video;
 
-        public VideoInfoViewModel(IEventAggregator eventAggregator, IVideoInfoView view) : base(view)
+        public VideoInfoViewModel(IEventAggregator eventAggregator)
         {
-            this._eventAggregator = eventAggregator;
-            this._eventAggregator.GetEvent<VideoSelected>().Subscribe(video => this.Video = video);
+            eventAggregator.GetEvent<VideoSelected>().Subscribe(video => this.Video = video);
         }
 
         public Video Video

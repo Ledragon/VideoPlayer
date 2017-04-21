@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:regions="http://www.codeplex.com/CompositeWPF"
+             xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
              mc:Ignorable="d"
              d:DesignHeight="768" d:DesignWidth="1024">
     <UserControl.Resources>
@@ -72,7 +74,6 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center"
                     ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True"
                     CanHorizontallyScroll="True">
-
             <Button Content="Settings" Style="{StaticResource ToolbarStyle}" TabIndex="0"
                     Command="{Binding GoToSettingsCommand}" />
             <Button Content="Videos" Style="{StaticResource ToolbarStyle}" TabIndex="1" IsDefault="True"

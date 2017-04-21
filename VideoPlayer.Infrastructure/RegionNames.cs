@@ -5,6 +5,7 @@ namespace VideoPlayer.Infrastructure
     public class RegionNames
     {
         public const String ContentRegion = "ContentRegion";
+        public const String NavigationRegion = "NavigationRegion";
         public const String VideoInfoRegion = "VideoInfoRegion";
         public const String EditVideoInfoRegion = "EditVideoInfoRegion";
         public const String VideosListRegion = "VideosListRegion";

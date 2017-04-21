@@ -96,3 +96,4 @@ D:\Development\GitHub\VideoPlayer\Modules\PlaylistModule\obj\Debug\PlaylistModul
 D:\Development\GitHub\VideoPlayer\Modules\PlaylistModule\obj\Debug\PlaylistModule.csproj.GenerateResource.Cache
 D:\Development\GitHub\VideoPlayer\Modules\PlaylistModule\obj\Debug\PlaylistModule.dll
 D:\Development\GitHub\VideoPlayer\Modules\PlaylistModule\obj\Debug\PlaylistModule.pdb
+D:\Development\GitHub\VideoPlayer\Modules\PlaylistModule\bin\Debug\PlaylistModule.dll.config

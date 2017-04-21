@@ -97,6 +97,7 @@
     <Compile Include="ViewModels\IVideoInfoViewModel.cs" />
     <Compile Include="ViewModels\VideoInfoViewModel.cs" />
     <Compile Include="ViewModels\VideosCollectionView.cs" />
+    <Compile Include="ViewModels\VideosPageButtonViewModel.cs" />
     <Compile Include="Views\IVideoInfoView.cs" />
     <Compile Include="Views\IVideosListView.cs" />
     <Compile Include="ViewModels\IVideosListViewModel.cs" />
@@ -111,6 +112,9 @@
       <DependentUpon>VideosListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\VideosListViewModel.cs" />
+    <Compile Include="Views\VideosPageButton.xaml.cs">
+      <DependentUpon>VideosPageButton.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -154,6 +158,10 @@
     <Page Include="Views\VideosListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\VideosPageButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

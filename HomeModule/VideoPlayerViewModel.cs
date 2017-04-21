@@ -2,6 +2,7 @@
 using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using Microsoft.Practices.Prism.Regions;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
 
@@ -11,6 +12,7 @@ namespace HomeModule
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly ILibraryService _libraryService;
+        private readonly IRegionManager _regionManager;
         private Visibility _isExitMenuVisible;
         private Visibility _isLoading;
         private String _loadingMessage;
@@ -18,13 +20,14 @@ namespace HomeModule
         //private WindowStyle _windowStyle;
 
         public VideoPlayerViewModel(IVideoPlayer videoPlayer, IEventAggregator eventAggregator,
-            ILibraryService libraryService) : base(videoPlayer)
+            ILibraryService libraryService, IRegionManager regionManager) : base(videoPlayer)
         {
             this.IsLoading = Visibility.Hidden;
             this.IsExitMenuVisible = Visibility.Hidden;
 
             this._eventAggregator = eventAggregator;
             this._libraryService = libraryService;
+            this._regionManager = regionManager;
             this.GoToHomePageCommand = new DelegateCommand(this.SetHomePage);
             this.ToggleStyleCommand = new DelegateCommand(this.ToggleWindowStyle);
             this.CloseCommand = new DelegateCommand(this.CloseAsync, () =>this.SelectedTab != 3);
@@ -38,8 +41,11 @@ namespace HomeModule
                 });
             this._eventAggregator.GetEvent<LibraryUpdated>()
                 .Subscribe(payload => { this.IsLoading = Visibility.Hidden; });
+            this.NavigateCommand = new DelegateCommand<Object>(this.Navigate);
+            ApplicationCommands.NavigateCommand.RegisterCommand(this.NavigateCommand);
         }
 
+        public DelegateCommand<Object> NavigateCommand { get;  }
         public DelegateCommand GoToHomePageCommand { get; private set; }
         public DelegateCommand ToggleStyleCommand { get; private set; }
         //public DelegateCommand WindowLoadedCommand { get; private set; }
@@ -97,6 +103,14 @@ namespace HomeModule
                 if (value == this._isExitMenuVisible) return;
                 this._isExitMenuVisible = value;
                 this.OnPropertyChanged();
+            }
+        }
+
+        private void Navigate(Object navigatePath)
+        {
+            if (navigatePath != null)
+            {
+                this._regionManager.RequestNavigate(RegionNames.ContentRegion, navigatePath.ToString());
             }
         }
 

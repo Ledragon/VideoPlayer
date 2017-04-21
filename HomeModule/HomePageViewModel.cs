@@ -1,8 +1,12 @@
-﻿using System.Windows.Input;
+﻿using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using PlaylistModule;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
+using VideosListModule;
+using ApplicationCommands = VideoPlayer.Infrastructure.ApplicationCommands;
 
 namespace HomeModule
 {
@@ -18,24 +22,17 @@ namespace HomeModule
             this._libraryService = libraryService;
             this.GoToSettingsCommand = new DelegateCommand(this.GoToSettings);
             this.GoToVideosCommand = new DelegateCommand(this.GoToVideos);
+            //this.GoToVideosCommand = (dummy)=>ApplicationCommands.NavigateCommand.Execute(this.View.GetType()); //new DelegateCommand(this.GoToVideos);
             this.CleanCommand = new DelegateCommand(this.Clean);
             this.LoadCommand = new DelegateCommand(this.LoadAsync);
             this.ManageCommand = new DelegateCommand(this.GoToManage);
         }
 
-        public ICommand GoToSettingsCommand { get; private set; }
-        public ICommand GoToVideosCommand { get; private set; }
-        public ICommand LoadCommand { get; private set; }
-        public ICommand CleanCommand { get; private set; }
-        public ICommand ManageCommand { get; private set; }
-
-        private void Load()
-        {
-            this._eventAggregator.GetEvent<LibraryUpdating>().Publish(null);
-            var videos = this._libraryService.Update();
-            this._eventAggregator.GetEvent<LibraryUpdated>()
-                .Publish(videos);
-        }
+        public ICommand GoToSettingsCommand { get; }
+        public ICommand GoToVideosCommand { get; }
+        public ICommand LoadCommand { get; }
+        public ICommand CleanCommand { get; }
+        public ICommand ManageCommand { get; }
 
         private async void LoadAsync()
         {
@@ -74,7 +71,8 @@ namespace HomeModule
 
         private void GoToVideos()
         {
-            this._eventAggregator.GetEvent<GoToPage>().Publish(1);
+            //this._eventAggregator.GetEvent<GoToPage>().Publish(1);
+            ApplicationCommands.NavigateCommand.Execute(typeof(PlayListView));
         }
     }
 }

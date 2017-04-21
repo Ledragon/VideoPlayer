@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Regions;
+﻿using System;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using VideoPlayer.Infrastructure;
 using VideosListModule.ViewModels;
@@ -8,9 +9,12 @@ namespace VideosListModule
 {
     public class VideosListModule : ModuleBase
     {
+        private readonly IRegionManager _regionManager;
+
         public VideosListModule(IUnityContainer unityContainer, IRegionManager regionManager)
             : base(unityContainer, regionManager)
         {
+            this._regionManager = regionManager;
         }
 
         public override void Initialize()
@@ -18,9 +22,12 @@ namespace VideosListModule
             this.RegisterType<IVideoInfoView, VideoInfo>()
                 .RegisterType<IVideoInfoViewModel, VideoInfoViewModel>()
                 .RegisterType<IVideosListView, VideosListView>()
-                .RegisterType<IVideosListViewModel, VideosListViewModel>();
+                .RegisterType<IVideosListViewModel, VideosListViewModel>()
+                .RegisterType<VideosPageButtonViewModel>()
+                .RegisterType<VideosPageButton>();
             this.ReferenceRegion<IVideosListViewModel>(RegionNames.VideosListRegion);
             this.ReferenceRegion<IVideoInfoViewModel>(RegionNames.VideoInfoRegion);
+            this._regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof (VideosPageButton));
         }
     }
 }

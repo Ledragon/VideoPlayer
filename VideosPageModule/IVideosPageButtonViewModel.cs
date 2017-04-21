@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 using VideoPlayer.Infrastructure.ViewFirst;
 
-namespace VideosListModule.ViewModels
+namespace VideosPageModule
 {
     public interface IVideosPageButtonViewModel : IViewModel
     {

@@ -1,9 +1,8 @@
 ﻿using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
-using VideosPageModule;
 using ApplicationCommands = VideoPlayer.Infrastructure.ApplicationCommands;
 
-namespace VideosListModule.ViewModels
+namespace VideosPageModule
 {
     public class VideosPageButtonViewModel : IVideosPageButtonViewModel
     {

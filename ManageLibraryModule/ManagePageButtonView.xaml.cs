@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using Microsoft.Practices.Prism.Regions;
 using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace ManageLibraryModule

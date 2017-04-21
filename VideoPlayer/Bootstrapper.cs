@@ -23,7 +23,6 @@ namespace VideoPlayer
                 .RegisterType<ILibraryService, LibraryService>(new ContainerControlledLifetimeManager())
                 .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager())
                 .RegisterType<StackPanelRegionAdapter>();
-                //.RegisterType<IVideosPageViewModel, VideosPageViewModel>();
 
             //TEMP
             this.Container.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
@@ -46,10 +45,11 @@ namespace VideoPlayer
                 .AddModule<VlcPlayerModule>()
                 .AddModule<HomeModule.HomeModule>()
                 .AddModule<PlayListManagementModule>()
+                .AddModule<SettingsModule.SettingsModule>()
                 .AddModule<VideosListModule.VideosListModule>()
                 .AddModule<VideosPageModule.VideosPageModule>()
                 .AddModule<ManageLibraryModule.ManageLibraryModule>()
-                .AddModule<SettingsModule.SettingsModule>();
+                ;
         }
 
         protected override RegionAdapterMappings ConfigureRegionAdapterMappings()

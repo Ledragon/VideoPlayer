@@ -1,11 +1,12 @@
-﻿using VideoPlayer.Infrastructure.ViewFirst;
-using VideosListModule.ViewModels;
+﻿using Microsoft.Practices.Prism.Regions;
+using VideoPlayer.Infrastructure.ViewFirst;
 
-namespace VideosListModule.Views
+namespace VideosPageModule
 {
     /// <summary>
     ///     Interaction logic for VideosPageButtonView.xaml
     /// </summary>
+    [ViewSortHint("1")]
     public partial class VideosPageButtonView : IVideosPageButtonView
     {
         public VideosPageButtonView(IVideosPageButtonViewModel viewModel)

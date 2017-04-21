@@ -89,23 +89,6 @@
         <Setter Property="Width" Value="200" />
     </Style>
 
-
-    <Style TargetType="TabItem" x:Key="HiddenTabItem">
-        <Setter Property="Visibility"
-                Value="Collapsed" />
-        <Setter Property="Padding"
-                Value="0" />
-    </Style>
-    <Style TargetType="TabControl"
-           x:Key="HiddenTabControl">
-        <Setter Property="Background"
-                Value="Transparent" />
-        <Setter Property="Padding"
-                Value="0" />
-        <Setter Property="BorderThickness"
-                Value="0" />
-        <Setter Property="ItemContainerStyle" Value="{StaticResource HiddenTabItem}"></Setter>
-    </Style>
     
     <Style TargetType="DataGridColumnHeader"
            x:Key="EditPropertyGridHeader">

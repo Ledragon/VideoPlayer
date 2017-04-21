@@ -10,12 +10,13 @@
     d:DesignHeight="768" d:DesignWidth="1024"
     Background="#00000000"
     Cursor="{Binding Cursor}">
-    <!--<UserControl.Resources>
-        <ResourceDictionary Source="Resources.xaml" />
-    </UserControl.Resources>-->
+    <UserControl.Resources>
+        <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml">
+        </ResourceDictionary>
+    </UserControl.Resources>
     <TabControl x:Name="_uiVideosTabControl"
                 SelectedIndex="{Binding SelectedIndex}"
-                >
+                Style="{StaticResource HiddenTabControl}">
         <TabItem x:Name="_uiVideosList">
             <Grid>
                 <Grid.RowDefinitions>

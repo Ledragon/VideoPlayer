@@ -20,16 +20,18 @@ namespace PlaylistModule
             this.RegisterType<IPlayListViewModel, PlayListViewModel>();
             this.RegisterType<IPlayListView, PlayListView>();
             var regionName = RegionNames.PlayListRegion;
-            var view = this._container.Resolve<IPlayListView>();
-            if (this._regionManager.Regions.ContainsRegionWithName(regionName))
-            {
-                var region = this._regionManager.Regions[regionName];
-                region.Add(view);
-            }
-            else
-            {
-                this._regionManager.RegisterViewWithRegion(regionName, view.GetType);
-            }
+
+                this._regionManager.RegisterViewWithRegion(regionName,typeof(IPlayListView));
+            //var view = this._container.Resolve<IPlayListView>();
+            //if (this._regionManager.Regions.ContainsRegionWithName(regionName))
+            //{
+            //    var region = this._regionManager.Regions[regionName];
+            //    region.Add(view);
+            //}
+            //else
+            //{
+            //    this._regionManager.RegisterViewWithRegion(regionName, view.GetType);
+            //}
             //this.ReferenceRegion<IPlayListViewModel>(RegionNames.PlayListRegion);
         }
     }

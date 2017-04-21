@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 //using System.ComponentModel;
 using System.Linq;
-using Classes;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
@@ -11,7 +10,7 @@ using VideoPlayer.Services;
 
 namespace Module
 {
-    public class VideoFilterGridViewModel : ViewModelBase, IVideoFilterGridViewModel
+    public class VideoFilterGridViewModel : VideoPlayer.Infrastructure.ViewFirst.ViewModelBase, IVideoFilterGridViewModel
     {
 
         private readonly IEventAggregator _eventAggregator;
@@ -25,9 +24,8 @@ namespace Module
         private ObservableCollection<CategoryViewModel> _selectedTags;
         private ObservableCollection<CategoryViewModel> _tags;
 
-        public VideoFilterGridViewModel(IVideoFilterGrid videoFilterGrid, IEventAggregator eventAggregator,
-            ILibraryService libraryService)
-            : base(videoFilterGrid)
+        public VideoFilterGridViewModel(IEventAggregator eventAggregator, ILibraryService libraryService)
+            
         {
             this._eventAggregator = eventAggregator;
             this._libraryService = libraryService;

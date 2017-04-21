@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace Module
 {
@@ -8,9 +8,10 @@ namespace Module
     /// </summary>
     public partial class VideoFilterGrid : UserControl, IVideoFilterGrid
     {
-        public VideoFilterGrid()
+        public VideoFilterGrid(IVideoFilterGridViewModel viewModel)
         {
             this.InitializeComponent();
+            this.ViewModel = viewModel;
         }
 
         public IViewModel ViewModel

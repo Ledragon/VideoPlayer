@@ -24,6 +24,8 @@ namespace Module
 
             this.RegisterType<IVideoFilterGrid, VideoFilterGrid>();
             this.RegisterType<IVideoFilterGridViewModel, VideoFilterGridViewModel>();
+            this._regionManager.RegisterViewWithRegion(RegionNames.FilterRegion, typeof (IVideoFilterGrid));
+            //this.ReferenceRegion<IVideoFilterGridViewModel>(RegionNames.FilterRegion);
 
             this.RegisterType<ITagsListView, TagsList>();
             this.RegisterType<ITagsListViewModel, TagsListViewModel>();
@@ -35,7 +37,6 @@ namespace Module
             this.RegisterType<IEditVideoViewModel, EditVideoViewModel>();
 
             //this.ReferenceRegion<ICategoryListViewModel>(RegionNames.CategoriesListRegion);
-            this.ReferenceRegion<IVideoFilterGridViewModel>(RegionNames.FilterRegion);
             this.ReferenceRegion<ITagsListViewModel>(RegionNames.TagsRegion);
             this.ReferenceRegion<ISortGridViewModel>(RegionNames.SortGridRegion);
             this.ReferenceRegion<IEditVideoViewModel>(RegionNames.EditVideoInfoRegion);

@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManageLibraryModule", "Mana
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.SettingsModule", "VideoPlayer.SettingsModule\VideoPlayer.SettingsModule.csproj", "{5030B19E-A359-4628-9A56-9930FB0DC429}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.VideoListInteraction", "VideoPlayer.VideoListInteraction\VideoPlayer.VideoListInteraction.csproj", "{34630FE1-166E-49BC-B527-E47E2BF81AA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +155,10 @@ Global
 		{5030B19E-A359-4628-9A56-9930FB0DC429}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5030B19E-A359-4628-9A56-9930FB0DC429}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5030B19E-A359-4628-9A56-9930FB0DC429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -171,6 +177,7 @@ Global
 		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{5030B19E-A359-4628-9A56-9930FB0DC429} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
+		{34630FE1-166E-49BC-B527-E47E2BF81AA2} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

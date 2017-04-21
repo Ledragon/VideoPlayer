@@ -22,12 +22,6 @@ namespace VideoPlayer
             this.RegisterType<IPlayListManagementViewModel, PlayListManagementViewModel>();
             this._regionManager.RegisterViewWithRegion(RegionNames.PlayListManagementRegion,
                 typeof (IPlayListManagementView));
-
-            this.RegisterType<IVideosListInteractionView, VideosListInteractionView>();
-            this.RegisterType<IVideosListInteractionViewModel, VideosListInteractionViewModel>();
-            this._regionManager.RegisterViewWithRegion(RegionNames.VideosListInteraction,
-                typeof(IVideosListInteractionView));
-            //this.ReferenceRegion<IVideosListInteractionViewModel>(RegionNames.VideosListInteraction);
         }
     }
 }

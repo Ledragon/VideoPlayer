@@ -11,6 +11,7 @@ using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
+using VideoPlayer.VideoListInteraction;
 using VlcPlayer;
 
 namespace VideoPlayer
@@ -49,6 +50,7 @@ namespace VideoPlayer
                 .AddModule<VideosListModule.VideosListModule>()
                 .AddModule<VideosPageModule.VideosPageModule>()
                 .AddModule<ManageLibraryModule.ManageLibraryModule>()
+                .AddModule<VideoListInteractionModule>()
                 ;
         }
 

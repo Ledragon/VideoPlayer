@@ -1,4 +1,4 @@
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace Module
 {

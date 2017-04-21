@@ -35,7 +35,7 @@ namespace Module
 
             this.RegisterType<IEditView, EditVideo>();
             this.RegisterType<IEditVideoViewModel, EditVideoViewModel>();
-            this.ReferenceRegion<IEditVideoViewModel>(RegionNames.EditVideoInfoRegion);
+            this._regionManager.RegisterViewWithRegion(RegionNames.EditVideoInfoRegion, typeof (IEditView));
         }
     }
 }

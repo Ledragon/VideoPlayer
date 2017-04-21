@@ -25,7 +25,9 @@ namespace VideoPlayer
 
             this.RegisterType<IVideosListInteractionView, VideosListInteractionView>();
             this.RegisterType<IVideosListInteractionViewModel, VideosListInteractionViewModel>();
-            this.ReferenceRegion<IVideosListInteractionViewModel>(RegionNames.VideosListInteraction);
+            this._regionManager.RegisterViewWithRegion(RegionNames.VideosListInteraction,
+                typeof(IVideosListInteractionView));
+            //this.ReferenceRegion<IVideosListInteractionViewModel>(RegionNames.VideosListInteraction);
         }
     }
 }

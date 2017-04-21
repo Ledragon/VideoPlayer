@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
+using VideoPlayer.ViewModels;
 
 namespace VideoPlayer.Views
 {
@@ -8,9 +9,10 @@ namespace VideoPlayer.Views
     /// </summary>
     public partial class VideosListInteractionView : UserControl, IVideosListInteractionView
     {
-        public VideosListInteractionView()
+        public VideosListInteractionView(IVideosListInteractionViewModel viewModel)
         {
             this.InitializeComponent();
+            this.ViewModel = viewModel;
         }
 
         public IViewModel ViewModel

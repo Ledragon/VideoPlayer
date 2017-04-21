@@ -2,24 +2,22 @@
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
-using VideoPlayer.Views;
 
 namespace VideoPlayer.ViewModels
 {
-    public class VideosListInteractionViewModel : Infrastructure.ViewModelBase, IVideosListInteractionViewModel
+    public class VideosListInteractionViewModel : Infrastructure.ViewFirst.ViewModelBase, IVideosListInteractionViewModel
     {
         private readonly IEventAggregator _eventAggregator;
 
-        public VideosListInteractionViewModel(IVideosListInteractionView view, IEventAggregator eventAggregator)
-            : base(view)
+        public VideosListInteractionViewModel(IEventAggregator eventAggregator)
         {
             this._eventAggregator = eventAggregator;
             this.PlayAllCommand = new DelegateCommand(this.PlayAll);
             this.AddAllCommand = new DelegateCommand(this.AddRange);
         }
 
-        public ICommand AddAllCommand { get; private set; }
-        public ICommand PlayAllCommand { get; private set; }
+        public ICommand AddAllCommand { get; }
+        public ICommand PlayAllCommand { get; }
 
         private void PlayAll()
         {

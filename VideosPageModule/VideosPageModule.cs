@@ -1,9 +1,8 @@
 ﻿using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
 using VideoPlayer.Infrastructure;
-using VideoPlayer.ViewModels;
 
-namespace VideoPlayer
+namespace VideosPageModule
 {
     public class VideosPageModule : ModuleBase
     {
@@ -14,9 +13,9 @@ namespace VideoPlayer
 
         public override void Initialize()
         {
-            this.RegisterType<IVideosPageViewModel, VideosPageViewModel>()
-                .RegisterType<IVideosPageView, VideosPage>();
-            this.ReferenceRegion<IVideosPageViewModel>(RegionNames.VideosPageRegion);
+            this.RegisterType<IVideosPageViewModel, VideosPageViewModel>();
+            this.RegisterView<VideosPage>();
+            //this.ReferenceRegion<IVideosPageViewModel>(RegionNames.VideosPageRegion);
         }
     }
 }

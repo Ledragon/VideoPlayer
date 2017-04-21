@@ -1,12 +1,11 @@
-﻿using System.Windows.Controls;
-using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace PlaylistModule
 {
     /// <summary>
     ///     Interaction logic for PlayListView.xaml
     /// </summary>
-    public partial class PlayListView : UserControl, IPlayListView
+    public partial class PlayListView : IPlayListView
     {
         public PlayListView(IPlayListViewModel viewModel)
         {
@@ -14,9 +13,9 @@ namespace PlaylistModule
             this.ViewModel = viewModel;
         }
 
-        public IPlayListViewModel ViewModel
+        public IViewModel ViewModel
         {
-            get { return (IPlayListViewModel) this.DataContext; }
+            get { return (IViewModel)this.DataContext; }
             set { this.DataContext = value; }
         }
     }

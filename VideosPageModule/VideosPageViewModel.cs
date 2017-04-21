@@ -3,16 +3,16 @@ using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
-namespace VideoPlayer.ViewModels
+namespace VideosPageModule
 {
-    public class VideosPageViewModel : Infrastructure.ViewModelBase, IVideosPageViewModel
+    public class VideosPageViewModel : ViewModelBase, IVideosPageViewModel
     {
         private Cursor _cursor;
         private Int32 _selectedIndex;
 
-        public VideosPageViewModel(IEventAggregator eventAggregator, IVideosPageView videosPageView)
-            : base(videosPageView)
+        public VideosPageViewModel(IEventAggregator eventAggregator)
         {
             this.InitCommands();
             eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);

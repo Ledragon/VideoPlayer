@@ -45,7 +45,7 @@ namespace VideoPlayer
                 .AddModule<HomeModule.HomeModule>()
                 .AddModule<PlayListManagementModule>()
                 .AddModule<VideosListModule.VideosListModule>()
-                .AddModule<VideosPageModule>();
+                .AddModule<VideosPageModule.VideosPageModule>();
         }
 
         private Bootstrapper AddModule<T>()

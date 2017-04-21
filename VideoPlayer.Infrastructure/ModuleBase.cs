@@ -37,6 +37,11 @@ namespace VideoPlayer.Infrastructure
             this._unityContainer.RegisterType<T>();
         }
 
+        protected IUnityContainer RegisterView<T>()
+        {
+            return this._unityContainer.RegisterType<Object, T>(typeof(T).FullName);
+        }
+
         protected IUnityContainer RegisterType<T, U>() where U : T
         {
             return this._unityContainer.RegisterType<T, U>();

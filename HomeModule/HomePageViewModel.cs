@@ -6,6 +6,7 @@ using PlaylistModule;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
 using VideosListModule;
+using VideosPageModule;
 using ApplicationCommands = VideoPlayer.Infrastructure.ApplicationCommands;
 
 namespace HomeModule
@@ -72,7 +73,7 @@ namespace HomeModule
         private void GoToVideos()
         {
             //this._eventAggregator.GetEvent<GoToPage>().Publish(1);
-            ApplicationCommands.NavigateCommand.Execute(typeof(PlayListView));
+            ApplicationCommands.NavigateCommand.Execute(typeof(VideosPage));
         }
     }
 }

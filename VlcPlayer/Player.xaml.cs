@@ -14,6 +14,7 @@ using Vlc.DotNet.Core;
 using Vlc.DotNet.Core.Medias;
 using Vlc.DotNet.Wpf;
 using Image = System.Drawing.Image;
+using IViewModel = VideoPlayer.Infrastructure.ViewFirst.IViewModel;
 
 namespace VlcPlayer
 {
@@ -27,11 +28,12 @@ namespace VlcPlayer
         private readonly IEventAggregator _eventAggregator;
         private PlayerViewModel _viewModel;
 
-        public Player()
+        public Player(IPlayerViewModel viewModel, IEventAggregator eventAggregator)
         {
+            this._eventAggregator = eventAggregator;
+            this.ViewModel = viewModel;
             this.InitializeVlc();
             this.InitializeComponent();
-            this._eventAggregator = DependencyFactory.Resolve<IEventAggregator>();
 
             this._eventAggregator.GetEvent<OnStop>().Subscribe(this.Stop);
             this._eventAggregator.GetEvent<RateChanged>().Subscribe(this.RateChanged);

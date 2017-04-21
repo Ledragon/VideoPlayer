@@ -16,6 +16,8 @@ namespace VideosPageModule
         {
             this.InitCommands();
             eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
+            eventAggregator.GetEvent<PlayOneEvent>()
+                .Subscribe(video => this.SelectedIndex = 1);
         }
 
         public ICommand SwitchToWindowCommand { get; private set; }

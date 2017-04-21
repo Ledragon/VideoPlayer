@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 using Microsoft.Practices.Prism.Commands;
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace HomeModule
 {

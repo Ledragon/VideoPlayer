@@ -11,6 +11,7 @@ using Log;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
 namespace VlcPlayer
 {
@@ -36,7 +37,7 @@ namespace VlcPlayer
         private TimeSpan _timePosition;
         private String _title;
 
-        public PlayerViewModel(IPlayer player, IEventAggregator eventAggregator) : base(player)
+        public PlayerViewModel(IEventAggregator eventAggregator)
         {
             this._eventAggregator = eventAggregator;
             this.Rate = 1;

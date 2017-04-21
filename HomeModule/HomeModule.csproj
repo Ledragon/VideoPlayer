@@ -156,6 +156,10 @@
       <Project>{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}</Project>
       <Name>VideosPageModule</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VlcPlayer\VlcPlayer.csproj">
+      <Project>{A060B03D-3DEF-4826-888F-1B80059B7E13}</Project>
+      <Name>VlcPlayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="HomePage.xaml">

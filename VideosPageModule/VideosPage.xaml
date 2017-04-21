@@ -14,10 +14,9 @@
         <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml">
         </ResourceDictionary>
     </UserControl.Resources>
-    <TabControl x:Name="_uiVideosTabControl"
-                SelectedIndex="{Binding SelectedIndex}"
+    <TabControl SelectedIndex="{Binding SelectedIndex}"
                 Style="{StaticResource HiddenTabControl}">
-        <TabItem x:Name="_uiVideosList">
+        <TabItem>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />

@@ -15,7 +15,7 @@ using VideoPlayer.Services;
 
 namespace VideosListModule.ViewModels
 {
-    public class VideosListViewModel : ViewModelBase, IVideosListViewModel
+    public class VideosListViewModel : VideoPlayer.Infrastructure.ViewFirst.ViewModelBase, IVideosListViewModel
     {
         private Video _currentVideo;
         private Int32 _editIndex;
@@ -25,9 +25,7 @@ namespace VideosListModule.ViewModels
         private Boolean _isLoading;
         private ILibraryService _libraryService;
 
-        public VideosListViewModel(ILibraryService libraryService, IVideosListView videosListView,
-            IEventAggregator eventAggregator)
-            : base(videosListView)
+        public VideosListViewModel(ILibraryService libraryService, IEventAggregator eventAggregator)
         {
             this.Init(libraryService, eventAggregator);
         }

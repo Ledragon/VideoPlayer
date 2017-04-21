@@ -111,4 +111,10 @@ namespace VideoPlayer.Infrastructure
     }
 
     public class VideoSelected : PubSubEvent<Video> { }
+
+
+
+    public class PlayCompleted : PubSubEvent<Object> 
+    {
+    }
 }

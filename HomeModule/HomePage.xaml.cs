@@ -1,4 +1,4 @@
-﻿using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace HomeModule
 {
@@ -7,16 +7,15 @@ namespace HomeModule
     /// </summary>
     public partial class HomePage : IHomePage
     {
-        public HomePage()
+        public HomePage(IHomePageViewModel viewModel)
         {
             this.InitializeComponent();
-            //this.DataContext = DependencyFactory.Resolve<IHomePageViewModel>();
+            this.ViewModel = viewModel;
         }
-
 
         public IViewModel ViewModel
         {
-            get { return (IViewModel)this.DataContext; }
+            get { return (IViewModel) this.DataContext; }
             set { this.DataContext = value; }
         }
     }

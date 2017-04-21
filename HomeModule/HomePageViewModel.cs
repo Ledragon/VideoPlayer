@@ -1,4 +1,4 @@
-﻿using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace HomeModule
 {
@@ -7,8 +7,7 @@ namespace HomeModule
         //private readonly IEventAggregator _eventAggregator;
         //private readonly ILibraryService _libraryService;
 
-        public HomePageViewModel(IHomePage homePage)
-            : base(homePage)
+        public HomePageViewModel()
         {
             //this._eventAggregator = eventAggregator;
             //this._libraryService = libraryService;

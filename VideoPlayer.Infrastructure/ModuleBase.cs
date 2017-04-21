@@ -21,14 +21,25 @@ namespace VideoPlayer.Infrastructure
         protected void ReferenceRegion<T>(String regionName) where T : IViewModel
         {
             var viewModel = this._unityContainer.Resolve<T>();
+            var view = viewModel.View;
+            this.ReferenceRegion(regionName, view);
+        }
+
+        //protected void ReferenceRegionByView<T>(String regionName) where T : ViewFirst.IView
+        //{
+        //    this.GetValue<T>(regionName, view);
+        //}
+
+        private void ReferenceRegion(String regionName, IView view) //where T : IViewModel
+        {
             if (this._regionManager.Regions.ContainsRegionWithName(regionName))
             {
                 var region = this._regionManager.Regions[regionName];
-                region.Add(viewModel.View);
+                region.Add(view);
             }
             else
             {
-                this._regionManager.RegisterViewWithRegion(regionName, viewModel.View.GetType());
+                this._regionManager.RegisterViewWithRegion(regionName, view.GetType());
             }
         }
 

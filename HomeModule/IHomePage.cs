@@ -1,9 +1,8 @@
-﻿using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace HomeModule
 {
-    public interface IHomePage:IView
+    public interface IHomePage : IView
     {
-         
     }
 }

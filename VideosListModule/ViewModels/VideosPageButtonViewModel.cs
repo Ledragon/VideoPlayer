@@ -9,10 +9,10 @@ namespace VideosListModule.ViewModels
     {
         public VideosPageButtonViewModel()
         {
-            this.GoToVideosCommand =
+            this.NavigateCommand =
                 new DelegateCommand(() => { ApplicationCommands.NavigateCommand.Execute(typeof (VideosPage)); });
         }
 
-        public ICommand GoToVideosCommand { get; }
+        public ICommand NavigateCommand { get; }
     }
 }

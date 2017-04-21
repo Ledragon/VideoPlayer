@@ -19,10 +19,8 @@ namespace HomeModule
         public override void Initialize()
         {
             this.RegisterType<IHomePageViewModel, HomePageViewModel>();
-            //this.RegisterType<IHomePage, HomePage>();
             this._unityContainer.RegisterType<Object, HomePage>(typeof(HomePage).FullName);
             this._regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, typeof (HomePage));
-            //this.ReferenceRegion<IHomePageViewModel>(RegionNames.ContentRegion);
         }
     }
 }

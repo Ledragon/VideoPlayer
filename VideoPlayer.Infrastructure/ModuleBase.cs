@@ -10,7 +10,7 @@ namespace VideoPlayer.Infrastructure
         private readonly IRegionManager _regionManager;
         private readonly IUnityContainer _unityContainer;
 
-        public ModuleBase(IUnityContainer unityContainer, IRegionManager regionManager)
+        protected ModuleBase(IUnityContainer unityContainer, IRegionManager regionManager)
         {
             this._unityContainer = unityContainer;
             this._regionManager = regionManager;

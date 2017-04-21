@@ -5,6 +5,6 @@ namespace VideosListModule.ViewModels
 {
     public interface IVideosPageButtonViewModel : IViewModel
     {
-        ICommand GoToVideosCommand { get; }
+        ICommand NavigateCommand { get; }
     }
 }

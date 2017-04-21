@@ -46,10 +46,10 @@ namespace HomeModule
         }
 
         public DelegateCommand<Object> NavigateCommand { get;  }
-        public DelegateCommand GoToHomePageCommand { get; private set; }
-        public DelegateCommand ToggleStyleCommand { get; private set; }
+        public DelegateCommand GoToHomePageCommand { get; }
+        public DelegateCommand ToggleStyleCommand { get; }
         //public DelegateCommand WindowLoadedCommand { get; private set; }
-        public DelegateCommand CloseCommand { get; private set; }
+        public DelegateCommand CloseCommand { get; }
 
         public Int32 SelectedTab
         {
@@ -123,10 +123,7 @@ namespace HomeModule
 
         private void SetHomePage()
         {
-            if (this.SelectedTab != 0)
-            {
-                this.SetSelectedTab(0);
-            }
+            this.Navigate(typeof (HomePage));
         }
 
         private void SetSelectedTab(Int32 pageNumber)

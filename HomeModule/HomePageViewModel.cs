@@ -1,12 +1,9 @@
-﻿using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using ManageLibraryModule;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
-using PlaylistModule;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
-using VideosListModule;
 using VideosPageModule;
 using ApplicationCommands = VideoPlayer.Infrastructure.ApplicationCommands;
 
@@ -24,7 +21,6 @@ namespace HomeModule
             this._libraryService = libraryService;
             this.GoToSettingsCommand = new DelegateCommand(this.GoToSettings);
             this.GoToVideosCommand = new DelegateCommand(this.GoToVideos);
-            //this.GoToVideosCommand = (dummy)=>ApplicationCommands.NavigateCommand.Execute(this.View.GetType()); //new DelegateCommand(this.GoToVideos);
             this.CleanCommand = new DelegateCommand(this.Clean);
             this.LoadCommand = new DelegateCommand(this.LoadAsync);
             this.ManageCommand = new DelegateCommand(this.GoToManage);
@@ -67,14 +63,11 @@ namespace HomeModule
 
         private void GoToManage()
         {
-            //this._eventAggregator.GetEvent<GoToPage>().Publish(3);
             ApplicationCommands.NavigateCommand.Execute(typeof(EditView));
-
         }
 
         private void GoToVideos()
         {
-            //this._eventAggregator.GetEvent<GoToPage>().Publish(1);
             ApplicationCommands.NavigateCommand.Execute(typeof(VideosPage));
         }
     }

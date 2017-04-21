@@ -1,12 +1,15 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using HomeModule;
 using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 using Module;
 using PlaylistModule;
 using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
+using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
 using VideoPlayer.ViewModels;
 using VlcPlayer;
@@ -19,7 +22,8 @@ namespace VideoPlayer
         {
             this.Container.RegisterType<IVideoRepository, FileVideoRepository>(new ContainerControlledLifetimeManager())
                 .RegisterType<ILibraryService, LibraryService>(new ContainerControlledLifetimeManager())
-                .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager());
+                .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager())
+                .RegisterType<StackPanelRegionAdapter>();
                 //.RegisterType<IVideosPageViewModel, VideosPageViewModel>();
 
             //TEMP
@@ -46,6 +50,13 @@ namespace VideoPlayer
                 .AddModule<VideosListModule.VideosListModule>()
                 .AddModule<VideosPageModule.VideosPageModule>()
                 .AddModule<ManageLibraryModule.ManageLibraryModule>();
+        }
+
+        protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
+        {
+            var mappings = base.ConfigureRegionAdapterMappings();
+            mappings.RegisterMapping(typeof(StackPanel), this.Container.Resolve<StackPanelRegionAdapter>());
+            return mappings;
         }
 
         private Bootstrapper AddModule<T>()

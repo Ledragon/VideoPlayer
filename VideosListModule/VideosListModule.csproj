@@ -102,6 +102,7 @@
     <Compile Include="Views\IVideosListView.cs" />
     <Compile Include="ViewModels\IVideosListViewModel.cs" />
     <Compile Include="VideosListModule.cs" />
+    <Compile Include="Views\IVideosPageButtonView.cs" />
     <Compile Include="Views\VideoInfo.xaml.cs">
       <DependentUpon>VideoInfo.xaml</DependentUpon>
     </Compile>
@@ -188,6 +189,10 @@
     <ProjectReference Include="..\VideoPlayer.Services\VideoPlayer.Services.csproj">
       <Project>{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}</Project>
       <Name>VideoPlayer.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideosPageModule\VideosPageModule.csproj">
+      <Project>{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}</Project>
+      <Name>VideosPageModule</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,10 +5,10 @@ namespace HomeModule
 {
     public interface IHomePageViewModel : IViewModel
     {
-        ICommand GoToSettingsCommand { get; }
-        ICommand GoToVideosCommand { get; }
-        ICommand LoadCommand { get; }
-        ICommand CleanCommand { get; }
-        ICommand ManageCommand { get; }
+        //ICommand GoToSettingsCommand { get; }
+        //ICommand GoToVideosCommand { get; }
+        //ICommand LoadCommand { get; }
+        //ICommand CleanCommand { get; }
+        //ICommand ManageCommand { get; }
     }
 }

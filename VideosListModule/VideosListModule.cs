@@ -23,11 +23,11 @@ namespace VideosListModule
                 .RegisterType<IVideoInfoViewModel, VideoInfoViewModel>()
                 .RegisterType<IVideosListView, VideosListView>()
                 .RegisterType<IVideosListViewModel, VideosListViewModel>()
-                .RegisterType<VideosPageButtonViewModel>()
-                .RegisterType<VideosPageButton>();
+                .RegisterType<IVideosPageButtonViewModel, VideosPageButtonViewModel>()
+                .RegisterType<IVideosPageButtonView, VideosPageButton>();
             this._regionManager.RegisterViewWithRegion(RegionNames.VideosListRegion, typeof (IVideosListView));
             this._regionManager.RegisterViewWithRegion(RegionNames.VideoInfoRegion, typeof (IVideoInfoView));
-            this._regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof(VideosPageButton));
+            this._regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof(IVideosPageButtonView));
         }
     }
 }

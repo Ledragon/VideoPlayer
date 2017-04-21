@@ -6,7 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Button Content="Videos"
-            TabIndex="1"
             IsDefault="True"
             Command="{Binding GoToVideosCommand}" />
 </UserControl>

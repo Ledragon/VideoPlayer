@@ -23,6 +23,51 @@
                 <Setter Property="FontSize"
                         Value="12" />
             </Style>
+
+            <Style TargetType="{x:Type Button}"
+                   x:Key="Navigation"
+                   BasedOn="{StaticResource {x:Type Button}}">
+                <!--<Setter Property="Width"
+                        Value="36" />-->
+               <Setter Property="Height"
+                        Value="36" />
+                <!--<Setter Property="Background"
+                        Value="Transparent" />-->
+                <!--<Setter Property="BorderBrush"
+                        Value="Transparent" />-->
+                <!--<Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                         Value="True">
+                                    <Setter TargetName="border"
+                                            Property="BorderBrush"
+                                            Value="Transparent" />
+                                    <Setter Property="Background"
+                                            Value="DarkGray" />
+                                </Trigger>
+                                <Trigger Property="IsFocused"
+                                         Value="True">
+                                    <Setter TargetName="border"
+                                            Property="Background"
+                                            Value="Transparent" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>-->
+            </Style>
+            <Style TargetType="{x:Type Path}">
+                <Setter Property="Fill"
+                        Value="#0f0f0f" />
+            </Style>
+
             <mocks:MockVideoList x:Key="DesignViewModel" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -39,9 +84,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Button Grid.Row="0"
+                Style="{StaticResource Navigation}"
                 Command="{Binding PreviousCommand}">
-            Previous
-            <!--<Viewbox>
+            <!--Previous-->
+            <Viewbox>
                 <Viewbox.LayoutTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="0.5"
@@ -55,17 +101,17 @@
                     <Grid Width="48"
                           Height="48"
                           Visibility="Visible">
-                        <Rectangle Fill="#FF000000"
-                                   Name="Rect"
-                                   Visibility="Visible" />
+                        <!--<Rectangle
+                            Name="Rect"
+                            Visibility="Visible" />-->
                     </Grid>
-                    <Path Data="M299.152955025434,0L496.426178902388,0 268.890046089888,280.247772216797 198.190201729536,367.407897949219 199.87503144145,369.495361328125 271.502137154341,457.706451416016 498.999970406294,738 301.717621773481,738 101.234124153852,491.008697509766 99.5304498374462,488.936553955078 98.6409082114697,490.003173828125 0,368.488952636719 98.6409082114697,246.945526123047z"
-                          Stretch="Uniform"
-                          Fill="#FFFFFFFF"
-                          Width="26"
-                          Height="26"
-                          Margin="0,0,0,0"
-                          RenderTransformOrigin="0.5,0.5">
+                    <Path
+                        Data="M299.152955025434,0L496.426178902388,0 268.890046089888,280.247772216797 198.190201729536,367.407897949219 199.87503144145,369.495361328125 271.502137154341,457.706451416016 498.999970406294,738 301.717621773481,738 101.234124153852,491.008697509766 99.5304498374462,488.936553955078 98.6409082114697,490.003173828125 0,368.488952636719 98.6409082114697,246.945526123047z"
+                        Stretch="Uniform"
+                        Width="26"
+                        Height="26"
+                        Margin="0,0,0,0"
+                        RenderTransformOrigin="0.5,0.5">
                         <Path.RenderTransform>
                             <TransformGroup>
                                 <TransformGroup.Children>
@@ -77,7 +123,7 @@
                         </Path.RenderTransform>
                     </Path>
                 </Grid>
-            </Viewbox>-->
+            </Viewbox>
         </Button>
         <ListBox Grid.Row="1"
                  SelectionMode="Single"
@@ -105,33 +151,34 @@
                 <DataTemplate>
                     <Grid Margin="5">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid Background="Black">
                             <Image Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
                                    VerticalAlignment="Stretch"
                                    HorizontalAlignment="Stretch"
-                                   Stretch="Uniform"/>
+                                   Stretch="Uniform" />
                             <TextBlock Text="{Binding Length}" Foreground="White"
                                        Background="#3FD3D3D3"
-                                       HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5"></TextBlock>
+                                       HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" />
                         </Grid>
                         <TextBlock Grid.Row="1"
-                            Text="{Binding Category}"
+                                   Text="{Binding Category}"
                                    FontSize="14"
                                    Style="{StaticResource VideoLabel}" />
                         <TextBlock Grid.Row="2"
-                            Text="{Binding Title}"
+                                   Text="{Binding Title}"
                                    Style="{StaticResource VideoLabel}" />
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
         <Button Grid.Row="2"
-                Command="{Binding NextCommand}">
-            <!--<Viewbox>
+                Command="{Binding NextCommand}"
+                Style="{StaticResource Navigation}">
+            <Viewbox>
                 <Viewbox.LayoutTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="0.5"
@@ -146,13 +193,9 @@
                           Width="48"
                           Height="48"
                           Visibility="Visible">
-                        <Rectangle Fill="#FF000000"
-                                  
-                                   Visibility="Visible" />
                     </Grid>
                     <Path Data="M0,0L197.27686,0 397.76401,246.9906 399.46771,249.06265 400.3573,247.99635 498.99997,369.51013 400.3573,491.05371 199.85071,738 2.5647115,738 230.11415,457.75143 300.80618,370.59119 299.12131,368.50436 227.49289,280.29288z"
                           Stretch="Uniform"
-                          Fill="#FFFFFFFF"
                           Width="26"
                           Height="26"
                           Margin="0,0,0,0"
@@ -168,8 +211,7 @@
                         </Path.RenderTransform>
                     </Path>
                 </Grid>
-            </Viewbox>-->
-            Next
+            </Viewbox>
 
         </Button>
     </Grid>

@@ -95,13 +95,9 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
-    <Compile Include="ViewBase.cs" />
     <Compile Include="ViewFirst\IView.cs" />
     <Compile Include="ViewFirst\IViewModel.cs" />
     <Compile Include="ViewFirst\ViewModelBase.cs" />
-    <Compile Include="ViewModelBase.cs" />
-    <Compile Include="IView.cs" />
-    <Compile Include="IViewModel.cs" />
     <Compile Include="VisibilityBooleanConverter.cs" />
   </ItemGroup>
   <ItemGroup>

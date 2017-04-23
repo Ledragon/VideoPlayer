@@ -93,7 +93,6 @@
     <Compile Include="ViewModels\Interfaces\IVideoFilterGridViewModel.cs" />
     <Compile Include="ViewModels\ISortGridViewModel.cs" />
     <Compile Include="ViewModels\ITagsListViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\SortGridViewModel.cs" />
     <Compile Include="ViewModels\SortingViewModel.cs" />
     <Compile Include="ViewModels\TagsListViewModel.cs" />

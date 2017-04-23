@@ -31,7 +31,8 @@ namespace Module
 
             this.RegisterType<ISortGrid, SortGrid>();
             this.RegisterType<ISortGridViewModel, SortGridViewModel>();
-            this.ReferenceRegion<ISortGridViewModel>(RegionNames.SortGridRegion);
+            this._regionManager.RegisterViewWithRegion(RegionNames.SortGridRegion, typeof(ISortGrid));
+            //this.ReferenceRegion<ISortGridViewModel>(RegionNames.SortGridRegion);
 
             this.RegisterType<IEditView, EditVideo>();
             this.RegisterType<IEditVideoViewModel, EditVideoViewModel>();

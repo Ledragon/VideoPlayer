@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
-using Module.Views;
 using VideoPlayer.Infrastructure;
+using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
 namespace Module
 {
@@ -58,7 +58,7 @@ namespace Module
 
         #endregion
 
-        public SortGridViewModel(ISortGrid view, IEventAggregator eventAggregator) : base(view)
+        public SortGridViewModel(IEventAggregator eventAggregator)
         {
             this._eventAggregator = eventAggregator;
             this.SortByLengthCommand = new DelegateCommand(this.SortByLength);

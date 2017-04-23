@@ -13,6 +13,7 @@ using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
 using VideoPlayer.VideoListInteraction;
 using VlcPlayer;
+using IModuleManager = VideoPlayer.Infrastructure.IModuleManager;
 
 namespace VideoPlayer
 {
@@ -23,6 +24,7 @@ namespace VideoPlayer
             this.Container.RegisterType<IVideoRepository, FileVideoRepository>(new ContainerControlledLifetimeManager())
                 .RegisterType<ILibraryService, LibraryService>(new ContainerControlledLifetimeManager())
                 .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager())
+                .RegisterType<IModuleManager, Infrastructure.ModuleManager>(new ContainerControlledLifetimeManager())
                 .RegisterType<StackPanelRegionAdapter>();
 
             //TEMP

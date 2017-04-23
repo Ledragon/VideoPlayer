@@ -91,7 +91,9 @@
     <Compile Include="GenericCommand.cs" />
     <Compile Include="IContainer.cs" />
     <Compile Include="ImageConverter.cs" />
+    <Compile Include="IModuleManager.cs" />
     <Compile Include="ModuleBase.cs" />
+    <Compile Include="ModuleManager.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />

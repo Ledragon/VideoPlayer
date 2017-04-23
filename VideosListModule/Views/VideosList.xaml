@@ -157,9 +157,9 @@
                         </Grid.RowDefinitions>
                         <Grid Background="Black">
                             <Image Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalAlignment="Stretch"
-                                   Stretch="Uniform" />
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Stretch="UniformToFill" />
                             <TextBlock Text="{Binding Length}" Foreground="White"
                                        Background="#3FD3D3D3"
                                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" />

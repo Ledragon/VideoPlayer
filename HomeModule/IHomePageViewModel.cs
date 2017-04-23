@@ -1,14 +1,8 @@
-﻿using System.Windows.Input;
-using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace HomeModule
 {
     public interface IHomePageViewModel : IViewModel
     {
-        ICommand GoToSettingsCommand { get; }
-        ICommand GoToVideosCommand { get; }
-        ICommand LoadCommand { get; }
-        ICommand CleanCommand { get; }
-        ICommand ManageCommand { get; }
     }
 }

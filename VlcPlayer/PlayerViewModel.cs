@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,6 +12,7 @@ using Log;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
 namespace VlcPlayer
 {
@@ -36,12 +38,12 @@ namespace VlcPlayer
         private TimeSpan _timePosition;
         private String _title;
 
-        public PlayerViewModel(IPlayer player, IEventAggregator eventAggregator) : base(player)
+        public PlayerViewModel(IEventAggregator eventAggregator)
         {
             this._eventAggregator = eventAggregator;
             this.Rate = 1;
             this.Playlist = new ObservableCollection<Video>();
-            this.IsRepeat = true;
+            this.IsRepeat = false;
             this.ControlsVisibility = true;
             this._timer.Interval = 500;
             this._timer.Elapsed += this.TimerOnElapsed;
@@ -56,12 +58,26 @@ namespace VlcPlayer
             eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
         }
 
+        public static String AssemblyDirectory
+        {
+            get
+            {
+                var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                var uri = new UriBuilder(codeBase);
+                var path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
         public Boolean IsMouseDown
         {
             get { return this._isMouseDown; }
             set
             {
-                if (value.Equals(this._isMouseDown)) return;
+                if (value.Equals(this._isMouseDown))
+                {
+                    return;
+                }
                 this._isMouseDown = value;
                 this.OnPropertyChanged();
             }
@@ -72,7 +88,10 @@ namespace VlcPlayer
             get { return this._controlsVisibility; }
             set
             {
-                if (value == this._controlsVisibility) return;
+                if (value == this._controlsVisibility)
+                {
+                    return;
+                }
                 this._controlsVisibility = value;
                 this.OnPropertyChanged();
             }
@@ -90,7 +109,10 @@ namespace VlcPlayer
             get { return this._isRepeat; }
             set
             {
-                if (value.Equals(this._isRepeat)) return;
+                if (value.Equals(this._isRepeat))
+                {
+                    return;
+                }
                 this._isRepeat = value;
                 this.OnPropertyChanged();
             }
@@ -101,7 +123,10 @@ namespace VlcPlayer
             get { return this._playlist; }
             set
             {
-                if (Equals(value, this._playlist)) return;
+                if (Equals(value, this._playlist))
+                {
+                    return;
+                }
                 this._playlist = value;
                 this.OnPropertyChanged();
             }
@@ -112,7 +137,10 @@ namespace VlcPlayer
             get { return this._timePosition; }
             set
             {
-                if (value.Equals(this._timePosition)) return;
+                if (value.Equals(this._timePosition))
+                {
+                    return;
+                }
                 this._timePosition = value;
                 this.OnPropertyChanged();
             }
@@ -128,24 +156,24 @@ namespace VlcPlayer
                     this.Duration = value.Length;
                     this.Title = value.Title;
                 }
-                if (Equals(value, this._currentVideo)) return;
+                //if (Equals(value, this._currentVideo)) return;
                 this._currentVideo = value;
                 this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
                 this.OnPropertyChanged();
             }
         }
 
-        public String TemporaryImagePath
-        {
-            get { return Path.Combine(Environment.GetEnvironmentVariable("TEMP"), this.Title + ".jpg"); }
-        }
+        public String TemporaryImagePath => Path.Combine(AssemblyDirectory, this.Title + ".jpg");
 
         public String Title
         {
             get { return this._title; }
             set
             {
-                if (value == this._title) return;
+                if (value == this._title)
+                {
+                    return;
+                }
                 this._title = value;
                 this.OnPropertyChanged();
             }
@@ -156,7 +184,10 @@ namespace VlcPlayer
             get { return this._position; }
             set
             {
-                if (value.Equals(this._position)) return;
+                if (value.Equals(this._position))
+                {
+                    return;
+                }
                 this._position = value;
                 if (this._position > 1)
                 {
@@ -182,7 +213,10 @@ namespace VlcPlayer
             get { return this._rate; }
             set
             {
-                if (value.Equals(this._rate)) return;
+                if (value.Equals(this._rate))
+                {
+                    return;
+                }
                 this._rate = value;
                 this._eventAggregator.GetEvent<RateChanged>().Publish(this._rate);
                 this.OnPropertyChanged();
@@ -194,7 +228,10 @@ namespace VlcPlayer
             get { return this._duration; }
             set
             {
-                if (value.Equals(this._duration)) return;
+                if (value.Equals(this._duration))
+                {
+                    return;
+                }
                 this._duration = value;
                 this.OnPropertyChanged();
             }
@@ -205,7 +242,10 @@ namespace VlcPlayer
             get { return this._positionTimeSpan; }
             set
             {
-                if (value.Equals(this._positionTimeSpan)) return;
+                if (value.Equals(this._positionTimeSpan))
+                {
+                    return;
+                }
                 this._positionTimeSpan = value;
                 this.OnPropertyChanged();
             }
@@ -216,7 +256,10 @@ namespace VlcPlayer
             get { return this._isMute; }
             set
             {
-                if (value.Equals(this._isMute)) return;
+                if (value.Equals(this._isMute))
+                {
+                    return;
+                }
                 this._isMute = value;
                 this.OnPropertyChanged();
             }
@@ -241,7 +284,10 @@ namespace VlcPlayer
             get { return this._isPaused; }
             set
             {
-                if (value.Equals(this._isPaused)) return;
+                if (value.Equals(this._isPaused))
+                {
+                    return;
+                }
                 this._isPaused = value;
                 this.OnPropertyChanged();
             }
@@ -252,7 +298,10 @@ namespace VlcPlayer
             get { return this._cursor; }
             set
             {
-                if (Equals(value, this._cursor)) return;
+                if (Equals(value, this._cursor))
+                {
+                    return;
+                }
                 this._cursor = value;
                 this.OnPropertyChanged();
             }
@@ -324,15 +373,19 @@ namespace VlcPlayer
         public void Next()
         {
             this._index++;
-            if (this._index == this.Playlist.Count - 1 && !this.IsRepeat)
+            if (this._index >= this.Playlist.Count && !this.IsRepeat)
             {
                 this.NextCommand.CanExecute(false);
+                this._eventAggregator.GetEvent<PlayCompleted>().Publish(null);
             }
-            else if (this._index >= this.Playlist.Count)
+            else
             {
-                this._index = 0;
+                if (this._index == this.Playlist.Count)
+                {
+                    this._index = 0;
+                }
+                this.CurrentVideo = this.Playlist[this._index];
             }
-            this.CurrentVideo = this.Playlist[this._index];
         }
 
         public void Previous()

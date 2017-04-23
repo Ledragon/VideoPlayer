@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classes", "Classes\Classes.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MethodsTest", "MethodsTest\MethodsTest.csproj", "{A6BA87C3-DCFD-48DB-B895-041365E496E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers", "Controler\Controllers.csproj", "{0856C528-64CF-413D-95CB-0DE13D4DA228}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Log\Log.csproj", "{02C8E3B1-3796-49B2-ABA2-67D0E8644871}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Database.Repository", "VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj", "{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}"
@@ -18,8 +16,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Helpers", "VideoPlayer.Helpers\VideoPlayer.Helpers.csproj", "{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{AB865795-450F-4980-B7C9-238E49C2D5E0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Bootstrapper", "VideoPlayer.Bootstrapper\VideoPlayer.Bootstrapper.csproj", "{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Services", "VideoPlayer.Services\VideoPlayer.Services.csproj", "{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}"
 EndProject
@@ -49,6 +45,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformationEditionModule", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeDragon.Controls", "LeDragon.Controls\LeDragon.Controls.csproj", "{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideosPageModule", "VideosPageModule\VideosPageModule.csproj", "{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManageLibraryModule", "ManageLibraryModule\ManageLibraryModule.csproj", "{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.SettingsModule", "VideoPlayer.SettingsModule\VideoPlayer.SettingsModule.csproj", "{5030B19E-A359-4628-9A56-9930FB0DC429}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.VideoListInteraction", "VideoPlayer.VideoListInteraction\VideoPlayer.VideoListInteraction.csproj", "{34630FE1-166E-49BC-B527-E47E2BF81AA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,10 +71,6 @@ Global
 		{A6BA87C3-DCFD-48DB-B895-041365E496E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6BA87C3-DCFD-48DB-B895-041365E496E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6BA87C3-DCFD-48DB-B895-041365E496E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0856C528-64CF-413D-95CB-0DE13D4DA228}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0856C528-64CF-413D-95CB-0DE13D4DA228}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0856C528-64CF-413D-95CB-0DE13D4DA228}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0856C528-64CF-413D-95CB-0DE13D4DA228}.Release|Any CPU.Build.0 = Release|Any CPU
 		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -83,10 +83,6 @@ Global
 		{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -135,6 +131,22 @@ Global
 		{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5030B19E-A359-4628-9A56-9930FB0DC429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5030B19E-A359-4628-9A56-9930FB0DC429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5030B19E-A359-4628-9A56-9930FB0DC429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5030B19E-A359-4628-9A56-9930FB0DC429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,6 +162,10 @@ Global
 		{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{57309725-0F3D-4A63-B876-05366E0DE7DF} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{5638EDFA-60FA-49B9-A7D3-99B043BF7EF5} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
+		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
+		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
+		{5030B19E-A359-4628-9A56-9930FB0DC429} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
+		{34630FE1-166E-49BC-B527-E47E2BF81AA2} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

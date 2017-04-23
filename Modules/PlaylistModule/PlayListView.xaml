@@ -68,5 +68,6 @@
         <ComboBox Grid.Row="3" ItemsSource="{Binding PlayListCollection}" SelectedItem="{Binding SelectedPlayList}">
             
         </ComboBox>
+
     </Grid>
 </UserControl>

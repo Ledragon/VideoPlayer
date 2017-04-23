@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VideoPlayer</RootNamespace>
     <AssemblyName>VideoPlayer</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -148,52 +148,21 @@
     </ApplicationDefinition>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="InfoExporter.cs" />
-    <Compile Include="Mocks\MockEditViewModel.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="PlayListManagementModule.cs" />
-    <Compile Include="ViewModels\EditViewModel.cs" />
-    <Compile Include="ViewModels\IEditViewModel.cs" />
     <Compile Include="ViewModels\IPlayListManagementViewModel.cs" />
-    <Compile Include="ViewModels\IVideosListInteractionViewModel.cs" />
     <Compile Include="ViewModels\PlayListManagementViewModel.cs" />
-    <Compile Include="ViewModels\VideosListInteractionViewModel.cs" />
-    <Compile Include="ViewModels\VideosTabControlViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\DirectoryBrowser.xaml.cs">
-      <DependentUpon>DirectoryBrowser.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\EditView.xaml.cs">
-      <DependentUpon>EditView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\IVideosListInteractionView.cs" />
+    <Compile Include="Views\IPlayListManagementView.cs" />
     <Compile Include="Views\PlayListManagementView.xaml.cs">
       <DependentUpon>PlayListManagementView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatusBar.xaml.cs">
       <DependentUpon>StatusBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\VideosListInteractionView.xaml.cs">
-      <DependentUpon>VideosListInteractionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\VideosPage.xaml.cs">
-      <DependentUpon>VideosPage.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\DirectoryBrowser.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\EditView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Resources.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,9 +174,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="VideoPlayer.xaml.cs">
       <DependentUpon>VideoPlayer.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -217,14 +183,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StatusBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\VideosListInteractionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\VideosPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -276,6 +234,10 @@
       <Project>{02c8e3b1-3796-49b2-aba2-67d0e8644871}</Project>
       <Name>Log</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ManageLibraryModule\ManageLibraryModule.csproj">
+      <Project>{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}</Project>
+      <Name>ManageLibraryModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Modules\PlaylistModule\PlaylistModule.csproj">
       <Project>{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC}</Project>
       <Name>PlaylistModule</Name>
@@ -304,9 +266,21 @@
       <Project>{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}</Project>
       <Name>VideoPlayer.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.SettingsModule\VideoPlayer.SettingsModule.csproj">
+      <Project>{5030B19E-A359-4628-9A56-9930FB0DC429}</Project>
+      <Name>VideoPlayer.SettingsModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.VideoListInteraction\VideoPlayer.VideoListInteraction.csproj">
+      <Project>{34630FE1-166E-49BC-B527-E47E2BF81AA2}</Project>
+      <Name>VideoPlayer.VideoListInteraction</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideosListModule\VideosListModule.csproj">
       <Project>{57309725-0F3D-4A63-B876-05366E0DE7DF}</Project>
       <Name>VideosListModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideosPageModule\VideosPageModule.csproj">
+      <Project>{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}</Project>
+      <Name>VideosPageModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\VlcPlayer\VlcPlayer.csproj">
       <Project>{a060b03d-3def-4826-888f-1b80059b7e13}</Project>
@@ -406,7 +380,9 @@
     <Resource Include="TheaterCurtains.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="FodyWeavers.xml" />
+    <Resource Include="FodyWeavers.xml">
+      <SubType>Designer</SubType>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

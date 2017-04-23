@@ -61,10 +61,6 @@
       <Project>{02c8e3b1-3796-49b2-aba2-67d0e8644871}</Project>
       <Name>Log</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VideoPlayer.Bootstrapper\VideoPlayer.Bootstrapper.csproj">
-      <Project>{1F4ACA5B-8A77-4D0F-BFF2-1F7617C8450D}</Project>
-      <Name>VideoPlayer.Bootstrapper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Common\VideoPlayer.Common.csproj">
       <Project>{85D3796A-9536-460E-8FF0-F96ACD68878F}</Project>
       <Name>VideoPlayer.Common</Name>

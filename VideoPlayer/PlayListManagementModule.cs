@@ -8,20 +8,20 @@ namespace VideoPlayer
 {
     public class PlayListManagementModule : ModuleBase
     {
+        private readonly IRegionManager _regionManager;
+
         public PlayListManagementModule(IUnityContainer unityContainer, IRegionManager regionManager)
             : base(unityContainer, regionManager)
         {
+            this._regionManager = regionManager;
         }
 
         public override void Initialize()
         {
-            //this.RegisterType<IPlayListManagementView, PlayListManagementView>();
+            this.RegisterType<IPlayListManagementView, PlayListManagementView>();
             this.RegisterType<IPlayListManagementViewModel, PlayListManagementViewModel>();
-            this.ReferenceRegion<IPlayListManagementViewModel>(RegionNames.PlayListManagementRegion);
-
-            this.RegisterType<IVideosListInteractionView, VideosListInteractionView>();
-            this.RegisterType<IVideosListInteractionViewModel, VideosListInteractionViewModel>();
-            this.ReferenceRegion<IVideosListInteractionViewModel>(RegionNames.VideosListInteraction);
+            this._regionManager.RegisterViewWithRegion(RegionNames.PlayListManagementRegion,
+                typeof (IPlayListManagementView));
         }
     }
 }

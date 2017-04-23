@@ -8,6 +8,7 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
+using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
 namespace Module
 {
@@ -22,8 +23,7 @@ namespace Module
         private Video _video;
 
 
-        public EditVideoViewModel(ILibraryService libraryService, IEditView view, IEventAggregator eventAggregator)
-            : base(view)
+        public EditVideoViewModel(ILibraryService libraryService, IEventAggregator eventAggregator)
         {
             this._libraryService = libraryService;
             this._eventAggregator = eventAggregator;
@@ -41,7 +41,10 @@ namespace Module
             get { return this._tags; }
             set
             {
-                if (Equals(value, this._tags)) return;
+                if (Equals(value, this._tags))
+                {
+                    return;
+                }
                 this._tags = value;
                 this.OnPropertyChanged();
             }
@@ -54,7 +57,10 @@ namespace Module
             get { return this._newCategory; }
             set
             {
-                if (value == this._newCategory) return;
+                if (value == this._newCategory)
+                {
+                    return;
+                }
                 this._newCategory = value;
                 this.OnPropertyChanged();
             }
@@ -65,15 +71,15 @@ namespace Module
             get { return this._video; }
             set
             {
-                if (Equals(value, this._video)) return;
+                if (Equals(value, this._video))
+                {
+                    return;
+                }
                 this._video = value;
                 this.SelectedCategory = this.CategoryViewModels.FirstOrDefault(c => c.Name == this.Video.Category);
                 //if (value.PropertyChanged)
                 //{
-                    value.PropertyChanged += (s, e) =>
-                    {
-                        this._eventAggregator.GetEvent<VideoEdited>().Publish(value);
-                    };
+                value.PropertyChanged += (s, e) => { this._eventAggregator.GetEvent<VideoEdited>().Publish(value); };
                 //}
                 this.OnPropertyChanged();
             }
@@ -93,7 +99,10 @@ namespace Module
             }
             set
             {
-                if (Equals(value, this._selectedCategory)) return;
+                if (Equals(value, this._selectedCategory))
+                {
+                    return;
+                }
                 this._selectedCategory = value;
                 if (this.Video != null && value != null)
                 {
@@ -108,7 +117,10 @@ namespace Module
             get { return this._categoryViewModels; }
             set
             {
-                if (Equals(value, this._categoryViewModels)) return;
+                if (Equals(value, this._categoryViewModels))
+                {
+                    return;
+                }
                 this._categoryViewModels = value;
                 this.OnPropertyChanged();
             }
@@ -122,14 +134,14 @@ namespace Module
             IEnumerable<Tag> tags = videos
                 .SelectMany(v => v.Tags)
                 .Distinct()
-                .OrderBy(t=>t.Value);
+                .OrderBy(t => t.Value);
             foreach (var tag in tags)
             {
                 this.Tags.Add(tag);
             }
         }
 
-        private void VideoEdited(object obj)
+        private void VideoEdited(Object obj)
         {
             this.CreateCategories(this._libraryService);
         }
@@ -137,11 +149,11 @@ namespace Module
         private void CreateCategories(ILibraryService libraryService)
         {
             this.CategoryViewModels.Clear();
-            IEnumerable<IGrouping<string, Video>> categories =
+            IEnumerable<IGrouping<String, Video>> categories =
                 libraryService.GetObjectsFromFile()
                     .Videos.Where(v => !String.IsNullOrEmpty(v.Category))
                     .GroupBy(v => v.Category)
-                    .OrderBy(g=>g.Key);
+                    .OrderBy(g => g.Key);
             foreach (var category in categories)
             {
                 this.CategoryViewModels.Add(new CategoryViewModel
@@ -152,7 +164,7 @@ namespace Module
             }
             if (this.CategoryViewModels.Any())
             {
-                CategoryViewModel vm = this.CategoryViewModels.First();
+                var vm = this.CategoryViewModels.First();
                 if (this.Video != null && !String.IsNullOrEmpty(this.Video.Category))
                 {
                     vm = this.CategoryViewModels.FirstOrDefault(c => c.Name == this.Video.Category);

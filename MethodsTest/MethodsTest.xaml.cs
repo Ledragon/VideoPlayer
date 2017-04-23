@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Linq;
 //using VideoPlayer;
-using Controllers;
 
 namespace MethodsTest
 {

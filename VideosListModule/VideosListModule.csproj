@@ -169,10 +169,6 @@
       <Project>{02C8E3B1-3796-49B2-ABA2-67D0E8644871}</Project>
       <Name>Log</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Module\Module.csproj">
-      <Project>{27f28f3a-17fe-4ee3-abf4-1a13ea1abff5}</Project>
-      <Name>Module</Name>
-    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Infrastructure\VideoPlayer.Infrastructure.csproj">
       <Project>{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}</Project>
       <Name>VideoPlayer.Infrastructure</Name>

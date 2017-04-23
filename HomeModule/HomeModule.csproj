@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HomeModule</RootNamespace>
     <AssemblyName>HomeModule</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -76,6 +76,9 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Vlc.DotNet.Core.Interops">
+      <HintPath>..\_dll\Vlc.DotNet.Core.Interops.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -129,6 +132,14 @@
       <Project>{02C8E3B1-3796-49B2-ABA2-67D0E8644871}</Project>
       <Name>Log</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ManageLibraryModule\ManageLibraryModule.csproj">
+      <Project>{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}</Project>
+      <Name>ManageLibraryModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\PlaylistModule\PlaylistModule.csproj">
+      <Project>{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC}</Project>
+      <Name>PlaylistModule</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Infrastructure\VideoPlayer.Infrastructure.csproj">
       <Project>{80e2c9d4-f13f-482e-bc5d-678e61a88fa6}</Project>
       <Name>VideoPlayer.Infrastructure</Name>
@@ -137,11 +148,27 @@
       <Project>{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}</Project>
       <Name>VideoPlayer.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideosListModule\VideosListModule.csproj">
+      <Project>{57309725-0F3D-4A63-B876-05366E0DE7DF}</Project>
+      <Name>VideosListModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideosPageModule\VideosPageModule.csproj">
+      <Project>{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}</Project>
+      <Name>VideosPageModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VlcPlayer\VlcPlayer.csproj">
+      <Project>{A060B03D-3DEF-4826-888F-1B80059B7E13}</Project>
+      <Name>VlcPlayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HomePageTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

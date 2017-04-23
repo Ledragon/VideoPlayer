@@ -20,6 +20,27 @@
         <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
     </Style>
     <Style TargetType="TextBlock" x:Key="Light" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="Foreground" Value="Gray"></Setter>
+        <Setter Property="Foreground" Value="Gray" />
     </Style>
+
+    <Style TargetType="TabItem"
+           x:Key="HiddenTabItem">
+        <Setter Property="Visibility"
+                Value="Collapsed" />
+        <Setter Property="Padding"
+                Value="0" />
+    </Style>
+    <Style TargetType="TabControl"
+           x:Key="HiddenTabControl">
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="ItemContainerStyle"
+                Value="{StaticResource HiddenTabItem}" />
+    </Style>
+    
+
 </ResourceDictionary>

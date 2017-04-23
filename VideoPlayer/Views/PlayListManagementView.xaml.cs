@@ -1,6 +1,4 @@
-﻿using System.Windows.Controls;
-using VideoPlayer.Common;
-using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure.ViewFirst;
 using VideoPlayer.ViewModels;
 
 namespace VideoPlayer.Views
@@ -8,23 +6,19 @@ namespace VideoPlayer.Views
     /// <summary>
     ///     Interaction logic for PlayListManagementView.xaml
     /// </summary>
-    public partial class PlayListManagementView : UserControl//, IPlayListManagementView
+    public partial class PlayListManagementView : IPlayListManagementView
     {
-        public PlayListManagementView()
+        public PlayListManagementView(IPlayListManagementViewModel playListManagementViewModel)
         {
             this.InitializeComponent();
-            //this.DataContext = DependencyFactory.Resolve<IPlayListManagementViewModel>();
+            this.ViewModel = playListManagementViewModel;
         }
 
 
-        //public IViewModel ViewModel
-        //{
-        //    get { return (IViewModel)this.DataContext; }
-        //    set { this.DataContext = value; }
-        //}
-    }
-
-    public interface IPlayListManagementView : IView
-    {
+        public IViewModel ViewModel
+        {
+            get { return (IViewModel) this.DataContext; }
+            set { this.DataContext = value; }
+        }
     }
 }

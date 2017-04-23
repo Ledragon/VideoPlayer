@@ -1,8 +1,16 @@
-﻿using VideoPlayer.Infrastructure;
+﻿using System;
+using System.Windows.Input;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace VideoPlayer.ViewModels
 {
     public interface IPlayListManagementViewModel : IViewModel
     {
+        Boolean IsCategoryGridVisible { get; set; }
+        Boolean IsPlayListVisible { get; set; }
+        Boolean FilterGridVisibility { get; set; }
+        ICommand SwitchCategoryGridVisibilityCommand { get; }
+        ICommand SwitchPlaylistVisibilityCommand { get; }
+        ICommand SwitchFilterGridVisibilityCommand { get; }
     }
 }

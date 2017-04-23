@@ -8,19 +8,22 @@ namespace VideosListModule
 {
     public class VideosListModule : ModuleBase
     {
+        private readonly IRegionManager _regionManager;
+
         public VideosListModule(IUnityContainer unityContainer, IRegionManager regionManager)
             : base(unityContainer, regionManager)
         {
+            this._regionManager = regionManager;
         }
 
         public override void Initialize()
         {
-            this.RegisterType<IVideoInfoView, VideoInfo>();
-            this.RegisterType<IVideoInfoViewModel, VideoInfoViewModel>();
-            this.RegisterType<IVideosListView, VideosListView>();
-            this.RegisterType<IVideosListViewModel, VideosListViewModel>();
-            this.ReferenceRegion<IVideosListViewModel>(RegionNames.VideosListRegion);
-            this.ReferenceRegion<IVideoInfoViewModel>(RegionNames.VideoInfoRegion);
+            this.RegisterType<IVideoInfoView, VideoInfo>()
+                .RegisterType<IVideoInfoViewModel, VideoInfoViewModel>()
+                .RegisterType<IVideosListView, VideosListView>()
+                .RegisterType<IVideosListViewModel, VideosListViewModel>();
+            this._regionManager.RegisterViewWithRegion(RegionNames.VideosListRegion, typeof (IVideosListView));
+            this._regionManager.RegisterViewWithRegion(RegionNames.VideoInfoRegion, typeof (IVideoInfoView));
         }
     }
 }

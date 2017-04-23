@@ -1,14 +1,17 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using HomeModule;
 using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 using Module;
 using PlaylistModule;
 using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
+using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
-using VideoPlayer.ViewModels;
+using VideoPlayer.VideoListInteraction;
 using VlcPlayer;
 
 namespace VideoPlayer
@@ -20,12 +23,11 @@ namespace VideoPlayer
             this.Container.RegisterType<IVideoRepository, FileVideoRepository>(new ContainerControlledLifetimeManager())
                 .RegisterType<ILibraryService, LibraryService>(new ContainerControlledLifetimeManager())
                 .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager())
-                .RegisterType<VideosTabControlViewModel>();
+                .RegisterType<StackPanelRegionAdapter>();
 
             //TEMP
             this.Container.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
             this.Container.RegisterType<IVideoPlayer, HomeModule.VideoPlayer>();
-            this.Container.RegisterType<IEditViewModel, EditViewModel>();
             Locator.Container = this.Container;
             return this.Container.Resolve<MainWindow>();
         }
@@ -39,15 +41,27 @@ namespace VideoPlayer
 
         protected override void ConfigureModuleCatalog()
         {
-            this.AddModule<ModuleModule>();
-            this.AddModule<PlayListModule>();
-            this.AddModule<VlcPlayerModule>();
-            this.AddModule<HomeModule.HomeModule>();
-            this.AddModule<PlayListManagementModule>();
-            this.AddModule<VideosListModule.VideosListModule>();
+            this.AddModule<ModuleModule>()
+                .AddModule<PlayListModule>()
+                .AddModule<VlcPlayerModule>()
+                .AddModule<HomeModule.HomeModule>()
+                .AddModule<PlayListManagementModule>()
+                .AddModule<SettingsModule.SettingsModule>()
+                .AddModule<VideosListModule.VideosListModule>()
+                .AddModule<VideosPageModule.VideosPageModule>()
+                .AddModule<ManageLibraryModule.ManageLibraryModule>()
+                .AddModule<VideoListInteractionModule>()
+                ;
         }
 
-        private void AddModule<T>()
+        protected override RegionAdapterMappings ConfigureRegionAdapterMappings()
+        {
+            var mappings = base.ConfigureRegionAdapterMappings();
+            mappings.RegisterMapping(typeof(StackPanel), this.Container.Resolve<StackPanelRegionAdapter>());
+            return mappings;
+        }
+
+        private Bootstrapper AddModule<T>()
         {
             var moduleType = typeof (T);
             var moduleInfo = new ModuleInfo
@@ -57,6 +71,7 @@ namespace VideoPlayer
                 InitializationMode = InitializationMode.WhenAvailable
             };
             this.ModuleCatalog.AddModule(moduleInfo);
+            return this;
         }
     }
 }

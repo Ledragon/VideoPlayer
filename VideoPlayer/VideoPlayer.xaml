@@ -7,7 +7,7 @@
     xmlns:views="clr-namespace:VideoPlayer.Views"
     x:Class="VideoPlayer.MainWindow"
     Title="VideoPlayer" Height="768" Width="1024" Background="Black" Foreground="White" FontFamily="Iskoola Pota"
-    WindowStyle="None"
+    WindowStyle="SingleBorderWindow"
     WindowStartupLocation="CenterScreen"
     WindowState="Maximized"
     ResizeMode="NoResize">
@@ -15,7 +15,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
-                <ResourceDictionary Source="Views/Resources.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Views/Resources.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="StatusBar">
                 <Setter Property="Background" Value="Black" />
@@ -48,26 +48,7 @@
         <Grid.Background>
             <ImageBrush ImageSource=".\TheaterCurtains.jpg" />
         </Grid.Background>
-        <TabControl Name="_uiTabs" SelectedIndex="{Binding SelectedTab}" Style="{StaticResource HiddenTabControl}">
-            <TabItem Name="_uiHomeTab">
-                <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.HomeRegion}" />
-
-                <!--<homeModule:HomePage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"
-                                x:Name="_uiHomePage" />-->
-            </TabItem>
-            <TabItem Name="_uiVideoTab">
-                <local:VideosPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"
-                                  x:Name="UiVideosView" />
-                <!--<ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosListRegion}"></ContentControl>-->
-            </TabItem>
-            <TabItem Name="_uiSettingsTab">
-                <local:SettingsPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"
-                                    x:Name="_uiSettingsView" />
-            </TabItem>
-            <TabItem>
-                <views:EditView />
-            </TabItem>
-        </TabControl>
+        <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}" />
         <Grid Visibility="{Binding IsExitMenuVisible}" Background="#cc000000">
             <TextBlock Style="{StaticResource ExitMessage}">
                 VideoPlayer will now close...

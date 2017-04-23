@@ -4,31 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignHeight="400" d:DesignWidth="580.795">
+             d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
-        <Style TargetType="Label" x:Key="Label">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="5" />
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="BorderBrush" Value="Gray" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Height" Value="25" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="5" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Label" x:Key="Label">
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                <Setter Property="BorderBrush" Value="Gray" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
     </UserControl.Resources>
 
     <Grid>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -38,23 +40,21 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Label}" Content="Path:" Margin="5,3.675,5,5" />
-        <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource Label}" Content="{Binding Video.FileName}" Margin="5,3.675,5,5" />
-        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Content="Title:" Margin="5,3.675,5,5" />
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Video.Title}"  />
+        <Label Grid.Row="0" Grid.Column="0" Style="{StaticResource Label}" Content="Path:" />
+        <Label Grid.Row="0" Grid.Column="1" Style="{StaticResource Label}" Content="{Binding Video.FileName}" />
+        <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource Label}" Content="Title:" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Video.Title}" />
         <Label Grid.Row="2" Grid.Column="0" Style="{StaticResource Label}" Content="Duration:" />
         <Label Grid.Row="2" Grid.Column="1" Style="{StaticResource Label}" Content="{Binding Video.Length}"
                ContentStringFormat="HH:mm:ss" />
         <Label Grid.Row="3" Grid.Column="0" Style="{StaticResource Label}" Content="Rating:" />
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Video.Rating}"/>
-        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource Label}" Content="Category:" Grid.RowSpan="2" />
-        <ComboBox Grid.Row="5" Grid.Column="1" IsEditable="False" SelectedItem="{Binding SelectedCategory}"
-                  ItemsSource="{Binding CategoryViewModels}" Margin="5" Grid.RowSpan="2">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Name}" />
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Video.Rating}" />
+        <Label Grid.Row="5" Grid.Column="0" Style="{StaticResource Label}" 
+               Content="Category:" />
+        <ComboBox Grid.Row="5" Grid.Column="1" IsEditable="False" 
+                  SelectedItem="{Binding SelectedCategory}"
+                  ItemsSource="{Binding CategoryViewModels}" 
+                  DisplayMemberPath="Name">
         </ComboBox>
         <Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
@@ -66,8 +66,7 @@
         </Grid>
         <Label Grid.Row="8" Grid.Column="0" Style="{StaticResource Label}" Content="Tags:" />
         <DataGrid Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch"
-                  HorizontalAlignment="Stretch" ItemsSource="{Binding Video.Tags}" ColumnWidth="*" Margin="5"
-                  AutoGenerateColumns="True" CanUserAddRows="True">
-        </DataGrid>
+                  HorizontalAlignment="Stretch" ItemsSource="{Binding Video.Tags}" ColumnWidth="*"
+                  AutoGenerateColumns="True" CanUserAddRows="True" />
     </Grid>
 </UserControl>

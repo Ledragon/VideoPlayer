@@ -1,26 +1,24 @@
-﻿using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
-using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure;
 
 namespace ManageLibraryModule
 {
-    public class ManageLibraryModule : ModuleBase
+    public class ManageLibraryModule : IPrismModule
     {
-        private readonly IRegionManager _regionManager;
+        private readonly IModuleManager _moduleManager;
 
-        public ManageLibraryModule(IUnityContainer unityContainer, IRegionManager regionManager)
-            : base(unityContainer, regionManager)
+        public ManageLibraryModule(IModuleManager moduleManager)
         {
-            this._regionManager = regionManager;
+            this._moduleManager = moduleManager;
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
-            this.RegisterType<IEditViewModel, EditViewModel>()
+            this._moduleManager
+                .RegisterType<IEditViewModel, EditViewModel>()
                 .RegisterType<IManagePageButtonViewModel, ManagePageButtonViewModel>()
                 .RegisterType<IManagePageButtonView, ManagePageButtonView>()
-                .RegisterView<ManageLibraryView>();
-            this._regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof (IManagePageButtonView));
+                .RegisterView<ManageLibraryView>()
+                .RegisterViewWithRegion<IManagePageButtonView>(RegionNames.NavigationRegion);
         }
     }
 }

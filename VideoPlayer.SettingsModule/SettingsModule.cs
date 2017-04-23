@@ -1,10 +1,8 @@
-﻿using Microsoft.Practices.Prism.Modularity;
-using VideoPlayer.Infrastructure;
-using IModuleManager = VideoPlayer.Infrastructure.IModuleManager;
+﻿using VideoPlayer.Infrastructure;
 
 namespace VideoPlayer.SettingsModule
 {
-    public class SettingsModule : IModule
+    public class SettingsModule : IPrismModule
     {
         private readonly IModuleManager _moduleManager;
 

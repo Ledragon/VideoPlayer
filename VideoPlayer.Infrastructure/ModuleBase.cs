@@ -37,12 +37,4 @@ namespace VideoPlayer.Infrastructure
             return this;
         }
     }
-
-    public static class ContainerExtensions
-    {
-        public static IUnityContainer RegisterView<T>(this IUnityContainer container)
-        {
-            return container.RegisterType<Object, T>(typeof (T).FullName);
-        }
-    }
 }

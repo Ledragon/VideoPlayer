@@ -6,47 +6,56 @@
              mc:Ignorable="d"
              d:DesignHeight="100" d:DesignWidth="400">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Width" Value="36" />
-            <Setter Property="Height" Value="36" />
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Margin" Value="5" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border"
-                                Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
-                                <Setter Property="Background" Value="DarkGray" />
-                            </Trigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="Transparent" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style TargetType="{x:Type Ellipse}">
-            <Setter Property="Fill" Value="#0f0f0f" />
-        </Style>
-        <Style TargetType="{x:Type Path}">
-            <Setter Property="Fill" Value="#f0f0f0" />
-        </Style>
-        <Style TargetType="{x:Type Rectangle}">
-            <Setter Property="UseLayoutRounding" Value="True" />
-            <Setter Property="RadiusX" Value="5" />
-            <Setter Property="RadiusY" Value="5" />
-            <Setter Property="Fill" Value="#0f0f0f" />
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Button}" x:Key="SortButton" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Width" Value="36" />
+                <Setter Property="Height" Value="36" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <!--<Setter Property="Margin" Value="5" />-->
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="Transparent" />
+                                    <Setter Property="Background" Value="DarkGray" />
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="Transparent" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="{x:Type Ellipse}">
+                <Setter Property="Fill" Value="#0f0f0f" />
+            </Style>
+            <Style TargetType="{x:Type Path}">
+                <Setter Property="Fill" Value="#f0f0f0" />
+            </Style>
+            <Style TargetType="{x:Type Rectangle}">
+                <Setter Property="UseLayoutRounding" Value="True" />
+                <Setter Property="RadiusX" Value="5" />
+                <Setter Property="RadiusY" Value="5" />
+                <Setter Property="Fill" Value="#0f0f0f" />
+            </Style>
+        </ResourceDictionary>
+
     </UserControl.Resources>
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="#cc0f0f0f">
-        <Button Command="{Binding SortByTitleCommand}" ToolTip="Title">
+    <StackPanel Orientation="Horizontal"
+                HorizontalAlignment="Stretch" 
+                Background="#cc0f0f0f">
+        <Button Command="{Binding SortByTitleCommand}" ToolTip="Title" 
+                Style="{StaticResource SortButton}">
             <Viewbox>
                 <Grid>
                     <Grid Width="24" Height="24" Visibility="Visible">
@@ -78,7 +87,9 @@
                 </Grid>
             </Viewbox>
         </Button>
-        <Button Command="{Binding SortByLengthCommand}" ToolTip="Length">
+        <Button Command="{Binding SortByLengthCommand}"
+                ToolTip="Length"
+                Style="{StaticResource SortButton}">
             <Viewbox>
                 <Grid>
                     <Grid Width="24" Height="24" Visibility="Visible">
@@ -102,7 +113,9 @@
                 </Grid>
             </Viewbox>
         </Button>
-        <Button Command="{Binding SortByCategoryCommand}" ToolTip="Category">
+        <Button Command="{Binding SortByCategoryCommand}"
+                ToolTip="Category"
+                Style="{StaticResource SortButton}">
             <Viewbox>
                 <Grid>
                     <Grid Width="24" Height="24" Visibility="Visible">
@@ -123,9 +136,10 @@
                     </Path>
                 </Grid>
             </Viewbox>
-
         </Button>
-        <Button Command="{Binding SortByMostViewedCommand}" ToolTip="Increasing number of views">
+        <Button Command="{Binding SortByMostViewedCommand}"
+                ToolTip="Increasing number of views"
+                Style="{StaticResource SortButton}">
             <Viewbox>
                 <Grid>
                     <Grid Width="24" Height="24" Visibility="Visible">
@@ -148,7 +162,9 @@
             </Viewbox>
 
         </Button>
-        <Button Command="{Binding SortByLeastViewedCommand}" ToolTip="Decreasing number of views">
+        <Button Command="{Binding SortByLeastViewedCommand}"
+                ToolTip="Decreasing number of views"
+                Style="{StaticResource SortButton}">
             <Viewbox>
                 <Grid>
                     <Grid Width="24" Height="24" Visibility="Visible">
@@ -171,7 +187,8 @@
             </Viewbox>
 
         </Button>
-        <Button Command="{Binding SortByOldestCommand}" ToolTip="Oldest first">
+        <Button Command="{Binding SortByOldestCommand}" ToolTip="Oldest first"
+                Style="{StaticResource SortButton}">
             <Viewbox>
                 <Grid>
                     <Grid Width="24" Height="24" Visibility="Visible">
@@ -207,7 +224,8 @@
             </Viewbox>
 
         </Button>
-        <Button Command="{Binding SortByNewestCommand}" ToolTip="Newest first">
+        <Button Command="{Binding SortByNewestCommand}" ToolTip="Newest first"
+                Style="{StaticResource SortButton}">
             <Viewbox>
                 <Grid>
                     <Grid Width="24" Height="24" Visibility="Visible">

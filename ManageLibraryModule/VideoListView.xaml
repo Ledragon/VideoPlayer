@@ -30,7 +30,6 @@
               SelectedItem="{Binding SelectedVideo}"
               IsSynchronizedWithCurrentItem="True"
               SelectionMode="Single"
-              Margin="5"
               Background="Transparent"
               IsReadOnly="True"
               CanUserAddRows="False"

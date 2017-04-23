@@ -14,7 +14,7 @@
                 Value="5" />
         <Setter Property="Padding" Value="5" />
     </Style>
-    <Style TargetType="TextBox">
+    <Style TargetType="TextBox" x:Key="TextBoxBase">
         <Setter Property="Margin"
                 Value="5" />
         <Setter Property="Padding"
@@ -25,6 +25,16 @@
                 Value="5" />
     </Style>
     <Style TargetType="ComboBox">
+        <Setter Property="Margin"
+                Value="5" />
+        <Setter Property="Padding"
+                Value="5" />
+    </Style>
+    <Style TargetType="ListBox">
+        <Setter Property="Margin"
+                Value="5" />
+    </Style>
+    <Style TargetType="Image">
         <Setter Property="Margin"
                 Value="5" />
     </Style>

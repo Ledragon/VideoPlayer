@@ -48,9 +48,11 @@
                             prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosListRegion}"
                             x:Name="VideoListControl" />
             <ContentControl Grid.Row="1"
-                            prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SortGridRegion}" />
+                            prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SortGridRegion}"
+                            Margin="5"/>
             <ContentControl Grid.Row="2"
-                            prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosListInteraction}" />
+                            prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosListInteraction}" 
+                            Margin="5"/>
             
         </Grid>
         <ContentControl Grid.Column="3"

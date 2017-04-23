@@ -1,8 +1,8 @@
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace Module
 {
-    public interface ITagsListView:IView
+    public interface ITagsListView : IView
     {
     }
 }

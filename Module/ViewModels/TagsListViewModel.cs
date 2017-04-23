@@ -2,23 +2,19 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Microsoft.Practices.Prism.PubSubEvents;
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 using VideoPlayer.Services;
 
 namespace Module
 {
     public class TagsListViewModel : ViewModelBase, ITagsListViewModel
     {
-        private readonly IEventAggregator _eventAggregator;
         private CategoryViewModel _selectedTag;
         private ObservableCollection<CategoryViewModel> _selectedTags;
         private ObservableCollection<CategoryViewModel> _tags;
 
-        public TagsListViewModel(ITagsListView view, ILibraryService libraryService, IEventAggregator eventAggregator)
-            : base(view)
+        public TagsListViewModel(ILibraryService libraryService)
         {
-            this._eventAggregator = eventAggregator;
             this.SelectedTags = new ObservableCollection<CategoryViewModel>();
             this.Tags = new ObservableCollection<CategoryViewModel>();
             var videos = libraryService.GetObjectsFromFile().Videos;

@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace Module
 {
@@ -8,9 +8,10 @@ namespace Module
     /// </summary>
     public partial class TagsList : UserControl, ITagsListView
     {
-        public TagsList()
+        public TagsList(ITagsListViewModel tagsListViewModel)
         {
             this.InitializeComponent();
+            this.ViewModel = tagsListViewModel;
         }
 
         public IViewModel ViewModel

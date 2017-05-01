@@ -24,7 +24,6 @@ namespace PlaylistModule
         private TimeSpan _totalDuration;
 
         public PlayListViewModel(IEventAggregator eventAggregator, ILibraryService libraryService, IPlaylistService playlistService)
-            //: base(view)
         {
             this._libraryService = libraryService;
             this.Playlist = new ObservableCollection<Video>();

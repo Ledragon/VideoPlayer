@@ -132,12 +132,10 @@ namespace VideosListModule.ViewModels
                 this._eventAggregator.GetEvent<TagFilterChangedEvent>().Subscribe(this.FilterTag);
                 this._eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
                 this._eventAggregator.GetEvent<SortingChangedEvent>().Subscribe(this.Sort);
-                //this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.UpdateVideoListView);
                 this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Subscribe(this.AddRange);
                 this.InfoVisibility = Visibility.Visible;
 
                 this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
-                //this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
                 this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
                 this.NextCommand = new DelegateCommand(() =>
                 {
@@ -153,7 +151,6 @@ namespace VideosListModule.ViewModels
                 },
                     () => this.FilteredVideos != null && this.FilteredVideos.CanMoveToPreviousPage);
                 this.LoadDataAsyncCommand = new DelegateCommand(async () => await this.Init());
-                //await this.Init();
             }
             catch (Exception e)
             {

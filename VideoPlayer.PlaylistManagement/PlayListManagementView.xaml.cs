@@ -1,7 +1,6 @@
 ﻿using VideoPlayer.Infrastructure.ViewFirst;
-using VideoPlayer.ViewModels;
 
-namespace VideoPlayer.Views
+namespace VideoPlayer.PlaylistManagement
 {
     /// <summary>
     ///     Interaction logic for PlayListManagementView.xaml

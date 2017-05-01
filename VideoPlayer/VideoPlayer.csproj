@@ -149,16 +149,12 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="PlayListManagementModule.cs" />
-    <Compile Include="ViewModels\IPlayListManagementViewModel.cs" />
-    <Compile Include="ViewModels\PlayListManagementViewModel.cs" />
+    <Compile Include="VideoPlayerModule.cs" />
+    <Compile Include="ViewModels\IVideoPlayerViewModel.cs" />
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\IPlayListManagementView.cs" />
-    <Compile Include="Views\PlayListManagementView.xaml.cs">
-      <DependentUpon>PlayListManagementView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModels\VideoPlayerViewModel.cs" />
     <Compile Include="Views\StatusBar.xaml.cs">
       <DependentUpon>StatusBar.xaml</DependentUpon>
     </Compile>
@@ -178,10 +174,6 @@
       <DependentUpon>VideoPlayer.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\PlayListManagementView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\StatusBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -261,6 +253,10 @@
     <ProjectReference Include="..\VideoPlayer.Infrastructure\VideoPlayer.Infrastructure.csproj">
       <Project>{80e2c9d4-f13f-482e-bc5d-678e61a88fa6}</Project>
       <Name>VideoPlayer.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.PlaylistManagement\VideoPlayer.PlaylistManagement.csproj">
+      <Project>{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}</Project>
+      <Name>VideoPlayer.PlaylistManagement</Name>
     </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Services\VideoPlayer.Services.csproj">
       <Project>{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}</Project>

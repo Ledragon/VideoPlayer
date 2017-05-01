@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using VideoPlayer.Infrastructure.ViewFirst;
 
-namespace VideoPlayer.ViewModels
+namespace VideoPlayer.PlaylistManagement
 {
     public interface IPlayListManagementViewModel : IViewModel
     {

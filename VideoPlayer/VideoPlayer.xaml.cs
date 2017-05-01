@@ -4,6 +4,7 @@ using Log;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Common;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.ViewModels;
 
 namespace VideoPlayer
 {

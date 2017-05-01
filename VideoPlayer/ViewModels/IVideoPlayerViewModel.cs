@@ -3,7 +3,7 @@ using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using VideoPlayer.Infrastructure.ViewFirst;
 
-namespace HomeModule
+namespace VideoPlayer.ViewModels
 {
     public interface IVideoPlayerViewModel : IViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using VideoPlayer.Infrastructure.ViewFirst;
 
-namespace VideosPageModule
+namespace VideoPlayer.PlaylistManagement
 {
     public interface IVideosPageButtonView : IView
     {

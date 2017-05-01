@@ -1,27 +1,24 @@
-﻿using System;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
-using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure;
 
 namespace PlaylistModule
 {
-    public class PlayListModule : ModuleBase
+    public class PlayListModule : IPrismModule
     {
-        private readonly IUnityContainer _container;
-        private readonly IRegionManager _regionManager;
+        private readonly IModuleManager _moduleManager;
+        //private readonly IRegionManager _regionManager;
 
-        public PlayListModule(IUnityContainer container, IRegionManager regionManager) : base(container, regionManager)
+        public PlayListModule(IModuleManager moduleManager) 
         {
-            this._container = container;
-            this._regionManager = regionManager;
+            this._moduleManager = moduleManager;
+            //this._regionManager = regionManager;
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
-            this.RegisterType<IPlayListViewModel, PlayListViewModel>()
-                .RegisterType<IPlayListView, PlayListView>();
-            //this._container.RegisterType<Object, PlayListView>(typeof(PlayListView).FullName);
-            this._regionManager.RegisterViewWithRegion(RegionNames.PlayListRegion, typeof (IPlayListView));
+            this._moduleManager.RegisterType<IPlayListViewModel, PlayListViewModel>()
+                .RegisterType<IPlayListView, PlayListView>()
+                .RegisterViewWithRegion<IPlayListView>(RegionNames.PlayListRegion);
+            //this._regionManager.RegisterViewWithRegion(RegionNames.PlayListRegion, typeof (IPlayListView));
         }
     }
 }

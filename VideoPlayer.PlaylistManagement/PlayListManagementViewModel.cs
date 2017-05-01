@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
-using VideoPlayer.Views;
 
-namespace VideoPlayer.ViewModels
+namespace VideoPlayer.PlaylistManagement
 {
     public class PlayListManagementViewModel : Infrastructure.ViewFirst.ViewModelBase, IPlayListManagementViewModel
     {

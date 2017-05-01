@@ -91,8 +91,6 @@
     <Compile Include="HomePageViewModel.cs" />
     <Compile Include="IHomePage.cs" />
     <Compile Include="IHomePageViewModel.cs" />
-    <Compile Include="IVideoPlayer.cs" />
-    <Compile Include="IVideoPlayerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,9 +104,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="VideoPlayer.cs" />
-    <Compile Include="VideoPlayerModule.cs" />
-    <Compile Include="VideoPlayerViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

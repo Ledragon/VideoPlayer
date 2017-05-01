@@ -17,17 +17,17 @@ namespace VideosPageModule
         public VideosPageViewModel(IEventAggregator eventAggregator)
         {
             this.InitCommands();
-            eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
-            eventAggregator.GetEvent<PlayOneEvent>()
-                .Subscribe(video =>
-                {
-                    ApplicationCommands.NavigateCommand.Execute(typeof(Player));
-                });
-            eventAggregator.GetEvent<OnPlayPlaylistRequest>()
-                .Subscribe(video =>
-                {
-                    ApplicationCommands.NavigateCommand.Execute(typeof(Player));
-                });
+            //eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
+            //eventAggregator.GetEvent<PlayOneEvent>()
+            //    .Subscribe(video =>
+            //    {
+            //        ApplicationCommands.NavigateCommand.Execute(typeof(Player));
+            //    });
+            //eventAggregator.GetEvent<OnPlayPlaylistRequest>()
+            //    .Subscribe(video =>
+            //    {
+            //        ApplicationCommands.NavigateCommand.Execute(typeof(Player));
+            //    });
         }
 
         public ICommand SwitchToWindowCommand { get; private set; }

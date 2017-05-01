@@ -1,7 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Regions;
 using VideoPlayer.Infrastructure.ViewFirst;
 
-namespace VideosPageModule
+namespace VideoPlayer.PlaylistManagement
 {
     /// <summary>
     ///     Interaction logic for VideosPageButtonView.xaml

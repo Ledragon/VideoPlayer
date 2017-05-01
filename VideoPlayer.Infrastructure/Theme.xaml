@@ -67,5 +67,10 @@
                 Value="{StaticResource HiddenTabItem}" />
     </Style>
 
+    <Style TargetType="ContentControl"
+           x:Key="VideosViewControl">
+        <Setter Property="Width"
+                Value="200" />
+    </Style>
 
 </ResourceDictionary>

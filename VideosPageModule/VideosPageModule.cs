@@ -15,10 +15,7 @@ namespace VideosPageModule
         {
             this._moduleManager
                 .RegisterType<IVideosPageViewModel, VideosPageViewModel>()
-                .RegisterView<VideosPage>()
-                .RegisterType<IVideosPageButtonViewModel, VideosPageButtonViewModel>()
-                .RegisterType<IVideosPageButtonView, VideosPageButtonView>()
-                .RegisterViewWithRegion<IVideosPageButtonView>(RegionNames.NavigationRegion);
+                .RegisterView<VideosPage>();
         }
     }
 }

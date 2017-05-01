@@ -1,6 +1,6 @@
 ﻿using VideoPlayer.Infrastructure.ViewFirst;
 
-namespace VideoPlayer.Views
+namespace VideoPlayer.PlaylistManagement
 {
     public interface IPlayListManagementView : IView
     {

@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Windows;
+using HomeModule;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.PlaylistManagement;
 using VideoPlayer.Services;
-using VideosPageModule;
+using VideoPlayer.Views;
 using VlcPlayer;
 using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
-namespace HomeModule
+namespace VideoPlayer.ViewModels
 {
     public class VideoPlayerViewModel : ViewModelBase, IVideoPlayerViewModel
     {
@@ -48,13 +50,23 @@ namespace HomeModule
 
             eventAggregator.GetEvent<PlayCompleted>()
                 .Subscribe(dummy =>
-                    ApplicationCommands.NavigateCommand.Execute(typeof(VideosPage))
+                    ApplicationCommands.NavigateCommand.Execute(typeof(PlayListManagementView))
                 );
 
             eventAggregator.GetEvent<OnStop>()
                 .Subscribe(dummy =>
-                    ApplicationCommands.NavigateCommand.Execute(typeof(VideosPage))
+                    ApplicationCommands.NavigateCommand.Execute(typeof(PlayListManagementView))
                 );
+            eventAggregator.GetEvent<PlayOneEvent>()
+               .Subscribe(video =>
+               {
+                   ApplicationCommands.NavigateCommand.Execute(typeof(Player));
+               });
+            eventAggregator.GetEvent<OnPlayPlaylistRequest>()
+                .Subscribe(video =>
+                {
+                    ApplicationCommands.NavigateCommand.Execute(typeof(Player));
+                });
             //this._eventAggregator.GetEvent<PlayAllEvent>()
             //    .Subscribe(dummy => this.Navigate(typeof (Player)));
             //this._eventAggregator.GetEvent<PlayOneEvent>()

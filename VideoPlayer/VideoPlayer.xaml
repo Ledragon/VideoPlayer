@@ -44,8 +44,7 @@
         <Grid.Background>
             <ImageBrush ImageSource=".\TheaterCurtains.jpg" />
         </Grid.Background>
-        <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}"
-                        Margin="5" />
+        <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.ContentRegion}"/>
         <Grid Visibility="{Binding IsExitMenuVisible}" Background="#cc000000">
             <TextBlock Style="{StaticResource ExitMessage}">
                 VideoPlayer will now close...

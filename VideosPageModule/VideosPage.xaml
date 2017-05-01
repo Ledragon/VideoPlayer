@@ -27,8 +27,7 @@
             </Grid>
         </TabItem>
         <TabItem>
-            <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}"
-                            Margin="0" />
+            <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}" />
         </TabItem>
     </TabControl>
 </UserControl>

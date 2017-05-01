@@ -21,7 +21,8 @@
             <Style TargetType="ListBox">
                 <Setter Property="Background" Value="{StaticResource VideoMenusSolidBrush}" />
             </Style>
-            <Style TargetType="TextBlock" x:Key="PlayListElement" BasedOn="{StaticResource TrimmedTextBlock}">
+            <Style TargetType="TextBlock" x:Key="PlayListElement"
+                   BasedOn="{StaticResource TrimmedTextBlock}">
                 <Setter Property="Margin" Value="3" />
             </Style>
         </ResourceDictionary>
@@ -56,7 +57,16 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-            <TextBlock Grid.Row="1" Text="{Binding TotalDuration}" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       Text="{Binding TotalDuration}" />
+            <Button Grid.Column="1" Command="{Binding ClearCommand}">Clear</Button>
+
+        </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

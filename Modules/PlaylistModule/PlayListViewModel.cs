@@ -34,15 +34,35 @@ namespace PlaylistModule
             this.AddCommand = new DelegateCommand<Video>(this.Add);
             this.AddRangeCommand = new DelegateCommand<IEnumerable<Video>>(this.Add);
             this.SavePlaylistCommand = new DelegateCommand(this.Save);
+            this.ClearCommand= new DelegateCommand(() =>
+            {
+                this.Playlist.Clear();
+            });
 
             eventAggregator.GetEvent<OnAddVideo>().Subscribe(this.Add);
             eventAggregator.GetEvent<OnAddVideoRange>().Subscribe(this.Add);
 
+            eventAggregator.GetEvent<PlayRangeEvent>()
+               .Subscribe(videos =>
+               {
+                   this.Playlist.Clear();
+                   this.Add(videos);
+                   eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(this.Playlist);
+               });
+
             eventAggregator.GetEvent<OnPlayPlaylistRequest>()
-                .Subscribe(dummy => { eventAggregator.GetEvent<OnPlayPlaylist>().Publish(this.Playlist); }, true);
+                .Subscribe(dummy =>
+                {
+                    eventAggregator.GetEvent<OnPlayPlaylist>().Publish(this.Playlist);
+                }, true);
 
             this.PlayListCollection = new ObservableCollection<Playlist>(libraryService.GetObjectsFromFile().PlayLists);
             playlistService.Playlist = this.Playlist;
+            this.Playlist.CollectionChanged += (s, e) =>
+            {
+                this.TotalDuration = this.Playlist
+                    .Aggregate(TimeSpan.Zero, (current, v) => current.Add(v.Length));
+            };
         }
 
         public String PlayListName
@@ -138,11 +158,11 @@ namespace PlaylistModule
         public ICommand RemoveCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand AddRangeCommand { get; }
+        public ICommand ClearCommand { get; }
 
         private void Add(IEnumerable<Video> videos)
         {
             this.Playlist.AddRange(videos.Where(v => !this.Playlist.Contains(v)));
-            this.TotalDuration = this.Playlist.Aggregate(TimeSpan.Zero, (current, v) => current.Add(v.Length));
         }
 
         private void Add(Video video)
@@ -150,7 +170,6 @@ namespace PlaylistModule
             if (!this.Playlist.Contains(video))
             {
                 this.Playlist.Add(video);
-                this.TotalDuration = this.TotalDuration.Add(video.Length);
             }
         }
 
@@ -159,7 +178,6 @@ namespace PlaylistModule
             if (this.Playlist.Contains(video))
             {
                 this.Playlist.Remove(video);
-                this.TotalDuration = this.TotalDuration.Subtract(video.Length);
             }
         }
 

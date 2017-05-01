@@ -132,12 +132,12 @@ namespace VideosListModule.ViewModels
                 this._eventAggregator.GetEvent<TagFilterChangedEvent>().Subscribe(this.FilterTag);
                 this._eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
                 this._eventAggregator.GetEvent<SortingChangedEvent>().Subscribe(this.Sort);
-                this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.UpdateVideoListView);
+                //this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.UpdateVideoListView);
                 this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Subscribe(this.AddRange);
                 this.InfoVisibility = Visibility.Visible;
 
                 this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
-                this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
+                //this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
                 this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
                 this.NextCommand = new DelegateCommand(() =>
                 {
@@ -216,13 +216,14 @@ namespace VideosListModule.ViewModels
 
         private void PlayAll(Object obj)
         {
-            this._eventAggregator.GetEvent<ClearPlaylistEvent>().Publish(null);
-            var videoAddedEvent = this._eventAggregator.GetEvent<OnAddVideo>();
-            foreach (var video in this.FilteredVideos.Cast<Video>())
-            {
-                videoAddedEvent.Publish(video);
-            }
-            this.PlayPlaylist();
+            this._eventAggregator.GetEvent<PlayRangeEvent>()
+                .Publish(this.FilteredVideos.Cast<Video>());
+            //var videoAddedEvent = this._eventAggregator.GetEvent<OnAddVideo>();
+            //foreach (var video in this.FilteredVideos.Cast<Video>())
+            //{
+            //    videoAddedEvent.Publish(video);
+            //}
+            //this.PlayPlaylist();
         }
 
         private void AddRange(Object obj)
@@ -235,7 +236,7 @@ namespace VideosListModule.ViewModels
         {
             if (File.Exists(this.CurrentVideo.FileName))
             {
-                this._eventAggregator.GetEvent<PlayOneEvent>()
+                this._eventAggregator.GetEvent<PlayOneRequestEvent>()
                     .Publish(this.CurrentVideo);
             }
             else
@@ -244,11 +245,11 @@ namespace VideosListModule.ViewModels
             }
         }
 
-        private void PlayPlaylist()
-        {
-            this._eventAggregator.GetEvent<OnPlayPlaylistRequest>()
-                .Publish(null);
-        }
+        //private void PlayPlaylist()
+        //{
+        //    this._eventAggregator.GetEvent<OnPlayPlaylistRequest>()
+        //        .Publish(null);
+        //}
 
         private void Add()
         {

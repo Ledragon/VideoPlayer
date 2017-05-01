@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.PubSubEvents;
+using VideoPlayer.Infrastructure;
 
 namespace VideoPlayer.PlaylistManagement
 {
     public class PlayListManagementViewModel : Infrastructure.ViewFirst.ViewModelBase, IPlayListManagementViewModel
     {
+        private readonly IEventAggregator _eventAggregator;
         private Boolean _filterGridVisibility;
         private Boolean _isCategoryGridVisible;
         private Boolean _isPlayListVisible;
 
-        public PlayListManagementViewModel()
+        public PlayListManagementViewModel(IEventAggregator eventAggregator)
         {
+            this._eventAggregator = eventAggregator;
             this.FilterGridVisibility = false;
             this.IsPlayListVisible = true;
             this.IsCategoryGridVisible = true;
@@ -20,6 +24,12 @@ namespace VideoPlayer.PlaylistManagement
             this.SwitchPlaylistVisibilityCommand = new DelegateCommand(this.SwitchPlayListVisibility);
             this.SwitchCategoryGridVisibilityCommand =
                 new DelegateCommand(() => this.IsCategoryGridVisible = !this.IsCategoryGridVisible);
+           
+            this.PlayPlaylistCommand = new DelegateCommand(() =>
+            {
+                this._eventAggregator.GetEvent<OnPlayPlaylistRequest>()
+                    .Publish(null);
+            });
         }
 
         public Boolean IsCategoryGridVisible
@@ -66,7 +76,7 @@ namespace VideoPlayer.PlaylistManagement
         public ICommand SwitchCategoryGridVisibilityCommand { get; }
         public ICommand SwitchPlaylistVisibilityCommand { get; }
         public ICommand SwitchFilterGridVisibilityCommand { get; }
-
+        public ICommand PlayPlaylistCommand { get; }
 
         private void SwitchPlayListVisibility()
         {

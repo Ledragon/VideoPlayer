@@ -46,6 +46,7 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
+    public class PlayOneRequestEvent : PubSubEvent<Video> { }
     public class PlayOneEvent : PubSubEvent<Video>
     {
     }
@@ -95,6 +96,8 @@ namespace VideoPlayer.Infrastructure
     }
 
     public class PlayAllEvent : PubSubEvent<Object>
+    {
+    }public class PlayRangeEvent : PubSubEvent<IEnumerable<Video>>
     {
     }
 

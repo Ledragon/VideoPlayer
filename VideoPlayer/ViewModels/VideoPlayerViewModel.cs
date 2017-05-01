@@ -36,14 +36,14 @@ namespace VideoPlayer.ViewModels
             this.CloseCommand = new DelegateCommand(this.CloseAsync, () => this.SelectedTab != 3);
 
             this._eventAggregator.GetEvent<GoToPage>().Subscribe(this.SetSelectedTab);
-            this._eventAggregator.GetEvent<LibraryUpdating>()
-                .Subscribe(message =>
-                {
-                    this.LoadingMessage = message;
-                    this.IsLoading = Visibility.Visible;
-                });
-            this._eventAggregator.GetEvent<LibraryUpdated>()
-                .Subscribe(payload => { this.IsLoading = Visibility.Hidden; });
+            //this._eventAggregator.GetEvent<LibraryUpdating>()
+            //    .Subscribe(message =>
+            //    {
+            //        this.LoadingMessage = message;
+            //        this.IsLoading = Visibility.Visible;
+            //    });
+            //this._eventAggregator.GetEvent<LibraryUpdated>()
+            //    .Subscribe(payload => { this.IsLoading = Visibility.Hidden; });
             this.NavigateCommand = new DelegateCommand<Object>(this.Navigate);
             ApplicationCommands.NavigateCommand.RegisterCommand(this.NavigateCommand);
 
@@ -56,13 +56,13 @@ namespace VideoPlayer.ViewModels
                 .Subscribe(dummy =>
                     ApplicationCommands.NavigateCommand.Execute(typeof(PlayListManagementView))
                 );
-            eventAggregator.GetEvent<PlayOneEvent>()
-               .Subscribe(video =>
-               {
-                   ApplicationCommands.NavigateCommand.Execute(typeof(Player));
-                    //this._eventAggregator.GetEvent<PlayedEvent>()
-                    //    .Publish(video);
-               });
+            //eventAggregator.GetEvent<PlayOneRequestEvent>()
+            //   .Subscribe(video =>
+            //   {
+            //       ApplicationCommands.NavigateCommand.Execute(typeof(Player));
+            //       this._eventAggregator.GetEvent<PlayOneEvent>()
+            //           .Publish(video);
+            //   });
             eventAggregator.GetEvent<OnPlayPlaylistRequest>()
                 .Subscribe(video =>
                 {

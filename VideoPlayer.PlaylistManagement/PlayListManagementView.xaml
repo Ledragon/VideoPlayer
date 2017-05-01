@@ -16,6 +16,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.InputBindings>
+        <KeyBinding Key="P"
+                    Command="{Binding PlayPlaylistCommand}" />
         <KeyBinding Key="P" Modifiers="Alt" Command="{Binding SwitchPlaylistVisibilityCommand}" />
         <KeyBinding Key="F" Modifiers="Alt" Command="{Binding SwitchFilterGridVisibilityCommand}" />
         <KeyBinding Key="C" Modifiers="Alt" Command="{Binding SwitchCategoryGridVisibilityCommand}" />

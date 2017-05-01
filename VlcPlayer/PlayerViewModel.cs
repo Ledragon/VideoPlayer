@@ -50,9 +50,6 @@ namespace VlcPlayer
             this._timer.Start();
             this.InitCommands();
 
-            //eventAggregator.GetEvent<OnAddVideo>().Subscribe(this.AddVideo);
-            //eventAggregator.GetEvent<OnPlayPlaylist>().Subscribe(this.PlayAll);
-            //eventAggregator.GetEvent<PlayOneEvent>().Subscribe(this.PlayVideo);
             eventAggregator.GetEvent<VideoDurationChanged>()
                 .Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>()
@@ -63,7 +60,6 @@ namespace VlcPlayer
             {
                 this.CurrentVideo = this.Playlist.First();
             }
-            //eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
         }
 
         public static String AssemblyDirectory
@@ -337,42 +333,7 @@ namespace VlcPlayer
                 this._currentVideo = video;
             }
         }
-
-        //public void ClearPlaylist()
-        //{
-        //    this.Playlist.Clear();
-        //}
-
-        //public void PlayVideo(Video video)
-        //{
-        //    this.ClearPlaylist();
-        //    if (video != null)
-        //    {
-        //        this.AddVideo(video);
-        //        this.CurrentVideo = video;
-        //        this._eventAggregator.GetEvent<PlayedEvent>().Publish(video);
-        //    }
-        //    else
-        //    {
-        //        this.Logger().WarnFormat("No video to play.");
-        //    }
-        //}
-
-        //public void PlayAll(IEnumerable<Video> playlist)
-        //{
-        //    if (this.Playlist.Any())
-        //    {
-        //        this.Logger().DebugFormat("Playing created playlist.");
-        //        this.Playlist = new ObservableCollection<Video>(playlist);
-        //        this.CurrentVideo = this.Playlist.First();
-        //        this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
-        //    }
-        //    else
-        //    {
-        //        this.Logger().WarnFormat("No video in playlist.");
-        //    }
-        //}
-
+        
         public void Next(Object dummy)
         {
             this.Next();
@@ -409,12 +370,7 @@ namespace VlcPlayer
             }
             this.CurrentVideo = this.Playlist[this._index];
         }
-
-        //private void ClearPlaylist(Object obj)
-        //{
-        //    this.ClearPlaylist();
-        //}
-
+        
         private void VideoDurationChanged(TimeSpan span)
         {
             if (this.CurrentVideo.Length == TimeSpan.Zero)

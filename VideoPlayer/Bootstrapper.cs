@@ -48,13 +48,12 @@ namespace VideoPlayer
             this.AddModule<ModuleModule>()
                 .AddModule<PlayListModule>()
                 .AddModule<VlcPlayerModule>()
-                .AddModule<HomeModule.HomeModule>()
-                .AddModule<PlayListManagementModule>()
-                .AddModule<SettingsModule.SettingsModule>()
                 .AddModule<VideosListModule.VideosListModule>()
-                //.AddModule<VideosPageModule.VideosPageModule>()
-                .AddModule<ManageLibraryModule.ManageLibraryModule>()
+                .AddModule<HomeModule.HomeModule>()
                 .AddModule<VideoListInteractionModule>()
+                .AddModule<SettingsModule.SettingsModule>()
+                .AddModule<PlayListManagementModule>()
+                .AddModule<ManageLibraryModule.ManageLibraryModule>()
                 ;
         }
 

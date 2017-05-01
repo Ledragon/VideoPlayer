@@ -27,41 +27,8 @@
             <Style TargetType="{x:Type Button}"
                    x:Key="Navigation"
                    BasedOn="{StaticResource {x:Type Button}}">
-                <!--<Setter Property="Width"
-                        Value="36" />-->
                <Setter Property="Height"
                         Value="36" />
-                <!--<Setter Property="Background"
-                        Value="Transparent" />-->
-                <!--<Setter Property="BorderBrush"
-                        Value="Transparent" />-->
-                <!--<Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Border x:Name="border"
-                                    Background="{TemplateBinding Background}">
-                                <ContentPresenter HorizontalAlignment="Center"
-                                                  VerticalAlignment="Center" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver"
-                                         Value="True">
-                                    <Setter TargetName="border"
-                                            Property="BorderBrush"
-                                            Value="Transparent" />
-                                    <Setter Property="Background"
-                                            Value="DarkGray" />
-                                </Trigger>
-                                <Trigger Property="IsFocused"
-                                         Value="True">
-                                    <Setter TargetName="border"
-                                            Property="Background"
-                                            Value="Transparent" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>-->
             </Style>
             <Style TargetType="{x:Type Path}">
                 <Setter Property="Fill"
@@ -74,8 +41,6 @@
     <UserControl.InputBindings>
         <KeyBinding Key="A"
                     Command="{Binding AddVideoCommand}" />
-        <KeyBinding Key="P"
-                    Command="{Binding PlayPlaylistCommand}" />
     </UserControl.InputBindings>
     <Grid d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
         <Grid.RowDefinitions>
@@ -86,7 +51,6 @@
         <Button Grid.Row="0"
                 Style="{StaticResource Navigation}"
                 Command="{Binding PreviousCommand}">
-            <!--Previous-->
             <Viewbox>
                 <Viewbox.LayoutTransform>
                     <TransformGroup>
@@ -101,9 +65,6 @@
                     <Grid Width="48"
                           Height="48"
                           Visibility="Visible">
-                        <!--<Rectangle
-                            Name="Rect"
-                            Visibility="Visible" />-->
                     </Grid>
                     <Path
                         Data="M299.152955025434,0L496.426178902388,0 268.890046089888,280.247772216797 198.190201729536,367.407897949219 199.87503144145,369.495361328125 271.502137154341,457.706451416016 498.999970406294,738 301.717621773481,738 101.234124153852,491.008697509766 99.5304498374462,488.936553955078 98.6409082114697,490.003173828125 0,368.488952636719 98.6409082114697,246.945526123047z"
@@ -212,7 +173,6 @@
                     </Path>
                 </Grid>
             </Viewbox>
-
         </Button>
     </Grid>
 </UserControl>

@@ -14,20 +14,20 @@
         <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml">
         </ResourceDictionary>
     </UserControl.Resources>
-    <TabControl SelectedIndex="{Binding SelectedIndex}"
+    <!--<TabControl SelectedIndex="{Binding SelectedIndex}"
                 Style="{StaticResource HiddenTabControl}">
         <TabItem>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                </Grid.RowDefinitions>-->
                 <ContentControl
                     prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListManagementRegion}" />
-            </Grid>
+            <!--</Grid>
         </TabItem>
         <TabItem>
             <ContentControl prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}" />
         </TabItem>
-    </TabControl>
+    </TabControl>-->
 </UserControl>

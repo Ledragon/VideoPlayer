@@ -12,6 +12,8 @@ using Log;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.Services;
+using ApplicationCommands = VideoPlayer.Infrastructure.ApplicationCommands;
 using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
 namespace VlcPlayer
@@ -38,11 +40,11 @@ namespace VlcPlayer
         private TimeSpan _timePosition;
         private String _title;
 
-        public PlayerViewModel(IEventAggregator eventAggregator)
+        public PlayerViewModel(IEventAggregator eventAggregator, IPlaylistService playlistService)
         {
             this._eventAggregator = eventAggregator;
             this.Rate = 1;
-            this.Playlist = new ObservableCollection<Video>();
+            this.Playlist = new ObservableCollection<Video>(playlistService.Playlist);
             this.IsRepeat = false;
             this.ControlsVisibility = true;
             this._timer.Interval = 500;
@@ -50,12 +52,12 @@ namespace VlcPlayer
             this._timer.Start();
             this.InitCommands();
 
-            eventAggregator.GetEvent<OnAddVideo>().Subscribe(this.AddVideo);
-            eventAggregator.GetEvent<OnPlayPlaylist>().Subscribe(this.PlayAll);
-            eventAggregator.GetEvent<PlayOneEvent>().Subscribe(this.PlayVideo);
+            //eventAggregator.GetEvent<OnAddVideo>().Subscribe(this.AddVideo);
+            //eventAggregator.GetEvent<OnPlayPlaylist>().Subscribe(this.PlayAll);
+            //eventAggregator.GetEvent<PlayOneEvent>().Subscribe(this.PlayVideo);
             eventAggregator.GetEvent<VideoDurationChanged>().Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>().Subscribe(this.Next);
-            eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
+            //eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
         }
 
         public static String AssemblyDirectory
@@ -335,35 +337,35 @@ namespace VlcPlayer
             this.Playlist.Clear();
         }
 
-        public void PlayVideo(Video video)
-        {
-            this.ClearPlaylist();
-            if (video != null)
-            {
-                this.AddVideo(video);
-                this.CurrentVideo = video;
-                this._eventAggregator.GetEvent<PlayedEvent>().Publish(video);
-            }
-            else
-            {
-                this.Logger().WarnFormat("No video to play.");
-            }
-        }
+        //public void PlayVideo(Video video)
+        //{
+        //    this.ClearPlaylist();
+        //    if (video != null)
+        //    {
+        //        this.AddVideo(video);
+        //        this.CurrentVideo = video;
+        //        this._eventAggregator.GetEvent<PlayedEvent>().Publish(video);
+        //    }
+        //    else
+        //    {
+        //        this.Logger().WarnFormat("No video to play.");
+        //    }
+        //}
 
-        public void PlayAll(IEnumerable<Video> playlist)
-        {
-            if (this.Playlist.Any())
-            {
-                this.Logger().DebugFormat("Playing created playlist.");
-                this.Playlist = new ObservableCollection<Video>(playlist);
-                this.CurrentVideo = this.Playlist.First();
-                this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
-            }
-            else
-            {
-                this.Logger().WarnFormat("No video in playlist.");
-            }
-        }
+        //public void PlayAll(IEnumerable<Video> playlist)
+        //{
+        //    if (this.Playlist.Any())
+        //    {
+        //        this.Logger().DebugFormat("Playing created playlist.");
+        //        this.Playlist = new ObservableCollection<Video>(playlist);
+        //        this.CurrentVideo = this.Playlist.First();
+        //        this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
+        //    }
+        //    else
+        //    {
+        //        this.Logger().WarnFormat("No video in playlist.");
+        //    }
+        //}
 
         public void Next(Object dummy)
         {

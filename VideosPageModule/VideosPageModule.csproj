@@ -107,6 +107,10 @@
       <Project>{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}</Project>
       <Name>VideoPlayer.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VlcPlayer\VlcPlayer.csproj">
+      <Project>{A060B03D-3DEF-4826-888F-1B80059B7E13}</Project>
+      <Name>VlcPlayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

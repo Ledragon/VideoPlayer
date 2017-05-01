@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Classes;
-using Classes.Annotations;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 using VideoPlayer.Services;
 
 namespace PlaylistModule
 {
-    public class PlayListViewModel : IPlayListViewModel, INotifyPropertyChanged
+    public class PlayListViewModel : ViewModelBase, IPlayListViewModel
     {
         private readonly ILibraryService _libraryService;
         private Video _currentVideo;
@@ -25,7 +23,7 @@ namespace PlaylistModule
         private Playlist _selectedPlayList;
         private TimeSpan _totalDuration;
 
-        public PlayListViewModel(IEventAggregator eventAggregator, ILibraryService libraryService)
+        public PlayListViewModel(IEventAggregator eventAggregator, ILibraryService libraryService, IPlaylistService playlistService)
             //: base(view)
         {
             this._libraryService = libraryService;
@@ -44,6 +42,7 @@ namespace PlaylistModule
                 .Subscribe(dummy => { eventAggregator.GetEvent<OnPlayPlaylist>().Publish(this.Playlist); }, true);
 
             this.PlayListCollection = new ObservableCollection<Playlist>(libraryService.GetObjectsFromFile().PlayLists);
+            playlistService.Playlist = this.Playlist;
         }
 
         public String PlayListName
@@ -173,13 +172,6 @@ namespace PlaylistModule
             };
             this._libraryService.AddPlaylist(playlist);
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] String propertyName = null)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        
     }
 }

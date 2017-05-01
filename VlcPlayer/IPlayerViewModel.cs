@@ -33,11 +33,11 @@ namespace VlcPlayer
         TimeSpan PositionTimeSpan { get; set; }
         ImageSource Source { get; set; }
         void MouseMove();
-        void AddVideo(String path);
-        void AddVideo(Video video);
-        void ClearPlaylist();
-        void PlayVideo(Video video);
-        void PlayAll(IEnumerable<Video> playlist);
+        //void AddVideo(String path);
+        //void AddVideo(Video video);
+        //void ClearPlaylist();
+        //void PlayVideo(Video video);
+        //void PlayAll(IEnumerable<Video> playlist);
         void Next(Object dummy);
         void Next();
         void Previous();

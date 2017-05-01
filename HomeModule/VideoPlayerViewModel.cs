@@ -5,6 +5,7 @@ using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
+using VideosPageModule;
 using VlcPlayer;
 using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
@@ -45,6 +46,15 @@ namespace HomeModule
             this.NavigateCommand = new DelegateCommand<Object>(this.Navigate);
             ApplicationCommands.NavigateCommand.RegisterCommand(this.NavigateCommand);
 
+            eventAggregator.GetEvent<PlayCompleted>()
+                .Subscribe(dummy =>
+                    ApplicationCommands.NavigateCommand.Execute(typeof(VideosPage))
+                );
+
+            eventAggregator.GetEvent<OnStop>()
+                .Subscribe(dummy =>
+                    ApplicationCommands.NavigateCommand.Execute(typeof(VideosPage))
+                );
             //this._eventAggregator.GetEvent<PlayAllEvent>()
             //    .Subscribe(dummy => this.Navigate(typeof (Player)));
             //this._eventAggregator.GetEvent<PlayOneEvent>()

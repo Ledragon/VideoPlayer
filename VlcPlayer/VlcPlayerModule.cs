@@ -4,22 +4,22 @@ using VideoPlayer.Infrastructure;
 
 namespace VlcPlayer
 {
-    public class VlcPlayerModule : ModuleBase
+    public class VlcPlayerModule : IPrismModule
     {
-        private readonly IRegionManager _regionManager;
+        private readonly IModuleManager _moduleManager;
 
-        public VlcPlayerModule(IUnityContainer container, IRegionManager regionManager) : base(container, regionManager)
+        public VlcPlayerModule(IModuleManager moduleManager)
         {
-            this._regionManager = regionManager;
+            this._moduleManager = moduleManager;
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
-            this.RegisterType<IPlayerViewModel, PlayerViewModel>();
-            //this.RegisterView<Player>();
-            this.RegisterType<IPlayer, Player>();
-            this._regionManager.RegisterViewWithRegion(RegionNames.PlayerRegion, typeof(IPlayer));
-            //this.ReferenceRegion<IPlayerViewModel>(RegionNames.PlayerRegion);
+            this._moduleManager.RegisterType<IPlayerViewModel, PlayerViewModel>()
+                //.RegisterType<IPlayer, Player>()
+                .RegisterView<Player>();
+            //this._moduleManager.RegisterViewWithRegion<IPlayer>(RegionNames.PlayerRegion);
+                //.RegisterViewWithRegion(RegionNames.PlayerRegion, typeof(IPlayer));
         }
     }
 }

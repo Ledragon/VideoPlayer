@@ -77,7 +77,7 @@
                         LengthChanged="_VLCcontrol_OnLengthChanged"
                         EndReached="_VLCcontrol_OnEndReached" />
 
-        <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform" Margin="0"/>
+        <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform"/>
         <Grid Grid.Column="0"
               x:Name="UiControlsGrid"
               HorizontalAlignment="Stretch"

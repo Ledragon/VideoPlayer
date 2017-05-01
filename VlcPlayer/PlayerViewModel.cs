@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Timers;
 using System.Windows.Input;
@@ -13,7 +11,6 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
-using ApplicationCommands = VideoPlayer.Infrastructure.ApplicationCommands;
 using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
 namespace VlcPlayer
@@ -55,8 +52,10 @@ namespace VlcPlayer
             //eventAggregator.GetEvent<OnAddVideo>().Subscribe(this.AddVideo);
             //eventAggregator.GetEvent<OnPlayPlaylist>().Subscribe(this.PlayAll);
             //eventAggregator.GetEvent<PlayOneEvent>().Subscribe(this.PlayVideo);
-            eventAggregator.GetEvent<VideoDurationChanged>().Subscribe(this.VideoDurationChanged);
-            eventAggregator.GetEvent<VideoEnded>().Subscribe(this.Next);
+            eventAggregator.GetEvent<VideoDurationChanged>()
+                .Subscribe(this.VideoDurationChanged);
+            eventAggregator.GetEvent<VideoEnded>()
+                .Subscribe(this.Next);
             //eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
         }
 
@@ -332,10 +331,10 @@ namespace VlcPlayer
             }
         }
 
-        public void ClearPlaylist()
-        {
-            this.Playlist.Clear();
-        }
+        //public void ClearPlaylist()
+        //{
+        //    this.Playlist.Clear();
+        //}
 
         //public void PlayVideo(Video video)
         //{
@@ -404,10 +403,10 @@ namespace VlcPlayer
             this.CurrentVideo = this.Playlist[this._index];
         }
 
-        private void ClearPlaylist(Object obj)
-        {
-            this.ClearPlaylist();
-        }
+        //private void ClearPlaylist(Object obj)
+        //{
+        //    this.ClearPlaylist();
+        //}
 
         private void VideoDurationChanged(TimeSpan span)
         {

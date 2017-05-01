@@ -28,9 +28,6 @@ namespace VideosPageModule
                 {
                     ApplicationCommands.NavigateCommand.Execute(typeof(Player));
                 });
-            //eventAggregator.GetEvent<PlayCompleted>()
-            //    .Subscribe(dummy => this.SelectedIndex = 0);
-
         }
 
         public ICommand SwitchToWindowCommand { get; private set; }

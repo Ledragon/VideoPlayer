@@ -1,5 +1,4 @@
-﻿using HomeModule;
-using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure;
 using VideoPlayer.ViewModels;
 
 namespace VideoPlayer
@@ -9,7 +8,6 @@ namespace VideoPlayer
         private readonly IModuleManager _moduleManager;
 
         public VideoPlayerModule(IModuleManager moduleManager)
-            //: base(unityContainer, regionManager)
         {
             this._moduleManager = moduleManager;
         }

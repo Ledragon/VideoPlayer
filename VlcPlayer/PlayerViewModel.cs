@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Timers;
 using System.Windows.Input;
@@ -56,6 +57,12 @@ namespace VlcPlayer
                 .Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>()
                 .Subscribe(this.Next);
+            //eventAggregator.GetEvent<PlayOneEvent>()
+            //    .Subscribe(video => this.CurrentVideo = video);
+            if (this.Playlist.Any())
+            {
+                this.CurrentVideo = this.Playlist.First();
+            }
             //eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
         }
 

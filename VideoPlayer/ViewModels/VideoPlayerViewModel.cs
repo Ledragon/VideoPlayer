@@ -7,7 +7,6 @@ using Microsoft.Practices.Prism.Regions;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.PlaylistManagement;
 using VideoPlayer.Services;
-using VideoPlayer.Views;
 using VlcPlayer;
 using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
@@ -61,6 +60,8 @@ namespace VideoPlayer.ViewModels
                .Subscribe(video =>
                {
                    ApplicationCommands.NavigateCommand.Execute(typeof(Player));
+                    //this._eventAggregator.GetEvent<PlayedEvent>()
+                    //    .Publish(video);
                });
             eventAggregator.GetEvent<OnPlayPlaylistRequest>()
                 .Subscribe(video =>

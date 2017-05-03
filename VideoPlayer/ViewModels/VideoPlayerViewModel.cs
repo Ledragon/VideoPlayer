@@ -33,17 +33,8 @@ namespace VideoPlayer.ViewModels
             this._regionManager = regionManager;
             this.GoToHomePageCommand = new DelegateCommand(this.SetHomePage);
             this.ToggleStyleCommand = new DelegateCommand(this.ToggleWindowStyle);
-            this.CloseCommand = new DelegateCommand(this.CloseAsync, () => this.SelectedTab != 3);
+            this.CloseCommand = new DelegateCommand(this.CloseAsync);
 
-            this._eventAggregator.GetEvent<GoToPage>().Subscribe(this.SetSelectedTab);
-            //this._eventAggregator.GetEvent<LibraryUpdating>()
-            //    .Subscribe(message =>
-            //    {
-            //        this.LoadingMessage = message;
-            //        this.IsLoading = Visibility.Visible;
-            //    });
-            //this._eventAggregator.GetEvent<LibraryUpdated>()
-            //    .Subscribe(payload => { this.IsLoading = Visibility.Hidden; });
             this.NavigateCommand = new DelegateCommand<Object>(this.Navigate);
             ApplicationCommands.NavigateCommand.RegisterCommand(this.NavigateCommand);
 
@@ -56,48 +47,17 @@ namespace VideoPlayer.ViewModels
                 .Subscribe(dummy =>
                     ApplicationCommands.NavigateCommand.Execute(typeof(PlayListManagementView))
                 );
-            //eventAggregator.GetEvent<PlayOneRequestEvent>()
-            //   .Subscribe(video =>
-            //   {
-            //       ApplicationCommands.NavigateCommand.Execute(typeof(Player));
-            //       this._eventAggregator.GetEvent<PlayOneEvent>()
-            //           .Publish(video);
-            //   });
             eventAggregator.GetEvent<OnPlayPlaylistRequest>()
                 .Subscribe(video =>
                 {
                     ApplicationCommands.NavigateCommand.Execute(typeof(Player));
                 });
-            //this._eventAggregator.GetEvent<PlayAllEvent>()
-            //    .Subscribe(dummy => this.Navigate(typeof (Player)));
-            //this._eventAggregator.GetEvent<PlayOneEvent>()
-            //    .Subscribe(video =>
-            //    {
-            //        this.Navigate(typeof (Player));
-            //        this._eventAggregator.GetEvent<PlayedEvent>()
-            //            .Publish(video);
-            //    });
         }
 
         public DelegateCommand<Object> NavigateCommand { get; }
         public DelegateCommand GoToHomePageCommand { get; }
         public DelegateCommand ToggleStyleCommand { get; }
-        //public DelegateCommand WindowLoadedCommand { get; private set; }
         public DelegateCommand CloseCommand { get; }
-
-        public Int32 SelectedTab
-        {
-            get { return this._selectedTab; }
-            set
-            {
-                if (value == this._selectedTab)
-                {
-                    return;
-                }
-                this._selectedTab = value;
-                this.OnPropertyChanged();
-            }
-        }
 
         public String LoadingMessage
         {
@@ -126,17 +86,6 @@ namespace VideoPlayer.ViewModels
                 this.OnPropertyChanged();
             }
         }
-
-        //public WindowStyle WindowStyle
-        //{
-        //    get { return this._windowStyle; }
-        //    set
-        //    {
-        //        if (value == this._windowStyle) return;
-        //        this._windowStyle = value;
-        //        this.OnPropertyChanged();
-        //    }
-        //}
 
         public Visibility IsExitMenuVisible
         {
@@ -170,11 +119,6 @@ namespace VideoPlayer.ViewModels
         private void SetHomePage()
         {
             this.Navigate(typeof (HomePage));
-        }
-
-        private void SetSelectedTab(Int32 pageNumber)
-        {
-            this.SelectedTab = pageNumber;
         }
 
         private void ToggleWindowStyle()

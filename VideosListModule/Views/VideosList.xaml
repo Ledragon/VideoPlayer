@@ -33,6 +33,12 @@
             <Style TargetType="{x:Type Path}">
                 <Setter Property="Fill"
                         Value="#0f0f0f" />
+                <Style.Triggers>
+                    <Trigger Property="IsEnabled"
+                             Value="False">
+                        <Setter Property="Fill" Value="#cccccc"></Setter>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
             <mocks:MockVideoList x:Key="DesignViewModel" />

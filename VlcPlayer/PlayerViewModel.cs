@@ -54,8 +54,6 @@ namespace VlcPlayer
                 .Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>()
                 .Subscribe(this.Next);
-            //eventAggregator.GetEvent<PlayOneEvent>()
-            //    .Subscribe(video => this.CurrentVideo = video);
             if (this.Playlist.Any())
             {
                 this.CurrentVideo = this.Playlist.First();

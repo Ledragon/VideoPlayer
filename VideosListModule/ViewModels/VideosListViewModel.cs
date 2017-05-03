@@ -216,12 +216,6 @@ namespace VideosListModule.ViewModels
         {
             this._eventAggregator.GetEvent<PlayRangeEvent>()
                 .Publish(this.FilteredVideos.Cast<Video>());
-            //var videoAddedEvent = this._eventAggregator.GetEvent<OnAddVideo>();
-            //foreach (var video in this.FilteredVideos.Cast<Video>())
-            //{
-            //    videoAddedEvent.Publish(video);
-            //}
-            //this.PlayPlaylist();
         }
 
         private void AddRange(Object obj)
@@ -242,13 +236,7 @@ namespace VideosListModule.ViewModels
                 MessageBox.Show("File not found.");
             }
         }
-
-        //private void PlayPlaylist()
-        //{
-        //    this._eventAggregator.GetEvent<OnPlayPlaylistRequest>()
-        //        .Publish(null);
-        //}
-
+        
         private void Add()
         {
             if (this.CurrentVideo != null && File.Exists(this.CurrentVideo.FileName))

@@ -11,11 +11,12 @@ using Log;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 using VideoPlayer.Services;
 
 namespace VideosListModule.ViewModels
 {
-    public class VideosListViewModel : VideoPlayer.Infrastructure.ViewFirst.ViewModelBase, IVideosListViewModel
+    public class VideosListViewModel : ViewModelBase, IVideosListViewModel
     {
         private Video _currentVideo;
         private Int32 _editIndex;
@@ -233,8 +234,8 @@ namespace VideosListModule.ViewModels
         {
             if (File.Exists(this.CurrentVideo.FileName))
             {
-                this._eventAggregator.GetEvent<PlayOneRequestEvent>()
-                    .Publish(this.CurrentVideo);
+                this._eventAggregator.GetEvent<PlayRangeEvent>()
+                    .Publish(new List<Video> {this.CurrentVideo});
             }
             else
             {

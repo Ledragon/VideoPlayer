@@ -54,6 +54,16 @@
             <Style TargetType="TabItem" x:Key="HiddenHeader">
                 <Setter Property="Background" Value="LightGray"></Setter>
             </Style>
+            <Style TargetType="Image">
+                <Setter Property="Stretch" Value="Uniform"></Setter>
+                <Setter Property="Margin" Value="5"></Setter>
+            </Style>
+            <Style TargetType="TabControl">
+                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                <Setter Property="TabStripPlacement" Value="Bottom"></Setter>
+                <Setter Property="Margin" Value="5"></Setter>
+            </Style>
             <mocks:MockVideo x:Key="MockVideo" />
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </ResourceDictionary>
@@ -104,21 +114,20 @@
                        Text="{Binding DateAdded, StringFormat=Added on {0:dd/MM/yyy HH:mm}}"
                        Style="{StaticResource Current}" />
         </Grid>
-        <Grid Grid.Row="1">
+        <TabControl Grid.Row="1">
+            <TabItem Header="Preview">
+                <Image Source="{Binding Path=PreviewImage, Converter={StaticResource ImageConverter}}" />
+            </TabItem>
+            <TabItem Header="Contact sheet">
+                <Image Source="{Binding Path=DataContext.ContactSheetPath, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" />
+            </TabItem>
+        </TabControl>
+        <!--<Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Image Source="{Binding Path=PreviewImage, Converter={StaticResource ImageConverter}}"
-                   Stretch="Uniform"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   Margin="5" />
-            <Image Grid.Row="1" Source="{Binding Path=DataContext.ContactSheetPath, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                   Stretch="Uniform"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch"
-                   Margin="5" />
-        </Grid>
+            
+        </Grid>-->
     </Grid>
 </UserControl>

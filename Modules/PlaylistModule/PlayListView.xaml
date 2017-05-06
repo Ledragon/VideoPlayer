@@ -12,7 +12,7 @@
                 <ResourceDictionary Source="pack://application:,,,/VideoPlayer.Infrastructure;component/Theme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <infrastructure:ImageConverter x:Key="imageConverter" />
-            <Style TargetType="TextBlock">
+            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="Background" Value="{StaticResource VideoMenusSolidBrush}" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
@@ -20,6 +20,7 @@
             </Style>
             <Style TargetType="ListBox">
                 <Setter Property="Background" Value="{StaticResource VideoMenusSolidBrush}" />
+                <Setter Property="Margin" Value="5"></Setter>
             </Style>
             <Style TargetType="TextBlock" x:Key="PlayListElement"
                    BasedOn="{StaticResource TrimmedTextBlock}">
@@ -72,7 +73,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Text="{Binding PlayListName}" HorizontalAlignment="Stretch" />
+            <TextBox Text="{Binding PlayListName}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxBase}"/>
             <Button Grid.Column="1" Content="Save" Command="{Binding SavePlaylistCommand}" />
         </Grid>
         <ComboBox Grid.Row="3" ItemsSource="{Binding PlayListCollection}" SelectedItem="{Binding SelectedPlayList}">

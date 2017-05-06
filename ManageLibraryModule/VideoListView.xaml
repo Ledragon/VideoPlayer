@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
+             xmlns:mocks="clr-namespace:ManageLibraryModule.Mocks"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="800" d:DesignWidth="500">
     <UserControl.Resources>
         <Style TargetType="DataGridColumnHeader"
                x:Key="EditPropertyGridHeader">
@@ -22,8 +23,11 @@
                     Value="14"></Setter>
             <Setter Property="Padding"
                     Value="10"></Setter>
+            <Setter Property="Foreground" Value="#d3d3d3"></Setter>
         </Style>
         <infrastructure:ImageConverter x:Key="ImageConverter" />
+        <mocks:MockEditViewModel x:Key="DesignViewModel" />
+
     </UserControl.Resources>
     <DataGrid AutoGenerateColumns="False"
               ItemsSource="{Binding Videos}"
@@ -34,7 +38,8 @@
               IsReadOnly="True"
               CanUserAddRows="False"
               ColumnHeaderStyle="{StaticResource EditPropertyGridHeader}"
-              RowStyle="{StaticResource EditPropertyGridRow}">
+              RowStyle="{StaticResource EditPropertyGridRow}"
+              d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
         <DataGrid.Columns>
             <DataGridTemplateColumn Width="Auto"
                                     Header="Preview">

@@ -76,7 +76,7 @@
             <TextBox Text="{Binding PlayListName}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxBase}"/>
             <Button Grid.Column="1" Content="Save" Command="{Binding SavePlaylistCommand}" />
         </Grid>
-        <ComboBox Grid.Row="3" ItemsSource="{Binding PlayListCollection}" SelectedItem="{Binding SelectedPlayList}">
+        <ComboBox Grid.Row="3" ItemsSource="{Binding PlayListCollection}" SelectedItem="{Binding SelectedPlayList}" DisplayMemberPath="Title">
             
         </ComboBox>
 

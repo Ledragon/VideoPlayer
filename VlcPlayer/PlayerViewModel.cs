@@ -8,17 +8,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Classes;
 using Log;
+using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 using VideoPlayer.Services;
-using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
 namespace VlcPlayer
 {
-    public class PlayerViewModel : ViewModelBase, IPlayerViewModel
+    public class PlayerViewModel : ViewModelBase, IPlayerViewModel, IActiveAware
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly IPlaylistService _playlistService;
         private readonly Timer _timer = new Timer();
         private Boolean _controlsVisibility;
         private Video _currentVideo;
@@ -37,12 +39,13 @@ namespace VlcPlayer
         private ImageSource _source;
         private TimeSpan _timePosition;
         private String _title;
+        private Boolean _isActive;
 
         public PlayerViewModel(IEventAggregator eventAggregator, IPlaylistService playlistService)
         {
             this._eventAggregator = eventAggregator;
+            this._playlistService = playlistService;
             this.Rate = 1;
-            this.Playlist = new ObservableCollection<Video>(playlistService.Playlist);
             this.IsRepeat = false;
             this.ControlsVisibility = true;
             this._timer.Interval = 500;
@@ -54,10 +57,6 @@ namespace VlcPlayer
                 .Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>()
                 .Subscribe(this.Next);
-            if (this.Playlist.Any())
-            {
-                this.CurrentVideo = this.Playlist.First();
-            }
         }
 
         public static String AssemblyDirectory
@@ -70,6 +69,25 @@ namespace VlcPlayer
                 return Path.GetDirectoryName(path);
             }
         }
+
+        public Boolean IsActive
+        {
+            get { return this._isActive; }
+            set
+            {
+                this._isActive = value;
+                if (value)
+                {
+                    this.Playlist = new ObservableCollection<Video>(this._playlistService.Playlist);
+                    if (this.Playlist.Any())
+                    {
+                        this.CurrentVideo = this.Playlist.First();
+                    }
+                }
+            }
+        }
+
+        public event EventHandler IsActiveChanged;
 
         public Boolean IsMouseDown
         {
@@ -316,22 +334,6 @@ namespace VlcPlayer
             this.ControlsVisibility = true;
         }
 
-        public void AddVideo(String path)
-        {
-            var video = new Video(path);
-            this.AddVideo(video);
-        }
-
-        public void AddVideo(Video video)
-        {
-            this.Logger().DebugFormat("Adding video '{0}' to playlist.", video.Title);
-            this.Playlist.Add(video);
-            if (this._currentVideo == null)
-            {
-                this._currentVideo = video;
-            }
-        }
-        
         public void Next(Object dummy)
         {
             this.Next();
@@ -368,7 +370,23 @@ namespace VlcPlayer
             }
             this.CurrentVideo = this.Playlist[this._index];
         }
-        
+
+        public void AddVideo(String path)
+        {
+            var video = new Video(path);
+            this.AddVideo(video);
+        }
+
+        public void AddVideo(Video video)
+        {
+            this.Logger().DebugFormat("Adding video '{0}' to playlist.", video.Title);
+            this.Playlist.Add(video);
+            if (this._currentVideo == null)
+            {
+                this._currentVideo = video;
+            }
+        }
+
         private void VideoDurationChanged(TimeSpan span)
         {
             if (this.CurrentVideo.Length == TimeSpan.Zero)
@@ -400,7 +418,7 @@ namespace VlcPlayer
         private void Stop()
         {
             this.IsPaused = false;
-            this.Playlist.Clear();
+            this.Playlist?.Clear();
             this._eventAggregator.GetEvent<OnStop>().Publish(null);
         }
 

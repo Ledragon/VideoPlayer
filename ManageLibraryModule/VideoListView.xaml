@@ -27,7 +27,6 @@
         </Style>
         <infrastructure:ImageConverter x:Key="ImageConverter" />
         <mocks:MockEditViewModel x:Key="DesignViewModel" />
-
     </UserControl.Resources>
     <DataGrid AutoGenerateColumns="False"
               ItemsSource="{Binding Videos}"

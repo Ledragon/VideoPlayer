@@ -23,7 +23,8 @@ namespace PlaylistModule
         private Playlist _selectedPlayList;
         private TimeSpan _totalDuration;
 
-        public PlayListViewModel(IEventAggregator eventAggregator, ILibraryService libraryService, IPlaylistService playlistService)
+        public PlayListViewModel(IEventAggregator eventAggregator, ILibraryService libraryService,
+            IPlaylistService playlistService)
         {
             this._libraryService = libraryService;
             this.Playlist = new ObservableCollection<Video>();
@@ -33,27 +34,26 @@ namespace PlaylistModule
             this.AddCommand = new DelegateCommand<Video>(this.Add);
             this.AddRangeCommand = new DelegateCommand<IEnumerable<Video>>(this.Add);
             this.SavePlaylistCommand = new DelegateCommand(this.Save);
-            this.ClearCommand= new DelegateCommand(() =>
+            this.ClearCommand = new DelegateCommand(() =>
             {
                 this.Playlist.Clear();
+                playlistService.Clear();
             });
 
             eventAggregator.GetEvent<OnAddVideo>().Subscribe(this.Add);
             eventAggregator.GetEvent<OnAddVideoRange>().Subscribe(this.Add);
 
             eventAggregator.GetEvent<PlayRangeEvent>()
-               .Subscribe(videos =>
-               {
-                   this.Playlist.Clear();
-                   this.Add(videos);
-                   eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(this.Playlist);
-               });
+                .Subscribe(videos =>
+                {
+                    this.Playlist.Clear();
+                    this.Add(videos);
+                    playlistService.Playlist = this.Playlist;
+                    eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(this.Playlist);
+                });
 
             eventAggregator.GetEvent<OnPlayPlaylistRequest>()
-                .Subscribe(dummy =>
-                {
-                    eventAggregator.GetEvent<OnPlayPlaylist>().Publish(this.Playlist);
-                }, true);
+                .Subscribe(dummy => { eventAggregator.GetEvent<OnPlayPlaylist>().Publish(this.Playlist); }, true);
 
             this.PlayListCollection = new ObservableCollection<Playlist>(libraryService.GetObjectsFromFile().PlayLists);
             playlistService.Playlist = this.Playlist;
@@ -104,13 +104,17 @@ namespace PlaylistModule
                 this._selectedPlayList = value;
                 this.OnPropertyChanged();
                 this.Playlist.Clear();
-                this.Playlist.AddRange(this._libraryService.GetVideosByFilePath(this._selectedPlayList.Files));
+                this.Playlist.AddRange(
+                    this._libraryService.GetVideosByFilePath(this._selectedPlayList.Items.Select(f => f.FileName)));
+                this.PlayListName = this._selectedPlayList.Title;
                 this.TotalDuration = this.Playlist.Aggregate(TimeSpan.Zero,
                     (current, video) => current.Add(video.Length));
             }
         }
 
+        public ICommand ClearCommand { get; }
         public ICommand SavePlaylistCommand { get; private set; }
+
 
         public ObservableCollection<Video> Playlist
         {
@@ -157,7 +161,6 @@ namespace PlaylistModule
         public ICommand RemoveCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand AddRangeCommand { get; }
-        public ICommand ClearCommand { get; }
 
         private void Add(IEnumerable<Video> videos)
         {
@@ -182,13 +185,17 @@ namespace PlaylistModule
 
         private void Save()
         {
-            var playlist = new Playlist
+            var playlist = this.PlayListCollection.SingleOrDefault(p => p.Title == this._playListName);
+            if (playlist == null)
             {
-                Title = this.PlayListName,
-                Files = this.Playlist.Select(v => v.FileName).ToList()
-            };
-            this._libraryService.AddPlaylist(playlist);
+                playlist = new Playlist
+                {
+                    Title = this.PlayListName
+                };
+                this._libraryService.AddPlaylist(playlist);
+                this.PlayListCollection.Add(playlist);
+            }
+            playlist.Items = this.Playlist.Select((v, i) => new PlayListItem(v.FileName, i)).ToList();
         }
-        
     }
 }

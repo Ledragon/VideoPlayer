@@ -112,9 +112,6 @@ namespace PlaylistModule
             }
         }
 
-        public ICommand ClearCommand { get; }
-        public ICommand SavePlaylistCommand { get; private set; }
-
 
         public ObservableCollection<Video> Playlist
         {
@@ -158,6 +155,9 @@ namespace PlaylistModule
             }
         }
 
+
+        public ICommand ClearCommand { get; }
+        public ICommand SavePlaylistCommand { get; private set; }
         public ICommand RemoveCommand { get; }
         public ICommand AddCommand { get; }
         public ICommand AddRangeCommand { get; }

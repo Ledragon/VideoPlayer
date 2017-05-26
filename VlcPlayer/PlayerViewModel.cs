@@ -78,10 +78,13 @@ namespace VlcPlayer
                 this._isActive = value;
                 if (value)
                 {
-                    this.Playlist = new ObservableCollection<Video>(this._playlistService.Playlist);
-                    if (this.Playlist.Any())
+                    if (this._playlistService.Playlist != null)
                     {
-                        this.CurrentVideo = this.Playlist.First();
+                        this.Playlist = new ObservableCollection<Video>(this._playlistService.Playlist);
+                        if (this.Playlist.Any())
+                        {
+                            this.CurrentVideo = this.Playlist.First();
+                        }
                     }
                 }
             }

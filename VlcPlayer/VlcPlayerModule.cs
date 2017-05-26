@@ -16,10 +16,10 @@ namespace VlcPlayer
         public void Initialize()
         {
             this._moduleManager.RegisterType<IPlayerViewModel, PlayerViewModel>()
+            .RegisterType<IPlayer, Player>()
                 //.RegisterType<IPlayer, Player>()
                 .RegisterView<Player>();
-            //this._moduleManager.RegisterViewWithRegion<IPlayer>(RegionNames.PlayerRegion);
-                //.RegisterViewWithRegion(RegionNames.PlayerRegion, typeof(IPlayer));
+            this._moduleManager.RegisterViewWithRegion<IPlayer>(RegionNames.PlayerRegion);
         }
     }
 }

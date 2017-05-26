@@ -22,6 +22,7 @@ namespace VlcPlayer
         private readonly IEventAggregator _eventAggregator;
         private readonly IPlaylistService _playlistService;
         private readonly Timer _timer = new Timer();
+        private Boolean _autoPlay;
         private Boolean _controlsVisibility;
         private Video _currentVideo;
         private Cursor _cursor;
@@ -34,13 +35,13 @@ namespace VlcPlayer
         private Boolean _isRepeat;
         private DateTime _mouseLastMouveDateTime = DateTime.Now;
         private ObservableCollection<Video> _playlist;
+        private Boolean _playlistVisibility;
         private Single _position;
         private TimeSpan _positionTimeSpan;
         private Single _rate;
         private ImageSource _source;
         private TimeSpan _timePosition;
         private String _title;
-        private Boolean _autoPlay;
 
         public PlayerViewModel(IEventAggregator eventAggregator, IPlaylistService playlistService)
         {
@@ -64,6 +65,20 @@ namespace VlcPlayer
                     this._autoPlay = false;
                     this.CurrentVideo = v;
                 });
+        }
+
+        public Boolean PlaylistVisibility
+        {
+            get { return this._playlistVisibility; }
+            set
+            {
+                if (value == this._playlistVisibility)
+                {
+                    return;
+                }
+                this._playlistVisibility = value;
+                this.OnPropertyChanged();
+            }
         }
 
         public static String AssemblyDirectory
@@ -345,6 +360,7 @@ namespace VlcPlayer
             this._mouseLastMouveDateTime = DateTime.Now;
             this.Cursor = Cursors.Arrow;
             this.ControlsVisibility = true;
+            this.PlaylistVisibility = this.Playlist != null && this.Playlist.Count > 1;
         }
 
         public void Next(Object dummy)

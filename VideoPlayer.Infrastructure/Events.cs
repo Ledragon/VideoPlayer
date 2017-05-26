@@ -79,6 +79,10 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
+
+    public class SetVideo : PubSubEvent<Video>
+    {
+    }
     public class VideoEdited : PubSubEvent<Object>
     {
     }

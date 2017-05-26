@@ -27,6 +27,7 @@ namespace VlcPlayer
         private Cursor _cursor;
         private TimeSpan _duration;
         private Int32 _index;
+        private Boolean _isActive;
         private Boolean _isMouseDown;
         private Boolean _isMute;
         private Boolean _isPaused;
@@ -39,7 +40,7 @@ namespace VlcPlayer
         private ImageSource _source;
         private TimeSpan _timePosition;
         private String _title;
-        private Boolean _isActive;
+        private Boolean _autoPlay;
 
         public PlayerViewModel(IEventAggregator eventAggregator, IPlaylistService playlistService)
         {
@@ -52,11 +53,17 @@ namespace VlcPlayer
             this._timer.Elapsed += this.TimerOnElapsed;
             this._timer.Start();
             this.InitCommands();
-
+            this._autoPlay = true;
             eventAggregator.GetEvent<VideoDurationChanged>()
                 .Subscribe(this.VideoDurationChanged);
             eventAggregator.GetEvent<VideoEnded>()
                 .Subscribe(this.Next);
+            eventAggregator.GetEvent<SetVideo>()
+                .Subscribe(v =>
+                {
+                    this._autoPlay = false;
+                    this.CurrentVideo = v;
+                });
         }
 
         public static String AssemblyDirectory
@@ -181,7 +188,10 @@ namespace VlcPlayer
                 }
                 //if (Equals(value, this._currentVideo)) return;
                 this._currentVideo = value;
-                this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
+                if (this._autoPlay)
+                {
+                    this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
+                }
                 this.OnPropertyChanged();
             }
         }

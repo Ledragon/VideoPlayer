@@ -69,6 +69,7 @@ namespace ManageLibraryModule
                 }
                 this._selectedVideo = value;
                 this._eventAggregator.GetEvent<VideoEditing>().Publish(this._selectedVideo);
+                this._eventAggregator.GetEvent<SetVideo>().Publish(this._selectedVideo);
                 this.OnPropertyChanged();
             }
         }

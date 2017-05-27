@@ -62,14 +62,17 @@ namespace VlcPlayer
             eventAggregator.GetEvent<SetVideo>()
                 .Subscribe(v =>
                 {
-                    this._autoPlay = false;
+                    //this._autoPlay = false;
                     this.CurrentVideo = v;
                 });
         }
 
         public Boolean PlaylistVisibility
         {
-            get { return this.Playlist != null && this.Playlist.Any() && this.ControlsVisibility; }
+            get
+            {
+                return this.Playlist != null && this.Playlist.Any() && this.ControlsVisibility;
+            }
             set
             {
                 if (value == this._playlistVisibility)

@@ -1,29 +1,29 @@
 ﻿<UserControl x:Class="ManageLibraryModule.VideoListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
              xmlns:mocks="clr-namespace:ManageLibraryModule.Mocks"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="800" d:DesignWidth="500">
     <UserControl.Resources>
         <Style TargetType="DataGridColumnHeader"
                x:Key="EditPropertyGridHeader">
             <Setter Property="FontSize"
-                    Value="14"></Setter>
+                    Value="14" />
             <Setter Property="Padding"
-                    Value="10"></Setter>
+                    Value="10" />
         </Style>
         <Style TargetType="DataGridRow"
                x:Key="EditPropertyGridRow">
             <Setter Property="Background"
-                    Value="#3FD3D3D3"></Setter>
+                    Value="#3FD3D3D3" />
             <Setter Property="FontSize"
-                    Value="14"></Setter>
+                    Value="14" />
             <Setter Property="Padding"
-                    Value="10"></Setter>
-            <Setter Property="Foreground" Value="#d3d3d3"></Setter>
+                    Value="10" />
+            <Setter Property="Foreground" Value="#d3d3d3" />
         </Style>
         <infrastructure:ImageConverter x:Key="ImageConverter" />
         <mocks:MockEditViewModel x:Key="DesignViewModel" />
@@ -58,6 +58,12 @@
             <DataGridTextColumn Binding="{Binding Category}"
                                 Width="Auto"
                                 Header="Category" />
+            <DataGridTextColumn Binding="{Binding DateAdded, StringFormat=dd-MM-yyyy}"
+                                Width="Auto"
+                                Header="Date added" />
+            <DataGridCheckBoxColumn Binding="{Binding HasContactSheet, Mode=OneTime}"
+                                    IsReadOnly="True"
+                                    Header="Contact sheet" />
         </DataGrid.Columns>
         <DataGrid.GroupStyle>
             <GroupStyle>
@@ -67,7 +73,7 @@
                                    Background="DarkGray"
                                    Foreground="White"
                                    FontSize="16"
-                                   Margin="5"></TextBlock>
+                                   Margin="5" />
                     </DataTemplate>
                 </GroupStyle.HeaderTemplate>
             </GroupStyle>

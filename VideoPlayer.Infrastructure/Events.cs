@@ -58,6 +58,9 @@ namespace VideoPlayer.Infrastructure
     public class OnStop : PubSubEvent<Object>
     {
     }
+    public class OnStopped : PubSubEvent<Object>
+    {
+    }
 
     public class RateChanged : PubSubEvent<Single>
     {

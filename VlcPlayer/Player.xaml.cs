@@ -171,7 +171,7 @@ namespace VlcPlayer
                 this.Logger().Error(exc.Message);
                 this.Logger().Error(exc.Source);
             }
-            if (!isPaused)
+            if (!isPaused && !this._viewModel.IsPaused)
             {
                 this._VLCcontrol.Play();
             }

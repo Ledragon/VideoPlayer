@@ -62,7 +62,7 @@ namespace VlcPlayer
             eventAggregator.GetEvent<SetVideo>()
                 .Subscribe(v =>
                 {
-                    //this._autoPlay = false;
+                    this._autoPlay = false;
                     this.CurrentVideo = v;
                 });
         }
@@ -110,6 +110,7 @@ namespace VlcPlayer
                         this.Playlist = new ObservableCollection<Video>(this._playlistService.Playlist);
                         if (this.Playlist.Any())
                         {
+                            this._autoPlay = true;
                             this.CurrentVideo = this.Playlist.First();
                         }
                     }

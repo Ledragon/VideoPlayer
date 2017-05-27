@@ -43,8 +43,6 @@ namespace VlcPlayer
         private TimeSpan _timePosition;
         private String _title;
 
-        public event EventHandler IsActiveChanged;
-
         public PlayerViewModel(IEventAggregator eventAggregator, IPlaylistService playlistService)
         {
             this._eventAggregator = eventAggregator;
@@ -71,7 +69,7 @@ namespace VlcPlayer
 
         public Boolean PlaylistVisibility
         {
-            get { return this._playlistVisibility; }
+            get { return this.Playlist != null && this.Playlist.Any() && this.ControlsVisibility; }
             set
             {
                 if (value == this._playlistVisibility)
@@ -93,6 +91,8 @@ namespace VlcPlayer
                 return Path.GetDirectoryName(path);
             }
         }
+
+        public event EventHandler IsActiveChanged;
 
         public Boolean IsActive
         {
@@ -139,6 +139,7 @@ namespace VlcPlayer
                 }
                 this._controlsVisibility = value;
                 this.OnPropertyChanged();
+                this.OnPropertyChanged(nameof(this.PlaylistVisibility));
             }
         }
 
@@ -174,6 +175,7 @@ namespace VlcPlayer
                 }
                 this._playlist = value;
                 this.OnPropertyChanged();
+                this.OnPropertyChanged(nameof(this.PlaylistVisibility));
             }
         }
 
@@ -418,7 +420,7 @@ namespace VlcPlayer
 
         private void VideoDurationChanged(TimeSpan span)
         {
-            if (this.CurrentVideo.Length == TimeSpan.Zero)
+            if (this.CurrentVideo != null && this.CurrentVideo.Length == TimeSpan.Zero)
             {
                 this.CurrentVideo.Length = span;
                 this.Duration = span;

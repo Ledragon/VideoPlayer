@@ -43,6 +43,8 @@ namespace VlcPlayer
         private TimeSpan _timePosition;
         private String _title;
 
+        public event EventHandler IsActiveChanged;
+
         public PlayerViewModel(IEventAggregator eventAggregator, IPlaylistService playlistService)
         {
             this._eventAggregator = eventAggregator;
@@ -111,8 +113,6 @@ namespace VlcPlayer
                 }
             }
         }
-
-        public event EventHandler IsActiveChanged;
 
         public Boolean IsMouseDown
         {

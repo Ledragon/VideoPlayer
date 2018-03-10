@@ -53,8 +53,7 @@ namespace VideoPlayer.Database.Repository
             }
             catch (Exception e)
             {
-                this.Logger().Error(e.Message);
-                this.Logger().Error(e.Source);
+                this.Logger().Error(e);
             }
 
             return wrapper;

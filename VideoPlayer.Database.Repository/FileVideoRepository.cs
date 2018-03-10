@@ -10,52 +10,58 @@ namespace VideoPlayer.Database.Repository
     {
         public void Save(String filePath, ObjectsWrapper wrapper)
         {
-            this.Logger().InfoFormat("Saving file '{0}'.", filePath);
-            if (wrapper != null)
+            this.Monitor(() =>
             {
-                var xmlSerializer = new XmlSerializer(typeof(ObjectsWrapper));
-                StreamWriter streamWriter = null;
-                try
+                this.Logger().InfoFormat("Saving file '{0}'.", filePath);
+                if (wrapper != null)
                 {
-                    streamWriter = new StreamWriter(filePath);
-                    xmlSerializer.Serialize(streamWriter, wrapper);
-                    this.Logger().InfoFormat("File '{0}' saved.", filePath);
-                }
-                catch (Exception e)
-                {
-                    this.Logger().Error(e.Message);
-                    this.Logger().Error(e.Source);
-                }
-                finally
-                {
-                    if (streamWriter != null)
+                    var xmlSerializer = new XmlSerializer(typeof(ObjectsWrapper));
+                    StreamWriter streamWriter = null;
+                    try
                     {
-                        streamWriter.Close();
+                        streamWriter = new StreamWriter(filePath);
+                        xmlSerializer.Serialize(streamWriter, wrapper);
+                        this.Logger().InfoFormat("File '{0}' saved.", filePath);
+                    }
+                    catch (Exception e)
+                    {
+                        this.Logger().Error(e.Message);
+                        this.Logger().Error(e.Source);
+                    }
+                    finally
+                    {
+                        if (streamWriter != null) streamWriter.Close();
                     }
                 }
-            }
+            }, "Save");
         }
 
         public ObjectsWrapper Load(String filePath)
         {
-            ObjectsWrapper wrapper = new ObjectsWrapper();
+            var wrapper = new ObjectsWrapper();
             try
             {
-                this.Logger().InfoFormat("Loading file '{0}'.", filePath);
-                var xmlSerializer = new XmlSerializer(typeof(ObjectsWrapper));
-                if (File.Exists(filePath))
+                wrapper = this.Monitor(() =>
                 {
-                    var streamReader = new StreamReader(filePath);
-                    wrapper = xmlSerializer.Deserialize(streamReader) as ObjectsWrapper;
-                    streamReader.Close();
-                    this.Logger().InfoFormat("File '{0}' loaded.", filePath);
-                }
+                    this.Logger().InfoFormat("Loading file '{0}'.", filePath);
+                    var xmlSerializer = new XmlSerializer(typeof(ObjectsWrapper));
+                    if (File.Exists(filePath))
+                    {
+                        var streamReader = new StreamReader(filePath);
+                        wrapper = xmlSerializer.Deserialize(streamReader) as ObjectsWrapper;
+                        streamReader.Close();
+                        this.Logger().InfoFormat("File '{0}' loaded.", filePath);
+                    }
+
+                    return wrapper;
+                }, "Load");
             }
             catch (Exception e)
             {
                 this.Logger().Error(e.Message);
                 this.Logger().Error(e.Source);
             }
+
             return wrapper;
         }
     }

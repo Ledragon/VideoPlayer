@@ -3,7 +3,9 @@
 namespace Log
 {
     public static class LoggingExtension
-    {/// <summary>
+    {
+        
+        /// <summary>
         /// Provides a logger.
         /// </summary>
         /// <typeparam name="T">The type of the logger.</typeparam>

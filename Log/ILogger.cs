@@ -1,26 +1,27 @@
-﻿namespace Log
+﻿using System;
+namespace Log
 {
     public interface ILogger
 
     {
-        void Debug(object message);
+        void Debug(Object message);
 
-        void DebugFormat(string format, params object[] args);
+        void DebugFormat(String format, params Object[] args);
 
-        void Info(object message);
+        void Info(Object message);
 
-        void InfoFormat(string format, params object[] args);
+        void InfoFormat(String format, params Object[] args);
 
-        void Warn(object message);
+        void Warn(Object message);
 
-        void WarnFormat(string format, params object[] args);
+        void WarnFormat(String format, params Object[] args);
 
-        void Error(object message);
+        void Error(Object message);
 
-        void ErrorFormat(string format, params object[] args);
+        void ErrorFormat(String format, params Object[] args);
 
-        void Fatal(object message);
+        void Fatal(Object message);
 
-        void FatalFormat(string format, params object[] args);
+        void FatalFormat(String format, params Object[] args);
     }
 }

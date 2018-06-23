@@ -29,7 +29,7 @@ namespace NEwVlcPlayer
 
         }
 
-        private void OnVlcControlNeedsLibDirectory(object sender, Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs e)
+        private void OnVlcControlNeedsLibDirectory(Object sender, Vlc.DotNet.Forms.VlcLibDirectoryNeededEventArgs e)
         {
 
             String programFilesPath = @"D:\Development\VisualStudio\dll\vlc-2.1.5";
@@ -57,7 +57,7 @@ namespace NEwVlcPlayer
             //VlcContext.Initialize();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(Object sender, RoutedEventArgs e)
         {
             try
             {

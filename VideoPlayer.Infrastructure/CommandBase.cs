@@ -12,12 +12,12 @@ namespace VideoPlayer.Infrastructure
             this._method = method;
         }
 
-        public virtual bool CanExecute(object parameter)
+        public virtual Boolean CanExecute(Object parameter)
         {
             return true;
         }
 
-        public void Execute(object parameter)
+        public void Execute(Object parameter)
         {
             this._method.Invoke();
         }

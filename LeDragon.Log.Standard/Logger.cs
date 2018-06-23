@@ -1,8 +1,7 @@
-﻿using System;
-using LeDragon.Log.Standard;
-using log4net;
+﻿using log4net;
+using System;
 
-namespace Log
+namespace LeDragon.Log.Standard
 {
     public class Logger : ILogger
     {

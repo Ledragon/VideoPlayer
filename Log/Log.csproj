@@ -48,8 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logger.cs" />
-    <Compile Include="LoggerFactory.cs" />
     <Compile Include="LoggingExtension.cs" />
     <Compile Include="LoggingSystemManager.cs" />
     <Compile Include="PerfLogger.cs" />

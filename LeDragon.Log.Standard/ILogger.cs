@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Log
+namespace LeDragon.Log.Standard
 {
     public interface ILogger
 

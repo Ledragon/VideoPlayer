@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeDragon.Log.Standard;
+using System;
 using System.Diagnostics;
 
 namespace Log

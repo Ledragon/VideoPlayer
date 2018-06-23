@@ -1,4 +1,5 @@
 ﻿using System;
+using LeDragon.Log.Standard;
 using log4net;
 
 namespace Log

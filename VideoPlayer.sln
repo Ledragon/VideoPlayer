@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer", "VideoPlayer\VideoPlayer.csproj", "{94B19A70-3F0D-4E7F-9249-4CBDC97D92F9}"
 EndProject
@@ -52,6 +52,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.VideoListInteraction", "VideoPlayer.VideoListInteraction\VideoPlayer.VideoListInteraction.csproj", "{34630FE1-166E-49BC-B527-E47E2BF81AA2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.PlaylistManagement", "VideoPlayer.PlaylistManagement\VideoPlayer.PlaylistManagement.csproj", "{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeDragon.Log.Standard", "LeDragon.Log.Standard\LeDragon.Log.Standard.csproj", "{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,10 @@ Global
 		{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -166,6 +172,9 @@ Global
 		{5030B19E-A359-4628-9A56-9930FB0DC429} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{34630FE1-166E-49BC-B527-E47E2BF81AA2} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{52F602CD-701F-4CCB-BE12-BBB1503DC9BD} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31FA2FE4-54F2-4EFB-8CD9-2430DB8D4FB1}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

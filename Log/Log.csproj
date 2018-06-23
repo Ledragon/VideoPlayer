@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ILogger.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LoggerFactory.cs" />
     <Compile Include="LoggingExtension.cs" />
@@ -58,6 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LeDragon.Log.Standard\LeDragon.Log.Standard.csproj">
+      <Project>{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}</Project>
+      <Name>LeDragon.Log.Standard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

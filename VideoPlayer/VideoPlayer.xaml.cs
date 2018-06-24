@@ -1,6 +1,5 @@
 ﻿using System;
-using HomeModule;
-using Log;
+using LeDragon.Log.Standard;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Common;
 using VideoPlayer.Infrastructure;

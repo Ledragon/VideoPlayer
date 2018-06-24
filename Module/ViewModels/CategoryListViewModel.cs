@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Classes;
-using Log;
+using LeDragon.Log.Standard;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Module.Interfaces;

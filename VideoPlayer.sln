@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classes", "Classes\Classes.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MethodsTest", "MethodsTest\MethodsTest.csproj", "{A6BA87C3-DCFD-48DB-B895-041365E496E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Log", "Log\Log.csproj", "{02C8E3B1-3796-49B2-ABA2-67D0E8644871}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Database.Repository", "VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj", "{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Helpers", "VideoPlayer.Helpers\VideoPlayer.Helpers.csproj", "{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}"
@@ -53,7 +51,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.VideoListIntera
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.PlaylistManagement", "VideoPlayer.PlaylistManagement\VideoPlayer.PlaylistManagement.csproj", "{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeDragon.Log.Standard", "LeDragon.Log.Standard\LeDragon.Log.Standard.csproj", "{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeDragon.Log.Standard", "LeDragon.Log.Standard\LeDragon.Log.Standard.csproj", "{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,10 +71,6 @@ Global
 		{A6BA87C3-DCFD-48DB-B895-041365E496E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6BA87C3-DCFD-48DB-B895-041365E496E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6BA87C3-DCFD-48DB-B895-041365E496E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{02C8E3B1-3796-49B2-ABA2-67D0E8644871}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}.Release|Any CPU.ActiveCfg = Release|Any CPU

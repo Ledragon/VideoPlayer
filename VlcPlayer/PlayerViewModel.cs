@@ -7,7 +7,7 @@ using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media;
 using Classes;
-using Log;
+using LeDragon.Log.Standard;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;

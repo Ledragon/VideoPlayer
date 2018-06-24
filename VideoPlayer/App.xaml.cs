@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
-using Log;
+using LeDragon.Log.Standard;
 using VideoPlayer.Helpers;
 
 namespace VideoPlayer

@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Log
+namespace LeDragon.Log.Standard
 {
     public static class PerfLogger
     {

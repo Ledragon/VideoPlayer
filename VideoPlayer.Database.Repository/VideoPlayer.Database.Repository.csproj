@@ -55,9 +55,9 @@
       <Project>{FFB9C128-CA7E-40BB-BBCD-7B28707C6719}</Project>
       <Name>Classes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Log\Log.csproj">
-      <Project>{02C8E3B1-3796-49B2-ABA2-67D0E8644871}</Project>
-      <Name>Log</Name>
+    <ProjectReference Include="..\LeDragon.Log.Standard\LeDragon.Log.Standard.csproj">
+      <Project>{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}</Project>
+      <Name>LeDragon.Log.Standard</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

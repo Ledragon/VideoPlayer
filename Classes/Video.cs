@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using Classes.Annotations;
-using Log;
+using LeDragon.Log.Standard;
 using Microsoft.WindowsAPICodePack.Shell;
 using ToolLib;
 

@@ -123,10 +123,6 @@
       <Project>{FFB9C128-CA7E-40BB-BBCD-7B28707C6719}</Project>
       <Name>Classes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Log\Log.csproj">
-      <Project>{02C8E3B1-3796-49B2-ABA2-67D0E8644871}</Project>
-      <Name>Log</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ManageLibraryModule\ManageLibraryModule.csproj">
       <Project>{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}</Project>
       <Name>ManageLibraryModule</Name>

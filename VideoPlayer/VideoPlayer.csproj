@@ -82,9 +82,8 @@
       <HintPath>..\packages\Costura.Fody.1.6.2\lib\dotnet\Costura.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism.Composition">
@@ -226,9 +225,9 @@
       <Project>{3b7b2ca0-a0e1-44eb-ad21-2b15919aa62d}</Project>
       <Name>LeDragon.Controls</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Log\Log.csproj">
-      <Project>{02c8e3b1-3796-49b2-aba2-67d0e8644871}</Project>
-      <Name>Log</Name>
+    <ProjectReference Include="..\LeDragon.Log.Standard\LeDragon.Log.Standard.csproj">
+      <Project>{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}</Project>
+      <Name>LeDragon.Log.Standard</Name>
     </ProjectReference>
     <ProjectReference Include="..\ManageLibraryModule\ManageLibraryModule.csproj">
       <Project>{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}</Project>

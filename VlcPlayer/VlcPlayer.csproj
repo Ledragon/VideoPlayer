@@ -114,9 +114,9 @@
       <Project>{ffb9c128-ca7e-40bb-bbcd-7b28707c6719}</Project>
       <Name>Classes</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Log\Log.csproj">
-      <Project>{02c8e3b1-3796-49b2-aba2-67d0e8644871}</Project>
-      <Name>Log</Name>
+    <ProjectReference Include="..\LeDragon.Log.Standard\LeDragon.Log.Standard.csproj">
+      <Project>{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}</Project>
+      <Name>LeDragon.Log.Standard</Name>
     </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Common\VideoPlayer.Common.csproj">
       <Project>{85d3796a-9536-460e-8ff0-f96acd68878f}</Project>

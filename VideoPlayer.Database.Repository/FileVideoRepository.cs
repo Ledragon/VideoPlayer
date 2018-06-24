@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 using Classes;
-using Log;
+using LeDragon.Log.Standard;
 
 namespace VideoPlayer.Database.Repository
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using log4net;
 using log4net.Appender;
 using log4net.Config;
@@ -6,7 +7,7 @@ using log4net.Core;
 using log4net.Layout;
 using log4net.Repository.Hierarchy;
 
-namespace Log
+namespace LeDragon.Log.Standard
 {
     public class LoggingSystemManager
     {
@@ -33,14 +34,14 @@ namespace Log
             };
             rollingFileAppender.ActivateOptions();
 
-            Hierarchy hierarchy = LogManager.GetRepository() as Hierarchy;
+            var loggerRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+            Hierarchy hierarchy = loggerRepository as Hierarchy;
             var root = hierarchy.Root;
             root.RemoveAllAppenders();
 
             root.Level = Level.All;
 
-            BasicConfigurator.Configure(rollingFileAppender);
-
+            BasicConfigurator.Configure(loggerRepository);
         }
         
     }

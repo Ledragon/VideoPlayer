@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Data;
 using Classes;
 using Classes.Annotations;
-using Log;
+using LeDragon.Log.Standard;
 
 namespace VideosListModule.ViewModels
 {

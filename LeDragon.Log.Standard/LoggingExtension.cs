@@ -1,6 +1,6 @@
 ﻿using log4net;
 
-namespace Log
+namespace LeDragon.Log.Standard
 {
     public static class LoggingExtension
     {
@@ -11,10 +11,10 @@ namespace Log
         /// <typeparam name="T">The type of the logger.</typeparam>
         /// <param name="thing"></param>
         /// <returns></returns>
-        public static ILog Logger<T>(this T thing)
+        public static ILogger Logger<T>(this T thing)
         {
             var log = LogManager.GetLogger(typeof(T));
-            return log;
+            return new Logger(log);
         }
     }
 }

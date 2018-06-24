@@ -5,6 +5,7 @@ using log4net.Appender;
 using log4net.Config;
 using log4net.Core;
 using log4net.Layout;
+using log4net.Repository;
 using log4net.Repository.Hierarchy;
 
 namespace LeDragon.Log.Standard
@@ -41,7 +42,7 @@ namespace LeDragon.Log.Standard
 
             root.Level = Level.All;
 
-            BasicConfigurator.Configure(loggerRepository);
+            BasicConfigurator.Configure(loggerRepository, rollingFileAppender);
         }
         
     }

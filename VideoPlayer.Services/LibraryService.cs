@@ -94,7 +94,7 @@ namespace VideoPlayer.Services
             return result;
         }
 
-        public async Task<IEnumerable<Video>>  UpdateAsync()
+        public async Task<IEnumerable<Video>> UpdateAsync()
         {
             return await Task.Factory.StartNew(() => this.Update());
         }
@@ -164,8 +164,13 @@ namespace VideoPlayer.Services
         {
             try
             {
-                var serializer = new Newtonsoft.Json.JsonSerializer();
-                var json = serializer.Serialize(videos);
+                var json = videos.ToJson();
+                var fileName = Path.Combine(FileSystemHelper.GetDefaultFolder(), "Library.json");
+                if (File.Exists(fileName))
+                {
+                    File.Delete(fileName);
+                }
+                File.WriteAllText(fileName, json);
             }
             catch (Exception e)
             {

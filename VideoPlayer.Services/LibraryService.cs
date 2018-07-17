@@ -138,7 +138,7 @@ namespace VideoPlayer.Services
             this.GetObjectsFromFile().PlayLists.Add(playlist);
         }
 
-        private void BackupLibrary()
+        public void BackupLibrary()
         {
             this.BackupLibrary(FileSystemHelper.GetDefaultFileName());
         }
@@ -158,6 +158,19 @@ namespace VideoPlayer.Services
             }
             File.Copy(filePath, destinationPath);
             this.Logger().DebugFormat("Library backed up to '{0}'.", destinationPath);
+        }
+
+        public void ToJson(IEnumerable<Video> videos)
+        {
+            try
+            {
+                var serializer = new Newtonsoft.Json.JsonSerializer();
+                var json = serializer.Serialize(videos);
+            }
+            catch (Exception e)
+            {
+                this.Logger().Error(e);
+            }
         }
 
         public List<Video> GetVideosByFilePath(IEnumerable<String> fileNames)

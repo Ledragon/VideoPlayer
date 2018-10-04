@@ -30,6 +30,11 @@ namespace ManageLibraryModule
 
             this.ToJsonCommand = new DelegateCommand(() => { libraryService.ToJson(this.Videos.SourceCollection as IEnumerable<Video>); });
 
+            this.CreateNfoCommand = new DelegateCommand(() =>
+            {
+
+            });
+
             this._eventAggregator.GetEvent<LibraryUpdated>()
                 .Subscribe(newList =>
                 {
@@ -47,6 +52,7 @@ namespace ManageLibraryModule
         public ICommand UpdateCommand { get; }
         public ICommand CleanCommand { get; }
         public ICommand ToJsonCommand { get; }
+        public ICommand CreateNfoCommand { get; }
 
         public VideosCollectionView Videos
         {

@@ -27,6 +27,7 @@
             <Button Command="{Binding UpdateCommand}">Load</Button>
             <Button Command="{Binding CleanCommand}">Clean</Button>
             <Button Command="{Binding ToJsonCommand}">Json</Button>
+            <Button Command="{Binding CreateNfoCommand}">NFO</Button>
         </StackPanel>
         <Grid Grid.Row="1" d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
             <Grid.ColumnDefinitions>

@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace VideoPlayer.Nfo
 {
-    public class NfoSerializer
+    public class NfoSerializer : INfoSerializer
     {
         public void Serialize(MovieNfo nfo, String path)
         {

@@ -6,6 +6,7 @@ using Classes;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.Nfo;
 using VideoPlayer.Services;
 using VideosListModule.ViewModels;
 using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
@@ -19,7 +20,7 @@ namespace ManageLibraryModule
         private Video _selectedVideo;
         private VideosCollectionView _videos;
 
-        public EditViewModel(ILibraryService libraryService, IEventAggregator eventAggregator)
+        public EditViewModel(ILibraryService libraryService, IEventAggregator eventAggregator, INfoService nfoService)
         {
             this._libraryService = libraryService;
             this._eventAggregator = eventAggregator;
@@ -32,7 +33,7 @@ namespace ManageLibraryModule
 
             this.CreateNfoCommand = new DelegateCommand(() =>
             {
-
+                nfoService.CreateNfo(collection);
             });
 
             this._eventAggregator.GetEvent<LibraryUpdated>()

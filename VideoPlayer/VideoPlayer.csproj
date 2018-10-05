@@ -257,6 +257,10 @@
       <Project>{80e2c9d4-f13f-482e-bc5d-678e61a88fa6}</Project>
       <Name>VideoPlayer.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Nfo\VideoPlayer.Nfo.csproj">
+      <Project>{39ADC655-7F6D-4C16-BF9D-AB95FCDCA1A8}</Project>
+      <Name>VideoPlayer.Nfo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.PlaylistManagement\VideoPlayer.PlaylistManagement.csproj">
       <Project>{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}</Project>
       <Name>VideoPlayer.PlaylistManagement</Name>

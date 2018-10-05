@@ -25,7 +25,9 @@ namespace VideoPlayer.Nfo
 
     public class Thumb
     {
+        [XmlAttribute]
         public String Aspect { get; set; }
+        [XmlAttribute]
         public String Preview { get; set; }
     }
 

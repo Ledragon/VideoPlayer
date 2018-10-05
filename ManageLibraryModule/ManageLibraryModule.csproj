@@ -138,6 +138,10 @@
       <Project>{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}</Project>
       <Name>VideoPlayer.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Nfo\VideoPlayer.Nfo.csproj">
+      <Project>{39ADC655-7F6D-4C16-BF9D-AB95FCDCA1A8}</Project>
+      <Name>VideoPlayer.Nfo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Services\VideoPlayer.Services.csproj">
       <Project>{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}</Project>
       <Name>VideoPlayer.Services</Name>

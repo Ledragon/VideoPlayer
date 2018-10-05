@@ -9,6 +9,7 @@ using PlaylistModule;
 using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.Nfo;
 using VideoPlayer.PlaylistManagement;
 using VideoPlayer.Services;
 using VideoPlayer.VideoListInteraction;
@@ -27,6 +28,8 @@ namespace VideoPlayer
                 .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager())
                 .RegisterType<IPlaylistService, PlaylistService>(new ContainerControlledLifetimeManager())
                 .RegisterType<IModuleManager, Infrastructure.ModuleManager>(new ContainerControlledLifetimeManager())
+                .RegisterType<INfoSerializer, NfoSerializer>(new ContainerControlledLifetimeManager())
+                .RegisterType<INfoService, NfoService>(new ContainerControlledLifetimeManager())
                 .RegisterType<StackPanelRegionAdapter>();
 
             //TEMP

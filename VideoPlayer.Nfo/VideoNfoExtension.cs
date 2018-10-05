@@ -12,6 +12,7 @@ namespace VideoPlayer.Nfo
     {
         public static MovieNfo ToNfo(this Video video)
         {
+
             var res = new MovieNfo
             {
                 DateAdded = video.DateAdded,
@@ -26,10 +27,18 @@ namespace VideoPlayer.Nfo
                 Runtime = (Int32)Math.Floor(video.Length.TotalMinutes),
                 Thumb = new Thumb
                 {
-
+                    Preview = video.GetThumbPath(),
+                    Aspect = "poster"
                 }
             };
             return res;
+        }
+
+        public static String GetThumbPath(this Video video)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(video.FileName);
+            var thumbName = Path.Combine(new FileInfo(video.FileName).DirectoryName, fileName + ".preview.png");
+            return thumbName;
         }
     }
 }

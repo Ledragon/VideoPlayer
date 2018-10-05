@@ -19,6 +19,7 @@ namespace VideoPlayer.Nfo
         public DateTime LastPlayed { get; set; }
         public Set Set { get; set; }
         public DateTime DateAdded { get; set; }
+        public Thumb Thumb { get; set; }
 
     }
 

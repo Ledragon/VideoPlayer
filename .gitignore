@@ -293,3 +293,4 @@ packages
 *.DotSettings
 bin
 obj
+_dll

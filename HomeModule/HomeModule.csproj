@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HomeModule</RootNamespace>
     <AssemblyName>HomeModule</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -91,8 +91,6 @@
     <Compile Include="HomePageViewModel.cs" />
     <Compile Include="IHomePage.cs" />
     <Compile Include="IHomePageViewModel.cs" />
-    <Compile Include="IVideoPlayer.cs" />
-    <Compile Include="IVideoPlayerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -106,9 +104,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="VideoPlayer.cs" />
-    <Compile Include="VideoPlayerModule.cs" />
-    <Compile Include="VideoPlayerViewModel.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -151,10 +146,6 @@
     <ProjectReference Include="..\VideosListModule\VideosListModule.csproj">
       <Project>{57309725-0F3D-4A63-B876-05366E0DE7DF}</Project>
       <Name>VideosListModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VideosPageModule\VideosPageModule.csproj">
-      <Project>{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}</Project>
-      <Name>VideosPageModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\VlcPlayer\VlcPlayer.csproj">
       <Project>{A060B03D-3DEF-4826-888F-1B80059B7E13}</Project>

@@ -34,7 +34,7 @@ namespace Log
             rollingFileAppender.ActivateOptions();
 
             Hierarchy hierarchy = LogManager.GetRepository() as Hierarchy;
-            Logger root = hierarchy.Root;
+            var root = hierarchy.Root;
             root.RemoveAllAppenders();
 
             root.Level = Level.All;

@@ -39,6 +39,10 @@ namespace VlcPlayer
             this._eventAggregator.GetEvent<RateChanged>().Subscribe(this.RateChanged);
             this._eventAggregator.GetEvent<PlayedEvent>().Subscribe(this.Play);
             this._eventAggregator.GetEvent<VideoPositionChanged>().Subscribe(this.PositionChanged);
+            if (viewModel.CurrentVideo != null)
+            {
+                this.Play(viewModel.CurrentVideo);
+            }
         }
 
         private void PositionChanged(Single position)
@@ -167,7 +171,7 @@ namespace VlcPlayer
                 this.Logger().Error(exc.Message);
                 this.Logger().Error(exc.Source);
             }
-            if (!isPaused)
+            if (!isPaused && !this._viewModel.IsPaused)
             {
                 this._VLCcontrol.Play();
             }

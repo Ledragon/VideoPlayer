@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace Module.Views
 {
@@ -8,9 +8,10 @@ namespace Module.Views
     /// </summary>
     public partial class SortGrid : UserControl, ISortGrid
     {
-        public SortGrid()
+        public SortGrid(ISortGridViewModel viewModel)
         {
             this.InitializeComponent();
+            this.ViewModel = viewModel;
         }
 
         public IViewModel ViewModel

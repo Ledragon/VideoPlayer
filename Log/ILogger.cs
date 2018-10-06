@@ -1,6 +1,7 @@
 ﻿namespace Log
 {
     public interface ILogger
+
     {
         void Debug(object message);
 

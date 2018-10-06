@@ -46,6 +46,7 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
+    public class PlayOneRequestEvent : PubSubEvent<Video> { }
     public class PlayOneEvent : PubSubEvent<Video>
     {
     }
@@ -55,6 +56,9 @@ namespace VideoPlayer.Infrastructure
     }
 
     public class OnStop : PubSubEvent<Object>
+    {
+    }
+    public class OnStopped : PubSubEvent<Object>
     {
     }
 
@@ -78,6 +82,10 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
+
+    public class SetVideo : PubSubEvent<Video>
+    {
+    }
     public class VideoEdited : PubSubEvent<Object>
     {
     }
@@ -95,6 +103,8 @@ namespace VideoPlayer.Infrastructure
     }
 
     public class PlayAllEvent : PubSubEvent<Object>
+    {
+    }public class PlayRangeEvent : PubSubEvent<IEnumerable<Video>>
     {
     }
 

@@ -12,6 +12,31 @@
     <Style TargetType="Button">
         <Setter Property="Margin"
                 Value="5" />
+        <Setter Property="Padding" Value="5" />
+    </Style>
+    <Style TargetType="TextBox" x:Key="TextBoxBase">
+        <Setter Property="Margin"
+                Value="5" />
+        <Setter Property="Padding"
+                Value="5" />
+    </Style>
+    <Style TargetType="DataGrid">
+        <Setter Property="Margin"
+                Value="5" />
+    </Style>
+    <Style TargetType="ComboBox">
+        <Setter Property="Margin"
+                Value="5" />
+        <Setter Property="Padding"
+                Value="5" />
+    </Style>
+    <Style TargetType="ListBox">
+        <Setter Property="Margin"
+                Value="5" />
+    </Style>
+    <Style TargetType="Image">
+        <Setter Property="Margin"
+                Value="5" />
     </Style>
     <Style TargetType="TextBlock" x:Key="TrimmedTextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -41,6 +66,11 @@
         <Setter Property="ItemContainerStyle"
                 Value="{StaticResource HiddenTabItem}" />
     </Style>
-    
+
+    <Style TargetType="ContentControl"
+           x:Key="VideosViewControl">
+        <Setter Property="Width"
+                Value="200" />
+    </Style>
 
 </ResourceDictionary>

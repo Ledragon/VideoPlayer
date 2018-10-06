@@ -11,11 +11,12 @@ using Log;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 using VideoPlayer.Services;
 
 namespace VideosListModule.ViewModels
 {
-    public class VideosListViewModel : VideoPlayer.Infrastructure.ViewFirst.ViewModelBase, IVideosListViewModel
+    public class VideosListViewModel : ViewModelBase, IVideosListViewModel
     {
         private Video _currentVideo;
         private Int32 _editIndex;
@@ -132,12 +133,10 @@ namespace VideosListModule.ViewModels
                 this._eventAggregator.GetEvent<TagFilterChangedEvent>().Subscribe(this.FilterTag);
                 this._eventAggregator.GetEvent<PlayAllEvent>().Subscribe(this.PlayAll);
                 this._eventAggregator.GetEvent<SortingChangedEvent>().Subscribe(this.Sort);
-                this._eventAggregator.GetEvent<LibraryUpdated>().Subscribe(this.UpdateVideoListView);
                 this._eventAggregator.GetEvent<OnAddVideoRangeRequest>().Subscribe(this.AddRange);
                 this.InfoVisibility = Visibility.Visible;
 
                 this.AddVideoCommand = new DelegateCommand(this.Add, this.CanCommandsExecute);
-                this.PlayPlaylistCommand = new DelegateCommand(this.PlayPlaylist, this.CanCommandsExecute);
                 this.PlayOneCommand = new DelegateCommand(this.PlayOne, this.CanCommandsExecute);
                 this.NextCommand = new DelegateCommand(() =>
                 {
@@ -153,7 +152,6 @@ namespace VideosListModule.ViewModels
                 },
                     () => this.FilteredVideos != null && this.FilteredVideos.CanMoveToPreviousPage);
                 this.LoadDataAsyncCommand = new DelegateCommand(async () => await this.Init());
-                //await this.Init();
             }
             catch (Exception e)
             {
@@ -216,42 +214,35 @@ namespace VideosListModule.ViewModels
 
         private void PlayAll(Object obj)
         {
-            this._eventAggregator.GetEvent<ClearPlaylistEvent>().Publish(null);
-            var videoAddedEvent = this._eventAggregator.GetEvent<OnAddVideo>();
-            foreach (var video in this.FilteredVideos.Cast<Video>())
-            {
-                videoAddedEvent.Publish(video);
-            }
-            this.PlayPlaylist();
+            this._eventAggregator.GetEvent<PlayRangeEvent>()
+                .Publish(this.FilteredVideos.Cast<Video>());
         }
 
         private void AddRange(Object obj)
         {
-            this._eventAggregator.GetEvent<OnAddVideoRange>().Publish(this.FilteredVideos.Cast<Video>());
+            this._eventAggregator.GetEvent<OnAddVideoRange>()
+                .Publish(this.FilteredVideos.Cast<Video>());
         }
 
         private void PlayOne()
         {
             if (File.Exists(this.CurrentVideo.FileName))
             {
-                this._eventAggregator.GetEvent<PlayOneEvent>().Publish(this.CurrentVideo);
+                this._eventAggregator.GetEvent<PlayRangeEvent>()
+                    .Publish(new List<Video> {this.CurrentVideo});
             }
             else
             {
                 MessageBox.Show("File not found.");
             }
         }
-
-        private void PlayPlaylist()
-        {
-            this._eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(null);
-        }
-
+        
         private void Add()
         {
             if (this.CurrentVideo != null && File.Exists(this.CurrentVideo.FileName))
             {
-                this._eventAggregator.GetEvent<OnAddVideo>().Publish(this.CurrentVideo);
+                this._eventAggregator.GetEvent<OnAddVideo>()
+                    .Publish(this.CurrentVideo);
             }
         }
     }

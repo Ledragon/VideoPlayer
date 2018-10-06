@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using HomeModule;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
@@ -10,9 +9,12 @@ using PlaylistModule;
 using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.PlaylistManagement;
 using VideoPlayer.Services;
 using VideoPlayer.VideoListInteraction;
+using VideoPlayer.ViewModels;
 using VlcPlayer;
+using IModuleManager = VideoPlayer.Infrastructure.IModuleManager;
 
 namespace VideoPlayer
 {
@@ -23,11 +25,13 @@ namespace VideoPlayer
             this.Container.RegisterType<IVideoRepository, FileVideoRepository>(new ContainerControlledLifetimeManager())
                 .RegisterType<ILibraryService, LibraryService>(new ContainerControlledLifetimeManager())
                 .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager())
+                .RegisterType<IPlaylistService, PlaylistService>(new ContainerControlledLifetimeManager())
+                .RegisterType<IModuleManager, Infrastructure.ModuleManager>(new ContainerControlledLifetimeManager())
                 .RegisterType<StackPanelRegionAdapter>();
 
             //TEMP
             this.Container.RegisterType<IVideoPlayerViewModel, VideoPlayerViewModel>();
-            this.Container.RegisterType<IVideoPlayer, HomeModule.VideoPlayer>();
+            //this.Container.RegisterType<IVideoPlayer, HomeModule.VideoPlayer>();
             Locator.Container = this.Container;
             return this.Container.Resolve<MainWindow>();
         }
@@ -44,13 +48,12 @@ namespace VideoPlayer
             this.AddModule<ModuleModule>()
                 .AddModule<PlayListModule>()
                 .AddModule<VlcPlayerModule>()
-                .AddModule<HomeModule.HomeModule>()
-                .AddModule<PlayListManagementModule>()
-                .AddModule<SettingsModule.SettingsModule>()
                 .AddModule<VideosListModule.VideosListModule>()
-                .AddModule<VideosPageModule.VideosPageModule>()
-                .AddModule<ManageLibraryModule.ManageLibraryModule>()
+                .AddModule<HomeModule.HomeModule>()
                 .AddModule<VideoListInteractionModule>()
+                .AddModule<SettingsModule.SettingsModule>()
+                .AddModule<PlayListManagementModule>()
+                .AddModule<ManageLibraryModule.ManageLibraryModule>()
                 ;
         }
 

@@ -3,13 +3,13 @@
 namespace VideosListModule.Views
 {
     /// <summary>
-    /// Interaction logic for VideosList.xaml
+    ///     Interaction logic for VideosList.xaml
     /// </summary>
     public partial class VideosList : UserControl
     {
         public VideosList()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

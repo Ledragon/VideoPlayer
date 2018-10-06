@@ -1,5 +1,5 @@
 using System.Collections.ObjectModel;
-using VideoPlayer.Infrastructure;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace Module
 {

@@ -206,6 +206,12 @@ namespace Classes
             }
         }
 
+        [XmlIgnore]
+        public Boolean HasContactSheet
+        {
+            get { return File.Exists(this.FileName + ".png"); }
+        }
+
         public Size Resolution
         {
             get

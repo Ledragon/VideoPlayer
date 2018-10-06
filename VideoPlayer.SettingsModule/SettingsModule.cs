@@ -1,25 +1,24 @@
-﻿using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
-using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure;
 
 namespace VideoPlayer.SettingsModule
 {
-    public class SettingsModule : ModuleBase
+    public class SettingsModule : IPrismModule
     {
-        private readonly IRegionManager _regionManager;
+        private readonly IModuleManager _moduleManager;
 
-        public SettingsModule(IUnityContainer unityContainer, IRegionManager regionManager) : base(unityContainer, regionManager)
+        public SettingsModule(IModuleManager moduleManager)
         {
-            this._regionManager = regionManager;
+            this._moduleManager = moduleManager;
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
-            this.RegisterType<ISettingsViewModel, SettingsViewModel>()
+            this._moduleManager
+                .RegisterType<ISettingsViewModel, SettingsViewModel>()
                 .RegisterType<ISettingsButtonViewModel, SettingsButtonViewModel>()
-                .RegisterType<ISettingsPageButtonView, SettingsPageButtonView>();
-            this.RegisterView<SettingsPage>();
-            this._regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof (ISettingsPageButtonView));
+                .RegisterType<ISettingsPageButtonView, SettingsPageButtonView>()
+                .RegisterView<SettingsPage>()
+                .RegisterViewWithRegion<ISettingsPageButtonView>(RegionNames.NavigationRegion);
         }
     }
 }

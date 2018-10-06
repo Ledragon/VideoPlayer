@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VideoPlayer</RootNamespace>
     <AssemblyName>VideoPlayer</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -78,6 +78,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Costura, Version=1.6.2.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Costura.Fody.1.6.2\lib\dotnet\Costura.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -149,16 +153,12 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="PlayListManagementModule.cs" />
-    <Compile Include="ViewModels\IPlayListManagementViewModel.cs" />
-    <Compile Include="ViewModels\PlayListManagementViewModel.cs" />
+    <Compile Include="VideoPlayerModule.cs" />
+    <Compile Include="ViewModels\IVideoPlayerViewModel.cs" />
     <Compile Include="ImageConverter.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\IPlayListManagementView.cs" />
-    <Compile Include="Views\PlayListManagementView.xaml.cs">
-      <DependentUpon>PlayListManagementView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ViewModels\VideoPlayerViewModel.cs" />
     <Compile Include="Views\StatusBar.xaml.cs">
       <DependentUpon>StatusBar.xaml</DependentUpon>
     </Compile>
@@ -178,10 +178,6 @@
       <DependentUpon>VideoPlayer.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\PlayListManagementView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\StatusBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -262,6 +258,10 @@
       <Project>{80e2c9d4-f13f-482e-bc5d-678e61a88fa6}</Project>
       <Name>VideoPlayer.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.PlaylistManagement\VideoPlayer.PlaylistManagement.csproj">
+      <Project>{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}</Project>
+      <Name>VideoPlayer.PlaylistManagement</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Services\VideoPlayer.Services.csproj">
       <Project>{8C8E56E4-9B91-4EC1-82CA-7EC017E4E43A}</Project>
       <Name>VideoPlayer.Services</Name>
@@ -277,10 +277,6 @@
     <ProjectReference Include="..\VideosListModule\VideosListModule.csproj">
       <Project>{57309725-0F3D-4A63-B876-05366E0DE7DF}</Project>
       <Name>VideosListModule</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VideosPageModule\VideosPageModule.csproj">
-      <Project>{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}</Project>
-      <Name>VideosPageModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\VlcPlayer\VlcPlayer.csproj">
       <Project>{a060b03d-3def-4826-888f-1b80059b7e13}</Project>
@@ -391,9 +387,11 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\Fody.1.28.3\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.1.28.3\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.2.4.4\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.2.4.4\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets'))" />
   </Target>
-  <Import Project="..\packages\Fody.1.28.3\build\Fody.targets" Condition="Exists('..\packages\Fody.1.28.3\build\Fody.targets')" />
+  <Import Project="..\packages\Fody.2.4.4\build\Fody.targets" Condition="Exists('..\packages\Fody.2.4.4\build\Fody.targets')" />
+  <Import Project="..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets" Condition="Exists('..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

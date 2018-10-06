@@ -1,27 +1,21 @@
-﻿using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
-using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure;
 
 namespace VideosPageModule
 {
-    public class VideosPageModule : ModuleBase
+    public class VideosPageModule : IPrismModule
     {
-        private readonly IRegionManager _regionManager;
+        private readonly IModuleManager _moduleManager;
 
-        public VideosPageModule(IUnityContainer unityContainer, IRegionManager regionManager)
-            : base(unityContainer, regionManager)
+        public VideosPageModule(IModuleManager moduleManager)
         {
-            this._regionManager = regionManager;
+            this._moduleManager = moduleManager;
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
-            this.RegisterType<IVideosPageViewModel, VideosPageViewModel>();
-            this.RegisterView<VideosPage>();
-
-            this.RegisterType<IVideosPageButtonViewModel, VideosPageButtonViewModel>()
-                .RegisterType<IVideosPageButtonView, VideosPageButtonView>();
-            this._regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, typeof(IVideosPageButtonView));
+            this._moduleManager
+                .RegisterType<IVideosPageViewModel, VideosPageViewModel>()
+                .RegisterView<VideosPage>();
         }
     }
 }

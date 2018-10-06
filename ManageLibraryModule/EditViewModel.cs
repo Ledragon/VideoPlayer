@@ -38,7 +38,8 @@ namespace ManageLibraryModule
         private void Refresh(List<Video> collection)
         {
             this.Videos = new VideosCollectionView(collection, 0);
-            this.Videos.Sort(new SortDescription("Category", ListSortDirection.Ascending));
+            //this.Videos.Sort(new SortDescription("Category", ListSortDirection.Ascending));
+            this.Videos.Sort(new SortDescription("DateAdded", ListSortDirection.Descending));
         }
 
         public ICommand UpdateCommand { get; }
@@ -69,6 +70,7 @@ namespace ManageLibraryModule
                 }
                 this._selectedVideo = value;
                 this._eventAggregator.GetEvent<VideoEditing>().Publish(this._selectedVideo);
+                this._eventAggregator.GetEvent<SetVideo>().Publish(this._selectedVideo);
                 this.OnPropertyChanged();
             }
         }

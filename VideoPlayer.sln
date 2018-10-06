@@ -45,13 +45,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InformationEditionModule", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeDragon.Controls", "LeDragon.Controls\LeDragon.Controls.csproj", "{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideosPageModule", "VideosPageModule\VideosPageModule.csproj", "{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManageLibraryModule", "ManageLibraryModule\ManageLibraryModule.csproj", "{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.SettingsModule", "VideoPlayer.SettingsModule\VideoPlayer.SettingsModule.csproj", "{5030B19E-A359-4628-9A56-9930FB0DC429}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.VideoListInteraction", "VideoPlayer.VideoListInteraction\VideoPlayer.VideoListInteraction.csproj", "{34630FE1-166E-49BC-B527-E47E2BF81AA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.PlaylistManagement", "VideoPlayer.PlaylistManagement\VideoPlayer.PlaylistManagement.csproj", "{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,10 +131,6 @@ Global
 		{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B7B2CA0-A0E1-44EB-AD21-2B15919AA62D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -147,6 +143,10 @@ Global
 		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34630FE1-166E-49BC-B527-E47E2BF81AA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F602CD-701F-4CCB-BE12-BBB1503DC9BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,10 +162,10 @@ Global
 		{B7AA01EE-C40D-4D5F-AF7D-85050154D1EC} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{57309725-0F3D-4A63-B876-05366E0DE7DF} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{5638EDFA-60FA-49B9-A7D3-99B043BF7EF5} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
-		{C8DC55BE-0198-4126-BBD7-9B4C4F7358BE} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{AC0283FC-4A42-4BFE-8158-BDB7F2BF6D17} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{5030B19E-A359-4628-9A56-9930FB0DC429} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 		{34630FE1-166E-49BC-B527-E47E2BF81AA2} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
+		{52F602CD-701F-4CCB-BE12-BBB1503DC9BD} = {D5A6E48F-B4F3-4079-920E-62429AB43D28}
 	EndGlobalSection
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

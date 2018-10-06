@@ -2,6 +2,7 @@
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
+using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace VideoPlayer.Infrastructure
 {
@@ -18,44 +19,22 @@ namespace VideoPlayer.Infrastructure
 
         public abstract void Initialize();
 
-        protected void ReferenceRegion<T>(String regionName) where T : IViewModel
+        public ModuleBase RegisterType<T, U>() where U : T
         {
-            var viewModel = this._unityContainer.Resolve<T>();
-            var view = viewModel.View;
-            this.ReferenceRegion(regionName, view);
+            this._unityContainer.RegisterType<T, U>();
+            return this;
         }
 
-        //protected void ReferenceRegionByView<T>(String regionName) where T : ViewFirst.IView
-        //{
-        //    this.GetValue<T>(regionName, view);
-        //}
-
-        private void ReferenceRegion(String regionName, IView view) //where T : IViewModel
+        public ModuleBase RegisterViewWithRegion<T>(String regionName) where T : IView
         {
-            if (this._regionManager.Regions.ContainsRegionWithName(regionName))
-            {
-                var region = this._regionManager.Regions[regionName];
-                region.Add(view);
-            }
-            else
-            {
-                this._regionManager.RegisterViewWithRegion(regionName, view.GetType());
-            }
+            this._regionManager.RegisterViewWithRegion(regionName, typeof (T));
+            return this;
         }
 
-        protected void RegisterType<T>()
+        public ModuleBase RegisterView<T>()
         {
-            this._unityContainer.RegisterType<T>();
-        }
-
-        protected IUnityContainer RegisterView<T>()
-        {
-            return this._unityContainer.RegisterType<Object, T>(typeof(T).FullName);
-        }
-
-        protected IUnityContainer RegisterType<T, U>() where U : T
-        {
-            return this._unityContainer.RegisterType<T, U>();
+            this._unityContainer.RegisterType<Object, T>(typeof (T).FullName);
+            return this;
         }
     }
 }

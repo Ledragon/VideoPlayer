@@ -3,7 +3,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:VideosListModule.Views"
-             xmlns:infrastructure11="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
+             xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
              xmlns:regions="http://www.codeplex.com/CompositeWPF"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:controls="clr-namespace:LeDragon.Controls;assembly=LeDragon.Controls"
@@ -38,15 +38,17 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <views:VideosList Grid.Column="0" />
         <Grid Grid.Column="1"
               Background="{StaticResource BackgroundColorBrush}"
-              Margin="0,0,0,5">
+              Margin="5">
             <ContentControl Grid.Row="0"
-                            regions:RegionManager.RegionName="{x:Static infrastructure11:RegionNames.VideoInfoRegion}" />
+                            regions:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideoInfoRegion}" 
+                            />
         </Grid>
-        <views:VideosList Grid.Column="0" />
-
-        <controls:LoadingPanel  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+        <controls:LoadingPanel  Grid.Row="0" Grid.Column="0"
+                                Grid.ColumnSpan="2" 
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
     </Grid>

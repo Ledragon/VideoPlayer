@@ -3,6 +3,8 @@ using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using VlcPlayer;
+using ApplicationCommands = VideoPlayer.Infrastructure.ApplicationCommands;
 using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
 
 namespace VideosPageModule
@@ -15,12 +17,17 @@ namespace VideosPageModule
         public VideosPageViewModel(IEventAggregator eventAggregator)
         {
             this.InitCommands();
-            eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
-            eventAggregator.GetEvent<PlayOneEvent>()
-                .Subscribe(video => this.SelectedIndex = 1);
-            eventAggregator.GetEvent<PlayCompleted>()
-                .Subscribe(dummy => this.SelectedIndex = 0);
-
+            //eventAggregator.GetEvent<OnStop>().Subscribe(this.SwitchToWindowMode);
+            //eventAggregator.GetEvent<PlayOneEvent>()
+            //    .Subscribe(video =>
+            //    {
+            //        ApplicationCommands.NavigateCommand.Execute(typeof(Player));
+            //    });
+            //eventAggregator.GetEvent<OnPlayPlaylistRequest>()
+            //    .Subscribe(video =>
+            //    {
+            //        ApplicationCommands.NavigateCommand.Execute(typeof(Player));
+            //    });
         }
 
         public ICommand SwitchToWindowCommand { get; private set; }

@@ -77,7 +77,7 @@
                         LengthChanged="_VLCcontrol_OnLengthChanged"
                         EndReached="_VLCcontrol_OnEndReached" />
 
-        <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform" />
+        <Image Grid.Column="0" Source="{Binding Source, Mode=OneWay}" Stretch="Uniform"/>
         <Grid Grid.Column="0"
               x:Name="UiControlsGrid"
               HorizontalAlignment="Stretch"
@@ -362,7 +362,7 @@
                  VerticalAlignment="Stretch"
                  HorizontalAlignment="Right"
                  Width="250"
-                 Visibility="{Binding ControlsVisibility, Converter={StaticResource BooleanConverter}}"
+                 Visibility="{Binding PlaylistVisibility, Converter={StaticResource BooleanConverter}}"
                  ItemsSource="{Binding Playlist}"
                  SelectedItem="{Binding CurrentVideo}"
                  Margin="0,5,5,70" Background="#3F808080">

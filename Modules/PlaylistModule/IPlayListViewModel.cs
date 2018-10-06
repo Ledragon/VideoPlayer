@@ -10,7 +10,7 @@ namespace PlaylistModule
     {
         ObservableCollection<Video> Playlist { get; set; }
         Video CurrentVideo { get; set; }
-        TimeSpan TotalDuration { get; set; }
+        TimeSpan TotalDuration { get; }
         ICommand RemoveCommand { get; }
         ICommand AddCommand { get; }
         ICommand AddRangeCommand { get; }

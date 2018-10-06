@@ -27,11 +27,12 @@ namespace Module
 
             this.RegisterType<ITagsListView, TagsList>();
             this.RegisterType<ITagsListViewModel, TagsListViewModel>();
-            this.ReferenceRegion<ITagsListViewModel>(RegionNames.TagsRegion);
+            this._regionManager.RegisterViewWithRegion(RegionNames.TagsRegion, typeof(ITagsListView));
 
             this.RegisterType<ISortGrid, SortGrid>();
             this.RegisterType<ISortGridViewModel, SortGridViewModel>();
-            this.ReferenceRegion<ISortGridViewModel>(RegionNames.SortGridRegion);
+            this._regionManager.RegisterViewWithRegion(RegionNames.SortGridRegion, typeof(ISortGrid));
+            //this.ReferenceRegion<ISortGridViewModel>(RegionNames.SortGridRegion);
 
             this.RegisterType<IEditView, EditVideo>();
             this.RegisterType<IEditVideoViewModel, EditVideoViewModel>();

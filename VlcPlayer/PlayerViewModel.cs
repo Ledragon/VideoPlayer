@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -9,28 +8,34 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Classes;
 using Log;
+using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
-using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
+using VideoPlayer.Infrastructure.ViewFirst;
+using VideoPlayer.Services;
 
 namespace VlcPlayer
 {
-    public class PlayerViewModel : ViewModelBase, IPlayerViewModel
+    public class PlayerViewModel : ViewModelBase, IPlayerViewModel, IActiveAware
     {
         private readonly IEventAggregator _eventAggregator;
+        private readonly IPlaylistService _playlistService;
         private readonly Timer _timer = new Timer();
+        private Boolean _autoPlay;
         private Boolean _controlsVisibility;
         private Video _currentVideo;
         private Cursor _cursor;
         private TimeSpan _duration;
         private Int32 _index;
+        private Boolean _isActive;
         private Boolean _isMouseDown;
         private Boolean _isMute;
         private Boolean _isPaused;
         private Boolean _isRepeat;
         private DateTime _mouseLastMouveDateTime = DateTime.Now;
         private ObservableCollection<Video> _playlist;
+        private Boolean _playlistVisibility;
         private Single _position;
         private TimeSpan _positionTimeSpan;
         private Single _rate;
@@ -38,24 +43,45 @@ namespace VlcPlayer
         private TimeSpan _timePosition;
         private String _title;
 
-        public PlayerViewModel(IEventAggregator eventAggregator)
+        public PlayerViewModel(IEventAggregator eventAggregator, IPlaylistService playlistService)
         {
             this._eventAggregator = eventAggregator;
+            this._playlistService = playlistService;
             this.Rate = 1;
-            this.Playlist = new ObservableCollection<Video>();
             this.IsRepeat = false;
             this.ControlsVisibility = true;
             this._timer.Interval = 500;
             this._timer.Elapsed += this.TimerOnElapsed;
             this._timer.Start();
             this.InitCommands();
+            this._autoPlay = true;
+            eventAggregator.GetEvent<VideoDurationChanged>()
+                .Subscribe(this.VideoDurationChanged);
+            eventAggregator.GetEvent<VideoEnded>()
+                .Subscribe(this.Next);
+            eventAggregator.GetEvent<SetVideo>()
+                .Subscribe(v =>
+                {
+                    this._autoPlay = false;
+                    this.CurrentVideo = v;
+                });
+        }
 
-            eventAggregator.GetEvent<OnAddVideo>().Subscribe(this.AddVideo);
-            eventAggregator.GetEvent<OnPlayPlaylist>().Subscribe(this.PlayAll);
-            eventAggregator.GetEvent<PlayOneEvent>().Subscribe(this.PlayVideo);
-            eventAggregator.GetEvent<VideoDurationChanged>().Subscribe(this.VideoDurationChanged);
-            eventAggregator.GetEvent<VideoEnded>().Subscribe(this.Next);
-            eventAggregator.GetEvent<ClearPlaylistEvent>().Subscribe(this.ClearPlaylist);
+        public Boolean PlaylistVisibility
+        {
+            get
+            {
+                return this.Playlist != null && this.Playlist.Any() && this.ControlsVisibility;
+            }
+            set
+            {
+                if (value == this._playlistVisibility)
+                {
+                    return;
+                }
+                this._playlistVisibility = value;
+                this.OnPropertyChanged();
+            }
         }
 
         public static String AssemblyDirectory
@@ -66,6 +92,29 @@ namespace VlcPlayer
                 var uri = new UriBuilder(codeBase);
                 var path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetDirectoryName(path);
+            }
+        }
+
+        public event EventHandler IsActiveChanged;
+
+        public Boolean IsActive
+        {
+            get { return this._isActive; }
+            set
+            {
+                this._isActive = value;
+                if (value)
+                {
+                    if (this._playlistService.Playlist != null)
+                    {
+                        this.Playlist = new ObservableCollection<Video>(this._playlistService.Playlist);
+                        if (this.Playlist.Any())
+                        {
+                            this._autoPlay = true;
+                            this.CurrentVideo = this.Playlist.First();
+                        }
+                    }
+                }
             }
         }
 
@@ -94,6 +143,7 @@ namespace VlcPlayer
                 }
                 this._controlsVisibility = value;
                 this.OnPropertyChanged();
+                this.OnPropertyChanged(nameof(this.PlaylistVisibility));
             }
         }
 
@@ -129,6 +179,7 @@ namespace VlcPlayer
                 }
                 this._playlist = value;
                 this.OnPropertyChanged();
+                this.OnPropertyChanged(nameof(this.PlaylistVisibility));
             }
         }
 
@@ -158,7 +209,10 @@ namespace VlcPlayer
                 }
                 //if (Equals(value, this._currentVideo)) return;
                 this._currentVideo = value;
-                this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
+                if (this._autoPlay)
+                {
+                    this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
+                }
                 this.OnPropertyChanged();
             }
         }
@@ -312,57 +366,7 @@ namespace VlcPlayer
             this._mouseLastMouveDateTime = DateTime.Now;
             this.Cursor = Cursors.Arrow;
             this.ControlsVisibility = true;
-        }
-
-        public void AddVideo(String path)
-        {
-            var video = new Video(path);
-            this.AddVideo(video);
-        }
-
-        public void AddVideo(Video video)
-        {
-            this.Logger().DebugFormat("Adding video '{0}' to playlist.", video.Title);
-            this.Playlist.Add(video);
-            if (this._currentVideo == null)
-            {
-                this._currentVideo = video;
-            }
-        }
-
-        public void ClearPlaylist()
-        {
-            this.Playlist.Clear();
-        }
-
-        public void PlayVideo(Video video)
-        {
-            this.ClearPlaylist();
-            if (video != null)
-            {
-                this.AddVideo(video);
-                this.CurrentVideo = video;
-                this._eventAggregator.GetEvent<PlayedEvent>().Publish(video);
-            }
-            else
-            {
-                this.Logger().WarnFormat("No video to play.");
-            }
-        }
-
-        public void PlayAll(IEnumerable<Video> playlist)
-        {
-            if (this.Playlist.Any())
-            {
-                this.Logger().DebugFormat("Playing created playlist.");
-                this.Playlist = new ObservableCollection<Video>(playlist);
-                this.CurrentVideo = this.Playlist.First();
-                this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
-            }
-            else
-            {
-                this.Logger().WarnFormat("No video in playlist.");
-            }
+            this.PlaylistVisibility = this.Playlist != null && this.Playlist.Count > 1;
         }
 
         public void Next(Object dummy)
@@ -402,14 +406,25 @@ namespace VlcPlayer
             this.CurrentVideo = this.Playlist[this._index];
         }
 
-        private void ClearPlaylist(Object obj)
+        public void AddVideo(String path)
         {
-            this.ClearPlaylist();
+            var video = new Video(path);
+            this.AddVideo(video);
+        }
+
+        public void AddVideo(Video video)
+        {
+            this.Logger().DebugFormat("Adding video '{0}' to playlist.", video.Title);
+            this.Playlist.Add(video);
+            if (this._currentVideo == null)
+            {
+                this._currentVideo = video;
+            }
         }
 
         private void VideoDurationChanged(TimeSpan span)
         {
-            if (this.CurrentVideo.Length == TimeSpan.Zero)
+            if (this.CurrentVideo != null && this.CurrentVideo.Length == TimeSpan.Zero)
             {
                 this.CurrentVideo.Length = span;
                 this.Duration = span;
@@ -438,7 +453,7 @@ namespace VlcPlayer
         private void Stop()
         {
             this.IsPaused = false;
-            this.Playlist.Clear();
+            this.Playlist?.Clear();
             this._eventAggregator.GetEvent<OnStop>().Publish(null);
         }
 

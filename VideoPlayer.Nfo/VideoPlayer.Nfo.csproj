@@ -48,6 +48,7 @@
     <Compile Include="NfoSerializer.cs" />
     <Compile Include="NfoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utf8Writer.cs" />
     <Compile Include="VideoNfoExtension.cs" />
   </ItemGroup>
   <ItemGroup>

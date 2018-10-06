@@ -10,7 +10,10 @@ namespace VideoPlayer.Nfo
     [XmlRoot(ElementName = "movie")]
     public class MovieNfo
     {
+        [XmlElement(ElementName = "title")]
+        [XmlText]
         public String Title { get; set; }
+        [XmlElement(ElementName = "originaltitle")]
         public String  OriginalTitle { get; set; }
         public Int32 UserRating { get; set; }
         public Int32 Runtime { get; set; }

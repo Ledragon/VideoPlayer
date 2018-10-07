@@ -11,27 +11,35 @@ namespace VideoPlayer.Nfo
     public class MovieNfo
     {
         [XmlElement(ElementName = "title")]
-        [XmlText]
         public String Title { get; set; }
         [XmlElement(ElementName = "originaltitle")]
-        public String  OriginalTitle { get; set; }
+        public String OriginalTitle { get; set; }
         public Int32 UserRating { get; set; }
         public Int32 Runtime { get; set; }
+        [XmlArray("fanart")]
+        [XmlArrayItem("thumb")]
         public List<Thumb> FanArt { get; set; }
         public Int32 PlayCount { get; set; }
         public DateTime LastPlayed { get; set; }
         public Set Set { get; set; }
         public DateTime DateAdded { get; set; }
+        [XmlElement(ElementName = "thumb")]
         public Thumb Thumb { get; set; }
 
     }
 
     public class Thumb
     {
-        [XmlAttribute]
+        [XmlAttribute("aspect")]
         public String Aspect { get; set; }
-        [XmlAttribute]
-        public String Preview { get; set; }
+        [XmlAttribute("preview")]
+        public String Preview
+        {
+            get { return this.Path; }
+            set { this.Path = value; }
+        }
+        [XmlText]
+        public String Path { get; set; }
     }
 
     public class Set

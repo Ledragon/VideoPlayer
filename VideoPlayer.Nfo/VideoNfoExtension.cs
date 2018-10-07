@@ -18,6 +18,7 @@ namespace VideoPlayer.Nfo
                 DateAdded = video.DateAdded,
                 FanArt = new List<Thumb>
                 {
+                    new Thumb { Preview = video.GetThumbPath() },
                     new Thumb { Preview = video.FileName+".png" }
                 },
                 LastPlayed = video.LastPlayed,

@@ -25,7 +25,15 @@ namespace VideoPlayer.Nfo
         public DateTime DateAdded { get; set; }
         [XmlElement(ElementName = "thumb")]
         public Thumb Thumb { get; set; }
-
+        [XmlElement(ElementName = "genre")]
+        public List<String> Genres { get; set; }
+        [XmlElement(ElementName = "tag")]
+        public List<String> Tags { get; set; }
+        public MovieNfo()
+        {
+            this.Genres = new List<String>();
+            this.Tags = new List<String>();
+        }
     }
 
     public class Thumb

@@ -18,7 +18,6 @@ namespace VideoPlayer.Nfo
                 DateAdded = video.DateAdded,
                 FanArt = new List<Thumb>
                 {
-                    new Thumb { Preview = video.GetThumbPath() },
                     new Thumb { Preview = video.FileName+".png" }
                 },
                 LastPlayed = video.LastPlayed,
@@ -26,12 +25,22 @@ namespace VideoPlayer.Nfo
                 Title = video.Title,
                 PlayCount = video.NumberOfViews,
                 Runtime = (Int32)Math.Floor(video.Length.TotalMinutes),
-                Thumb = new Thumb
-                {
-                    Preview = video.GetThumbPath(),
-                    Aspect = "poster"
-                }
             };
+            res.Genres.Add(video.Category);
+            if (video.Tags.Any())
+            {
+                res.Tags.AddRange(video.Tags.Select(t=>t.Value));
+            }
+            var thumbPath = video.GetThumbPath();
+            if (File.Exists(thumbPath))
+            {
+                res.Thumb = new Thumb
+                {
+                    Preview = thumbPath,
+                    Aspect = "poster"
+                };
+                res.FanArt.Add(new Thumb { Preview = thumbPath });
+            }
             return res;
         }
 

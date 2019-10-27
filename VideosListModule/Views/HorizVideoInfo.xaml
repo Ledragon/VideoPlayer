@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="VideosListModule.Views.HorizVideoInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VideosListModule.Views"
+             xmlns:mocks="clr-namespace:VideosListModule.Mocks"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Label" x:Key="Label">
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Margin" Value="5" />
+                <!--<Setter Property="FontFamily" Value="Lucida Calligraphy" />-->
+            </Style>
+            <Style TargetType="Label" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
+                <Setter Property="BorderBrush" Value="Gray" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Height" Value="25" />
+            </Style>
+
+            <Style TargetType="ListBox">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="Current">
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+            <Style TargetType="DataGrid">
+                <Setter Property="Background" Value="Black" />
+                <Setter Property="ColumnWidth" Value="*" />
+            </Style>
+            <Style TargetType="DataGridRow">
+                <Setter Property="Background" Value="Black" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+
+            <Style TargetType="TextBlock" x:Key="Title" BasedOn="{StaticResource Current}">
+                <Setter Property="FontSize" Value="40" />
+                <Setter Property="Foreground" Value="LightGray" />
+            </Style>
+            <Style TargetType="TextBlock" x:Key="Subtitle" BasedOn="{StaticResource Current}">
+                <Setter Property="FontSize" Value="32" />
+                <Setter Property="Foreground" Value="DarkGray" />
+            </Style>
+            <Style TargetType="TextBlock" x:Key="Tag" BasedOn="{StaticResource Current}">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="Foreground" Value="Gray" />
+            </Style>
+            <Style TargetType="TabItem" x:Key="HiddenHeader">
+                <Setter Property="Background" Value="LightGray"></Setter>
+            </Style>
+            <Style TargetType="Image">
+                <Setter Property="Stretch" Value="Uniform"></Setter>
+                <Setter Property="Margin" Value="5"></Setter>
+            </Style>
+            <Style TargetType="TabControl">
+                <Setter Property="Background" Value="Transparent"></Setter>
+                <Setter Property="BorderBrush" Value="Transparent"></Setter>
+                <Setter Property="TabStripPlacement" Value="Bottom"></Setter>
+                <Setter Property="Margin" Value="5"></Setter>
+            </Style>
+            <mocks:MockVideo x:Key="MockVideo" />
+            <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid d:DataContext="{Binding Source={StaticResource MockVideo}, Path=Video}" DataContext="{Binding Video}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}"
+                       Style="{StaticResource Title}" />
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Category}"
+                       Style="{StaticResource Subtitle}" />
+        <ListBox Grid.Row="2"
+                     ItemsSource="{Binding Tags}"
+                     HorizontalAlignment="Stretch"
+                     Margin="0"
+                     Height="40">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Margin="0" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Value}" Style="{StaticResource Tag}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Grid Grid.Row="4" Margin="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Length}"
+                       Style="{StaticResource Current}" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Rating, StringFormat={}{0:0}/5}"
+                       Style="{StaticResource Current}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                       Text="{Binding NumberOfViews, StringFormat=Viewed {0} times}" Style="{StaticResource Current}" />
+                    <TextBlock Grid.Row="3" Grid.Column="0"
+                       Text="{Binding DateAdded, StringFormat=Added on {0:dd/MM/yyy HH:mm}}"
+                       Style="{StaticResource Current}" />
+                </Grid>
+            <TabControl Grid.Column="1">
+                <TabItem Header="Contact sheet">
+                    <Image Source="{Binding Path=DataContext.ContactSheetPath, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                           Stretch="UniformToFill"
+                           VerticalAlignment="Center"/>
+                </TabItem>
+                <TabItem Header="Preview">
+                    <Image Source="{Binding Path=PreviewImage, Converter={StaticResource ImageConverter}}" 
+                           Stretch="UniformToFill"
+                           VerticalAlignment="Center"/>
+                </TabItem>
+            </TabControl>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

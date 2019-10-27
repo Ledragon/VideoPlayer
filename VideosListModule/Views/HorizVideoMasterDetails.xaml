@@ -53,6 +53,7 @@
         <local:HorizontalVideoList  Grid.Row="1"/>
         <controls:LoadingPanel  Grid.Row="0" Grid.Column="0"
                                 Grid.ColumnSpan="2" 
+                                Grid.RowSpan="2"
                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                 Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
 

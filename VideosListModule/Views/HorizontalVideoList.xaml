@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:VideosListModule.Views"
              xmlns:mocks="clr-namespace:VideosListModule.Mocks"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="200" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -54,15 +54,17 @@
                  IsTextSearchEnabled="False"
                  Background="{StaticResource BackgroundColorBrush}"
                  ScrollViewer.CanContentScroll="True"
-                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                 VerticalContentAlignment="Stretch" 
+                VerticalAlignment="Stretch">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>
+                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal" VerticalAlignment="Stretch"/>
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <Grid Margin="5" Width="120">
+                <Grid Margin="5" VerticalAlignment="Stretch" Width="120">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -72,7 +74,8 @@
                         <Image Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
                                    VerticalAlignment="Center"
                                    HorizontalAlignment="Center"
-                                   Stretch="Uniform" />
+                                   Stretch="UniformToFill"
+                               />
                         <TextBlock Text="{Binding Length}" Foreground="White"
                                        Background="#3FD3D3D3"
                                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" />

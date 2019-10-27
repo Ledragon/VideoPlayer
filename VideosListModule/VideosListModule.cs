@@ -16,9 +16,11 @@ namespace VideosListModule
         public void Initialize()
         {
             this._moduleManager
-                .RegisterType<IVideoInfoView, VideoInfo>()
+                //.RegisterType<IVideoInfoView, VideoInfo>()
+                .RegisterType<IVideoInfoView, HorizVideoInfo>()
                 .RegisterType<IVideoInfoViewModel, VideoInfoViewModel>()
-                .RegisterType<IVideosListView, VideosListView>()
+                //.RegisterType<IVideosListView, VideosListView>()
+                .RegisterType<IVideosListView, HorizVideoMasterDetails>()
                 .RegisterType<IVideosListViewModel, VideosListViewModel>()
                 .RegisterViewWithRegion<IVideosListView>(RegionNames.VideosListRegion)
                 .RegisterViewWithRegion<IVideoInfoView>(RegionNames.VideoInfoRegion);

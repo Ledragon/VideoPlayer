@@ -4,11 +4,11 @@ using VideoPlayer.Infrastructure.ViewFirst;
 namespace VideosListModule.Views
 {
     /// <summary>
-    /// Interaction logic for HorizVideoMasterDetails.xaml
+    /// Interaction logic for HorizVideoInfo.xaml
     /// </summary>
-    public partial class HorizVideoMasterDetails : UserControl, IVideosListView
+    public partial class HorizVideoInfo : UserControl, IVideoInfoView
     {
-        public HorizVideoMasterDetails(IVideosListViewModel viewModel)
+        public HorizVideoInfo(IVideoInfoViewModel viewModel)
         {
             this.InitializeComponent();
             this.ViewModel = viewModel;

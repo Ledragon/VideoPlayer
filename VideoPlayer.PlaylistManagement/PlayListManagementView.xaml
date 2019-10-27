@@ -47,11 +47,9 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Views1:HorizVideoMasterDetails />
-            
-            <!--<ContentControl Grid.Row="0"
+            <ContentControl Grid.Row="0"
                             prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosListRegion}"
-                            x:Name="VideoListControl" />-->
+                            x:Name="VideoListControl" />
             <ContentControl Grid.Row="1"
                             prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SortGridRegion}"
                             Margin="5"/>

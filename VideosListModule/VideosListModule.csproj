@@ -88,6 +88,9 @@
     <Compile Include="Views\HorizontalVideoList.xaml.cs">
       <DependentUpon>HorizontalVideoList.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\HorizVideoInfo.xaml.cs">
+      <DependentUpon>HorizVideoInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\HorizVideoMasterDetails.xaml.cs">
       <DependentUpon>HorizVideoMasterDetails.xaml</DependentUpon>
     </Compile>
@@ -138,6 +141,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\HorizontalVideoList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HorizVideoInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

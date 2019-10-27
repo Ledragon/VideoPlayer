@@ -44,6 +44,10 @@
             <mocks:MockVideoList x:Key="DesignViewModel" />
         </ResourceDictionary>
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="A"
+                    Command="{Binding AddVideoCommand}" />
+    </UserControl.InputBindings>
     <ListBox Grid.Row="1"
               d:DataContext="{Binding Source={StaticResource DesignViewModel}}"
                  SelectionMode="Single"
@@ -59,7 +63,14 @@
                 VerticalAlignment="Stretch">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal" VerticalAlignment="Stretch"/>
+                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal" VerticalAlignment="Stretch">
+                    <VirtualizingStackPanel.InputBindings>
+                        <MouseBinding Gesture="LeftDoubleClick"
+                                          Command="{Binding PlayOneCommand}" />
+                        <KeyBinding Key="Return"
+                                        Command="{Binding PlayOneCommand}" />
+                    </VirtualizingStackPanel.InputBindings>
+                </VirtualizingStackPanel>
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>

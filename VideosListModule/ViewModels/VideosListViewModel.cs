@@ -167,7 +167,7 @@ namespace VideosListModule.ViewModels
             {
                 filter = this.FilteredVideos.GetFilter();
             }
-            this.FilteredVideos = new VideosCollectionView(videos.ToList(), 12);
+            this.FilteredVideos = new VideosCollectionView(videos.ToList(), 0);
             if (filter != null)
             {
                 this.FilteredVideos.FilterTag(filter.Tags);

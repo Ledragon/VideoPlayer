@@ -7,7 +7,6 @@
     Title="VideoPlayer" Height="768" Width="1024"
     WindowStyle="None"
     WindowStartupLocation="CenterScreen"
-    WindowState="Maximized"
     ResizeMode="NoResize">
     <Window.Resources>
         <ResourceDictionary>

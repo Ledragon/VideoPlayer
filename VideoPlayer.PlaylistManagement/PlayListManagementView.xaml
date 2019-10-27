@@ -24,22 +24,22 @@
     </UserControl.InputBindings>
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
+            <!--<ColumnDefinition Width="*" />-->
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <ContentControl Grid.Column="0"
                         prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.CategoriesListRegion}"
                         Style="{StaticResource VideosViewControl}" 
                         Visibility="{Binding IsCategoryGridVisible, Converter={StaticResource BooleanConverter}}" 
                         />
-        <ContentControl Grid.Column="1"
+        <!--<ContentControl Grid.Column="1"
                         prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.FilterRegion}" 
                         Style="{StaticResource VideosViewControl}" 
                         Visibility="{Binding FilterGridVisibility, Converter={StaticResource BooleanConverter}}" 
-                        />
-        <Grid Grid.Column="2">
+                        />-->
+        <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -57,7 +57,7 @@
                             Margin="5"/>
             
         </Grid>
-        <ContentControl Grid.Column="3"
+        <ContentControl Grid.Column="2"
                         prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayListRegion}"
                         Style="{StaticResource VideosViewControl}"
                         Visibility="{Binding IsPlayListVisible, Converter={StaticResource BooleanConverter}}" />

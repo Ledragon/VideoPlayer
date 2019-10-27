@@ -85,6 +85,12 @@
     <Compile Include="ViewModels\IVideoInfoViewModel.cs" />
     <Compile Include="ViewModels\VideoInfoViewModel.cs" />
     <Compile Include="ViewModels\VideosCollectionView.cs" />
+    <Compile Include="Views\HorizontalVideoList.xaml.cs">
+      <DependentUpon>HorizontalVideoList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HorizVideoMasterDetails.xaml.cs">
+      <DependentUpon>HorizVideoMasterDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\IVideoInfoView.cs" />
     <Compile Include="Views\IVideosListView.cs" />
     <Compile Include="ViewModels\IVideosListViewModel.cs" />
@@ -131,6 +137,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\HorizontalVideoList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\HorizVideoMasterDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\VideoInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -156,6 +170,10 @@
     <ProjectReference Include="..\LeDragon.Log.Standard\LeDragon.Log.Standard.csproj">
       <Project>{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}</Project>
       <Name>LeDragon.Log.Standard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Common\VideoPlayer.Common.csproj">
+      <Project>{85D3796A-9536-460E-8FF0-F96ACD68878F}</Project>
+      <Name>VideoPlayer.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Infrastructure\VideoPlayer.Infrastructure.csproj">
       <Project>{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}</Project>

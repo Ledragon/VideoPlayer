@@ -64,7 +64,9 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0"
-                       Text="{Binding TotalDuration}" />
+                       Text="{Binding TotalDuration}" 
+                       Margin="5"
+                       TextAlignment="Center"/>
             <Button Grid.Column="1" Command="{Binding ClearCommand}">Clear</Button>
 
         </Grid>

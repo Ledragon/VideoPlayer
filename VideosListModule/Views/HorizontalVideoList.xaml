@@ -18,8 +18,8 @@
             <Style TargetType="{x:Type TextBlock}"
                    x:Key="VideoLabel"
                    BasedOn="{StaticResource TrimmedTextBlock}">
-                <Setter Property="Width"
-                        Value="150" />
+                <!--<Setter Property="Width"
+                        Value="150" />-->
                 <Setter Property="FontSize"
                         Value="12" />
             </Style>
@@ -76,7 +76,7 @@
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <Grid Margin="5" VerticalAlignment="Stretch">
+                <Grid Margin="5" VerticalAlignment="Stretch" Width="150">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -85,18 +85,18 @@
                     <Grid Background="Black">
                         <Image Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
                                    VerticalAlignment="Stretch"
-                                   Stretch="Uniform"
+                                   Stretch="UniformToFill"
                                />
                         <TextBlock Text="{Binding Length}" Foreground="White"
                                        Background="#3FD3D3D3"
                                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" />
                     </Grid>
                     <TextBlock Grid.Row="1"
-                                   Text="{Binding Category}"
+                                   Text="{Binding Title}"
                                    FontSize="14"
                                    Style="{StaticResource VideoLabel}" />
                     <TextBlock Grid.Row="2"
-                                   Text="{Binding Title}"
+                                   Text="{Binding Category}"
                                    Style="{StaticResource VideoLabel}" />
                 </Grid>
             </DataTemplate>

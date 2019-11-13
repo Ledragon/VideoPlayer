@@ -45,7 +45,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <!--<RowDefinition Height="Auto" />-->
             </Grid.RowDefinitions>
             <ContentControl Grid.Row="0"
                             prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosListRegion}"

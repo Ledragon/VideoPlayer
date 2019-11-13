@@ -12,6 +12,7 @@ namespace VideoPlayer.PlaylistManagement
         private Boolean _filterGridVisibility;
         private Boolean _isCategoryGridVisible;
         private Boolean _isPlayListVisible;
+        private Boolean _isSortGridVisible;
 
         public PlayListManagementViewModel(IEventAggregator eventAggregator)
         {
@@ -19,6 +20,7 @@ namespace VideoPlayer.PlaylistManagement
             this.FilterGridVisibility = false;
             this.IsPlayListVisible = true;
             this.IsCategoryGridVisible = true;
+            this.IsSortGridVisible = true;
 
             this.SwitchFilterGridVisibilityCommand = new DelegateCommand(this.SwitchFilterGridVisibility);
             this.SwitchPlaylistVisibilityCommand = new DelegateCommand(this.SwitchPlayListVisibility);
@@ -68,6 +70,18 @@ namespace VideoPlayer.PlaylistManagement
                 if (!value.Equals(this._filterGridVisibility))
                 {
                     this._filterGridVisibility = value;
+                    this.OnPropertyChanged();
+                }
+            }
+        }
+        public Boolean IsSortGridVisible
+        {
+            get { return this._isSortGridVisible; }
+            set
+            {
+                if (!value.Equals(this._isSortGridVisible))
+                {
+                    this._isSortGridVisible = value;
                     this.OnPropertyChanged();
                 }
             }

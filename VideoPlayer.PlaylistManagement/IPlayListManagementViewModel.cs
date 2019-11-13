@@ -9,6 +9,7 @@ namespace VideoPlayer.PlaylistManagement
         Boolean IsCategoryGridVisible { get; set; }
         Boolean IsPlayListVisible { get; set; }
         Boolean FilterGridVisibility { get; set; }
+        Boolean IsSortGridVisible { get; set; }
         ICommand SwitchCategoryGridVisibilityCommand { get; }
         ICommand SwitchPlaylistVisibilityCommand { get; }
         ICommand SwitchFilterGridVisibilityCommand { get; }

@@ -74,6 +74,7 @@
                             x:Name="VideoListControl" />
             <ContentControl Grid.Row="1"
                             prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.SortGridRegion}"
+                        Visibility="{Binding IsSortGridVisible, Converter={StaticResource BooleanConverter}}" 
                             Margin="5"/>
             <ContentControl Grid.Row="2"
                             prism:RegionManager.RegionName="{x:Static infrastructure:RegionNames.VideosListInteraction}" 

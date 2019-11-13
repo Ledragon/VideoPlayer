@@ -19,7 +19,7 @@
                    x:Key="VideoLabel"
                    BasedOn="{StaticResource TrimmedTextBlock}">
                 <Setter Property="Width"
-                        Value="300" />
+                        Value="150" />
                 <Setter Property="FontSize"
                         Value="12" />
             </Style>
@@ -59,11 +59,12 @@
                  Background="{StaticResource BackgroundColorBrush}"
                  ScrollViewer.CanContentScroll="True"
                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+             ScrollViewer.VerticalScrollBarVisibility="Disabled"
                  VerticalContentAlignment="Stretch" 
                 VerticalAlignment="Stretch">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal" VerticalAlignment="Stretch">
+                <VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal" VerticalAlignment="Stretch" CanVerticallyScroll="False">
                     <VirtualizingStackPanel.InputBindings>
                         <MouseBinding Gesture="LeftDoubleClick"
                                           Command="{Binding PlayOneCommand}" />
@@ -75,7 +76,7 @@
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <Grid Margin="5" VerticalAlignment="Stretch" Width="120">
+                <Grid Margin="5" VerticalAlignment="Stretch">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -83,8 +84,7 @@
                     </Grid.RowDefinitions>
                     <Grid Background="Black">
                         <Image Source="{Binding PreviewImage, Converter={StaticResource ImageConverter}}"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Stretch"
                                    Stretch="Uniform"
                                />
                         <TextBlock Text="{Binding Length}" Foreground="White"

@@ -10,7 +10,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:controls="clr-namespace:LeDragon.Controls;assembly=LeDragon.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="768" d:DesignWidth="1024">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,8 +21,8 @@
                              Color="{StaticResource BackgroundColor}" />
             <Style TargetType="{x:Type TextBlock}"
                    BasedOn="{StaticResource TrimmedTextBlock}">
-                <Setter Property="Width"
-                        Value="300" />
+                <!--<Setter Property="Width"
+                        Value="300" />-->
                 <Setter Property="FontSize"
                         Value="14" />
             </Style>
@@ -35,8 +35,8 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
         <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />

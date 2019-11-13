@@ -20,7 +20,7 @@
             <Style TargetType="Label" x:Key="ValueLabel" BasedOn="{StaticResource Label}">
                 <Setter Property="BorderBrush" Value="Gray" />
                 <Setter Property="BorderThickness" Value="1" />
-                <Setter Property="Height" Value="25" />
+                <!--<Setter Property="Height" Value="25" />-->
             </Style>
 
             <Style TargetType="ListBox">
@@ -30,6 +30,7 @@
             </Style>
             <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}" x:Key="Current">
                 <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="16"/>
             </Style>
             <Style TargetType="DataGrid">
                 <Setter Property="Background" Value="Black" />
@@ -45,11 +46,11 @@
                 <Setter Property="Foreground" Value="LightGray" />
             </Style>
             <Style TargetType="TextBlock" x:Key="Subtitle" BasedOn="{StaticResource Current}">
-                <Setter Property="FontSize" Value="24" />
+                <Setter Property="FontSize" Value="28" />
                 <Setter Property="Foreground" Value="DarkGray" />
             </Style>
             <Style TargetType="TextBlock" x:Key="Tag" BasedOn="{StaticResource Current}">
-                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontSize" Value="24" />
                 <Setter Property="Foreground" Value="Gray" />
             </Style>
             <Style TargetType="TabItem" x:Key="HiddenHeader">

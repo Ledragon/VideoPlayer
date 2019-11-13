@@ -21,26 +21,8 @@
                 <!--<Setter Property="Width"
                         Value="150" />-->
                 <Setter Property="FontSize"
-                        Value="12" />
+                        Value="14" />
             </Style>
-
-            <Style TargetType="{x:Type Button}"
-                   x:Key="Navigation"
-                   BasedOn="{StaticResource {x:Type Button}}">
-                <Setter Property="Height"
-                        Value="36" />
-            </Style>
-            <Style TargetType="{x:Type Path}">
-                <Setter Property="Fill"
-                        Value="#0f0f0f" />
-                <Style.Triggers>
-                    <Trigger Property="IsEnabled"
-                             Value="False">
-                        <Setter Property="Fill" Value="#cccccc"></Setter>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
             <mocks:MockVideoList x:Key="DesignViewModel" />
         </ResourceDictionary>
     </UserControl.Resources>
@@ -76,7 +58,7 @@
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <Grid Margin="5" VerticalAlignment="Stretch" Width="150">
+                <Grid Margin="5" VerticalAlignment="Stretch" Width="175">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
@@ -89,11 +71,12 @@
                                />
                         <TextBlock Text="{Binding Length}" Foreground="White"
                                        Background="#3FD3D3D3"
-                                       HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" />
+                                       HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" 
+                                   FontSize="14"/>
                     </Grid>
                     <TextBlock Grid.Row="1"
                                    Text="{Binding Title}"
-                                   FontSize="14"
+                                   FontSize="18"
                                    Style="{StaticResource VideoLabel}" />
                     <TextBlock Grid.Row="2"
                                    Text="{Binding Category}"

@@ -41,7 +41,7 @@
     <Style TargetType="TextBlock" x:Key="TrimmedTextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="TextWrapping" Value="NoWrap" />
-        <Setter Property="TextTrimming" Value="WordEllipsis" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         <Setter Property="FontFamily" Value="{StaticResource DefaultFont}" />
     </Style>
     <Style TargetType="TextBlock" x:Key="Light" BasedOn="{StaticResource {x:Type TextBlock}}">

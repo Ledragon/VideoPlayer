@@ -53,7 +53,7 @@
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal"
                 HorizontalAlignment="Stretch" 
-                Background="#cc0f0f0f">
+                Background="{StaticResource VideoMenusSolidBrush}">
         <Button Command="{Binding SortByTitleCommand}" ToolTip="Title" 
                 Style="{StaticResource SortButton}">
             <Viewbox>

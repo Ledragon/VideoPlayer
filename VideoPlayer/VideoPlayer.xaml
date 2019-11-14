@@ -6,8 +6,9 @@
     x:Class="VideoPlayer.MainWindow"
     Title="VideoPlayer" Height="768" Width="1024"
     WindowStyle="None"
+    WindowState="Maximized"
     WindowStartupLocation="CenterScreen"
-    ResizeMode="NoResize">
+    ResizeMode="CanMinimize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

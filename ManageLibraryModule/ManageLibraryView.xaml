@@ -30,7 +30,7 @@
             </Grid.ColumnDefinitions>
             <ManageLibraryModule:VideoListView />
             <StackPanel Grid.Column="1">
-                <ContentControl regions:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}" Height="250"/>
+                <ContentControl regions:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}" Height="250" Margin="5"/>
                 <ContentControl regions:RegionManager.RegionName="{x:Static infrastructure:RegionNames.EditVideoInfoRegion}" />
             </StackPanel>
         </Grid>

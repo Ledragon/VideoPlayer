@@ -8,7 +8,7 @@
              xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
              xmlns:mocks="clr-namespace:ManageLibraryModule.Mocks"
              mc:Ignorable="d"
-             d:DesignHeight="800" d:DesignWidth="800">
+             d:DesignHeight="720" d:DesignWidth="1280">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,16 +20,10 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
-            <Button Command="{Binding UpdateCommand}">Load</Button>
-            <Button Command="{Binding CleanCommand}">Clean</Button>
-            <Button Command="{Binding ToJsonCommand}">Json</Button>
-            <Button Command="{Binding CreateNfoCommand}">NFO</Button>
-        </StackPanel>
-        <Grid Grid.Row="1" d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
+        <Grid Grid.Row="0" d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
@@ -39,8 +33,12 @@
                 <ContentControl regions:RegionManager.RegionName="{x:Static infrastructure:RegionNames.PlayerRegion}" Height="250"/>
                 <ContentControl regions:RegionManager.RegionName="{x:Static infrastructure:RegionNames.EditVideoInfoRegion}" />
             </StackPanel>
-            
-
         </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button Command="{Binding UpdateCommand}">Load</Button>
+            <Button Command="{Binding CleanCommand}">Clean</Button>
+            <Button Command="{Binding ToJsonCommand}">Json</Button>
+            <Button Command="{Binding CreateNfoCommand}">NFO</Button>
+        </StackPanel>
     </Grid>
 </UserControl>

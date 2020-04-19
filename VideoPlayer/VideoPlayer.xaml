@@ -4,11 +4,11 @@
     xmlns:prism="http://www.codeplex.com/prism"
     xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
     x:Class="VideoPlayer.MainWindow"
-    Title="VideoPlayer" Height="768" Width="1024"
+    Title="VideoPlayer" Height="720" Width="1280"
     WindowStyle="None"
-    WindowState="Maximized"
+    WindowState="Normal"
     WindowStartupLocation="CenterScreen"
-    ResizeMode="CanMinimize">
+    ResizeMode="CanResize">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

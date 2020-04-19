@@ -198,8 +198,11 @@ namespace VideosListModule.ViewModels
 
         private void FilterCategory(String category)
         {
-            this.FilteredVideos.FilterCategory(category);
-            this.Raise();
+            if (this.FilteredVideos != null)
+            {
+                this.FilteredVideos.FilterCategory(category);
+                this.Raise();
+            }
         }
 
         private Boolean CanCommandsExecute()

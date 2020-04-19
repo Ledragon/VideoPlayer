@@ -17,7 +17,8 @@
                  ItemsSource="{Binding CategoryViewModels}"
                  SelectedItem="{Binding SelectedCategory}"
                  Style="{StaticResource FilterListBox}"
-                HorizontalContentAlignment="Stretch">
+                 HorizontalContentAlignment="Stretch"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         </ListBox>
     </Grid>
 </UserControl>

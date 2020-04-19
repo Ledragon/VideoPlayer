@@ -13,18 +13,29 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="{Binding Path=Name}">
+                    <Grid HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Stretch" 
+                          ToolTip="{Binding Path=Name}">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3*" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="20" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="{Binding Path=Name}" Margin="5" Foreground="White"
-                                   FontSize="14" FontFamily="{StaticResource DefaultFont}" 
+                        <TextBlock Grid.Column="0" 
+                                   Text="{Binding Path=Name}" 
+                                   Margin="5" 
+                                   Foreground="White"
+                                   FontSize="14" 
+                                   FontFamily="{StaticResource DefaultFont}" 
                                    TextWrapping="NoWrap"
-                                   TextTrimming="CharacterEllipsis"/>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   TextTrimming="CharacterEllipsis"
+                                   HorizontalAlignment="Stretch"/>
+                        <TextBlock Grid.Column="1" 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Right"
                                    Text="{Binding Path=Count}"
-                                   Margin="5" Foreground="#FF999999" FontSize="10"
+                                   Margin="5" 
+                                   Foreground="#FF999999" 
+                                   FontSize="10"
                                    FontFamily="{StaticResource DefaultFont}" 
                                    TextAlignment="Right"/>
                     </Grid>
@@ -35,14 +46,15 @@
             <Setter.Value>
                 <Style TargetType="ListBoxItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="Width" Value="150" />
                 </Style>
             </Setter.Value>
         </Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+                    <StackPanel Orientation="Vertical" 
+                                VerticalAlignment="Top" 
+                                HorizontalAlignment="Stretch" />
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>

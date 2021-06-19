@@ -138,18 +138,25 @@ namespace VideoPlayer.Services
 
         private void Dedupe(List<Video> videos)
         {
-            this.Logger().Debug("Remove duplicate files.");
-            var byFileName = videos.GroupBy(v => v.FileName)
-                .Where(g => g.Count() > 1);
-            if (byFileName.Any())
+            try
             {
-                this.Logger().DebugFormat($"Removing duplicate files.");
-                var toRemove = byFileName.SelectMany(d => d.Except(new[] { d.First() })).ToList();
-                videos.RemoveAll(v => toRemove.Contains(v));
+                this.Logger().Debug("Remove duplicate files.");
+                var byFileName = videos.GroupBy(v => v.FileName)
+                    .Where(g => g.Count() > 1);
+                if (byFileName.Any())
+                {
+                    this.Logger().DebugFormat($"Removing duplicate files.");
+                    var toRemove = byFileName.SelectMany(d => d.Except(new[] { d.First() })).ToList();
+                    videos.RemoveAll(v => toRemove.Contains(v));
+                }
+                else
+                {
+                    this.Logger().Debug("No duplicate found");
+                }
             }
-            else
+            catch (Exception e)
             {
-                this.Logger().Debug("No duplicate found");
+                this.Logger().Error(e);
             }
         }
 

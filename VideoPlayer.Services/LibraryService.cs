@@ -115,6 +115,9 @@ namespace VideoPlayer.Services
         {
             this.BackupLibrary();
             this.Logger().Info("Cleaning files.");
+
+            this.Dedupe(videoCollection);
+
             var existingFiles =
                 directoryCollection
                     .SelectMany(
@@ -131,6 +134,23 @@ namespace VideoPlayer.Services
                 this.Logger().DebugFormat("File '{0}' removed.", video.FileName);
             }
             this.Logger().InfoFormat("'{0}' files removed.", videosToRemove.Count);
+        }
+
+        private void Dedupe(List<Video> videos)
+        {
+            this.Logger().Debug("Remove duplicate files.");
+            var byFileName = videos.GroupBy(v => v.FileName)
+                .Where(g => g.Count() > 1);
+            if (byFileName.Any())
+            {
+                this.Logger().DebugFormat($"Removing duplicate files.");
+                var toRemove = byFileName.SelectMany(d => d.Except(new[] { d.First() })).ToList();
+                videos.RemoveAll(v => toRemove.Contains(v));
+            }
+            else
+            {
+                this.Logger().Debug("No duplicate found");
+            }
         }
 
         public void AddPlaylist(Playlist playlist)

@@ -8,7 +8,6 @@ namespace VideoPlayer.Services
         public IEnumerable<Video> Playlist { get; set; }
         public void Clear()
         {
-            
         }
     }
 }

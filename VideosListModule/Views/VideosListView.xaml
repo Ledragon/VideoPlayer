@@ -5,7 +5,7 @@
              xmlns:views="clr-namespace:VideosListModule.Views"
              xmlns:infrastructure="clr-namespace:VideoPlayer.Infrastructure;assembly=VideoPlayer.Infrastructure"
              xmlns:regions="http://www.codeplex.com/CompositeWPF"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:controls="clr-namespace:LeDragon.Controls;assembly=LeDragon.Controls"
              x:Class="VideosListModule.VideosListView"
              mc:Ignorable="d"

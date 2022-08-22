@@ -16,6 +16,7 @@ namespace PlaylistModule
     public class PlayListViewModel : ViewModelBase, IPlayListViewModel
     {
         private readonly ILibraryService _libraryService;
+        private readonly IPlaylistService _playlistService;
         private Video _currentVideo;
         private ObservableCollection<Video> _playlist;
         private ObservableCollection<Playlist> _playListCollection;
@@ -27,6 +28,7 @@ namespace PlaylistModule
             IPlaylistService playlistService)
         {
             this._libraryService = libraryService;
+            this._playlistService = playlistService;
             this.Playlist = new ObservableCollection<Video>();
 
             this.RemoveCommand = new DelegateCommand(() => this.Remove(this.CurrentVideo));
@@ -34,11 +36,7 @@ namespace PlaylistModule
             this.AddCommand = new DelegateCommand<Video>(this.Add);
             this.AddRangeCommand = new DelegateCommand<IEnumerable<Video>>(this.Add);
             this.SavePlaylistCommand = new DelegateCommand(this.Save);
-            this.ClearCommand = new DelegateCommand(() =>
-            {
-                this.Playlist.Clear();
-                playlistService.Clear();
-            });
+            this.ClearCommand = new DelegateCommand(this.ClearPlaylist);
 
             eventAggregator.GetEvent<OnAddVideo>().Subscribe(this.Add);
             eventAggregator.GetEvent<OnAddVideoRange>().Subscribe(this.Add);
@@ -46,7 +44,7 @@ namespace PlaylistModule
             eventAggregator.GetEvent<PlayRangeEvent>()
                 .Subscribe(videos =>
                 {
-                    this.Playlist.Clear();
+                    this.ClearPlaylist();
                     this.Add(videos);
                     playlistService.Playlist = this.Playlist;
                     eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(this.Playlist);
@@ -196,6 +194,13 @@ namespace PlaylistModule
                 this.PlayListCollection.Add(playlist);
             }
             playlist.Items = this.Playlist.Select((v, i) => new PlayListItem(v.FileName, i)).ToList();
+        }
+
+        private void ClearPlaylist()
+        {
+            this.Playlist.Clear();
+            this._playlistService.Clear();
+
         }
     }
 }

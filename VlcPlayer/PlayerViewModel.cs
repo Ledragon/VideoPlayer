@@ -209,6 +209,11 @@ namespace VlcPlayer
                 }
                 //if (Equals(value, this._currentVideo)) return;
                 this._currentVideo = value;
+                if (this.Playlist.Contains(value))
+                {
+                    this._index = this.Playlist.IndexOf(value);
+                }
+                
                 if (this._autoPlay)
                 {
                     this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);

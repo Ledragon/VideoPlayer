@@ -38,7 +38,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -132,7 +132,6 @@
     <Reference Include="System.Printing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -156,6 +155,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="InfoExporter.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Services\SettingsService.cs" />
     <Compile Include="VideoPlayerModule.cs" />
     <Compile Include="ViewModels\IVideoPlayerViewModel.cs" />
     <Compile Include="ImageConverter.cs">

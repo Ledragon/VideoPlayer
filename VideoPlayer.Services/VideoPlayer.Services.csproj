@@ -53,6 +53,7 @@
     <Compile Include="CategoryService.cs" />
     <Compile Include="ICategoryService.cs" />
     <Compile Include="IPlaylistService.cs" />
+    <Compile Include="ISettingsService.cs" />
     <Compile Include="LibraryService.cs" />
     <Compile Include="ILibraryService.cs" />
     <Compile Include="PlaylistService.cs" />

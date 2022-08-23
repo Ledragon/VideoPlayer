@@ -9,6 +9,7 @@ using Classes;
 using LeDragon.Log.Standard;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VideoPlayer.Infrastructure;
+using VideoPlayer.Services;
 using Vlc.DotNet.Core;
 using Vlc.DotNet.Core.Medias;
 using Vlc.DotNet.Wpf;
@@ -27,11 +28,11 @@ namespace VlcPlayer
         private readonly IEventAggregator _eventAggregator;
         private PlayerViewModel _viewModel;
 
-        public Player(IPlayerViewModel viewModel, IEventAggregator eventAggregator)
+        public Player(IPlayerViewModel viewModel, IEventAggregator eventAggregator, ISettingsService settingsService)
         {
             this._eventAggregator = eventAggregator;
             this.ViewModel = viewModel;
-            this.InitializeVlc();
+            this.InitializeVlc(settingsService.VlcFolder);
             this.InitializeComponent();
 
             this._eventAggregator.GetEvent<OnStop>().Subscribe(this.Stop);
@@ -77,14 +78,11 @@ namespace VlcPlayer
             });
         }
 
-        private void InitializeVlc()
+        private void InitializeVlc(String vlcFolder)
         {
             try
             {
-                //TODO problem with 64bit version of VLC
-                //String programFilesPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles).Replace(" (x86)", "");
-                //VlcContext.LibVlcDllsPath = Path.Combine(programFilesPath, @"VideoLan\VLC");
-                String programFilesPath = @"..\dll\vlc-2.1.5";
+                var programFilesPath = vlcFolder ?? @"..\dll\vlc-2.1.5";
                 VlcContext.LibVlcDllsPath = programFilesPath;
 
                 // Set the vlc plugins directory path

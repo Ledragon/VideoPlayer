@@ -30,6 +30,7 @@ namespace VideoPlayer
                 .RegisterType<IModuleManager, Infrastructure.ModuleManager>(new ContainerControlledLifetimeManager())
                 .RegisterType<INfoSerializer, NfoSerializer>(new ContainerControlledLifetimeManager())
                 .RegisterType<INfoService, NfoService>(new ContainerControlledLifetimeManager())
+                .RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager())
                 .RegisterType<StackPanelRegionAdapter>();
 
             //TEMP

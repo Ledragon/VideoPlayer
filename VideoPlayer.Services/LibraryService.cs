@@ -54,9 +54,9 @@ namespace VideoPlayer.Services
             await Task.Factory.StartNew(this.Clean);
         }
 
-        public IEnumerable<Video> Update()
+        public IEnumerable<Entities.Video> Update()
         {
-            IEnumerable<Video> result = new List<Video>();
+            IEnumerable<Entities.Video> result = new List<Entities.Video>();
             try
             {
                 this.Logger().DebugFormat("Updating library.");
@@ -73,7 +73,7 @@ namespace VideoPlayer.Services
                     this.Logger().DebugFormat("'{0}' new files found.", files.Count());
                     foreach (var videoFile in files)
                     {
-                        var newVideo = new Video(videoFile);
+                        var newVideo = new Entities.Video(videoFile);
                         var firstCategory = categories.FirstOrDefault(c => newVideo.Title.ToLower().Contains(c));
                         if (firstCategory != null)
                         {
@@ -95,7 +95,7 @@ namespace VideoPlayer.Services
             return result;
         }
 
-        public async Task<IEnumerable<Video>> UpdateAsync()
+        public async Task<IEnumerable<Entities.Video>> UpdateAsync()
         {
             return await Task.Factory.StartNew(() => this.Update());
         }
@@ -112,7 +112,7 @@ namespace VideoPlayer.Services
         }
 
         public void Clean(ObservableCollection<Directory> directoryCollection,
-            List<Video> videoCollection)
+            List<Entities.Video> videoCollection)
         {
             this.BackupLibrary();
             this.Logger().Info("Cleaning files.");
@@ -137,7 +137,7 @@ namespace VideoPlayer.Services
             this.Logger().InfoFormat("'{0}' files removed.", videosToRemove.Count);
         }
 
-        private void Dedupe(List<Video> videos)
+        private void Dedupe(List<Entities.Video> videos)
         {
             try
             {
@@ -188,7 +188,7 @@ namespace VideoPlayer.Services
             this.Logger().DebugFormat("Library backed up to '{0}'.", destinationPath);
         }
 
-        public void ToJson(IEnumerable<Video> videos)
+        public void ToJson(IEnumerable<Entities.Video> videos)
         {
             try
             {
@@ -206,7 +206,7 @@ namespace VideoPlayer.Services
             }
         }
 
-        public List<Video> GetVideosByFilePath(IEnumerable<String> fileNames)
+        public List<Entities.Video> GetVideosByFilePath(IEnumerable<String> fileNames)
         {
             return this.GetObjectsFromFile().Videos.Where(v => fileNames.Contains(v.FileName)).ToList();
         }

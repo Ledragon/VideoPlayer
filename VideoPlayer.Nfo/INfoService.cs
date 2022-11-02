@@ -6,6 +6,6 @@ namespace VideoPlayer.Nfo
 {
     public interface INfoService
     {
-        void CreateNfo(IEnumerable<Video> videos);
+        void CreateNfo(IEnumerable<Entities.Video> videos);
     }
 }

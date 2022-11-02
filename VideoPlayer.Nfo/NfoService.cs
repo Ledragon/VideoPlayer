@@ -13,7 +13,7 @@ namespace VideoPlayer.Nfo
         {
             this._serializer = nfoSerializer;
         }
-        public void CreateNfo(IEnumerable<Video> videos)
+        public void CreateNfo(IEnumerable<Entities.Video> videos)
         {
             foreach (var video in videos)
             {

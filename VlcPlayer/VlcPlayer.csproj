@@ -127,6 +127,10 @@
       <Project>{85d3796a-9536-460e-8ff0-f96acd68878f}</Project>
       <Name>VideoPlayer.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj">
+      <Project>{D69E3157-18F8-4AEF-A224-623845B017ED}</Project>
+      <Name>VideoPlayer.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Infrastructure\VideoPlayer.Infrastructure.csproj">
       <Project>{80e2c9d4-f13f-482e-bc5d-678e61a88fa6}</Project>
       <Name>VideoPlayer.Infrastructure</Name>

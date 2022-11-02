@@ -7,6 +7,7 @@ using Classes;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using VideoPlayer.Entities;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Infrastructure.ViewFirst;
 using VideoPlayer.Services;
@@ -17,8 +18,8 @@ namespace PlaylistModule
     {
         private readonly ILibraryService _libraryService;
         private readonly IPlaylistService _playlistService;
-        private VideoViewModel _currentVideo;
-        private ObservableCollection<VideoViewModel> _playlist;
+        private Classes.VideoViewModel _currentVideo;
+        private ObservableCollection<Classes.VideoViewModel> _playlist;
         private ObservableCollection<Playlist> _playListCollection;
         private String _playListName;
         private Playlist _selectedPlayList;
@@ -29,12 +30,12 @@ namespace PlaylistModule
         {
             this._libraryService = libraryService;
             this._playlistService = playlistService;
-            this.Playlist = new ObservableCollection<VideoViewModel>();
+            this.Playlist = new ObservableCollection<Classes.VideoViewModel>();
 
             this.RemoveCommand = new DelegateCommand(() => this.Remove(this.CurrentVideo));
 
-            this.AddCommand = new DelegateCommand<VideoViewModel>(this.Add);
-            this.AddRangeCommand = new DelegateCommand<IEnumerable<VideoViewModel>>(this.Add);
+            this.AddCommand = new DelegateCommand<Classes.VideoViewModel>(this.Add);
+            this.AddRangeCommand = new DelegateCommand<IEnumerable<Classes.VideoViewModel>>(this.Add);
             this.SavePlaylistCommand = new DelegateCommand(this.Save);
             this.ClearCommand = new DelegateCommand(this.ClearPlaylist);
 
@@ -111,7 +112,7 @@ namespace PlaylistModule
         }
 
 
-        public ObservableCollection<VideoViewModel> Playlist
+        public ObservableCollection<Classes.VideoViewModel> Playlist
         {
             get { return this._playlist; }
             set
@@ -125,7 +126,7 @@ namespace PlaylistModule
             }
         }
 
-        public VideoViewModel CurrentVideo
+        public Classes.VideoViewModel CurrentVideo
         {
             get { return this._currentVideo; }
             set
@@ -160,12 +161,12 @@ namespace PlaylistModule
         public ICommand AddCommand { get; }
         public ICommand AddRangeCommand { get; }
 
-        private void Add(IEnumerable<VideoViewModel> videos)
+        private void Add(IEnumerable<Classes.VideoViewModel> videos)
         {
             this.Playlist.AddRange(videos.Where(v => !this.Playlist.Contains(v)));
         }
 
-        private void Add(VideoViewModel video)
+        private void Add(Classes.VideoViewModel video)
         {
             if (!this.Playlist.Contains(video))
             {
@@ -173,7 +174,7 @@ namespace PlaylistModule
             }
         }
 
-        private void Remove(VideoViewModel video)
+        private void Remove(Classes.VideoViewModel video)
         {
             if (this.Playlist.Contains(video))
             {

@@ -25,7 +25,7 @@ namespace VlcPlayer
         private readonly Timer _timer = new Timer();
         private Boolean _autoPlay;
         private Boolean _controlsVisibility;
-        private VideoViewModel _currentVideo;
+        private Classes.VideoViewModel _currentVideo;
         private Cursor _cursor;
         private TimeSpan _duration;
         private Int32 _index;
@@ -35,7 +35,7 @@ namespace VlcPlayer
         private Boolean _isPaused;
         private Boolean _isRepeat;
         private DateTime _mouseLastMouveDateTime = DateTime.Now;
-        private ObservableCollection<VideoViewModel> _playlist;
+        private ObservableCollection<Classes.VideoViewModel> _playlist;
         private Boolean _playlistVisibility;
         private Single _position;
         private TimeSpan _positionTimeSpan;
@@ -169,7 +169,7 @@ namespace VlcPlayer
             }
         }
 
-        public ObservableCollection<VideoViewModel> Playlist
+        public ObservableCollection<Classes.VideoViewModel> Playlist
         {
             get { return this._playlist; }
             set
@@ -198,7 +198,7 @@ namespace VlcPlayer
             }
         }
 
-        public VideoViewModel CurrentVideo
+        public Classes.VideoViewModel CurrentVideo
         {
             get { return this._currentVideo; }
             set
@@ -418,7 +418,7 @@ namespace VlcPlayer
             this.AddVideo(video);
         }
 
-        public void AddVideo(VideoViewModel video)
+        public void AddVideo(Classes.VideoViewModel video)
         {
             this.Logger().DebugFormat("Adding video '{0}' to playlist.", video.Title);
             this.Playlist.Add(video);

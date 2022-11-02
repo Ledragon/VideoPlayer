@@ -21,7 +21,7 @@ namespace Module
         private String _newCategory;
         private CategoryViewModel _selectedCategory;
         private ObservableCollection<Tag> _tags;
-        private VideoViewModel _video;
+        private Classes.VideoViewModel _video;
 
 
         public EditVideoViewModel(ILibraryService libraryService, IEventAggregator eventAggregator)
@@ -67,7 +67,7 @@ namespace Module
             }
         }
 
-        public VideoViewModel Video
+        public Classes.VideoViewModel Video
         {
             get { return this._video; }
             set
@@ -150,7 +150,7 @@ namespace Module
         private void CreateCategories(ILibraryService libraryService)
         {
             this.CategoryViewModels.Clear();
-            IEnumerable<IGrouping<String, VideoViewModel>> categories =
+            IEnumerable<IGrouping<String, VideoPlayer.Entities.Video>> categories =
                 libraryService.GetObjectsFromFile()
                     .Videos.Where(v => !String.IsNullOrEmpty(v.Category))
                     .GroupBy(v => v.Category)

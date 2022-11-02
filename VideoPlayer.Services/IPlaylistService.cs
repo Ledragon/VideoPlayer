@@ -6,7 +6,7 @@ namespace VideoPlayer.Services
 {
     public interface IPlaylistService
     {
-        IEnumerable<Video> Playlist { get; set; }
+        IEnumerable<Entities.Video> Playlist { get; set; }
         void Clear();
     }
 }

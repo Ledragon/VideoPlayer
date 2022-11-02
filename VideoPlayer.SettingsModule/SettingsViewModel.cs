@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Classes;
 using Microsoft.Practices.Prism.Commands;
+using VideoPlayer.Entities;
 using VideoPlayer.Infrastructure.ViewFirst;
 using VideoPlayer.Services;
 

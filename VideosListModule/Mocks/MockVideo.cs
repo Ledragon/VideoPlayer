@@ -12,11 +12,11 @@ namespace VideosListModule.Mocks
 {
     public class MockVideo :  IVideoInfoViewModel, INotifyPropertyChanged
     {
-        private VideoViewModel _video;
+        private Classes.VideoViewModel _video;
 
         public MockVideo()
         {
-            this.Video = new VideoViewModel(new Video
+            this.Video = new Classes.VideoViewModel(new VideoPlayer.Entities.Video
             {
                 Title = "Michel",
                 Length = TimeSpan.FromMinutes(30),
@@ -41,7 +41,7 @@ namespace VideosListModule.Mocks
 
         public IView View { get; set; }
 
-        public VideoViewModel Video
+        public Classes.VideoViewModel Video
         {
             get { return this._video; }
             set

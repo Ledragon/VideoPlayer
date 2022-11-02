@@ -1,12 +1,9 @@
-﻿//using System.Threading.Tasks;
-
+﻿using LeDragon.Log.Standard;
 using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using log4net;
-using Directory = Classes.Directory;
-//using System.IO;
+using Directory = VideoPlayer.Entities.Directory;
 
 namespace VideoPlayer.SettingsModule
 {
@@ -15,7 +12,7 @@ namespace VideoPlayer.SettingsModule
     /// </summary>
     public partial class DirectoryBrowser : Window
     {
-        private readonly ILog _logger;
+        private readonly ILogger _logger;
         public Directory Directory = new Directory();
 
         public DirectoryBrowser()
@@ -25,7 +22,7 @@ namespace VideoPlayer.SettingsModule
 
         public DirectoryBrowser(Directory directory)
         {
-            this._logger = LogManager.GetLogger(typeof (DirectoryBrowser));
+            this._logger = this.Logger();
             this.Directory = directory;
             this._uiNameTextBox.Text = this.Directory.DirectoryName;
             this._uiPathText.Text = this.Directory.DirectoryPath;

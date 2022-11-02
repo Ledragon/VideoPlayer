@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
-using Classes;
+using VideoPlayer.Entities;
 using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace VideoPlayer.SettingsModule

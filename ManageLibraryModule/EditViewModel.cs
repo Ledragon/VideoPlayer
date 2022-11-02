@@ -39,7 +39,7 @@ namespace ManageLibraryModule
             this._eventAggregator.GetEvent<LibraryUpdated>()
                 .Subscribe(newList =>
                 {
-                    this.Refresh(newList.ToList());
+                    this.Refresh(newList.Select(v=>new VideoViewModel(v)).ToList());
                 });
         }
 

@@ -13,14 +13,14 @@ namespace ManageLibraryModule.Mocks
 {
     public class MockEditViewModel : IEditViewModel, INotifyPropertyChanged
     {
-        private VideoViewModel _selectedVideo;
+        private Classes.VideoViewModel _selectedVideo;
 
         public MockEditViewModel()
         {
-            var observableCollection = new ObservableCollection<VideoViewModel>();
+            var observableCollection = new ObservableCollection<Classes.VideoViewModel>();
             for (var i = 0; i < 50; i++)
             {
-                observableCollection.Add(new VideoViewModel(new Video
+                observableCollection.Add(new Classes.VideoViewModel(new VideoPlayer.Entities.Video
                 {
                     Title = "Michel",
                     Length = TimeSpan.FromMinutes(30),
@@ -49,7 +49,7 @@ namespace ManageLibraryModule.Mocks
 
         public VideosCollectionView Videos { get; }
 
-        public VideoViewModel SelectedVideo
+        public Classes.VideoViewModel SelectedVideo
         {
             get { return this._selectedVideo; }
             set

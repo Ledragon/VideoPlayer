@@ -16,10 +16,10 @@ namespace VideosListModule.Mocks
     {
         public MockVideoList()
         {
-            var observableCollection = new ObservableCollection<VideoViewModel>();
+            var observableCollection = new ObservableCollection<Classes.VideoViewModel>();
             for (var i = 0; i < 5; i++)
             {
-                observableCollection.Add(new VideoViewModel(new Video
+                observableCollection.Add(new Classes.VideoViewModel(new VideoPlayer.Entities.Video
                 {
                     Title = "Michel",
                     Length = TimeSpan.FromMinutes(30),
@@ -47,7 +47,7 @@ namespace VideosListModule.Mocks
 
         public IView View { get; set; }
         public DelegateCommand EditCommand { get; }
-        public VideoViewModel CurrentVideo { get; set; }
+        public Classes.VideoViewModel CurrentVideo { get; set; }
         public DelegateCommand AddVideoCommand { get; }
         public DelegateCommand PlayOneCommand { get; }
         public DelegateCommand PlayPlaylistCommand { get; }

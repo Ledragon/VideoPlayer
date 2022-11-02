@@ -14,7 +14,7 @@ namespace Classes
 {
     public class VideoViewModel : INotifyPropertyChanged
     {
-        private Video _video;
+        private readonly Video _video;
         private Image _previewImage;
         private Size _resolution;
 

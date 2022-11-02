@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Classes;
 using Microsoft.Practices.Prism.PubSubEvents;
+using VideoPlayer.Entities;
 
 namespace VideoPlayer.Infrastructure
 {
@@ -94,17 +95,17 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class LibraryUpdated : PubSubEvent<IEnumerable<VideoViewModel>>
+    public class LibraryUpdated : PubSubEvent<IEnumerable<Video>>
     {
     }
 
-    public class AddAllEvent : PubSubEvent<IEnumerable<VideoViewModel>>
+    public class AddAllEvent : PubSubEvent<IEnumerable<Video>>
     {
     }
 
     public class PlayAllEvent : PubSubEvent<Object>
     {
-    }public class PlayRangeEvent : PubSubEvent<IEnumerable<VideoViewModel>>
+    }public class PlayRangeEvent : PubSubEvent<IEnumerable<Video>>
     {
     }
 
@@ -120,7 +121,7 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class VideoSelected : PubSubEvent<VideoViewModel> { }
+    public class VideoSelected : PubSubEvent<Video> { }
 
 
 

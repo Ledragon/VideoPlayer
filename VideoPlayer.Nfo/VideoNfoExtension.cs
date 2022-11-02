@@ -11,7 +11,7 @@ namespace VideoPlayer.Nfo
 {
     public static class VideoNfoExtension
     {
-        public static MovieNfo ToNfo(this Video video)
+        public static MovieNfo ToNfo(this Entities.Video video)
         {
 
             var res = new MovieNfo
@@ -45,7 +45,7 @@ namespace VideoPlayer.Nfo
             return res;
         }
 
-        public static String GetThumbPath(this Video video)
+        public static String GetThumbPath(this Entities.Video video)
         {
             var fileName = Path.GetFileNameWithoutExtension(video.FileName);
             var thumbName = Path.Combine(new FileInfo(video.FileName).DirectoryName, fileName + ".preview.png");

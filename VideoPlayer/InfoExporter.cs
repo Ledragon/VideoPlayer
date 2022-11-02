@@ -7,12 +7,12 @@ namespace VideoPlayer
 {
     internal class InfoExporter
     {
-        public static void ExportImageResolutions(IEnumerable<Video> videos)
+        public static void ExportImageResolutions(IEnumerable<VideoViewModel> videos)
         {
             string path = @"D:\export.csv";
             var streamWriter = new StreamWriter(path);
             streamWriter.WriteLine("Name;Category;Width;Height");
-            foreach (Video video in videos)
+            foreach (VideoViewModel video in videos)
             {
                 streamWriter.WriteLine("{0};{3};{1};{2}", video.Title, video.PreviewImage.Width, video.PreviewImage.Height, video.Category);
             }

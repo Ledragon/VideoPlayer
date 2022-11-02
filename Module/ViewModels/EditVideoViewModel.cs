@@ -6,6 +6,7 @@ using Classes;
 using LeDragon.Log.Standard;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using VideoPlayer.Entities;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
 using ViewModelBase = VideoPlayer.Infrastructure.ViewFirst.ViewModelBase;
@@ -20,7 +21,7 @@ namespace Module
         private String _newCategory;
         private CategoryViewModel _selectedCategory;
         private ObservableCollection<Tag> _tags;
-        private Video _video;
+        private VideoViewModel _video;
 
 
         public EditVideoViewModel(ILibraryService libraryService, IEventAggregator eventAggregator)
@@ -66,7 +67,7 @@ namespace Module
             }
         }
 
-        public Video Video
+        public VideoViewModel Video
         {
             get { return this._video; }
             set
@@ -149,7 +150,7 @@ namespace Module
         private void CreateCategories(ILibraryService libraryService)
         {
             this.CategoryViewModels.Clear();
-            IEnumerable<IGrouping<String, Video>> categories =
+            IEnumerable<IGrouping<String, VideoViewModel>> categories =
                 libraryService.GetObjectsFromFile()
                     .Videos.Where(v => !String.IsNullOrEmpty(v.Category))
                     .GroupBy(v => v.Category)

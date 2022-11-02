@@ -133,6 +133,10 @@
       <Project>{FFB9C128-CA7E-40BB-BBCD-7B28707C6719}</Project>
       <Name>Classes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj">
+      <Project>{D69E3157-18F8-4AEF-A224-623845B017ED}</Project>
+      <Name>VideoPlayer.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Infrastructure\VideoPlayer.Infrastructure.csproj">
       <Project>{80E2C9D4-F13F-482E-BC5D-678E61A88FA6}</Project>
       <Name>VideoPlayer.Infrastructure</Name>

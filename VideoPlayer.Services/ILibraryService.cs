@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Classes;
+using VideoPlayer.Entities;
 
 namespace VideoPlayer.Services
 {

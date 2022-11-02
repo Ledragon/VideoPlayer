@@ -11,14 +11,14 @@ namespace VideosListModule
     {
         private String _contactSheetPath;
         private Boolean _hasContactSheet;
-        private Video _video;
+        private VideoViewModel _video;
 
         public VideoInfoViewModel(IEventAggregator eventAggregator)
         {
             eventAggregator.GetEvent<VideoSelected>().Subscribe(video => this.Video = video);
         }
 
-        public Video Video
+        public VideoViewModel Video
         {
             get { return this._video; }
             set

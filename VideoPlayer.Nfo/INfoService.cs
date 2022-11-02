@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Classes;
+using VideoPlayer.Entities;
 
 namespace VideoPlayer.Nfo
 {

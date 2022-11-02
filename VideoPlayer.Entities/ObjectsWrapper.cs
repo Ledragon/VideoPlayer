@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-//using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Classes
+namespace VideoPlayer.Entities
 {
     [XmlRoot("Library")]
     public class ObjectsWrapper
@@ -22,7 +20,7 @@ namespace Classes
 
         public ObjectsWrapper()
         {
-            this.Directories = new ObservableCollection<Directory>();//<Directory>();
+            this.Directories = new ObservableCollection<Directory>();
             this.Videos = new List<Video>();
             if (this.PlayLists == null)
             {

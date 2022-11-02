@@ -7,6 +7,6 @@ namespace ManageLibraryModule
     public interface IEditViewModel : IViewModel
     {
         VideosCollectionView Videos { get; }
-        Video SelectedVideo { get; set; }
+        VideoViewModel SelectedVideo { get; set; }
     }
 }

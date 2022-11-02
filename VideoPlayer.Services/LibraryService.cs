@@ -8,8 +8,9 @@ using Classes;
 using LeDragon.Log.Standard;
 using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
+using VideoPlayer.Entities;
 using VideoPlayer.Helpers;
-using Directory = Classes.Directory;
+using Directory = VideoPlayer.Entities.Directory;
 
 namespace VideoPlayer.Services
 {

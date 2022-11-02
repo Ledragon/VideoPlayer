@@ -61,11 +61,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
-    <Compile Include="Directory.cs" />
-    <Compile Include="ObjectsWrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Video.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WindowsVideoInfoExtractor.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -77,6 +76,10 @@
     <ProjectReference Include="..\LeDragon.Log.Standard\LeDragon.Log.Standard.csproj">
       <Project>{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}</Project>
       <Name>LeDragon.Log.Standard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj">
+      <Project>{D69E3157-18F8-4AEF-A224-623845B017ED}</Project>
+      <Name>VideoPlayer.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

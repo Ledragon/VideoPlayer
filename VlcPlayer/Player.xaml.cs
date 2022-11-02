@@ -65,7 +65,7 @@ namespace VlcPlayer
             this._VLCcontrol.Rate = rate;
         }
 
-        private void Play(Video video)
+        private void Play(VideoViewModel video)
         {
             this.ExecuteHandled(() =>
             {

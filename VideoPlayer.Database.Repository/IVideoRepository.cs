@@ -1,5 +1,5 @@
 using System;
-using Classes;
+using VideoPlayer.Entities;
 
 namespace VideoPlayer.Database.Repository
 {

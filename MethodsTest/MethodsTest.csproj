@@ -106,6 +106,10 @@
       <Project>{ffb9c128-ca7e-40bb-bbcd-7b28707c6719}</Project>
       <Name>Classes</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj">
+      <Project>{D69E3157-18F8-4AEF-A224-623845B017ED}</Project>
+      <Name>VideoPlayer.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

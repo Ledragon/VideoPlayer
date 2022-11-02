@@ -26,11 +26,11 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class OnAddVideo : PubSubEvent<Video>
+    public class OnAddVideo : PubSubEvent<VideoViewModel>
     {
     }
 
-    public class OnAddVideoRange : PubSubEvent<IEnumerable<Video>>
+    public class OnAddVideoRange : PubSubEvent<IEnumerable<VideoViewModel>>
     {
     }
 
@@ -42,16 +42,16 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class OnPlayPlaylist : PubSubEvent<IEnumerable<Video>>
+    public class OnPlayPlaylist : PubSubEvent<IEnumerable<VideoViewModel>>
     {
     }
 
-    public class PlayOneRequestEvent : PubSubEvent<Video> { }
-    public class PlayOneEvent : PubSubEvent<Video>
+    public class PlayOneRequestEvent : PubSubEvent<VideoViewModel> { }
+    public class PlayOneEvent : PubSubEvent<VideoViewModel>
     {
     }
 
-    public class PlayedEvent : PubSubEvent<Video>
+    public class PlayedEvent : PubSubEvent<VideoViewModel>
     {
     }
 
@@ -78,12 +78,12 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class VideoEditing : PubSubEvent<Video>
+    public class VideoEditing : PubSubEvent<VideoViewModel>
     {
     }
 
 
-    public class SetVideo : PubSubEvent<Video>
+    public class SetVideo : PubSubEvent<VideoViewModel>
     {
     }
     public class VideoEdited : PubSubEvent<Object>
@@ -94,17 +94,17 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class LibraryUpdated : PubSubEvent<IEnumerable<Video>>
+    public class LibraryUpdated : PubSubEvent<IEnumerable<VideoViewModel>>
     {
     }
 
-    public class AddAllEvent : PubSubEvent<IEnumerable<Video>>
+    public class AddAllEvent : PubSubEvent<IEnumerable<VideoViewModel>>
     {
     }
 
     public class PlayAllEvent : PubSubEvent<Object>
     {
-    }public class PlayRangeEvent : PubSubEvent<IEnumerable<Video>>
+    }public class PlayRangeEvent : PubSubEvent<IEnumerable<VideoViewModel>>
     {
     }
 
@@ -120,7 +120,7 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class VideoSelected : PubSubEvent<Video> { }
+    public class VideoSelected : PubSubEvent<VideoViewModel> { }
 
 
 

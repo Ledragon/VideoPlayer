@@ -11,6 +11,7 @@ using LeDragon.Log.Standard;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using VideoPlayer.Entities;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Infrastructure.ViewFirst;
 using VideoPlayer.Services;
@@ -24,7 +25,7 @@ namespace VlcPlayer
         private readonly Timer _timer = new Timer();
         private Boolean _autoPlay;
         private Boolean _controlsVisibility;
-        private Video _currentVideo;
+        private VideoViewModel _currentVideo;
         private Cursor _cursor;
         private TimeSpan _duration;
         private Int32 _index;
@@ -34,7 +35,7 @@ namespace VlcPlayer
         private Boolean _isPaused;
         private Boolean _isRepeat;
         private DateTime _mouseLastMouveDateTime = DateTime.Now;
-        private ObservableCollection<Video> _playlist;
+        private ObservableCollection<VideoViewModel> _playlist;
         private Boolean _playlistVisibility;
         private Single _position;
         private TimeSpan _positionTimeSpan;
@@ -168,7 +169,7 @@ namespace VlcPlayer
             }
         }
 
-        public ObservableCollection<Video> Playlist
+        public ObservableCollection<VideoViewModel> Playlist
         {
             get { return this._playlist; }
             set
@@ -197,7 +198,7 @@ namespace VlcPlayer
             }
         }
 
-        public Video CurrentVideo
+        public VideoViewModel CurrentVideo
         {
             get { return this._currentVideo; }
             set
@@ -413,11 +414,11 @@ namespace VlcPlayer
 
         public void AddVideo(String path)
         {
-            var video = new Video(path);
+            var video = new VideoViewModel(path);
             this.AddVideo(video);
         }
 
-        public void AddVideo(Video video)
+        public void AddVideo(VideoViewModel video)
         {
             this.Logger().DebugFormat("Adding video '{0}' to playlist.", video.Title);
             this.Playlist.Add(video);

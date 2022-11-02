@@ -8,8 +8,8 @@ namespace PlaylistModule
 {
     public interface IPlayListViewModel : IViewModel
     {
-        ObservableCollection<Video> Playlist { get; set; }
-        Video CurrentVideo { get; set; }
+        ObservableCollection<VideoViewModel> Playlist { get; set; }
+        VideoViewModel CurrentVideo { get; set; }
         TimeSpan TotalDuration { get; }
         ICommand RemoveCommand { get; }
         ICommand AddCommand { get; }

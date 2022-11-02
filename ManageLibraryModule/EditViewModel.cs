@@ -17,7 +17,7 @@ namespace ManageLibraryModule
     {
         private readonly ILibraryService _libraryService;
         private readonly IEventAggregator _eventAggregator;
-        private Video _selectedVideo;
+        private VideoViewModel _selectedVideo;
         private VideosCollectionView _videos;
 
         public EditViewModel(ILibraryService libraryService, IEventAggregator eventAggregator, INfoService nfoService)
@@ -25,11 +25,11 @@ namespace ManageLibraryModule
             this._libraryService = libraryService;
             this._eventAggregator = eventAggregator;
             var collection = this._libraryService.GetObjectsFromFile().Videos;
-            this.Refresh(collection);
+            this.Refresh(collection.Select(v => new VideoViewModel(v)).ToList());
             this.UpdateCommand = new DelegateCommand(this.UpdateAsync);
             this.CleanCommand = new DelegateCommand(this.Clean);
 
-            this.ToJsonCommand = new DelegateCommand(() => { libraryService.ToJson(this.Videos.SourceCollection as IEnumerable<Video>); });
+            //this.ToJsonCommand = new DelegateCommand(() => { libraryService.ToJson(this.Videos.SourceCollection as IEnumerable<VideoViewModel>); });
 
             this.CreateNfoCommand = new DelegateCommand(() =>
             {
@@ -43,7 +43,7 @@ namespace ManageLibraryModule
                 });
         }
 
-        private void Refresh(List<Video> collection)
+        private void Refresh(List<VideoViewModel> collection)
         {
             this.Videos = new VideosCollectionView(collection, 0);
             //this.Videos.Sort(new SortDescription("Category", ListSortDirection.Ascending));
@@ -69,7 +69,7 @@ namespace ManageLibraryModule
             }
         }
 
-        public Video SelectedVideo
+        public VideoViewModel SelectedVideo
         {
             get { return this._selectedVideo; }
             set

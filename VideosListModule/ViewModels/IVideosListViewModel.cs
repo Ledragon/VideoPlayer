@@ -10,7 +10,7 @@ namespace VideosListModule
 {
     public interface IVideosListViewModel : IViewModel
     {
-        Video CurrentVideo { get; set; }
+        VideoViewModel CurrentVideo { get; set; }
         DelegateCommand AddVideoCommand { get; }
         DelegateCommand PlayOneCommand { get; }
         DelegateCommand PlayPlaylistCommand { get; }

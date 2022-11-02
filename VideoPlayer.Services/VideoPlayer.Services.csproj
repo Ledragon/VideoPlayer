@@ -77,6 +77,10 @@
       <Project>{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}</Project>
       <Name>VideoPlayer.Database.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj">
+      <Project>{D69E3157-18F8-4AEF-A224-623845B017ED}</Project>
+      <Name>VideoPlayer.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Helpers\VideoPlayer.Helpers.csproj">
       <Project>{2B1B69BB-FFF7-4DD6-967B-CA5180EBEE85}</Project>
       <Name>VideoPlayer.Helpers</Name>

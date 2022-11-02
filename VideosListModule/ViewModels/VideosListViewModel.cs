@@ -18,7 +18,7 @@ namespace VideosListModule.ViewModels
 {
     public class VideosListViewModel : ViewModelBase, IVideosListViewModel
     {
-        private Video _currentVideo;
+        private VideoViewModel _currentVideo;
         private Int32 _editIndex;
         private IEventAggregator _eventAggregator;
         private VideosCollectionView _filteredVideos;
@@ -78,7 +78,7 @@ namespace VideosListModule.ViewModels
                 }
                 this._filteredVideos = value;
 
-                this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
+                this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<VideoViewModel>().Count());
                 this.Raise();
                 this.OnPropertyChanged();
             }
@@ -98,7 +98,7 @@ namespace VideosListModule.ViewModels
             }
         }
 
-        public Video CurrentVideo
+        public VideoViewModel CurrentVideo
         {
             get { return this._currentVideo; }
             set
@@ -117,7 +117,7 @@ namespace VideosListModule.ViewModels
             this.IsLoading = true;
             var wrapper = await this._libraryService.LoadAsync();
             var videos = wrapper.Videos;
-            this.UpdateVideoListView(videos);
+            this.UpdateVideoListView(videos.Select(v => new VideoViewModel(v)).ToList());
             this.IsLoading = false;
         }
 
@@ -160,7 +160,7 @@ namespace VideosListModule.ViewModels
             }
         }
 
-        private void UpdateVideoListView(IEnumerable<Video> videos)
+        private void UpdateVideoListView(IEnumerable<VideoViewModel> videos)
         {
             FilterParameters filter = null;
             if (this.FilteredVideos != null)
@@ -175,7 +175,7 @@ namespace VideosListModule.ViewModels
                 this.FilteredVideos.FilterName(filter.Name);
                 this.FilteredVideos.Sort(filter.SortDescription);
             }
-            this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<Video>().Count());
+            this._eventAggregator.GetEvent<FilterChangedEvent>().Publish(this.FilteredVideos.Cast<VideoViewModel>().Count());
         }
 
         private void Raise()
@@ -218,13 +218,13 @@ namespace VideosListModule.ViewModels
         private void PlayAll(Object obj)
         {
             this._eventAggregator.GetEvent<PlayRangeEvent>()
-                .Publish(this.FilteredVideos.Cast<Video>());
+                .Publish(this.FilteredVideos.Cast<VideoViewModel>());
         }
 
         private void AddRange(Object obj)
         {
             this._eventAggregator.GetEvent<OnAddVideoRange>()
-                .Publish(this.FilteredVideos.Cast<Video>());
+                .Publish(this.FilteredVideos.Cast<VideoViewModel>());
         }
 
         private void PlayOne()
@@ -232,14 +232,14 @@ namespace VideosListModule.ViewModels
             if (File.Exists(this.CurrentVideo.FileName))
             {
                 this._eventAggregator.GetEvent<PlayRangeEvent>()
-                    .Publish(new List<Video> {this.CurrentVideo});
+                    .Publish(new List<VideoViewModel> { this.CurrentVideo });
             }
             else
             {
                 MessageBox.Show("File not found.");
             }
         }
-        
+
         private void Add()
         {
             if (this.CurrentVideo != null && File.Exists(this.CurrentVideo.FileName))

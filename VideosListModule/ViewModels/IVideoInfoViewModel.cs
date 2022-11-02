@@ -6,7 +6,7 @@ namespace VideosListModule
 {
     public interface IVideoInfoViewModel : IViewModel
     {
-        Video Video { get; set; }
+        VideoViewModel Video { get; set; }
         String ContactSheetPath { get; }
         Boolean HasContactSheet { get; }
     }

@@ -19,7 +19,7 @@ namespace VideosListModule.ViewModels
         private Int32 _pageNumber;
         private SortDescription _sortDescription;
 
-        public VideosCollectionView([NotNull] List<Video> collection, Int32 pageSize = 20)
+        public VideosCollectionView([NotNull] List<VideoViewModel> collection, Int32 pageSize = 20)
             : base(collection)
         {
             this.PageSize = pageSize;
@@ -43,11 +43,11 @@ namespace VideosListModule.ViewModels
             }
         }
 
-        private Video[] CurrentItems
+        private VideoViewModel[] CurrentItems
         {
             get
             {
-                var enumerable = this.Cast<Video>();
+                var enumerable = this.Cast<VideoViewModel>();
                 if (this.PageSize > 0)
                 {
                     enumerable = enumerable
@@ -63,7 +63,7 @@ namespace VideosListModule.ViewModels
         {
             get
             {
-                return this.PageSize > 0 && this.Cast<Video>().Count() > this.PageSize*(this._pageNumber + 1);
+                return this.PageSize > 0 && this.Cast<VideoViewModel>().Count() > this.PageSize*(this._pageNumber + 1);
                 ;
             }
         }
@@ -155,7 +155,7 @@ namespace VideosListModule.ViewModels
                 var result = true;
                 try
                 {
-                    var video = item as Video;
+                    var video = item as VideoViewModel;
                     var isNameOk = this.IsNameOk(video);
                     var isCategoryOk = this.IsCategoryOk(video, this._categoryFilter);
                     var isTagOk = this.IsTagOk(video);
@@ -169,7 +169,7 @@ namespace VideosListModule.ViewModels
             };
         }
 
-        private Boolean IsCategoryOk(Video video, String category)
+        private Boolean IsCategoryOk(VideoViewModel video, String category)
         {
             Boolean isCategoryOk;
             if (String.Compare(category, "all", StringComparison.InvariantCultureIgnoreCase) == 0)
@@ -188,7 +188,7 @@ namespace VideosListModule.ViewModels
             return isCategoryOk;
         }
 
-        private Boolean IsNameOk(Video video)
+        private Boolean IsNameOk(VideoViewModel video)
         {
             var result = true;
             if (!String.IsNullOrEmpty(this._filterName))
@@ -198,7 +198,7 @@ namespace VideosListModule.ViewModels
             return result;
         }
 
-        private Boolean IsTagOk(Video video)
+        private Boolean IsTagOk(VideoViewModel video)
         {
             var result = true;
             if (this._filterTags != null && this._filterTags.Any())

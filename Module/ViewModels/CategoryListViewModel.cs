@@ -103,7 +103,7 @@ namespace Module
             }
         }
 
-        private void BuildCategoryList(IEnumerable<Video> videos = null)
+        private void BuildCategoryList(IEnumerable<VideoViewModel> videos = null)
         {
             var selectedCategoryName = this.SelectedCategory == null ? String.Empty : this.SelectedCategory.Name;
 

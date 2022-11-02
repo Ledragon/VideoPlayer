@@ -17,8 +17,8 @@ namespace PlaylistModule
     {
         private readonly ILibraryService _libraryService;
         private readonly IPlaylistService _playlistService;
-        private Video _currentVideo;
-        private ObservableCollection<Video> _playlist;
+        private VideoViewModel _currentVideo;
+        private ObservableCollection<VideoViewModel> _playlist;
         private ObservableCollection<Playlist> _playListCollection;
         private String _playListName;
         private Playlist _selectedPlayList;
@@ -29,12 +29,12 @@ namespace PlaylistModule
         {
             this._libraryService = libraryService;
             this._playlistService = playlistService;
-            this.Playlist = new ObservableCollection<Video>();
+            this.Playlist = new ObservableCollection<VideoViewModel>();
 
             this.RemoveCommand = new DelegateCommand(() => this.Remove(this.CurrentVideo));
 
-            this.AddCommand = new DelegateCommand<Video>(this.Add);
-            this.AddRangeCommand = new DelegateCommand<IEnumerable<Video>>(this.Add);
+            this.AddCommand = new DelegateCommand<VideoViewModel>(this.Add);
+            this.AddRangeCommand = new DelegateCommand<IEnumerable<VideoViewModel>>(this.Add);
             this.SavePlaylistCommand = new DelegateCommand(this.Save);
             this.ClearCommand = new DelegateCommand(this.ClearPlaylist);
 
@@ -111,7 +111,7 @@ namespace PlaylistModule
         }
 
 
-        public ObservableCollection<Video> Playlist
+        public ObservableCollection<VideoViewModel> Playlist
         {
             get { return this._playlist; }
             set
@@ -125,7 +125,7 @@ namespace PlaylistModule
             }
         }
 
-        public Video CurrentVideo
+        public VideoViewModel CurrentVideo
         {
             get { return this._currentVideo; }
             set
@@ -160,12 +160,12 @@ namespace PlaylistModule
         public ICommand AddCommand { get; }
         public ICommand AddRangeCommand { get; }
 
-        private void Add(IEnumerable<Video> videos)
+        private void Add(IEnumerable<VideoViewModel> videos)
         {
             this.Playlist.AddRange(videos.Where(v => !this.Playlist.Contains(v)));
         }
 
-        private void Add(Video video)
+        private void Add(VideoViewModel video)
         {
             if (!this.Playlist.Contains(video))
             {
@@ -173,7 +173,7 @@ namespace PlaylistModule
             }
         }
 
-        private void Remove(Video video)
+        private void Remove(VideoViewModel video)
         {
             if (this.Playlist.Contains(video))
             {

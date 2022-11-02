@@ -22,9 +22,9 @@ namespace VlcPlayer
         Boolean IsRepeat { get; set; }
         Boolean IsMute { get; set; }
         Boolean IsPaused { get; set; }
-        ObservableCollection<Video> Playlist { get; set; }
+        ObservableCollection<VideoViewModel> Playlist { get; set; }
         TimeSpan TimePosition { get; set; }
-        Video CurrentVideo { get; set; }
+        VideoViewModel CurrentVideo { get; set; }
         String TemporaryImagePath { get; }
         String Title { get; set; }
         Single Position { get; set; }

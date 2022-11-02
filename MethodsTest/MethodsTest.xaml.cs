@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.Linq;
+using VideoPlayer.Entities;
 //using VideoPlayer;
 
 namespace MethodsTest
@@ -26,7 +27,7 @@ namespace MethodsTest
             InitializeComponent();            
         }
 
-        private readonly ObservableCollection<Video> _videos = new ObservableCollection<Video>();
+        private readonly ObservableCollection<VideoViewModel> _videos = new ObservableCollection<VideoViewModel>();
         
         private void InfoViewer_Loaded(object sender, RoutedEventArgs e)
         {

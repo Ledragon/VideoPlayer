@@ -1,10 +1,6 @@
 ﻿using Classes;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VideoPlayer.Nfo
 {
@@ -20,11 +16,11 @@ namespace VideoPlayer.Nfo
         {
             foreach (var video in videos)
             {
-                var thumbName = video.GetThumbPath();
-                if (!File.Exists(thumbName))
-                {
-                    video.PreviewImage.Save(thumbName);
-                }
+                //var thumbName = video.GetThumbPath();
+                //if (!File.Exists(thumbName))
+                //{
+                //    video.PreviewImage.Save(thumbName);
+                //}
                 var fileName = Path.GetFileNameWithoutExtension(video.FileName);
                 var path = Path.Combine(new FileInfo(video.FileName).DirectoryName, fileName + ".nfo");
                 var nfo = video.ToNfo();

@@ -15,6 +15,7 @@ namespace VideoPlayer.Nfo
         [XmlElement(ElementName = "originaltitle")]
         public String OriginalTitle { get; set; }
         public Int32 UserRating { get; set; }
+        [XmlElement(ElementName ="runtime")]
         public Int32 Runtime { get; set; }
         [XmlArray("fanart")]
         [XmlArrayItem("thumb")]
@@ -34,25 +35,5 @@ namespace VideoPlayer.Nfo
             this.Genres = new List<String>();
             this.Tags = new List<String>();
         }
-    }
-
-    public class Thumb
-    {
-        [XmlAttribute("aspect")]
-        public String Aspect { get; set; }
-        [XmlAttribute("preview")]
-        public String Preview
-        {
-            get { return this.Path; }
-            set { this.Path = value; }
-        }
-        [XmlText]
-        public String Path { get; set; }
-    }
-
-    public class Set
-    {
-        public String Name { get; set; }
-        public String Overview { get; set; }
     }
 }

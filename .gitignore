@@ -294,3 +294,7 @@ packages
 bin
 obj
 _dll
+
+*.backup
+.upgrade-assistant
+upgrade-assistant.clef

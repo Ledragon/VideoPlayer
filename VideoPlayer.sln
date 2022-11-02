@@ -49,7 +49,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.PlaylistManagem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LeDragon.Log.Standard", "LeDragon.Log.Standard\LeDragon.Log.Standard.csproj", "{EAF0CE5C-ADA1-4990-932C-31EFE7C4CD3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Nfo", "VideoPlayer.Nfo\VideoPlayer.Nfo.csproj", "{39ADC655-7F6D-4C16-BF9D-AB95FCDCA1A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoPlayer.Nfo", "VideoPlayer.Nfo\VideoPlayer.Nfo.csproj", "{39ADC655-7F6D-4C16-BF9D-AB95FCDCA1A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Entities", "VideoPlayer.Entities\VideoPlayer.Entities.csproj", "{D69E3157-18F8-4AEF-A224-623845B017ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +143,10 @@ Global
 		{39ADC655-7F6D-4C16-BF9D-AB95FCDCA1A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{39ADC655-7F6D-4C16-BF9D-AB95FCDCA1A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{39ADC655-7F6D-4C16-BF9D-AB95FCDCA1A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D69E3157-18F8-4AEF-A224-623845B017ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D69E3157-18F8-4AEF-A224-623845B017ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D69E3157-18F8-4AEF-A224-623845B017ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D69E3157-18F8-4AEF-A224-623845B017ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

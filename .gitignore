@@ -298,3 +298,4 @@ _dll
 *.backup
 .upgrade-assistant
 upgrade-assistant.clef
+*.sarif

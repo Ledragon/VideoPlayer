@@ -11,7 +11,6 @@ using LeDragon.Log.Standard;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
-using VideoPlayer.Entities;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Infrastructure.ViewFirst;
 using VideoPlayer.Services;
@@ -36,7 +35,7 @@ namespace VlcPlayer
         private Boolean _isPaused;
         private Boolean _isRepeat;
         private DateTime _mouseLastMouveDateTime = DateTime.Now;
-        private ObservableCollection<Classes.VideoViewModel> _playlist;
+        private ObservableCollection<VideoViewModel> _playlist;
         private Boolean _playlistVisibility;
         private Single _position;
         private TimeSpan _positionTimeSpan;

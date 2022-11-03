@@ -121,18 +121,18 @@ namespace Classes
             }
         }
 
-        public String SerializedImage { get; set; }
+        public String SerializedImage { get => this._video.SerializedImage; set => this._video.SerializedImage = value; }
 
         public Image PreviewImage
         {
             get
             {
-                //if (this._previewImage == null)
-                //{
-                var modifier = new ImageModifier();
-                var image = modifier.DeserializeFromBase64String(this.SerializedImage);
-                this._previewImage = image;
-                //}
+                if (this._previewImage == null)
+                {
+                    var modifier = new ImageModifier();
+                    var image = modifier.DeserializeFromBase64String(this.SerializedImage);
+                    this._previewImage = image;
+                }
                 return this._previewImage;
             }
             set

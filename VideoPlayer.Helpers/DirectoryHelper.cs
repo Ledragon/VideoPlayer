@@ -10,7 +10,7 @@ namespace VideoPlayer.Helpers
     {
         private static readonly String[] VideoExtensions =
         {
-            ".3gp", ".asf", ".avi", ".divx", ".flv", ".m4v", ".mov", ".mp4",
+            ".3gp", ".asf", ".avi", ".divx", ".flv", ".m4v", ".mkv", ".mov", ".mp4",
             ".mpeg", ".mpg", ".webm", ".wmv"
         };
 

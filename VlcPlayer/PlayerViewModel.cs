@@ -68,6 +68,7 @@ namespace VlcPlayer
                     this._autoPlay = false;
                     this.CurrentVideo = v;
                 });
+            this.Playlist = new ObservableCollection<VideoViewModel>();
         }
 
         public Boolean PlaylistVisibility

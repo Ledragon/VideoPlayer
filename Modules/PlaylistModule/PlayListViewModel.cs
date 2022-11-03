@@ -47,7 +47,7 @@ namespace PlaylistModule
                 {
                     this.ClearPlaylist();
                     this.Add(videos);
-                    playlistService.Playlist = this.Playlist;
+                    playlistService.Playlist = this.Playlist.Select(p => p.Video);
                     eventAggregator.GetEvent<OnPlayPlaylistRequest>().Publish(this.Playlist);
                 });
 
@@ -55,7 +55,7 @@ namespace PlaylistModule
                 .Subscribe(dummy => { eventAggregator.GetEvent<OnPlayPlaylist>().Publish(this.Playlist); }, true);
 
             this.PlayListCollection = new ObservableCollection<Playlist>(libraryService.GetObjectsFromFile().PlayLists);
-            playlistService.Playlist = this.Playlist;
+            playlistService.Playlist = this.Playlist.Select(p => p.Video);
             this.Playlist.CollectionChanged += (s, e) =>
             {
                 this.TotalDuration = this.Playlist
@@ -104,7 +104,8 @@ namespace PlaylistModule
                 this.OnPropertyChanged();
                 this.Playlist.Clear();
                 this.Playlist.AddRange(
-                    this._libraryService.GetVideosByFilePath(this._selectedPlayList.Items.Select(f => f.FileName)));
+                    this._libraryService.GetVideosByFilePath(this._selectedPlayList.Items.Select(f => f.FileName))
+                    .Select(v => new VideoViewModel(v)));
                 this.PlayListName = this._selectedPlayList.Title;
                 this.TotalDuration = this.Playlist.Aggregate(TimeSpan.Zero,
                     (current, video) => current.Add(video.Length));

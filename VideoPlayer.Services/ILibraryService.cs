@@ -12,12 +12,13 @@ namespace VideoPlayer.Services
         void Save();
         Task SaveAsync();
         void Clean();
-        IEnumerable<Entities.Video> Update();
-        Task<IEnumerable<Entities.Video>> UpdateAsync();
+        IEnumerable<Video> Update();
+        Task<IEnumerable<Video>> UpdateAsync();
         Task CleanAsync();
         void AddPlaylist(Playlist playlist);
-        List<Entities.Video> GetVideosByFilePath(IEnumerable<String> fileNames);
+        List<Video> GetVideosByFilePath(IEnumerable<String> fileNames);
         Task<ObjectsWrapper> LoadAsync();
-        void ToJson(IEnumerable<Entities.Video> videos);
+        void ToJson(IEnumerable<Video> videos);
+        Video GetVideoByFilePath(String fileName);
     }
 }

@@ -188,7 +188,7 @@ namespace VideoPlayer.Services
             this.Logger().DebugFormat("Library backed up to '{0}'.", destinationPath);
         }
 
-        public void ToJson(IEnumerable<Entities.Video> videos)
+        public void ToJson(IEnumerable<Video> videos)
         {
             try
             {
@@ -206,7 +206,12 @@ namespace VideoPlayer.Services
             }
         }
 
-        public List<Entities.Video> GetVideosByFilePath(IEnumerable<String> fileNames)
+        public Video GetVideoByFilePath(String fileName)
+        {
+            return this.GetObjectsFromFile().Videos.FirstOrDefault(v => v.FileName == fileName);
+        }
+
+        public List<Video> GetVideosByFilePath(IEnumerable<String> fileNames)
         {
             return this.GetObjectsFromFile().Videos.Where(v => fileNames.Contains(v.FileName)).ToList();
         }

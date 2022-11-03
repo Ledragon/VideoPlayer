@@ -8,6 +8,7 @@ using LeDragon.Log.Standard;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Module.Interfaces;
+using VideoPlayer.Entities;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Services;
 
@@ -103,7 +104,7 @@ namespace Module
             }
         }
 
-        private void BuildCategoryList(IEnumerable<VideoViewModel> videos = null)
+        private void BuildCategoryList(IEnumerable<Video> videos = null)
         {
             var selectedCategoryName = this.SelectedCategory == null ? String.Empty : this.SelectedCategory.Name;
 

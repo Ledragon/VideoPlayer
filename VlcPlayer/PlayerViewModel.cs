@@ -22,10 +22,11 @@ namespace VlcPlayer
     {
         private readonly IEventAggregator _eventAggregator;
         private readonly IPlaylistService _playlistService;
+        private readonly ILibraryService _libraryService;
         private readonly Timer _timer = new Timer();
         private Boolean _autoPlay;
         private Boolean _controlsVisibility;
-        private Classes.VideoViewModel _currentVideo;
+        private VideoViewModel _currentVideo;
         private Cursor _cursor;
         private TimeSpan _duration;
         private Int32 _index;
@@ -44,10 +45,11 @@ namespace VlcPlayer
         private TimeSpan _timePosition;
         private String _title;
 
-        public PlayerViewModel(IEventAggregator eventAggregator, IPlaylistService playlistService)
+        public PlayerViewModel(IEventAggregator eventAggregator, IPlaylistService playlistService, ILibraryService libraryService)
         {
             this._eventAggregator = eventAggregator;
             this._playlistService = playlistService;
+            this._libraryService = libraryService;
             this.Rate = 1;
             this.IsRepeat = false;
             this.ControlsVisibility = true;
@@ -108,7 +110,7 @@ namespace VlcPlayer
                 {
                     if (this._playlistService.Playlist != null)
                     {
-                        this.Playlist = new ObservableCollection<Video>(this._playlistService.Playlist);
+                        this.Playlist = new ObservableCollection<VideoViewModel>(this._playlistService.Playlist.Select(v => new VideoViewModel(v)));
                         if (this.Playlist.Any())
                         {
                             this._autoPlay = true;
@@ -169,7 +171,7 @@ namespace VlcPlayer
             }
         }
 
-        public ObservableCollection<Classes.VideoViewModel> Playlist
+        public ObservableCollection<VideoViewModel> Playlist
         {
             get { return this._playlist; }
             set
@@ -214,7 +216,7 @@ namespace VlcPlayer
                 {
                     this._index = this.Playlist.IndexOf(value);
                 }
-                
+
                 if (this._autoPlay)
                 {
                     this._eventAggregator.GetEvent<PlayedEvent>().Publish(this.CurrentVideo);
@@ -257,7 +259,7 @@ namespace VlcPlayer
                 {
                     this._position = 0;
                 }
-                Double ticks = this._duration.Ticks*this._position;
+                Double ticks = this._duration.Ticks * this._position;
                 var parsedTicks = Int64.Parse(ticks.ToString("0"));
                 this.PositionTimeSpan = new TimeSpan(parsedTicks);
                 if (this.IsMouseDown)
@@ -414,11 +416,18 @@ namespace VlcPlayer
 
         public void AddVideo(String path)
         {
-            var video = new VideoViewModel(path);
-            this.AddVideo(video);
+            var video = this._libraryService.GetVideoByFilePath(path);
+            if (video != null)
+            {
+                this.AddVideo(new VideoViewModel(video));
+            }
+            else
+            {
+                this.Logger().DebugFormat("Video '{0}' not found.", path);
+            }
         }
 
-        public void AddVideo(Classes.VideoViewModel video)
+        public void AddVideo(VideoViewModel video)
         {
             this.Logger().DebugFormat("Adding video '{0}' to playlist.", video.Title);
             this.Playlist.Add(video);

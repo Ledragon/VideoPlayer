@@ -18,12 +18,13 @@ namespace Classes
         private Image _previewImage;
         private Size _resolution;
 
+        public Video Video => this._video;
+
         public VideoViewModel(Video video)
         {
             this._video = video;
             var videoPath = video.FileName;
             this.Directory = Path.GetDirectoryName(videoPath);
-            this.FileName = videoPath;
             //try
             //{
             //    if (File.Exists(videoPath))
@@ -39,7 +40,7 @@ namespace Classes
             //}
         }
 
-        public String FileName { get; set; }
+        public String FileName { get => this._video.FileName; set => this._video.FileName = value; }
 
         public String Title
         {

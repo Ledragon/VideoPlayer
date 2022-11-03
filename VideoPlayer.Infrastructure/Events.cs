@@ -87,6 +87,7 @@ namespace VideoPlayer.Infrastructure
     public class SetVideo : PubSubEvent<VideoViewModel>
     {
     }
+
     public class VideoEdited : PubSubEvent<Object>
     {
     }
@@ -99,13 +100,15 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class AddAllEvent : PubSubEvent<IEnumerable<Video>>
+    public class AddAllEvent : PubSubEvent<IEnumerable<VideoViewModel>>
     {
     }
 
     public class PlayAllEvent : PubSubEvent<Object>
     {
-    }public class PlayRangeEvent : PubSubEvent<IEnumerable<Video>>
+    }
+    
+    public class PlayRangeEvent : PubSubEvent<IEnumerable<VideoViewModel>>
     {
     }
 
@@ -121,7 +124,7 @@ namespace VideoPlayer.Infrastructure
     {
     }
 
-    public class VideoSelected : PubSubEvent<Video> { }
+    public class VideoSelected : PubSubEvent<VideoViewModel> { }
 
 
 

@@ -25,19 +25,16 @@ namespace Classes
             this._video = video;
             var videoPath = video.FileName;
             this.Directory = Path.GetDirectoryName(videoPath);
-            //try
-            //{
-            //    if (File.Exists(videoPath))
-            //    {
-            //        this.Title = Path.GetFileNameWithoutExtension(videoPath).Replace("%20", " ");
-            //        this.Rating = 0;
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    this.Logger().ErrorFormat(e.Message);
-            //    this.Logger().ErrorFormat(e.StackTrace);
-            //}
+            try
+            {
+                var wvie = new WindowsVideoInfoExtractor();
+                wvie.SetShellInfo(this);
+            }
+            catch (Exception e)
+            {
+                this.Logger().ErrorFormat(e.Message);
+                this.Logger().ErrorFormat(e.StackTrace);
+            }
         }
 
         public String FileName { get => this._video.FileName; set => this._video.FileName = value; }

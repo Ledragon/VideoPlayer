@@ -1,5 +1,4 @@
-﻿
-using Unity;
+﻿using Microsoft.Practices.Unity;
 
 namespace VideoPlayer.Infrastructure
 {

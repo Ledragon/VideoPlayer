@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
-using Unity;
+using Microsoft.Practices.Unity;
 using VideoPlayer.Infrastructure.ViewFirst;
 
 namespace VideoPlayer.Infrastructure

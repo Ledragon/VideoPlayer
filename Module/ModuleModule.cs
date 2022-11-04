@@ -1,7 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Regions;
 using Module.Interfaces;
 using Module.Views;
-using Unity;
+using Microsoft.Practices.Unity;
 using VideoPlayer.Infrastructure;
 
 namespace Module

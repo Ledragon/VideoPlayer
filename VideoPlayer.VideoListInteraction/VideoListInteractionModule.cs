@@ -1,5 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Regions;
-using Unity;
+using Microsoft.Practices.Unity;
 using VideoPlayer.Infrastructure;
 
 namespace VideoPlayer.VideoListInteraction

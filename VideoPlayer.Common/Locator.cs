@@ -1,9 +1,9 @@
-﻿using Microsoft.Practices.Unity;
+﻿using Unity;
 
 namespace VideoPlayer.Common
 {
     public class Locator
     {
-        public static IUnityContainer Container { get;set; } 
+        public static IUnityContainer Container { get; set; }
     }
 }

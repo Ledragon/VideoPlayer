@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
+using Unity;
 using VideoPlayer.Infrastructure;
 
 namespace HomeModule

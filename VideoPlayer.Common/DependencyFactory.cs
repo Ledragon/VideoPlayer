@@ -1,6 +1,4 @@
-﻿using Microsoft.Practices.Unity;
-
-namespace VideoPlayer.Common
+﻿namespace VideoPlayer.Common
 {
     public static class DependencyFactory
     {

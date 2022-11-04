@@ -1,6 +1,4 @@
-﻿using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.Unity;
-using VideoPlayer.Infrastructure;
+﻿using VideoPlayer.Infrastructure;
 
 namespace VlcPlayer
 {

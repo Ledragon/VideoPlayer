@@ -1,9 +1,10 @@
-﻿using Microsoft.Practices.Unity;
+﻿
+using Unity;
 
 namespace VideoPlayer.Infrastructure
 {
-    public interface IContainer:IUnityContainer
+    public interface IContainer : IUnityContainer
     {
-         
+
     }
 }

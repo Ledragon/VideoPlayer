@@ -1,4 +1,6 @@
-﻿namespace VideoPlayer.Common
+﻿using Unity;
+
+namespace VideoPlayer.Common
 {
     public static class DependencyFactory
     {

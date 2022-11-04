@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Classes;
 using LeDragon.Log.Standard;
 using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;

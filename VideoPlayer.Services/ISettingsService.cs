@@ -1,7 +1,9 @@
-﻿namespace VideoPlayer.Services
+﻿using System;
+
+namespace VideoPlayer.Services
 {
     public interface ISettingsService
     {
-        System.String VlcFolder { get; }
+        String VlcFolder { get; }
     }
 }

@@ -1,17 +1,14 @@
-﻿using Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VideoPlayer.Entities;
 
 namespace VideoPlayer.Nfo
 {
     public static class VideoNfoExtension
     {
-        public static MovieNfo ToNfo(this Entities.Video video)
+        public static MovieNfo ToNfo(this Video video)
         {
 
             var res = new MovieNfo
@@ -27,10 +24,10 @@ namespace VideoPlayer.Nfo
                 PlayCount = video.NumberOfViews,
                 Runtime = (Int32)Math.Floor(video.Length.TotalMinutes),
             };
-            res.Genres.Add(video.Category);
+            res.Tags.Add(video.Category);
             if (video.Tags.Any())
             {
-                res.Tags.AddRange(video.Tags.Select(t=>t.Value));
+                res.Tags.AddRange(video.Tags.Select(t => t.Value));
             }
             var thumbPath = video.GetThumbPath();
             if (File.Exists(thumbPath))
@@ -45,7 +42,7 @@ namespace VideoPlayer.Nfo
             return res;
         }
 
-        public static String GetThumbPath(this Entities.Video video)
+        public static String GetThumbPath(this Video video)
         {
             var fileName = Path.GetFileNameWithoutExtension(video.FileName);
             var thumbName = Path.Combine(new FileInfo(video.FileName).DirectoryName, fileName + ".preview.png");

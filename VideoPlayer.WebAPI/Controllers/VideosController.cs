@@ -7,6 +7,13 @@ namespace VideoPlayer.WebAPI.Controllers
     [Route("api/videos")]
     public class VideosController : ControllerBase
     {
+        private readonly ILogger<VideosController> _logger;
+
+        public VideosController(ILogger<VideosController> logger)
+        {
+            this._logger = logger;
+        }
+
         [HttpGet]
         public JsonResult GetVideos()
         {

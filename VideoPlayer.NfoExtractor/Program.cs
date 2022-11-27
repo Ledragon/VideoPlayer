@@ -1,10 +1,14 @@
-﻿namespace VideoPlayer.NfoExtractor;
+﻿using log4net.Config;
+
+namespace VideoPlayer.NfoExtractor;
 class Program
 {
     static void Main(String[] args)
     {
+        XmlConfigurator.Configure();
         if (args.Length == 3)
         {
+
             var filePath = args[0];
             var sourceDir = args[1];
             var targetDir = args[2];

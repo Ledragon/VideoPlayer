@@ -17,11 +17,16 @@ namespace VideoPlayer.Nfo
         {
             foreach (var video in videos)
             {
-                var fileName = Path.GetFileNameWithoutExtension(video.FileName);
-                var path = Path.Combine(new FileInfo(video.FileName).DirectoryName, fileName + ".nfo");
-                var nfo = video.ToNfo();
-                this._serializer.Serialize(nfo, path);
+                CreateNfo(video);
             }
+        }
+
+        public void CreateNfo(Video video)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(video.FileName);
+            var path = Path.Combine(new FileInfo(video.FileName).DirectoryName, fileName + ".nfo");
+            var nfo = video.ToNfo();
+            this._serializer.Serialize(nfo, path);
         }
     }
 }

@@ -20,9 +20,13 @@ namespace VideoPlayer.Nfo
         [XmlArray("fanart")]
         [XmlArrayItem("thumb")]
         public List<Thumb> FanArt { get; set; }
+        [XmlElement("playcount")]
         public Int32 PlayCount { get; set; }
+        [XmlElement("lastplayed")]
         public DateTime LastPlayed { get; set; }
+        [XmlElement("set")]
         public Set Set { get; set; }
+        [XmlElement("dateadded")]
         public DateTime DateAdded { get; set; }
         [XmlElement(ElementName = "thumb")]
         public Thumb Thumb { get; set; }

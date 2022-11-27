@@ -1,25 +1,26 @@
-﻿using VideoPlayer.Database.Repository;
-using VideoPlayer.Nfo;
-using VideoPlayer.Services;
-
-namespace VideoPlayer.NfoExtractor;
+﻿namespace VideoPlayer.NfoExtractor;
 class Program
 {
     static void Main(String[] args)
     {
-        var filePath = args[0];
-        if (File.Exists(filePath))
+        if (args.Length == 3)
         {
-            var repo = new FileVideoRepository();
-            var ofw = repo.Load(filePath);
-            var videos = ofw.Videos;
-            var nfoSerializer = new NfoSerializer();
-            var nfoService = new NfoService(nfoSerializer);
-            nfoService.CreateNfo(videos);
+            var filePath = args[0];
+            var sourceDir = args[1];
+            var targetDir = args[2];
+            if (File.Exists(filePath))
+            {
+                var service = new Service();
+                service.GenerateNfo(filePath, sourceDir, targetDir);
+            }
+            else
+            {
+                Console.WriteLine($"File '{filePath}' not found.");
+            }
         }
         else
         {
-            Console.WriteLine($"File '{filePath}' not found.");
+            Console.WriteLine("Expected 3 arguments: video file path, source directory, target directory");
         }
         Console.ReadLine();
     }

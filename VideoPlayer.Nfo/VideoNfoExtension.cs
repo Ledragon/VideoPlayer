@@ -8,7 +8,7 @@ namespace VideoPlayer.Nfo
 {
     public static class VideoNfoExtension
     {
-        public static MovieNfo ToNfo(this Video video)
+        public static MovieNfo ToNfo(this Video video, String outDir = null)
         {
 
             var res = new MovieNfo
@@ -29,7 +29,7 @@ namespace VideoPlayer.Nfo
             {
                 res.Tags.AddRange(video.Tags.Select(t => t.Value));
             }
-            var thumbPath = video.GetThumbPath();
+            var thumbPath = video.GetThumbPath(outDir);
             if (File.Exists(thumbPath))
             {
                 res.Thumb = new Thumb
@@ -42,10 +42,14 @@ namespace VideoPlayer.Nfo
             return res;
         }
 
-        public static String GetThumbPath(this Video video)
+        public static String GetThumbPath(this Video video, String outDir = null)
         {
             var fileName = Path.GetFileNameWithoutExtension(video.FileName);
-            var thumbName = Path.Combine(new FileInfo(video.FileName).DirectoryName, fileName + ".preview.png");
+            if (String.IsNullOrEmpty(outDir))
+            {
+                outDir = new FileInfo(video.FileName).DirectoryName;
+            }
+            var thumbName = Path.Combine(outDir, fileName + ".preview.png");
             return thumbName;
         }
     }

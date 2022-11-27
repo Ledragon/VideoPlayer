@@ -24,20 +24,19 @@ namespace VideoPlayer.NfoExtractor
             var videos = ofw.Videos;
             var nfoSerializer = new NfoSerializer();
             var nfoService = new NfoService(nfoSerializer);
-            var cacheDir = GetCacheDirectory(targetDir);
+            var cacheDirectory = CacheDirectoryProvider.GetCacheDirectory(targetDir);
             videos.ForEach(v =>
             {
                 try
                 {
                     this._logger.DebugFormat("Creating nfo file for '{0}'.", v.FileName);
                     ReplaceDirectory(sourceDir, targetDir, v);
-                    // TODO save preview in some cache folder
                     if (!String.IsNullOrEmpty(v.SerializedImage))
                     {
-                        var cacheFile = Path.Combine(cacheDir, Guid.NewGuid() + ".png");
+                        var cacheFile = v.GetThumbPath(cacheDirectory);
                         this._imageExtractionService.SaveImage(v.SerializedImage, cacheFile);
                     }
-                    nfoService.CreateNfo(v);
+                    nfoService.CreateNfo(v, cacheDirectory);
                 }
                 catch (Exception e)
                 {
@@ -46,16 +45,6 @@ namespace VideoPlayer.NfoExtractor
             });
         }
 
-        private static String GetCacheDirectory(String targetDir)
-        {
-            var cacheDir = Path.Combine(targetDir, "cache");
-            if (!System.IO.Directory.Exists(cacheDir))
-            {
-                System.IO.Directory.CreateDirectory(cacheDir);
-            }
-
-            return cacheDir;
-        }
 
         private static void ReplaceDirectory(String sourceDir, String targetDir, Video v)
         {

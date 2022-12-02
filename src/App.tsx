@@ -1,34 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import './App.css';
+import { Box, Card, CardHeader, CardMedia, List, ListItem, ListItemButton, ListItemText, Paper, Typography } from '@mui/material';
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+interface Video {
+  category: string;
+  dateAdded: string;
+  serializedImage: string;
+  tags: string[];
+  title: string;
+  directory: string;
+  fileName: string;
+  lastPlayed: string;
+  length: string;
+  lengthString: string;
+  numberOfViews: number;
+  preview: string;
+  rating: number;
 }
 
-export default App
+interface State {
+  videos: Video[];
+  selectedVideo: Video | null;
+}
+
+function App() {
+  const [state, setState] = useState<State>({ videos: [], selectedVideo: null });
+  useEffect(() => {
+    fetch('http://localhost:5165/api/videos', { mode: 'cors' })
+      .then(data => {
+        return data.json();
+      })
+      .then(data => {
+        console.log(data);
+        setState(Object.assign({}, state, { videos: data }));
+      });
+  }, []);
+
+  function handleClick(v: Video) {
+    setState({ ...state, selectedVideo: v });
+  }
+  const { selectedVideo } = state;
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
+      <Paper sx={{ flexBasis: '50%' }}>
+        <List>
+          {state.videos.map((v, i) => {
+            return (
+              <ListItem key={i} disablePadding>
+                <ListItemButton onClick={() => { handleClick(v); }}>
+                  <ListItemText>{v.title}</ListItemText>
+                </ListItemButton>
+              </ListItem>
+            );
+          })}
+        </List>
+      </Paper>
+      <Paper sx={{ flexBasis: '50%' }}>
+        {selectedVideo
+          ?
+          <Card>
+            <CardHeader title={selectedVideo?.title}>
+            </CardHeader>
+            <CardMedia component="img" height={540} src={`data:image/png;base64, ${selectedVideo.serializedImage}`} alt={selectedVideo.title}></CardMedia>
+          </Card>
+         : <></>}
+      </Paper>
+    </Box>
+  );
+}
+
+export default App;

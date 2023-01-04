@@ -1,9 +1,7 @@
-import { Box } from "@mui/material";
+import { Box } from '@mui/material';
 
-const Home = ()=>{
-    return (
-        <Box>
+const Home = () => {
+  return <Box></Box>;
+};
 
-        </Box>
-    )
-}
+export default Home;

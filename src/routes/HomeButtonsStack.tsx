@@ -1,4 +1,5 @@
 import { Box, Button, Stack } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const HomeButtonsStack = (props: { buttons: any[] }) => {
   const { buttons } = props;
@@ -38,7 +39,14 @@ const HomeButtonsStack = (props: { buttons: any[] }) => {
               display: 'flex'
             }}
           >
-            <Button variant="contained">{d.label}</Button>
+            <Button
+              sx={{ flexGrow: 1 }}
+              component={RouterLink}
+              to={'../' + d.name}
+              startIcon={d.icon}
+            >
+              {d.label}
+            </Button>
           </Box>
         ))}
       </Stack>

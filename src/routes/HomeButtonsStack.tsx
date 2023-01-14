@@ -18,7 +18,10 @@ const HomeButtonsStack = (props: { buttons: any[] }) => {
         sx={{
           flexGrow: 0,
           flexBasis: 'auto',
-          backgroundColor: (theme) => theme.palette.grey[200],
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[200]
+              : theme.palette.grey[700],
           p: 2
         }}
         spacing={2}

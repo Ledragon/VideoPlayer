@@ -29,7 +29,7 @@ namespace ManageLibraryModule
             this.UpdateCommand = new DelegateCommand(this.UpdateAsync);
             this.CleanCommand = new DelegateCommand(this.Clean);
 
-            //this.ToJsonCommand = new DelegateCommand(() => { libraryService.ToJson(this.Videos.SourceCollection as IEnumerable<VideoViewModel>); });
+            this.ToJsonCommand = new DelegateCommand(() => { libraryService.ToJson((this.Videos.SourceCollection as IEnumerable<VideoViewModel>).Select(v => v.Video)); });
 
             this.CreateNfoCommand = new DelegateCommand(() =>
             {

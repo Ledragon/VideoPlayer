@@ -1,17 +1,32 @@
-import { Box, Card, CardHeader, CardMedia } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  Typography
+} from '@mui/material';
 import { Video } from '../../models/Video';
+import getBase64Url from './getBase64Url';
 
-const VideoCard = (props: { selectedVideo: Video }) => {
-  const { selectedVideo } = props;
+const VideoCard = (props: { video: Video }) => {
+  const { video } = props;
   return (
     <Card>
-      <CardHeader title={selectedVideo?.title}></CardHeader>
+      {/* <CardHeader title={selectedVideo?.title}></CardHeader> */}
       <CardMedia
         component="img"
-        height={540}
-        src={`data:image/png;base64, ${selectedVideo.serializedImage}`}
-        alt={selectedVideo.title}
+        width={320}
+        height={240}
+        src={getBase64Url(video.serializedImage)}
+        alt={video.title}
       ></CardMedia>
+      <CardContent>
+        <Typography variant="h5">{video.title}</Typography>
+        <Typography variant="caption">{video.fileName}</Typography>
+        <br />
+        <Typography variant="caption">{video.numberOfViews}</Typography>
+      </CardContent>
     </Card>
   );
 };

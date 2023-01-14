@@ -1,9 +1,6 @@
 export interface Video {
   category: string;
   dateAdded: string;
-  serializedImage: string;
-  tags: string[];
-  title: string;
   directory: string;
   fileName: string;
   lastPlayed: string;
@@ -12,4 +9,7 @@ export interface Video {
   numberOfViews: number;
   preview: string;
   rating: number;
+  serializedImage: string;
+  tags: string[];
+  title: string;
 }

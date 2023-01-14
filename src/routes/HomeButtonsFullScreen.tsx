@@ -1,34 +1,23 @@
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 const HomeButtonsFullScreen = (props: { buttons: any[] }) => {
   const { buttons } = props;
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexGrow: 1,
-        flexDirection: 'column'
+        display: 'grid',
+        gridTemplateColumns: 'auto auto',
+        columnGap: 2,
+        rowGap: 2,
+        m: 2,
+        flexGrow: 1
       }}
     >
-      <Box sx={{ flexBasis: '70%' }}></Box>
-      <Stack
-        alignItems="center"
-        direction="row"
-        justifyContent="center"
-        sx={{
-          flexGrow: 0,
-          flexBasis: 'auto',
-          backgroundColor: (theme) => theme.palette.grey[200],
-          p: 2
-        }}
-        spacing={2}
-      >
-        {buttons.map((d, i) => (
-          <Box key={i} sx={{ flexBasis: (1 / buttons.length) * 100 + '%', justifyContent: 'center', justifyItems: 'center', flexDirection: 'row', alignItems: 'center', display: 'flex' }}>
-            <Button variant="contained">{d.label}</Button>
-          </Box>
-        ))}
-      </Stack>
+      {buttons.map((d, i) => (
+        <Box key={i} sx={{ display: 'inline-grid' }}>
+          <Button variant="outlined">{d.label}</Button>
+        </Box>
+      ))}
     </Box>
   );
 };

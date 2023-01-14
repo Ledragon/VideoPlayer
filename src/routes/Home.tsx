@@ -1,4 +1,5 @@
 import HomeButtonsFullScreen from './HomeButtonsFullScreen';
+import HomeButtonsStack from './HomeButtonsStack';
 
 const buttons = [
   { label: 'Settings', route: '../settings' },
@@ -9,7 +10,7 @@ const buttons = [
 
 const Home = () => {
   return (
-    <HomeButtonsFullScreen buttons={buttons}/>
+    <HomeButtonsStack buttons={buttons}/>
   );
 };
 

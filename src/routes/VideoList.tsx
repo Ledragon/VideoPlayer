@@ -39,8 +39,8 @@ const VideoList = () => {
   }
   const { selectedVideo } = state;
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
-      <Paper sx={{ flexBasis: '50%' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1, overflow: 'hidden' }}>
+      <Paper sx={{ flexBasis: '50%', overflowY: 'auto' }}>
         <List>
           {state.videos.map((v, i) => {
             return (

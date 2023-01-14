@@ -10,7 +10,7 @@ import {
   ListItemText,
   Paper,
 } from '@mui/material';
-import { Video } from '../Video';
+import { Video } from '../models/Video';
 
 
 interface State {

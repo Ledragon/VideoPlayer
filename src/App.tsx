@@ -1,21 +1,17 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { RouterProvider } from 'react-router-dom';
 
 import './App.css';
-import Home from './routes/Home';
-import VideoList from './routes/VideoList';
-
-const router = createBrowserRouter([
-  {
-    path: '/home',
-    element: <Home />,
-  },{
-    path: '/videos',
-    element: <VideoList />,
-  },
-]);
+import getTheme from './getTheme';
+import router from './routes/router';
 
 function App() {
-  return <RouterProvider router={router}/>;
+  return (
+    <ThemeProvider theme={getTheme('dark')}>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
 }
 
 export default App;

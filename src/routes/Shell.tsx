@@ -4,7 +4,6 @@ import BottomNavigation from './BottomNavigation';
 
 const Shell = () => {
   const location = useLocation();
-  console.log(location);
   return (
     <Box
       sx={{
@@ -14,7 +13,7 @@ const Shell = () => {
         flexDirection: 'column'
       }}
     >
-      <Box sx={{ flexGrow: 1, flexDirection: 'column', display: 'flex' }}>
+      <Box sx={{ flexGrow: 1, flexDirection: 'column', display: 'flex', height: '100%' }}>
         <Outlet />
       </Box>
       <BottomNavigation value={location.pathname} />

@@ -12,6 +12,7 @@ import VideoCard from './VideoCard';
 import VideoList from './VideoList';
 import VideosImageList from './VideosImageList';
 import VideoDialog from './VideoDialog';
+import VideosDataGrid from './VideosDataGrid';
 
 interface State {
   videos: Video[];
@@ -48,10 +49,11 @@ const VideosPage = () => {
         overflow: 'hidden'
       }}
     >
-      <VideosImageList
+      <VideosDataGrid videos={state.videos} onClick={handleClick}></VideosDataGrid>
+      {/* <VideosImageList
         videos={state.videos}
         onClick={handleClick}
-      ></VideosImageList>
+      ></VideosImageList> */}
       <VideoDialog
         open={open}
         video={selectedVideo}

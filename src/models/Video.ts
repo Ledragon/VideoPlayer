@@ -10,6 +10,6 @@ export interface Video {
   preview: string;
   rating: number;
   serializedImage: string;
-  tags: string[];
+  tags: { value: string }[];
   title: string;
 }

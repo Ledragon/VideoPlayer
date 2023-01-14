@@ -3,6 +3,7 @@ import Home from './Home/Home';
 import Pictures from './Pictures';
 import Settings from './Settings';
 import Shell from './Shell';
+import VideoPage from './Video/VideoPage';
 import VideosPage from './Videos/VideosPage';
 
 const router = createBrowserRouter([
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
         path: '/pictures',
         id: 'pictures',
         element: <Pictures />
+      },
+      {
+        path: '/video/:id',
+        id: 'video',
+        element: <VideoPage />
       }
     ]
   }

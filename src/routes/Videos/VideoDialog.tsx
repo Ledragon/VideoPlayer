@@ -57,7 +57,6 @@ const VideoDialog = (props: PropType) => {
               )}
             ></Autocomplete>
           </form>
-          <img />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => onCancel()}>Cancel</Button>

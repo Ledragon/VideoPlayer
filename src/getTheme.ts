@@ -8,7 +8,7 @@ import {
 } from '@mui/material/colors';
 
 const darkPalette: PaletteOptions = {
-  primary: { main: teal[200] },
+  primary: { main: lightBlue[400] }
   // grey: blueGrey
 };
 

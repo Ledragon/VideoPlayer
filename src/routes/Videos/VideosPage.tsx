@@ -37,13 +37,27 @@ const VideosPage = () => {
         display: 'flex',
         flexDirection: 'row',
         flexGrow: 1,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        p: 1
       }}
     >
-      <VideosDataGrid
-        videos={state.videos}
-        onClick={handleClick}
-      ></VideosDataGrid>
+      <Paper
+        sx={{
+          flexBasis: !!selectedVideo ? '50%' : '100%',
+          flexShrink: 1,
+          m: 1
+        }}
+      >
+        <VideosDataGrid
+          videos={state.videos}
+          onClick={handleClick}
+        ></VideosDataGrid>
+      </Paper>
+      {!!selectedVideo ? (
+        <Paper sx={{ flexBasis: '50%', m: 1 }}></Paper>
+      ) : (
+        <></>
+      )}
       {/* <VideosImageList
         videos={state.videos}
         onClick={handleClick}

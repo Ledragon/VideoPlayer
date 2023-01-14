@@ -1,4 +1,4 @@
-import { Box, Button, Chip, IconButton } from '@mui/material';
+import { Box, Button, Chip, IconButton, SxProps } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import { useState } from 'react';
@@ -7,21 +7,23 @@ import getBase64Url from './getBase64Url';
 import ThumbnailDialog from './Thumbnails';
 import { apiUrl } from '../../fetchHelper';
 
+const rowHeight = 64;
+
 const columns: GridColDef[] = [
   {
     field: 'serializedImage',
     headerName: 'Preview',
-    width: (16 / 9) * 128,
+    width: (16 / 9) * rowHeight,
     align: 'center',
     renderCell: (params: GridRenderCellParams<string>) => {
       if (!params.value) {
         return <></>;
       }
-      return <img src={getBase64Url(params.value)} height={128} />;
+      return <img src={getBase64Url(params.value)} height={rowHeight} />;
     }
   },
   { field: 'title', headerName: 'Title', flex: 8 },
-  { field: 'fileName', headerName: 'File', flex: 4 },
+  // { field: 'fileName', headerName: 'File', flex: 4 },
   { field: 'length', headerName: 'Length', flex: 1 },
   {
     field: 'dateAdded',
@@ -75,12 +77,13 @@ const columns: GridColDef[] = [
 const VideosDataGrid = (props: {
   videos: Video[];
   onClick?: (v: Video) => void;
+  sx?: SxProps;
 }) => {
-  const { videos } = props;
+  const { videos, sx } = props;
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [open, setOpen] = useState<boolean>(false);
   const rows = videos.map((v, i) => {
-    return Object.assign({ id: i }, v, {
+    return Object.assign({ id: v.fileName }, v, {
       hasTags: !!v.tags?.length,
       thumbnails: () => {
         setSelectedVideo(v);
@@ -90,13 +93,24 @@ const VideosDataGrid = (props: {
   });
   return (
     <>
-      <DataGrid columns={columns} rows={rows} rowHeight={128}></DataGrid>
+      (
+    <DataGrid
+      columns={columns}
+      rows={rows}
+      rowHeight={rowHeight}
+      checkboxSelection
+      onSelectionModelChange={(newSelectionModel) =>
+        console.log(newSelectionModel)
+      }
+      disableSelectionOnClick
+    ></DataGrid>
       <ThumbnailDialog
         video={selectedVideo}
         onCancel={() => setOpen(false)}
         open={open}
       ></ThumbnailDialog>
     </>
+  )
   );
 };
 

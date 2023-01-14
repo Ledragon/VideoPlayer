@@ -13,7 +13,7 @@ const Shell = () => {
         flexDirection: 'column'
       }}
     >
-      <Box sx={{ flexGrow: 1, flexDirection: 'column', display: 'flex', height: '100%' }}>
+      <Box sx={{ flexGrow: 1, flexDirection: 'column', display: 'flex', overflow: 'auto'}}>
         <Outlet />
       </Box>
       <BottomNavigation value={location.pathname} />

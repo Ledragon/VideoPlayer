@@ -49,16 +49,6 @@ const VideosPage = () => {
         videos={state.videos}
         onClick={handleClick}
       ></VideosImageList>
-      {/* <Paper sx={{ flexBasis: '50%', overflowY: 'auto' }}>
-        <VideoList videos={state.videos} onClick={handleClick}></VideoList>
-      </Paper>
-      <Paper sx={{ flexBasis: '50%' }}>
-        {selectedVideo ? (
-          <VideoCard selectedVideo={selectedVideo}></VideoCard>
-        ) : (
-          <></>
-        )}
-      </Paper> */}
     </Box>
   );
 };

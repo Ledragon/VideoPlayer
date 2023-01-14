@@ -1,8 +1,10 @@
 import {
+  IconButton,
   ImageList,
   ImageListItem,
-  ImageListItemBar,
+  ImageListItemBar
 } from '@mui/material';
+import InfoIcon from '@mui/icons-material/Info';
 import { Video } from '../../models/Video';
 
 interface PropType {
@@ -20,6 +22,11 @@ const VideosImageList = (props: PropType) => {
           <ImageListItemBar
             title={v.title}
             subtitle={v.length}
+            actionIcon={
+              <IconButton onClick={() => onClick(v)}>
+                <InfoIcon />
+              </IconButton>
+            }
           ></ImageListItemBar>
         </ImageListItem>
       ))}

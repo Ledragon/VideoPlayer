@@ -3,7 +3,7 @@ import Home from './Home';
 import Pictures from './Pictures';
 import Settings from './Settings';
 import Shell from './Shell';
-import VideoList from './VideoList';
+import VideosPage from './Videos/VideosPage';
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
       {
         path: '/videos',
         id: 'videos',
-        element: <VideoList />
+        element: <VideosPage />
       },
       {
         path: '/settings',

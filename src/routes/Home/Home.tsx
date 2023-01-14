@@ -1,5 +1,5 @@
 import HomeButtonsStack from './HomeButtonsStack';
-import linksDefinition from './linksDefinition';
+import linksDefinition from '../linksDefinition';
 
 const buttons = linksDefinition;
 const Home = () => {

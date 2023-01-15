@@ -1,17 +1,14 @@
-﻿using Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using VideoPlayer.Entities;
 
 namespace VideoPlayer.Nfo
 {
     public static class VideoNfoExtension
     {
-        public static MovieNfo ToNfo(this Entities.Video video)
+        public static MovieNfo ToNfo(this Video video, String outDir = null)
         {
 
             var res = new MovieNfo
@@ -19,7 +16,7 @@ namespace VideoPlayer.Nfo
                 DateAdded = video.DateAdded,
                 FanArt = new List<Thumb>
                 {
-                    new Thumb { Preview = video.FileName+".png" }
+                    new Thumb { Preview = video.FileName + ".png" }
                 },
                 LastPlayed = video.LastPlayed,
                 OriginalTitle = Path.GetFileNameWithoutExtension(video.FileName),
@@ -27,12 +24,12 @@ namespace VideoPlayer.Nfo
                 PlayCount = video.NumberOfViews,
                 Runtime = (Int32)Math.Floor(video.Length.TotalMinutes),
             };
-            res.Genres.Add(video.Category);
+            res.Tags.Add(video.Category);
             if (video.Tags.Any())
             {
-                res.Tags.AddRange(video.Tags.Select(t=>t.Value));
+                res.Tags.AddRange(video.Tags.Select(t => t.Value));
             }
-            var thumbPath = video.GetThumbPath();
+            var thumbPath = video.GetThumbPath(outDir);
             if (File.Exists(thumbPath))
             {
                 res.Thumb = new Thumb
@@ -45,10 +42,14 @@ namespace VideoPlayer.Nfo
             return res;
         }
 
-        public static String GetThumbPath(this Entities.Video video)
+        public static String GetThumbPath(this Video video, String outDir = null)
         {
             var fileName = Path.GetFileNameWithoutExtension(video.FileName);
-            var thumbName = Path.Combine(new FileInfo(video.FileName).DirectoryName, fileName + ".preview.png");
+            if (String.IsNullOrEmpty(outDir))
+            {
+                outDir = new FileInfo(video.FileName).DirectoryName;
+            }
+            var thumbName = Path.Combine(outDir, fileName + ".preview.png");
             return thumbName;
         }
     }

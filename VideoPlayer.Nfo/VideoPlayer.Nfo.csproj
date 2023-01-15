@@ -5,13 +5,9 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Classes\Classes.csproj" />
+    <AdditionalFiles Remove="C:\Users\Hugues Stefanski\.nuget\packages\microsoft.dotnet.upgradeassistant.extensions.default.analyzers\0.4.346202\build\\WebTypeReplacements.typemap" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.346202">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
+    <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj" />
   </ItemGroup>
 </Project>

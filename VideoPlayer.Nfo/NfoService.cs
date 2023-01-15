@@ -1,4 +1,4 @@
-﻿using Classes;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using VideoPlayer.Entities;
@@ -13,21 +13,21 @@ namespace VideoPlayer.Nfo
         {
             this._serializer = nfoSerializer;
         }
-        public void CreateNfo(IEnumerable<Entities.Video> videos)
+
+        public void CreateNfo(IEnumerable<Video> videos, String outDir  = null)
         {
             foreach (var video in videos)
             {
-                //var thumbName = video.GetThumbPath();
-                //if (!File.Exists(thumbName))
-                //{
-                //    video.PreviewImage.Save(thumbName);
-                //}
-                var fileName = Path.GetFileNameWithoutExtension(video.FileName);
-                var path = Path.Combine(new FileInfo(video.FileName).DirectoryName, fileName + ".nfo");
-                var nfo = video.ToNfo();
-                this._serializer.Serialize(nfo, path);
-
+                CreateNfo(video, outDir);
             }
+        }
+
+        public void CreateNfo(Video video, String cacheDirectory = null)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(video.FileName);
+            var path = Path.Combine(new FileInfo(video.FileName).DirectoryName, fileName + ".nfo");
+            var nfo = video.ToNfo(cacheDirectory);
+            this._serializer.Serialize(nfo, path);
         }
     }
 }

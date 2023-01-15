@@ -8,7 +8,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\LeDragon.Log.Standard\LeDragon.Log.Standard.csproj" />
-    <ProjectReference Include="..\VideoPlayer.Common\VideoPlayer.Common.csproj" />
     <ProjectReference Include="..\VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj" />
     <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj" />
     <ProjectReference Include="..\VideoPlayer.Helpers\VideoPlayer.Helpers.csproj" />

@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using LeDragon.Log.Standard;
-using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Entities;
 using VideoPlayer.Helpers;
@@ -17,12 +16,18 @@ namespace VideoPlayer.Services
     {
         // Singleton-like
         private static ObjectsWrapper _objectsWrapper;
+        private readonly IVideoRepository _videoRepository;
+
+        public LibraryService(IVideoRepository videoRepository)
+        {
+            this._videoRepository = videoRepository;
+        }
 
         public ObjectsWrapper GetObjectsFromFile()
         {
             if (_objectsWrapper == null)
             {
-                var repository = DependencyFactory.Resolve<IVideoRepository>();
+                var repository = this._videoRepository;
                 _objectsWrapper = repository.Load(FileSystemHelper.GetDefaultFileName());
             }
             return _objectsWrapper;
@@ -53,9 +58,9 @@ namespace VideoPlayer.Services
             await Task.Factory.StartNew(this.Clean);
         }
 
-        public IEnumerable<Entities.Video> Update()
+        public IEnumerable<Video> Update()
         {
-            IEnumerable<Entities.Video> result = new List<Entities.Video>();
+            IEnumerable<Video> result = new List<Video>();
             try
             {
                 this.Logger().DebugFormat("Updating library.");
@@ -94,7 +99,7 @@ namespace VideoPlayer.Services
             return result;
         }
 
-        public async Task<IEnumerable<Entities.Video>> UpdateAsync()
+        public async Task<IEnumerable<Video>> UpdateAsync()
         {
             return await Task.Factory.StartNew(() => this.Update());
         }
@@ -106,12 +111,12 @@ namespace VideoPlayer.Services
 
         public void Save(String filePath, ObjectsWrapper wrapper)
         {
-            var repository = DependencyFactory.Resolve<IVideoRepository>();
+            var repository = this._videoRepository;
             repository.Save(filePath, wrapper);
         }
 
         public void Clean(ObservableCollection<Directory> directoryCollection,
-            List<Entities.Video> videoCollection)
+            List<Video> videoCollection)
         {
             this.BackupLibrary();
             this.Logger().Info("Cleaning files.");
@@ -136,7 +141,7 @@ namespace VideoPlayer.Services
             this.Logger().InfoFormat("'{0}' files removed.", videosToRemove.Count);
         }
 
-        private void Dedupe(List<Entities.Video> videos)
+        private void Dedupe(List<Video> videos)
         {
             try
             {

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -10,7 +9,7 @@ using VideoPlayer.Services;
 
 namespace VideoPlayer.Ffmpeg
 {
-    public class FfmpegThumbnailGenerator
+    public class FfmpegThumbnailGenerator : IFfmpegThumbnailGenerator
     {
         private IFfprobeInfoExtractor _ffprobeInfoExtractor;
         private readonly IPathService _pathService;
@@ -91,7 +90,7 @@ namespace VideoPlayer.Ffmpeg
                             Array.ForEach(files, f => File.Delete(f));
                         }
                         var fileName = $"cs_{Path.GetFileNameWithoutExtension(videoFilePath)}.png";
-                        Double fps = (Double.Parse(info.format.duration, CultureInfo.InvariantCulture) / (rows*cols));
+                        Double fps = (Double.Parse(info.format.duration, CultureInfo.InvariantCulture) / (rows * cols));
                         var process = new Process();
                         process.StartInfo.WorkingDirectory = outputDir;
                         process.StartInfo.FileName = "ffmpeg";

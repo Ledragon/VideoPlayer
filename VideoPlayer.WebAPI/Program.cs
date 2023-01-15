@@ -1,4 +1,6 @@
 using VideoPlayer.Database.Repository;
+using VideoPlayer.Ffmpeg;
+using VideoPlayer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<IVideoRepository, FileVideoRepository>();
+builder.Services
+    .AddTransient<IVideoRepository, FileVideoRepository>()
+    .AddSingleton<IFfprobeInfoExtractor,FfprobeInfoExtractor>()
+    .AddSingleton<IFfmpegThumbnailGenerator, FfmpegThumbnailGenerator>()
+    .AddSingleton<IPathService, PathService>();
 //services cors
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>

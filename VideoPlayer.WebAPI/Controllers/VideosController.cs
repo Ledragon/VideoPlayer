@@ -28,12 +28,6 @@ namespace VideoPlayer.WebAPI.Controllers
             var filePath = this._pathService.GetLibraryFile();
             var videos = this._videoRepository.Load(filePath).Videos;
             return videos;
-            //return new JsonResult(new List<Video>
-            //{
-            //    new Video{ Title="Harry Potter"},
-            //    new Video{ Title = "Lord of the rings"},
-            //    new Video{ Title  ="Dead Sushi"},
-            //});
         }
 
         [HttpGet("/api/videos/metadata")]

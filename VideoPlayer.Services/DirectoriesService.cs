@@ -12,7 +12,8 @@ namespace VideoPlayer.Services
 
         public String GetLibraryFile()
         {
-            return @"/home/hugues/Documents/Code/files/Library.xml";
+            return @"E:\Hugues Stefanski\Documents\Development\GitHub\VideoPlayer\VideoPlayer\bin\Debug\Files\Library.xml";
+            //return @"/home/hugues/Documents/Code/files/Library.xml";
         }
     }
 }

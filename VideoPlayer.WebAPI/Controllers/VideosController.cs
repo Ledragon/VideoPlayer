@@ -37,11 +37,5 @@ namespace VideoPlayer.WebAPI.Controllers
             var videos = this._videoRepository.Load(filePath).Videos;
             return videos.ToDictionary(d => d.FileName, d => new VideoMetaData { Codec = "", HasContactSheet = System.IO.File.Exists(d.FileName + ".png") });
         }
-
-        [HttpPost("/api/videos/previews")]
-        public void GeneratePreviews([FromRoute] String path, [FromRoute] Int32 count)
-        {
-
-        }
     }
 }

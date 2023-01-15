@@ -10,6 +10,7 @@ namespace VideoPlayer.Ffmpeg.Test
         {
             var sut = new FfprobeInfoExtractor();
             var result = sut.GetVideoInfo(@"F:\Enfants\Disney\Titan Ae.avi");
+            Assert.AreEqual(2, result.streams.Length);
         }
     }
 }

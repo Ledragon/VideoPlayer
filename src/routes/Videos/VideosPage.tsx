@@ -1,16 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
-  Box,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Paper
-} from '@mui/material';
+  Box} from '@mui/material';
 import { Video } from '../../models/Video';
-import VideoCard from './VideoCard';
-import VideoList from './VideoList';
-import VideosImageList from './VideosImageList';
 import VideoDialog from './VideoDialog';
 import VideosDataGrid from './VideosDataGrid';
 
@@ -26,7 +17,7 @@ const VideosPage = () => {
   });
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    fetch('http://localhost:5000/api/videos', { mode: 'cors' })
+    fetch('http://localhost:5165/api/videos', { mode: 'cors' })
       .then((data) => {
         return data.json();
       })

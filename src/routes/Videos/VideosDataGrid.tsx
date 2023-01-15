@@ -1,13 +1,15 @@
-import { Box, Chip } from '@mui/material';
+import { Box, Button, Chip } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { useState } from 'react';
 import { Video } from '../../models/Video';
 import getBase64Url from './getBase64Url';
+import ThumbnailDialog from './Thumbnails';
 
 const columns: GridColDef[] = [
   {
     field: 'serializedImage',
     headerName: 'Preview',
-    width: 16/9*128,
+    width: (16 / 9) * 128,
     align: 'center',
     renderCell: (params: GridRenderCellParams<string>) => {
       if (!params.value) {
@@ -47,6 +49,23 @@ const columns: GridColDef[] = [
         </>
       );
     }
+  },
+  {
+    field: 'action',
+    width: 40,
+    renderCell: (params: GridRenderCellParams<() => void>) => {
+      return (
+        <Button
+          onClick={() => {
+            if (params.value) {
+              params.value();
+            }
+          }}
+        >
+          Generate
+        </Button>
+      );
+    }
   }
 ];
 
@@ -55,10 +74,27 @@ const VideosDataGrid = (props: {
   onClick?: (v: Video) => void;
 }) => {
   const { videos } = props;
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [open, setOpen] = useState<boolean>(false);
   const rows = videos.map((v, i) => {
-    return Object.assign({ id: i }, v, { hasTags: !!v.tags?.length });
+    return Object.assign({ id: i }, v, {
+      hasTags: !!v.tags?.length,
+      action: () => {
+        setSelectedVideo(v);
+        setOpen(true);
+      }
+    });
   });
-  return <DataGrid columns={columns} rows={rows} rowHeight={128}></DataGrid>;
+  return (
+    <>
+      <DataGrid columns={columns} rows={rows} rowHeight={128}></DataGrid>
+      <ThumbnailDialog
+        video={selectedVideo}
+        onCancel={() => setOpen(false)}
+        open={open}
+      ></ThumbnailDialog>
+    </>
+  );
 };
 
 export default VideosDataGrid;

@@ -14,17 +14,18 @@ namespace VideoPlayer.Ffmpeg
             }
             var process = new Process();
             process.StartInfo.FileName = "ffprobe";
-            process.StartInfo.ArgumentList.Add("-v error");
+            process.StartInfo.ArgumentList.Add("-v");
+            process.StartInfo.ArgumentList.Add("error");
             process.StartInfo.ArgumentList.Add("-show_format");
             process.StartInfo.ArgumentList.Add("-show_streams");
-            process.StartInfo.ArgumentList.Add("-of json");
+            process.StartInfo.ArgumentList.Add("-of");
+            process.StartInfo.ArgumentList.Add("json");
             process.StartInfo.ArgumentList.Add(filePath);
+            process.StartInfo.RedirectStandardOutput = true;
+            //process.StartInfo.UseShellExecute= true;   
             process.Start();
             process.WaitForExit();
-            using (var stream = process.StandardOutput)
-            {
-                var text = stream.ReadToEnd();
-            }
+            var text = process.StandardOutput.ReadToEnd();
             return new FfprobeVideoInfo();
             //process.StartInfo.ArgumentList = new List<String> { };
         }

@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj" />
     <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj" />
+    <ProjectReference Include="..\VideoPlayer.Services\VideoPlayer.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Diagnostics;
 using System.IO;
 
@@ -22,12 +23,11 @@ namespace VideoPlayer.Ffmpeg
             process.StartInfo.ArgumentList.Add("json");
             process.StartInfo.ArgumentList.Add(filePath);
             process.StartInfo.RedirectStandardOutput = true;
-            //process.StartInfo.UseShellExecute= true;   
             process.Start();
             process.WaitForExit();
             var text = process.StandardOutput.ReadToEnd();
-            return new FfprobeVideoInfo();
-            //process.StartInfo.ArgumentList = new List<String> { };
+            var result = JsonConvert.DeserializeObject<FfprobeVideoInfo>(text);
+            return result;
         }
     }
 }

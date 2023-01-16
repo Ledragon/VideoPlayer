@@ -10,6 +10,7 @@ import {
   ImageListItem
 } from '@mui/material';
 import { useState } from 'react';
+import { apiUrl } from '../../fetchHelper';
 import { Video } from '../../models/Video';
 import getBase64Url from './getBase64Url';
 import VideoCard from './VideoCard';
@@ -25,10 +26,9 @@ const ThumbnailDialog = (props: PropType) => {
   const { open, video, onCancel } = props;
   const [count, setCount] = useState<number>(12);
   const [thumbnails, setThumbnails] = useState<string[]>([]);
-  console.table(thumbnails);
   const handleClick = () => {
     fetch(
-      'http://localhost:5165/api/thumbnails?' +
+      apiUrl+'thumbnails?' +
         new URLSearchParams({
           filePath: video?.fileName || '',
           count: count.toFixed()

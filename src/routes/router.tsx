@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, redirect } from 'react-router-dom';
 import Home from './Home/Home';
 import Pictures from './Pictures';
 import Settings from './Settings';
@@ -11,6 +11,10 @@ const router = createBrowserRouter([
     path: '/',
     element: <Shell />,
     children: [
+      {
+        path: '',
+        loader: () => redirect('/home')
+      },
       {
         path: '/home',
         id: 'home',

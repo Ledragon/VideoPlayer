@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import {
-  Box} from '@mui/material';
+import { Box } from '@mui/material';
 import { Video } from '../../models/Video';
 import VideoDialog from './VideoDialog';
 import VideosDataGrid from './VideosDataGrid';
+import { apiUrl } from '../../fetchHelper';
 
 interface State {
   videos: Video[];
@@ -17,7 +17,7 @@ const VideosPage = () => {
   });
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    fetch('http://localhost:5165/api/videos', { mode: 'cors' })
+    fetch(new URL('videos', apiUrl), { mode: 'cors' })
       .then((data) => {
         return data.json();
       })
@@ -40,7 +40,10 @@ const VideosPage = () => {
         overflow: 'hidden'
       }}
     >
-      <VideosDataGrid videos={state.videos} onClick={handleClick}></VideosDataGrid>
+      <VideosDataGrid
+        videos={state.videos}
+        onClick={handleClick}
+      ></VideosDataGrid>
       {/* <VideosImageList
         videos={state.videos}
         onClick={handleClick}

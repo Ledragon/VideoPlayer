@@ -1,9 +1,11 @@
-import { Box, Button, Chip } from '@mui/material';
+import { Box, Button, Chip, IconButton } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import { useState } from 'react';
 import { Video } from '../../models/Video';
 import getBase64Url from './getBase64Url';
 import ThumbnailDialog from './Thumbnails';
+import { apiUrl } from '../../fetchHelper';
 
 const columns: GridColDef[] = [
   {
@@ -51,19 +53,20 @@ const columns: GridColDef[] = [
     }
   },
   {
-    field: 'action',
+    field: 'thumbnails',
+    headerName: '',
     width: 40,
     renderCell: (params: GridRenderCellParams<() => void>) => {
       return (
-        <Button
+        <IconButton
           onClick={() => {
             if (params.value) {
               params.value();
             }
           }}
         >
-          Generate
-        </Button>
+          <ImageSearchIcon />
+        </IconButton>
       );
     }
   }
@@ -79,7 +82,7 @@ const VideosDataGrid = (props: {
   const rows = videos.map((v, i) => {
     return Object.assign({ id: i }, v, {
       hasTags: !!v.tags?.length,
-      action: () => {
+      thumbnails: () => {
         setSelectedVideo(v);
         setOpen(true);
       }

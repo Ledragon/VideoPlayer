@@ -7,7 +7,9 @@ import {
   TextField,
   Autocomplete,
   ImageList,
-  ImageListItem
+  ImageListItem,
+  Backdrop,
+  CircularProgress
 } from '@mui/material';
 import { useState } from 'react';
 import { apiUrl } from '../../fetchHelper';
@@ -25,10 +27,19 @@ interface PropType {
 const ThumbnailDialog = (props: PropType) => {
   const { open, video, onCancel } = props;
   const [count, setCount] = useState<number>(12);
-  const [thumbnails, setThumbnails] = useState<string[]>([]);
+  const [thumbnails, setThumbnails] = useState<{ id: number; data: string }[]>(
+    []
+  );
+  const [selected, setSelected] = useState<{ id: number; data: string } | null>(
+    null
+  );
+  const [isGeneratingThumbnails, setIsGeneratingThumbnails] =
+    useState<boolean>(false);
   const handleClick = () => {
+    setIsGeneratingThumbnails(true);
     fetch(
-      apiUrl+'thumbnails?' +
+      apiUrl +
+        'thumbnails?' +
         new URLSearchParams({
           filePath: video?.fileName || '',
           count: count.toFixed()
@@ -39,34 +50,57 @@ const ThumbnailDialog = (props: PropType) => {
         return data.json();
       })
       .then((data) => {
-        setThumbnails(data);
+        setThumbnails(data.map((d: string, i: number) => ({ id: i, data: d })));
+        setIsGeneratingThumbnails(false);
       });
+  };
+
+  const handleSelect = (v: { id: number; data: string }) => {
+    return setSelected(v);
   };
 
   if (video != null) {
     return (
-      <Dialog open={open}>
+      <Dialog open={open} maxWidth="lg" scroll="paper">
         <DialogTitle>Generate thumbnails</DialogTitle>
         <DialogContent>
-          <form>
+          <form style={{display: 'flex', alignItems: 'center'}}>
             <TextField
-              fullWidth
               label="Number of thumbnails"
               value={count}
               onChange={(e) => setCount(parseFloat(e.target.value))}
               type="number"
               margin="dense"
               variant="outlined"
+              size="small"
+              sx={{flexGrow:1}}
             ></TextField>
-            <Button onClick={() => handleClick()}>Generate</Button>
+            <Button onClick={() => handleClick()} variant="outlined" sx={{m:2}}>Generate</Button>
           </form>
-          <ImageList cols={4} gap={6} sx={{ m: 1 }}>
-            {thumbnails.map((v, i) => (
-              <ImageListItem key={i}>
-                <img src={getBase64Url(v)}></img>
-              </ImageListItem>
-            ))}
-          </ImageList>
+          {isGeneratingThumbnails ? (
+            <CircularProgress />
+          ) : (
+            <ImageList cols={4} gap={6} sx={{ m: .5 }}>
+              {thumbnails.map((v, i) => (
+                <ImageListItem
+                  key={i}
+                  sx={{
+                    borderColor: (theme) =>
+                      v.id === selected?.id
+                        ? theme.palette.secondary.main
+                        : null,
+                    borderWidth: 1,
+                    borderStyle: v.id === selected?.id ? 'solid' : 'none'
+                  }}
+                >
+                  <img
+                    src={getBase64Url(v.data)}
+                    onClick={(e) => handleSelect(v)}
+                  ></img>
+                </ImageListItem>
+              ))}
+            </ImageList>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => onCancel()}>Cancel</Button>

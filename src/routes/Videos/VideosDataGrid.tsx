@@ -1,16 +1,10 @@
 import { Button, Chip, IconButton, SxProps } from '@mui/material';
-import {
-  DataGrid,
-  GridColDef,
-  GridRenderCellParams,
-  GridToolbar
-} from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import { useState } from 'react';
 import { Video } from '../../models/Video';
 import getBase64Url from './getBase64Url';
 import ThumbnailDialog from './Thumbnails';
-import { apiUrl } from '../../fetchHelper';
 
 const rowHeight = 64;
 
@@ -86,36 +80,41 @@ const VideosDataGrid = (props: {
 }) => {
   const { videos, sx } = props;
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [selectedRows, setSelectedRows] = useState<any[] | undefined>(undefined);
   const [open, setOpen] = useState<boolean>(false);
   const rows = videos.map((v, i) => {
-    return Object.assign({ id: v.fileName,
-      hasTags: !!v.tags?.length,
-      thumbnails: () => {
-        setSelectedVideo(v);
-        setOpen(true);
-      }
-    }, v);
+    return Object.assign(
+      {
+        id: v.fileName,
+        hasTags: !!v.tags?.length,
+        thumbnails: () => {
+          setSelectedVideo(v);
+          setOpen(true);
+        }
+      },
+      v
+    );
   });
   return (
     <>
-      (
-    <DataGrid
-      columns={columns}
-      rows={rows}
-      rowHeight={rowHeight}
-      checkboxSelection
-      onSelectionModelChange={(newSelectionModel) =>
-        console.log(newSelectionModel)
-      }
-      disableSelectionOnClick
-    ></DataGrid>
+      <DataGrid
+        columns={columns}
+        rows={rows}
+        rowHeight={rowHeight}
+        checkboxSelection
+        onSelectionModelChange={(newSelectionModel) => {
+          console.log(newSelectionModel);
+          setSelectedRows(newSelectionModel);
+        }}
+        selectionModel={selectedRows}
+        disableSelectionOnClick
+      ></DataGrid>
       <ThumbnailDialog
         video={selectedVideo}
         onCancel={() => setOpen(false)}
         open={open}
       ></ThumbnailDialog>
     </>
-  )
   );
 };
 

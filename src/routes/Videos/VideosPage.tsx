@@ -1,37 +1,23 @@
 import { useEffect, useState } from 'react';
-import { Box } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { Video } from '../../models/Video';
 import VideoDialog from './VideoDialog';
 import VideosDataGrid from './VideosDataGrid';
 import { apiUrl } from '../../fetchHelper';
+import { useGetVideosQuery } from '../../redux/api';
 
 interface State {
-  videos: Video[];
+  // videos: Video[];
   selectedVideo: Video | null;
 }
 
 const VideosPage = () => {
   const [state, setState] = useState<State>({
-    videos: [],
+    // videos: [],
     selectedVideo: null
   });
   const [open, setOpen] = useState(false);
-  const [metaData, setMetaData] = useState({});
-  console.log(metaData);
-  useEffect(() => {
-    fetch(new URL('videos', apiUrl), { mode: 'cors' })
-      .then((data) => {
-        return data.json();
-      })
-      .then((data) => {
-        setState(Object.assign({}, state, { videos: data }));
-        return fetch('http://localhost:5000/api/videos/metadata', {
-          mode: 'cors'
-        });
-      })
-      .then((data) => data.json())
-      .then((data) => setMetaData(Object.assign({}, metaData, data)));
-  }, []);
+  const { data: videos, isLoading } = useGetVideosQuery();
 
   function handleClick(v: Video) {
     setState({ ...state, selectedVideo: v });
@@ -56,7 +42,7 @@ const VideosPage = () => {
         }}
       >
         <VideosDataGrid
-          videos={state.videos}
+          videos={videos||[]}
           onClick={handleClick}
         ></VideosDataGrid>
       </Paper>

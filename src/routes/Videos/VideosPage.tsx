@@ -16,6 +16,8 @@ const VideosPage = () => {
     selectedVideo: null
   });
   const [open, setOpen] = useState(false);
+  const [metaData, setMetaData] = useState({});
+  console.log(metaData);
   useEffect(() => {
     fetch(new URL('videos', apiUrl), { mode: 'cors' })
       .then((data) => {
@@ -23,7 +25,12 @@ const VideosPage = () => {
       })
       .then((data) => {
         setState(Object.assign({}, state, { videos: data }));
-      });
+        return fetch('http://localhost:5000/api/videos/metadata', {
+          mode: 'cors'
+        });
+      })
+      .then((data) => data.json())
+      .then((data) => setMetaData(Object.assign({}, metaData, data)));
   }, []);
 
   function handleClick(v: Video) {

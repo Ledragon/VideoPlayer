@@ -1,5 +1,10 @@
-import { Box, Button, Chip, IconButton, SxProps } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { Button, Chip, IconButton, SxProps } from '@mui/material';
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridToolbar
+} from '@mui/x-data-grid';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import { useState } from 'react';
 import { Video } from '../../models/Video';
@@ -83,13 +88,13 @@ const VideosDataGrid = (props: {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [open, setOpen] = useState<boolean>(false);
   const rows = videos.map((v, i) => {
-    return Object.assign({ id: v.fileName }, v, {
+    return Object.assign({ id: v.fileName,
       hasTags: !!v.tags?.length,
       thumbnails: () => {
         setSelectedVideo(v);
         setOpen(true);
       }
-    });
+    }, v);
   });
   return (
     <>

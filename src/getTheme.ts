@@ -4,7 +4,8 @@ import {
   deepPurple,
   grey,
   lightBlue,
-  teal
+  teal,
+  pink
 } from '@mui/material/colors';
 
 const darkPalette: PaletteOptions = {

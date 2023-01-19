@@ -11,11 +11,10 @@ import {
   Backdrop,
   CircularProgress
 } from '@mui/material';
-import { useState } from 'react';
-import { apiUrl } from '../../fetchHelper';
+import { useEffect, useState } from 'react';
 import { Video } from '../../models/Video';
+import { useGetThumbnailsMutation } from '../../redux/api';
 import getBase64Url from './getBase64Url';
-import VideoCard from './VideoCard';
 
 interface PropType {
   open: boolean;
@@ -35,24 +34,38 @@ const ThumbnailDialog = (props: PropType) => {
   );
   const [isGeneratingThumbnails, setIsGeneratingThumbnails] =
     useState<boolean>(false);
+  const [getThumbnails, status] = useGetThumbnailsMutation();
+  console.log(status.data);
+  useEffect(() => {
+    setIsGeneratingThumbnails(status.isLoading);
+  }, [status.isLoading]);
+
+  useEffect(() => {
+    setThumbnails((status.data || []).map((d, i) => ({ id: i, data: d })));
+  }, [status.data]);
+
   const handleClick = () => {
-    setIsGeneratingThumbnails(true);
-    fetch(
-      apiUrl +
-        'thumbnails?' +
-        new URLSearchParams({
-          filePath: video?.fileName || '',
-          count: count.toFixed()
-        }),
-      { mode: 'cors' }
-    )
-      .then((data) => {
-        return data.json();
-      })
-      .then((data) => {
-        setThumbnails(data.map((d: string, i: number) => ({ id: i, data: d })));
-        setIsGeneratingThumbnails(false);
-      });
+    getThumbnails({
+      filePath: video?.fileName || '',
+      count: count
+    });
+    // setIsGeneratingThumbnails(true);
+    // fetch(
+    //   apiUrl +
+    //     'thumbnails?' +
+    //     new URLSearchParams({
+    //       filePath: video?.fileName || '',
+    //       count: count.toFixed()
+    //     }),
+    //   { mode: 'cors' }
+    // )
+    //   .then((data) => {
+    //     return data.json();
+    //   })
+    //   .then((data) => {
+    //     setThumbnails(data.map((d: string, i: number) => ({ id: i, data: d })));
+    //     setIsGeneratingThumbnails(false);
+    //   });
   };
 
   const handleSelect = (v: { id: number; data: string }) => {
@@ -64,7 +77,7 @@ const ThumbnailDialog = (props: PropType) => {
       <Dialog open={open} maxWidth="lg" scroll="paper">
         <DialogTitle>Generate thumbnails</DialogTitle>
         <DialogContent>
-          <form style={{display: 'flex', alignItems: 'center'}}>
+          <form style={{ display: 'flex', alignItems: 'center' }}>
             <TextField
               label="Number of thumbnails"
               value={count}
@@ -73,14 +86,20 @@ const ThumbnailDialog = (props: PropType) => {
               margin="dense"
               variant="outlined"
               size="small"
-              sx={{flexGrow:1}}
+              sx={{ flexGrow: 1 }}
             ></TextField>
-            <Button onClick={() => handleClick()} variant="outlined" sx={{m:2}}>Generate</Button>
+            <Button
+              onClick={() => handleClick()}
+              variant="outlined"
+              sx={{ m: 2 }}
+            >
+              Generate
+            </Button>
           </form>
-          {isGeneratingThumbnails ? (
+          {status.isLoading ? (
             <CircularProgress />
           ) : (
-            <ImageList cols={4} gap={6} sx={{ m: .5 }}>
+            <ImageList cols={4} gap={6} sx={{ m: 0.5 }}>
               {thumbnails.map((v, i) => (
                 <ImageListItem
                   key={i}

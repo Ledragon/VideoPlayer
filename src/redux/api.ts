@@ -10,7 +10,7 @@ const api = createApi({
   endpoints: (builder) => ({
     getVideos: builder.query<Video[], void>({
       query: () => 'videos',
-      providesTags:(result)=>{
+      providesTags: (result) => {
         return ['Videos'];
       }
     }),
@@ -18,7 +18,7 @@ const api = createApi({
       query: (video) => ({
         url: 'videos',
         method: 'PUT',
-        body: video,
+        body: video
       }),
       invalidatesTags: ['Videos']
     }),
@@ -28,10 +28,19 @@ const api = createApi({
     getMetadataForVideo: builder.query<VideoMetadata, string>({
       query: (filePath: string) =>
         'metadata?' + new URLSearchParams({ filePath })
-    })
+    }),
+    getThumbnails: builder.mutation<string[], { filePath: string; count: number }>(
+      {
+        query: (data) => ({
+          url: 'thumbnails',
+          params: data,
+          method: 'GET'
+        })
+      }
+    )
   })
 });
 
 export default api;
 
-export const { useGetVideosQuery, useUpdateVideoMutation,  } = api;
+export const { useGetVideosQuery, useUpdateVideoMutation, useGetThumbnailsMutation } = api;

@@ -1,7 +1,15 @@
-import { Autocomplete, Button, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Button,
+  ButtonGroup,
+  ImageList,
+  ImageListItem,
+  TextField
+} from '@mui/material';
 import { Box } from '@mui/system';
 import { useFormik } from 'formik';
 import { Video } from '../../models/Video';
+import getBase64Url from './getBase64Url';
 
 const VideoProperties = (props: {
   video: Video;
@@ -11,13 +19,14 @@ const VideoProperties = (props: {
   const formik = useFormik({
     initialValues: {
       title: video.title,
-      rating: video.rating,
-      category: video.category
+      rating: video.rating || 0,
+      category: video.category || ''
     },
     onSubmit: (value) => {
       const update = Object.assign({}, video, value);
       onSubmit(update);
-    }
+    },
+    enableReinitialize: true
   });
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -67,14 +76,19 @@ const VideoProperties = (props: {
           />
         )}
       ></Autocomplete>
-      <Box>
+      <ImageList cols={1}>
+        <ImageListItem>
+          <img src={getBase64Url(video.serializedImage)}></img>
+        </ImageListItem>
+      </ImageList>
+      <ButtonGroup>
         <Button variant="text" onClick={() => formik.resetForm()}>
           Cancel
         </Button>
         <Button variant="text" type="submit">
           Save
         </Button>
-      </Box>
+      </ButtonGroup>
     </form>
   );
 };

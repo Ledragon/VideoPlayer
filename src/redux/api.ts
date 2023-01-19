@@ -14,13 +14,11 @@ const api = createApi({
         return ['Videos'];
       }
     }),
-    updateVideo: builder.mutation<Video>({
+    updateVideo: builder.mutation<Video, Video>({
       query: (video) => ({
         url: 'videos',
         method: 'PUT',
         body: video,
-        mode: 'cors',
-        credentials: 'same-origin'
       }),
       invalidatesTags: ['Videos']
     }),

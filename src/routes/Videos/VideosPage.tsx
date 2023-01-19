@@ -47,19 +47,11 @@ const VideosPage = () => {
             flexBasis: '25%',
             m: 1,
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            p: 2
           }}
         >
-          {/* <Paper variant="outlined" sx={{ p: 2 }}></Paper> */}
-          <Paper variant="outlined" sx={{ p: 2, flexGrow: 1 }}>
-            <VideoProperties video={selectedVideo} />
-          </Paper>
-          <Paper variant="outlined" sx={{ p: 2 }}>
-            <Button variant="text">Cancel</Button>
-            <Button variant="text" onClick={() => updateVideo(selectedVideo)}>
-              Save
-            </Button>
-          </Paper>
+          <VideoProperties video={selectedVideo} onSubmit={updateVideo} />
         </Paper>
       ) : (
         <></>

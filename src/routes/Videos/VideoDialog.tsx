@@ -25,7 +25,7 @@ const VideoDialog = (props: PropType) => {
       <Dialog fullScreen open={open}>
         <DialogTitle>{video.title}</DialogTitle>
         <DialogContent>
-          <VideoProperties video={video} />
+          <VideoProperties video={video} onSubmit={onSave}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => onCancel()}>Cancel</Button>

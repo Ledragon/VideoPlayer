@@ -1,29 +1,23 @@
-import { useEffect, useState } from 'react';
-import { Box, Paper } from '@mui/material';
+import { useState } from 'react';
+import { Backdrop, Box, CircularProgress, Paper } from '@mui/material';
 import { Video } from '../../models/Video';
 import VideoDialog from './VideoDialog';
 import VideosDataGrid from './VideosDataGrid';
-import { apiUrl } from '../../fetchHelper';
 import { useGetVideosQuery } from '../../redux/api';
 
 interface State {
-  // videos: Video[];
   selectedVideo: Video | null;
 }
 
 const VideosPage = () => {
-  const [state, setState] = useState<State>({
-    // videos: [],
-    selectedVideo: null
-  });
+  const [selectedVideo, setSelectedVideo] = useState<Video|null>(null);
   const [open, setOpen] = useState(false);
   const { data: videos, isLoading } = useGetVideosQuery();
 
   function handleClick(v: Video) {
-    setState({ ...state, selectedVideo: v });
+    setSelectedVideo(selectedVideo);
     setOpen(true);
   }
-  const { selectedVideo } = state;
   return (
     <Box
       sx={{
@@ -41,8 +35,11 @@ const VideosPage = () => {
           m: 1
         }}
       >
+        <Backdrop open={isLoading}>
+          <CircularProgress />
+        </Backdrop>
         <VideosDataGrid
-          videos={videos||[]}
+          videos={videos || []}
           onClick={handleClick}
         ></VideosDataGrid>
       </Paper>

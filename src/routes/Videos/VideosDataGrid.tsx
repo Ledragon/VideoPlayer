@@ -1,4 +1,4 @@
-import { Button, Chip, IconButton, SxProps } from '@mui/material';
+import { Chip, IconButton, SxProps } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import { useState } from 'react';
@@ -103,7 +103,6 @@ const VideosDataGrid = (props: {
         rowHeight={rowHeight}
         checkboxSelection
         onSelectionModelChange={(newSelectionModel) => {
-          console.log(newSelectionModel);
           setSelectedRows(newSelectionModel);
         }}
         selectionModel={selectedRows}

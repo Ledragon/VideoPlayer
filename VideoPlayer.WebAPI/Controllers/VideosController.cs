@@ -13,7 +13,7 @@ namespace VideoPlayer.WebAPI.Controllers
         private readonly IVideoRepository _videoRepository;
         private readonly IPathService _pathService;
 
-        public VideosController(ILogger<VideosController> logger, 
+        public VideosController(ILogger<VideosController> logger,
             IVideoRepository videoRepository,
             IPathService pathService)
         {
@@ -36,6 +36,13 @@ namespace VideoPlayer.WebAPI.Controllers
             var filePath = this._pathService.GetLibraryFile();
             var videos = this._videoRepository.Load(filePath).Videos;
             return videos.ToDictionary(d => d.FileName, d => new VideoMetaData { Codec = "", HasContactSheet = System.IO.File.Exists(d.FileName + ".png") });
+        }
+
+        [HttpPut]
+        public Video UpdateVideo([FromBody] Video video)
+        {
+            this._logger.LogDebug(video.ToString());
+            return video;
         }
     }
 }

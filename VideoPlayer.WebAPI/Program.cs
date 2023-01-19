@@ -19,7 +19,7 @@ builder.Services
 //services cors
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
-        policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
+        policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader().AllowAnyMethod())
 );
 
 var app = builder.Build();

@@ -5,10 +5,6 @@ import VideoDialog from './VideoDialog';
 import VideosDataGrid from './VideosDataGrid';
 import { useGetVideosQuery } from '../../redux/api';
 
-interface State {
-  selectedVideo: Video | null;
-}
-
 const VideosPage = () => {
   const [selectedVideo, setSelectedVideo] = useState<Video|null>(null);
   const [open, setOpen] = useState(false);

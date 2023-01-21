@@ -10,11 +10,11 @@ namespace VideoPlayer.WebAPI.Controllers
     public class VideosController : ControllerBase
     {
         private readonly ILogger<VideosController> _logger;
-        private readonly IVideoRepository _videoRepository;
+        private readonly ILibraryRepository _videoRepository;
         private readonly IPathService _pathService;
 
         public VideosController(ILogger<VideosController> logger, 
-            IVideoRepository videoRepository,
+            ILibraryRepository videoRepository,
             IPathService pathService)
         {
             this._logger = logger;

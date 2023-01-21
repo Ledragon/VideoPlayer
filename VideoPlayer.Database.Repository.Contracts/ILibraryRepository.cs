@@ -3,7 +3,7 @@ using VideoPlayer.Entities;
 
 namespace VideoPlayer.Database.Repository.Contracts
 {
-    public interface IVideoRepository
+    public interface ILibraryRepository
     {
         void Save(String filePath, ObjectsWrapper wrapper);
         ObjectsWrapper Load(String filePath);

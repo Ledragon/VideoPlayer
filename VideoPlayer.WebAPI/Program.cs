@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services
-    .AddTransient<IVideoRepository, FileVideoRepository>()
+    .AddTransient<ILibraryRepository, FileLibraryRepository>()
     .AddSingleton<IFfprobeInfoExtractor,FfprobeInfoExtractor>()
     .AddSingleton<IFfmpegThumbnailGenerator, FfmpegThumbnailGenerator>()
     .AddSingleton<IPathService, PathService>();

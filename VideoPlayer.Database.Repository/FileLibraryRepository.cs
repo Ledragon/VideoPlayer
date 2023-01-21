@@ -7,7 +7,7 @@ using VideoPlayer.Entities;
 
 namespace VideoPlayer.Database.Repository
 {
-    public class FileVideoRepository : IVideoRepository
+    public class FileLibraryRepository : ILibraryRepository
     {
         public void Save(String filePath, ObjectsWrapper wrapper)
         {

@@ -16,9 +16,9 @@ namespace VideoPlayer.Services
     {
         // Singleton-like
         private static ObjectsWrapper _objectsWrapper;
-        private readonly IVideoRepository _videoRepository;
+        private readonly ILibraryRepository _videoRepository;
 
-        public LibraryService(IVideoRepository videoRepository)
+        public LibraryService(ILibraryRepository videoRepository)
         {
             this._videoRepository = videoRepository;
         }

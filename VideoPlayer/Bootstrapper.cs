@@ -24,7 +24,7 @@ namespace VideoPlayer
     {
         protected override DependencyObject CreateShell()
         {
-            this.Container.RegisterType<IVideoRepository, FileVideoRepository>(new ContainerControlledLifetimeManager())
+            this.Container.RegisterType<ILibraryRepository, FileLibraryRepository>(new ContainerControlledLifetimeManager())
                 .RegisterType<ILibraryService, LibraryService>(new ContainerControlledLifetimeManager())
                 .RegisterType<ICategoryService, CategoryService>(new ContainerControlledLifetimeManager())
                 .RegisterType<IPlaylistService, PlaylistService>(new ContainerControlledLifetimeManager())

@@ -19,7 +19,7 @@ namespace VideoPlayer.NfoExtractor
 
         public void GenerateNfo(String filePath, String sourceDir, String targetDir)
         {
-            var repo = new FileVideoRepository();
+            var repo = new FileLibraryRepository();
             var ofw = repo.Load(filePath);
             var videos = ofw.Videos;
             var nfoSerializer = new NfoSerializer();

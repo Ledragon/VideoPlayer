@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VideoPlayer.Database.Repository;
+using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Entities;
 using VideoPlayer.Services;
 

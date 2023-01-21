@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 using LeDragon.Log.Standard;
+using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Entities;
 
 namespace VideoPlayer.Database.Repository

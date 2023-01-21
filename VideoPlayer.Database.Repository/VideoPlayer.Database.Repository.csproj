@@ -6,6 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\LeDragon.Log.Standard\LeDragon.Log.Standard.csproj" />
+    <ProjectReference Include="..\VideoPlayer.Database.Repository.Contracts\VideoPlayer.Database.Repository.Contracts.csproj" />
     <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj" />
   </ItemGroup>
   <ItemGroup>

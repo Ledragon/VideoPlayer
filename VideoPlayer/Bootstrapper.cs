@@ -8,6 +8,7 @@ using Module;
 using PlaylistModule;
 using VideoPlayer.Common;
 using VideoPlayer.Database.Repository;
+using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Infrastructure;
 using VideoPlayer.Nfo;
 using VideoPlayer.PlaylistManagement;

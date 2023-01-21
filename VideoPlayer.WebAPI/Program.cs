@@ -1,4 +1,5 @@
 using VideoPlayer.Database.Repository;
+using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Ffmpeg;
 using VideoPlayer.Services;
 

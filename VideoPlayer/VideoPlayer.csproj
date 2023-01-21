@@ -390,6 +390,10 @@
       <Project>{85D3796A-9536-460E-8FF0-F96ACD68878F}</Project>
       <Name>VideoPlayer.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VideoPlayer.Database.Repository.Contracts\VideoPlayer.Database.Repository.Contracts.csproj">
+      <Project>{5C882A85-BB32-4D0A-A2D3-3635ADACD310}</Project>
+      <Name>VideoPlayer.Database.Repository.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj">
       <Project>{A5DB04F0-1DFF-4533-8C49-EE4F1519B5FF}</Project>
       <Name>VideoPlayer.Database.Repository</Name>

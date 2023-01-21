@@ -1,7 +1,7 @@
 using System;
 using VideoPlayer.Entities;
 
-namespace VideoPlayer.Database.Repository
+namespace VideoPlayer.Database.Repository.Contracts
 {
     public interface IVideoRepository
     {

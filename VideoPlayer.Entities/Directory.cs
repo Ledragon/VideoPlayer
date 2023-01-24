@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace VideoPlayer.Entities
@@ -13,5 +14,7 @@ namespace VideoPlayer.Entities
 
         [XmlAttribute("IsIncludeSubdirectories")]
         public Boolean IsIncludeSubdirectories { get; set; }
+
+        public List<Video> Videos { get; set; }
     }
 }

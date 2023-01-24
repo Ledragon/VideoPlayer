@@ -1,6 +1,7 @@
 ﻿using LeDragon.Log.Standard;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -37,12 +38,15 @@ namespace VideoPlayer.Entities
             }
         }
 
+        public Int32 Id { get; set; }
+
         [XmlAttribute("FileName")]
         public String FileName { get; set; }
 
         [XmlAttribute("Title")]
         public String Title { get; set; }
 
+        [NotMapped]
         [XmlIgnore]
         public TimeSpan Length
         {
@@ -85,6 +89,7 @@ namespace VideoPlayer.Entities
         [XmlAttribute]
         public UInt32 Rating { get; set; }
 
+        [NotMapped]
         [XmlAttribute]
         public String Category { get; set; }
 
@@ -111,7 +116,10 @@ namespace VideoPlayer.Entities
             }
         }
 
+        [NotMapped]
         [XmlAttribute("SerializedImage")]
         public String SerializedImage { get; set; }
+
+        public List<Thumbnail> Thumbnails { get; set; }
     }
 }

@@ -80,6 +80,7 @@ namespace VideoPlayer.Entities
         [XmlAttribute("Directory")]
         public String Directory { get; set; }
 
+        [NotMapped]
         [XmlAttribute("Preview")]
         public String Preview { get; set; }
 
@@ -96,6 +97,7 @@ namespace VideoPlayer.Entities
         [XmlIgnore]
         public DateTime DateAdded { get; set; }
 
+        [NotMapped]
         [XmlAttribute("DateAdded")]
         public String DateAddedString
         {

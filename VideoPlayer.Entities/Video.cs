@@ -19,7 +19,7 @@ namespace VideoPlayer.Entities
 
         public Video(String videoPath)
         {
-            this.Directory = Path.GetDirectoryName(videoPath);
+            this.DirectoryPath = Path.GetDirectoryName(videoPath);
             this.FileName = videoPath;
             try
             {
@@ -77,8 +77,9 @@ namespace VideoPlayer.Entities
             }
         }
 
+        [NotMapped]
         [XmlAttribute("Directory")]
-        public String Directory { get; set; }
+        public String DirectoryPath { get; set; }
 
         [NotMapped]
         [XmlAttribute("Preview")]
@@ -123,5 +124,7 @@ namespace VideoPlayer.Entities
         public String SerializedImage { get; set; }
 
         public List<Thumbnail> Thumbnails { get; set; }
+
+        public Directory Directory { get; set; }
     }
 }

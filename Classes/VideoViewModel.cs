@@ -66,12 +66,12 @@ namespace Classes
 
         public String Directory
         {
-            get => this._video.Directory;
+            get => this._video.DirectoryPath;
             set
             {
-                if (this._video.Directory != value)
+                if (this._video.DirectoryPath != value)
                 {
-                    this._video.Directory = value;
+                    this._video.DirectoryPath = value;
                     this.OnPropertyChanged();
                 }
             }

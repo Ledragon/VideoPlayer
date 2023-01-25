@@ -1,4 +1,5 @@
-﻿using VideoPlayer.Database.Repository;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using VideoPlayer.Database.Repository;
 using VideoPlayer.Database.Repository.SQLite;
 using VideoPlayer.Services;
 
@@ -10,6 +11,21 @@ var objects = xmlRepo.Load(libraryFile);
 using (var context = new VideoPlayerContext(Path.Combine(Path.GetDirectoryName(libraryFile), "Library.db")))
 {
     context.Database.EnsureCreated();
+
+    var dic = new Dictionary<String, EntityEntry<VideoPlayer.Entities.Directory>>();
+    foreach (var directory in objects.Directories)
+    {
+        var entity = context.Directories.Add(directory);
+        if (Directory.Exists(directory.DirectoryPath))
+        {
+            var di = new DirectoryInfo(directory.DirectoryPath);
+            var fileInfos = di.GetFiles("*", SearchOption.AllDirectories);
+            foreach (var fileInfo in fileInfos.Where(f => !dic.ContainsKey(f.FullName)))
+            {
+                dic.Add(fileInfo.FullName, entity);
+            }
+        }
+    }
 
     objects.Videos.ForEach(v =>
     {
@@ -30,6 +46,11 @@ using (var context = new VideoPlayerContext(Path.Combine(Path.GetDirectoryName(l
             var tag = context.Tags.FirstOrDefault(t => t.Value == v.Category)
             ?? context.Tags.Add(new VideoPlayer.Entities.Tag { Value = v.Category }).Entity;
             v.Tags.Add(tag);
+        }
+        if (dic.TryGetValue(v.FileName, out var entity))
+        {
+            entity.Entity.Videos.Add(v);
+            v.Directory = entity.Entity;
         }
     });
     context.Videos.AddRange(objects.Videos);

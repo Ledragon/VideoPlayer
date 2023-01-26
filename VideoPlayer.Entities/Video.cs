@@ -46,7 +46,6 @@ namespace VideoPlayer.Entities
         [XmlAttribute("Title")]
         public String Title { get; set; }
 
-        [NotMapped]
         [XmlIgnore]
         public TimeSpan Length
         {
@@ -54,6 +53,7 @@ namespace VideoPlayer.Entities
             set{this._length = value;}
         }
 
+        [NotMapped]
         [XmlAttribute("Length")]
         public String LengthString
         {
@@ -126,5 +126,7 @@ namespace VideoPlayer.Entities
         public List<Thumbnail> Thumbnails { get; set; }
 
         public Directory Directory { get; set; }
+        [ForeignKey(nameof(Directory))]
+        public Int32 DirectoryId { get; set; }
     }
 }

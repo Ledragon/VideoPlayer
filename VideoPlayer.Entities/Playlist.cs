@@ -11,6 +11,7 @@ namespace VideoPlayer.Entities
             this.CreationDate = DateTime.Now;
         }
 
+        public Int32 Id { get; set; }
         public String Title { get; set; }
         public DateTime CreationDate { get; set; }
 

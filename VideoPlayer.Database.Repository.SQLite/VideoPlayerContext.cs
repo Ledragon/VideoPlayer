@@ -26,5 +26,6 @@ namespace VideoPlayer.Database.Repository.SQLite
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Thumbnail> Thumbnails { get; set; }
         public DbSet<Entities.Directory> Directories { get; set; }
+        public DbSet<Playlist> Playlists { get; set; }
     }
 }

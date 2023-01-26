@@ -52,7 +52,7 @@ namespace VideoPlayer.NfoExtractor
             && !String.IsNullOrEmpty(targetDir)
             && sourceDir != targetDir)
             {
-                v.Directory = v.Directory
+                v.DirectoryPath = v.DirectoryPath
                     .Replace(sourceDir, targetDir)
                     .Replace("\\", "/");
                 v.FileName = v.FileName

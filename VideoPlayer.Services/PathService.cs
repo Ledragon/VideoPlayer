@@ -12,8 +12,15 @@ namespace VideoPlayer.Services
 
         public String GetLibraryFile()
         {
-            return @"E:\Hugues Stefanski\Documents\Development\GitHub\VideoPlayer\VideoPlayer\bin\Debug\Files\Library.xml";
-            //return @"/home/hugues/Documents/Code/files/Library.xml";
+            var osNameAndVersion = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+            if (osNameAndVersion.ToLower().Contains("windows"))
+            {
+                return @"E:\Hugues Stefanski\Documents\Development\GitHub\VideoPlayer\VideoPlayer\bin\Debug\Files\Library.xml";
+            }
+            else
+            {
+                return @"/home/hugues/Documents/Code/files/Library.xml";
+            }
         }
     }
 }

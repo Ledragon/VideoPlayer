@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace VideoPlayer.Services
 {
@@ -12,8 +13,8 @@ namespace VideoPlayer.Services
 
         public String GetLibraryFile()
         {
-            var osNameAndVersion = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
-            if (osNameAndVersion.ToLower().Contains("windows"))
+            
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return @"E:\Hugues Stefanski\Documents\Development\GitHub\VideoPlayer\VideoPlayer\bin\Debug\Files\Library.xml";
             }

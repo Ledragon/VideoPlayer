@@ -7,7 +7,11 @@ namespace VideoPlayer.Database.Repository.SQLite
     {
         private String _dbPath;
 
-        public VideoPlayerContext():this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VideoPlayer", "Temp", "Library.db"))
+        //public VideoPlayerContext() : this(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "VideoPlayer", "Temp", "Library.db"))
+        //{
+
+        //}
+        public VideoPlayerContext(DbContextOptions<VideoPlayerContext> options) : base(options)
         {
 
         }
@@ -19,7 +23,10 @@ namespace VideoPlayer.Database.Repository.SQLite
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"DataSource={this._dbPath}");
+            if (!String.IsNullOrEmpty(this._dbPath))
+            {
+                optionsBuilder.UseSqlite($"DataSource={this._dbPath}");
+            }
         }
 
         public DbSet<Video> Videos { get; set; }

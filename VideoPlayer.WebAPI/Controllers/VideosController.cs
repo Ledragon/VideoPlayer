@@ -10,31 +10,25 @@ namespace VideoPlayer.WebAPI.Controllers
     public class VideosController : ControllerBase
     {
         private readonly ILogger<VideosController> _logger;
-        private readonly ILibraryRepository _videoRepository;
-        private readonly IPathService _pathService;
+        private readonly IVideoRepository _videoRepository;
 
-        public VideosController(ILogger<VideosController> logger, 
-            ILibraryRepository videoRepository,
-            IPathService pathService)
+        public VideosController(ILogger<VideosController> logger, IVideoRepository videoRepository)
         {
             this._logger = logger;
             this._videoRepository = videoRepository;
-            this._pathService = pathService;
         }
 
         [HttpGet]
         public List<Video> GetVideos()
         {
-            var filePath = this._pathService.GetLibraryFile();
-            var videos = this._videoRepository.Load(filePath).Videos;
+            var videos = this._videoRepository.Get();
             return videos;
         }
 
         [HttpGet("/api/videos/metadata")]
         public Dictionary<String, VideoMetaData> GetMetaData()
         {
-            var filePath = this._pathService.GetLibraryFile();
-            var videos = this._videoRepository.Load(filePath).Videos;
+            var videos = this._videoRepository.Get();
             return videos.ToDictionary(d => d.FileName, d => new VideoMetaData { Codec = "", HasContactSheet = System.IO.File.Exists(d.FileName + ".png") });
         }
     }

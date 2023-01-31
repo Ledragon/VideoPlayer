@@ -1,5 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Database.Repository.Contracts;
+using VideoPlayer.Database.Repository.SQLite;
 using VideoPlayer.Ffmpeg;
 using VideoPlayer.Services;
 
@@ -16,12 +19,15 @@ builder.Services
     .AddTransient<ILibraryRepository, FileLibraryRepository>()
     .AddSingleton<IFfprobeInfoExtractor,FfprobeInfoExtractor>()
     .AddSingleton<IFfmpegThumbnailGenerator, FfmpegThumbnailGenerator>()
-    .AddSingleton<IPathService, PathService>();
+    .AddSingleton<IPathService, PathService>()
+    .AddTransient<IVideoRepository, SqliteVideoRepository>();
 //services cors
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
         policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
 );
+
+builder.Services.AddDbContext<VideoPlayerContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("Database")));
 
 var app = builder.Build();
 

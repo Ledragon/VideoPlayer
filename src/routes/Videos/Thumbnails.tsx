@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Video } from '../../models/Video';
-import { useGetThumbnailsMutation } from '../../redux/api';
+import { useGenerateThumbnailsMutation } from '../../redux';
 import getBase64Url from './getBase64Url';
 
 interface PropType {
@@ -34,7 +34,7 @@ const ThumbnailDialog = (props: PropType) => {
   );
   const [isGeneratingThumbnails, setIsGeneratingThumbnails] =
     useState<boolean>(false);
-  const [getThumbnails, status] = useGetThumbnailsMutation();
+  const [getThumbnails, status] = useGenerateThumbnailsMutation();
   console.log(status.data);
   useEffect(() => {
     setIsGeneratingThumbnails(status.isLoading);

@@ -3,13 +3,15 @@ import { Backdrop, Box, Button, CircularProgress, Paper } from '@mui/material';
 import { Video } from '../../models/Video';
 import VideoDialog from './VideoDialog';
 import VideosDataGrid from './VideosDataGrid';
-import { useGetVideosQuery, useUpdateVideoMutation } from '../../redux/api';
+import { useGetThumbnailsQuery, useGetVideosQuery, useUpdateVideoMutation } from '../../redux';
 import VideoProperties from './VideoProperties';
 
 const VideosPage = () => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [open, setOpen] = useState(false);
   const { data: videos, isLoading } = useGetVideosQuery();
+  const { data: thumbnails, isLoading: isLoadingThumbnails } = useGetThumbnailsQuery();
+    useGetVideosQuery();
   const [updateVideo, result] = useUpdateVideoMutation();
 
   function handleClick(v: Video) {
@@ -33,7 +35,7 @@ const VideosPage = () => {
           m: 1
         }}
       >
-        <Backdrop open={isLoading}>
+        <Backdrop open={isLoading || isLoadingThumbnails}>
           <CircularProgress />
         </Backdrop>
         <VideosDataGrid

@@ -1,30 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using VideoPlayer.Database.Repository.Contracts;
+using VideoPlayer.Entities;
 using VideoPlayer.Ffmpeg;
 
 namespace VideoPlayer.WebAPI.Controllers
 {
-    [Route("api/thumbnails")]
-    public class ThumbnailController : ControllerBase
+    [Route("api/[controller]")]
+    public class ThumbnailsController : ControllerBase
     {
         private readonly IFfmpegThumbnailGenerator _thumbnailGenerator;
+        private readonly IThumbnailsRepository _thumbnailsRepository;
 
-        public ThumbnailController(IFfmpegThumbnailGenerator thumbnailGenerator)
+        public ThumbnailsController(IFfmpegThumbnailGenerator thumbnailGenerator, IThumbnailsRepository thumbnailsRepository)
         {
             this._thumbnailGenerator = thumbnailGenerator;
+            this._thumbnailsRepository = thumbnailsRepository;
         }
 
-        [HttpGet("/api/thumbnails")]
-        public List<String> Thumbnails([FromQuery] String filePath, [FromQuery] Int32 count)
+        [HttpGet]
+        public List<Thumbnail> Get()
         {
-            var files = this._thumbnailGenerator.GenerateThumbnails(filePath, count);
-            return files
-                .Select(f =>
-                {
-                    var bytes = System.IO.File.ReadAllBytes(f);
-                    var converted = Convert.ToBase64String(bytes);
-                    return converted;
-                })
-                .ToList();
+            return this._thumbnailsRepository.Get();
         }
+
+        //[HttpGet]
+        //public List<String> Thumbnails([FromQuery] String filePath, [FromQuery] Int32 count)
+        //{
+        //    var files = this._thumbnailGenerator.GenerateThumbnails(filePath, count);
+        //    return files
+        //        .Select(f =>
+        //        {
+        //            var bytes = System.IO.File.ReadAllBytes(f);
+        //            var converted = Convert.ToBase64String(bytes);
+        //            return converted;
+        //        })
+        //        .ToList();
+        //}
     }
 }

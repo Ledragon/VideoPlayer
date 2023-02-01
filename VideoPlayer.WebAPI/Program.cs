@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Database.Repository.SQLite;
@@ -20,7 +19,9 @@ builder.Services
     .AddSingleton<IFfprobeInfoExtractor,FfprobeInfoExtractor>()
     .AddSingleton<IFfmpegThumbnailGenerator, FfmpegThumbnailGenerator>()
     .AddSingleton<IPathService, PathService>()
-    .AddTransient<IVideoRepository, SqliteVideoRepository>();
+    .AddTransient<IThumbnailsRepository, SqliteThumbnailsRepository>()
+    .AddTransient<IVideoRepository, SqliteVideoRepository>()
+    ;
 //services cors
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
@@ -41,5 +42,6 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 app.UseCors();
 app.MapControllers();
+app.MapDefaultControllerRoute();
 
 app.Run();

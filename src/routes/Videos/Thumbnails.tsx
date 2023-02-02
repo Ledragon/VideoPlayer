@@ -12,6 +12,7 @@ import {
   CircularProgress
 } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
 import { useGenerateThumbnailsMutation } from '../../redux';
 import getBase64Url from './getBase64Url';
@@ -20,57 +21,39 @@ interface PropType {
   open: boolean;
   video: Video | null;
   onCancel: () => void;
-  //   onSave: (v: Video) => void;
+  onSave: (thumbnails: Thumbnail[]) => void;
 }
 
 const ThumbnailDialog = (props: PropType) => {
-  const { open, video, onCancel } = props;
+  const { open, video, onCancel, onSave } = props;
   const [count, setCount] = useState<number>(12);
-  const [thumbnails, setThumbnails] = useState<{ id: number; data: string }[]>(
+  const [selected, setSelected] = useState<{ id: number; data: string }[]>(
     []
   );
-  const [selected, setSelected] = useState<{ id: number; data: string } | null>(
-    null
-  );
-  const [isGeneratingThumbnails, setIsGeneratingThumbnails] =
-    useState<boolean>(false);
   const [getThumbnails, status] = useGenerateThumbnailsMutation();
-  console.log(status.data);
-  useEffect(() => {
-    setIsGeneratingThumbnails(status.isLoading);
-  }, [status.isLoading]);
-
-  useEffect(() => {
-    setThumbnails((status.data || []).map((d, i) => ({ id: i, data: d })));
-  }, [status.data]);
 
   const handleClick = () => {
     getThumbnails({
       filePath: video?.fileName || '',
       count: count
     });
-    // setIsGeneratingThumbnails(true);
-    // fetch(
-    //   apiUrl +
-    //     'thumbnails?' +
-    //     new URLSearchParams({
-    //       filePath: video?.fileName || '',
-    //       count: count.toFixed()
-    //     }),
-    //   { mode: 'cors' }
-    // )
-    //   .then((data) => {
-    //     return data.json();
-    //   })
-    //   .then((data) => {
-    //     setThumbnails(data.map((d: string, i: number) => ({ id: i, data: d })));
-    //     setIsGeneratingThumbnails(false);
-    //   });
   };
 
-  const handleSelect = (v: { id: number; data: string }) => {
-    return setSelected(v);
+  const thumbnails =
+    status.isSuccess && status.data
+      ? status.data.map((d, i) => ({ id: i, data: d }))
+      : [];
+
+  const handleSelect = (v: { id: number; data: string; }) => {
+    const current = selected.filter(s => s.id !== v.id).concat([v]);
+    return setSelected(current);
   };
+
+  const handleSave = () => {
+    if (!!video) {
+      onSave(selected.map(d => ({ id: 0, image: d.data, videoId: video.id })));
+    }
+  }
 
   if (video != null) {
     return (
@@ -105,11 +88,14 @@ const ThumbnailDialog = (props: PropType) => {
                   key={i}
                   sx={{
                     borderColor: (theme) =>
-                      v.id === selected?.id
+                      selected.map((d) => d.id).indexOf(v.id) > 0
                         ? theme.palette.secondary.main
                         : null,
                     borderWidth: 1,
-                    borderStyle: v.id === selected?.id ? 'solid' : 'none'
+                    borderStyle:
+                      selected.map((d) => d.id).indexOf(v.id) > 0
+                        ? 'solid'
+                        : 'none'
                   }}
                 >
                   <img
@@ -123,7 +109,7 @@ const ThumbnailDialog = (props: PropType) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => onCancel()}>Cancel</Button>
-          {/* <Button onClick={() => onSave(video)}>Save</Button> */}
+          <Button onClick={() => handleSave()}>Save</Button>
         </DialogActions>
       </Dialog>
     );

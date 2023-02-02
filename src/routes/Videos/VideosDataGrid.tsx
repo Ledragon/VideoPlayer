@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Video } from '../../models/Video';
 import getBase64Url from './getBase64Url';
 import ThumbnailDialog from './Thumbnails';
+import { Thumbnail } from '../../models/Thumbnail';
 
 const rowHeight = 64;
 
@@ -55,7 +56,7 @@ const columns: GridColDef[] = [
     }
   },
   {
-    field: 'thumbnails',
+    field: 'generateThumbnails',
     headerName: '',
     width: 40,
     renderCell: (params: GridRenderCellParams<() => void>) => {
@@ -95,32 +96,38 @@ const columns: GridColDef[] = [
 const VideosDataGrid = (props: {
   videos: Video[];
   onClick?: (v: Video) => void;
+  thumbnails: Thumbnail[];
   sx?: SxProps;
+  onSave: (thumbnails: Thumbnail[]) => void;
 }) => {
-  const { videos, sx, onClick } = props;
+  const { videos, sx, onClick, thumbnails, onSave } = props;
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [selectedRows, setSelectedRows] = useState<any[] | undefined>(
     undefined
   );
   const [open, setOpen] = useState<boolean>(false);
   const rows = videos.map((v, i) => {
-    return Object.assign(
-      {
-        id: v.fileName,
-        hasTags: !!v.tags?.length,
-        thumbnails: () => {
-          setSelectedVideo(v);
-          setOpen(true);
-        },
-        details: () => {
-          if(onClick){
-            onClick(v);
-          }
-        }
+    const videoThumbs = thumbnails.filter((t) => t.videoId === v.id);
+    return Object.assign({}, v, {
+      id: v.fileName,
+      hasTags: !!v.tags?.length,
+      serializedImage: videoThumbs.length ? videoThumbs[0].image : null,
+      thumbnails: videoThumbs,
+      generateThumbnails: () => {
+        setSelectedVideo(v);
+        setOpen(true);
       },
-      v
-    );
+      details: () => {
+        if (onClick) {
+          onClick(v);
+        }
+      }
+    });
   });
+
+  const handleSave = (data: Thumbnail[]) => { 
+    onSave(data);
+  }
   return (
     <>
       <DataGrid
@@ -137,6 +144,7 @@ const VideosDataGrid = (props: {
       <ThumbnailDialog
         video={selectedVideo}
         onCancel={() => setOpen(false)}
+        onSave={handleSave}
         open={open}
       ></ThumbnailDialog>
     </>

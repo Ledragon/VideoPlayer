@@ -1,8 +1,11 @@
+import { Thumbnail } from './Thumbnail';
+
 export interface Video {
   category: string;
   dateAdded: string;
   directory: string;
   fileName: string;
+  id: number;
   lastPlayed: string;
   length: string;
   lengthString: string;
@@ -11,5 +14,6 @@ export interface Video {
   rating: number;
   serializedImage: string;
   tags: { value: string }[];
+  thumbnails?: Thumbnail[];
   title: string;
 }

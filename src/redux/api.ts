@@ -1,12 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { apiUrl } from '../fetchHelper';
-import { Video } from '../models/Video';
 import { VideoMetadata } from '../models/VideoMetadata';
 
 const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
-  tagTypes: ['Videos'],
+  tagTypes: ['Videos', 'Thumbnails'],
   endpoints: (builder) => ({
     getMetadata: builder.query<VideoMetadata[], void>({
       query: () => 'metadata'

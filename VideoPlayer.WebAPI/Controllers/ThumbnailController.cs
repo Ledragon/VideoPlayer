@@ -23,18 +23,24 @@ namespace VideoPlayer.WebAPI.Controllers
             return this._thumbnailsRepository.Get();
         }
 
-        //[HttpGet]
-        //public List<String> Thumbnails([FromQuery] String filePath, [FromQuery] Int32 count)
-        //{
-        //    var files = this._thumbnailGenerator.GenerateThumbnails(filePath, count);
-        //    return files
-        //        .Select(f =>
-        //        {
-        //            var bytes = System.IO.File.ReadAllBytes(f);
-        //            var converted = Convert.ToBase64String(bytes);
-        //            return converted;
-        //        })
-        //        .ToList();
-        //}
+        [HttpGet("generate")]
+        public List<String> Generate([FromQuery] String filePath, [FromQuery] Int32 count)
+        {
+            var files = this._thumbnailGenerator.GenerateThumbnails(filePath, count);
+            return files
+                .Select(f =>
+                {
+                    var bytes = System.IO.File.ReadAllBytes(f);
+                    var converted = Convert.ToBase64String(bytes);
+                    return converted;
+                })
+                .ToList();
+        }
+
+        [HttpPost]
+        public List<Thumbnail> Add([FromBody] List<Thumbnail> thumbnails)
+        {
+            return this._thumbnailsRepository.Add(thumbnails);
+        }
     }
 }

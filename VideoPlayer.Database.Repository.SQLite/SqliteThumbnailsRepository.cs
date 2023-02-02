@@ -16,6 +16,13 @@ namespace VideoPlayer.Database.Repository.SQLite
         {
             return this._context.Add(thumbnail).Entity;
         }
+        
+        public List<Thumbnail> Add(List<Thumbnail> thumbnails)
+        {
+            this._context.AddRange(thumbnails);
+            this._context.SaveChanges();
+            return thumbnails;
+        }
 
         public Thumbnail Delete(Int32 id)
         {

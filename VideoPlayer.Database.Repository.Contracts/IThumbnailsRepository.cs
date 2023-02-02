@@ -10,6 +10,7 @@ namespace VideoPlayer.Database.Repository.Contracts
         Thumbnail Get(Int32 id);
         List<Thumbnail> GetForVideo(Int32 videoId);
         Thumbnail Add(Thumbnail thumbnail);
+        List<Thumbnail> Add(List<Thumbnail> thumbnails);
         Thumbnail Delete(Int32 id);
     }
 }

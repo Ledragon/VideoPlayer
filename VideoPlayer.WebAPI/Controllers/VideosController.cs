@@ -25,6 +25,12 @@ namespace VideoPlayer.WebAPI.Controllers
             return videos;
         }
 
+        [HttpPut]
+        public Video Update(Video video)
+        {
+            return this._videoRepository.Update(video);
+        }
+
         [HttpGet("/api/videos/metadata")]
         public Dictionary<String, VideoMetaData> GetMetaData()
         {

@@ -19,18 +19,20 @@ import getBase64Url from './getBase64Url';
 
 interface PropType {
   open: boolean;
-  video: Video | null;
+  tuple?: { video: Video; thumbnails: Thumbnail[] };
   onCancel: () => void;
   onSave: (thumbnails: Thumbnail[]) => void;
 }
 
 const ThumbnailDialog = (props: PropType) => {
-  const { open, video, onCancel, onSave } = props;
+  const { open, tuple, onCancel, onSave } = props;
   const [count, setCount] = useState<number>(12);
-  const [selected, setSelected] = useState<{ id: number; data: string }[]>(
-    []
-  );
+  const [selected, setSelected] = useState<{ id: number; image: string }[]>([]);
   const [getThumbnails, status] = useGenerateThumbnailsMutation();
+  const { video, thumbnails: exisitingThumbs } = tuple || {
+    video: null,
+    thumbnails: []
+  };
 
   const handleClick = () => {
     getThumbnails({
@@ -41,25 +43,34 @@ const ThumbnailDialog = (props: PropType) => {
 
   const thumbnails =
     status.isSuccess && status.data
-      ? status.data.map((d, i) => ({ id: i, data: d }))
+      ? status.data.map((d, i) => ({ id: i, image: d }))
       : [];
 
-  const handleSelect = (v: { id: number; data: string; }) => {
-    const current = selected.filter(s => s.id !== v.id).concat([v]);
+  const handleSelect = (v: { id: number; image: string }) => {
+    const current = selected.filter((s) => s.id !== v.id).concat([v]);
     return setSelected(current);
   };
 
   const handleSave = () => {
     if (!!video) {
-      onSave(selected.map(d => ({ id: 0, image: d.data, videoId: video.id })));
+      onSave(
+        selected.map((d) => ({ id: 0, image: d.image, videoId: video.id }))
+      );
     }
-  }
+  };
 
   if (video != null) {
     return (
       <Dialog open={open} maxWidth="lg" scroll="paper">
         <DialogTitle>Generate thumbnails</DialogTitle>
         <DialogContent>
+          <ImageList cols={4} gap={6} sx={{ m: 0.5 }}>
+            {exisitingThumbs.map((v, i) => (
+              <ImageListItem key={i} sx={{}}>
+                <img src={getBase64Url(v.image)}></img>
+              </ImageListItem>
+            ))}
+          </ImageList>
           <form style={{ display: 'flex', alignItems: 'center' }}>
             <TextField
               label="Number of thumbnails"
@@ -99,7 +110,7 @@ const ThumbnailDialog = (props: PropType) => {
                   }}
                 >
                   <img
-                    src={getBase64Url(v.data)}
+                    src={getBase64Url(v.image)}
                     onClick={(e) => handleSelect(v)}
                   ></img>
                 </ImageListItem>

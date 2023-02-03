@@ -101,7 +101,10 @@ const VideosDataGrid = (props: {
   onSave: (thumbnails: Thumbnail[]) => void;
 }) => {
   const { videos, sx, onClick, thumbnails, onSave } = props;
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<{
+    video: Video;
+    thumbnails: Thumbnail[];
+  } | undefined>(undefined);
   const [selectedRows, setSelectedRows] = useState<any[] | undefined>(
     undefined
   );
@@ -114,7 +117,7 @@ const VideosDataGrid = (props: {
       serializedImage: videoThumbs.length ? videoThumbs[0].image : null,
       thumbnails: videoThumbs,
       generateThumbnails: () => {
-        setSelectedVideo(v);
+        setSelectedVideo({ video: v, thumbnails: videoThumbs });
         setOpen(true);
       },
       details: () => {
@@ -125,9 +128,9 @@ const VideosDataGrid = (props: {
     });
   });
 
-  const handleSave = (data: Thumbnail[]) => { 
+  const handleSave = (data: Thumbnail[]) => {
     onSave(data);
-  }
+  };
   return (
     <>
       <DataGrid
@@ -142,7 +145,7 @@ const VideosDataGrid = (props: {
         disableSelectionOnClick
       ></DataGrid>
       <ThumbnailDialog
-        video={selectedVideo}
+        tuple={selectedVideo}
         onCancel={() => setOpen(false)}
         onSave={handleSave}
         open={open}

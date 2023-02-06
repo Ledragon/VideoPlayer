@@ -9,13 +9,16 @@ import {
   ImageList,
   ImageListItem,
   Backdrop,
-  CircularProgress
+  CircularProgress,
+  ImageListItemBar
 } from '@mui/material';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { useEffect, useState } from 'react';
 import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
-import { useGenerateThumbnailsMutation } from '../../redux';
+import { useDeleteThumbnailMutation, useGenerateThumbnailsMutation } from '../../redux';
 import getBase64Url from './getBase64Url';
+import IconButton from '@mui/material/IconButton';
 
 interface PropType {
   open: boolean;
@@ -29,6 +32,7 @@ const ThumbnailDialog = (props: PropType) => {
   const [count, setCount] = useState<number>(12);
   const [selected, setSelected] = useState<{ id: number; image: string }[]>([]);
   const [getThumbnails, status] = useGenerateThumbnailsMutation();
+  const [deleteThumbnail, deleteStatus] = useDeleteThumbnailMutation();
   const { video, thumbnails: exisitingThumbs } = tuple || {
     video: null,
     thumbnails: []
@@ -68,6 +72,14 @@ const ThumbnailDialog = (props: PropType) => {
             {exisitingThumbs.map((v, i) => (
               <ImageListItem key={i} sx={{}}>
                 <img src={getBase64Url(v.image)}></img>
+                <ImageListItemBar
+                  position="top"
+                  actionIcon={
+                    <IconButton onClick={()=>{deleteThumbnail(v.id)}}>
+                      <DeleteForeverOutlinedIcon />
+                    </IconButton>
+                  }
+                ></ImageListItemBar>
               </ImageListItem>
             ))}
           </ImageList>

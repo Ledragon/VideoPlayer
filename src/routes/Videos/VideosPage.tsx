@@ -16,9 +16,7 @@ const VideosPage = () => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [open, setOpen] = useState(false);
   const { data: videos, isLoading } = useGetVideosQuery();
-  const { data: thumbnails, isLoading: isLoadingThumbnails } =
-    useGetThumbnailsQuery();
-  useGetVideosQuery();
+  const { data: thumbnails, isLoading: isLoadingThumbnails } = useGetThumbnailsQuery();
   const [updateVideo, result] = useUpdateVideoMutation();
   const [addThumbnails] = useAddThumbnailsMutation();
 

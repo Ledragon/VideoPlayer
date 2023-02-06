@@ -28,6 +28,16 @@ const thumbnailApi = api.injectEndpoints({
       invalidatesTags: () => {
         return [{ type: 'Thumbnails', id: 'LIST' }];
       }
+    }),
+    deleteThumbnail: builder.mutation<Thumbnail, number>({
+      query: (id) => ({
+        url: 'thumbnails',
+        params: { id },
+        method: 'DELETE'
+      }),
+      invalidatesTags: () => {
+        return [{ type: 'Thumbnails', id: 'LIST' }];
+      }
     })
   })
 });
@@ -35,5 +45,6 @@ const thumbnailApi = api.injectEndpoints({
 export const {
   useGenerateThumbnailsMutation,
   useGetThumbnailsQuery,
-  useAddThumbnailsMutation
+  useAddThumbnailsMutation,
+  useDeleteThumbnailMutation
 } = thumbnailApi;

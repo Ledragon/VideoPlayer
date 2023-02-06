@@ -50,7 +50,10 @@ namespace VideoPlayer.Ffmpeg
                         process.StartInfo.ArgumentList.Add("-i");
                         process.StartInfo.ArgumentList.Add(videoFilePath);
                         process.StartInfo.ArgumentList.Add("-vf");
-                        process.StartInfo.ArgumentList.Add($"fps=1/{fps.ToString(CultureInfo.InvariantCulture)}");
+                        //process.StartInfo.ArgumentList.Add($"fps=1/{fps.ToString(CultureInfo.InvariantCulture)}");
+                        var frameCount = Int32.Parse(info.streams.First(s => s.codec_type == "video").nb_frames);
+                        var modulo = frameCount / 12;
+                        process.StartInfo.ArgumentList.Add($"select='not(mod(n,{modulo}))'");
                         process.StartInfo.ArgumentList.Add($"thumb_{Path.GetFileNameWithoutExtension(videoFilePath)}_%03d.png");
                         process.StartInfo.RedirectStandardOutput = false;
                         process.StartInfo.UseShellExecute = false;

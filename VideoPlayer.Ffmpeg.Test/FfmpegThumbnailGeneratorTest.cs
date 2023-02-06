@@ -13,7 +13,7 @@ namespace VideoPlayer.Ffmpeg.Test
             var video = @"F:\Enfants\Disney\Titan Ae.avi";
             var moqInfoProvider = new Mock<IFfprobeInfoExtractor>();
             moqInfoProvider.Setup(x => x.GetVideoInfo(video))
-                .Returns(() => new FfprobeVideoInfo { format = new Format { duration = "5277.510844" } });
+                .Returns(() => new FfprobeVideoInfo { format = new Format { duration = "5277.510844" }, streams=new Stream[] { new Stream { codec_type="video", nb_frames="100000"} } });
             var moqPathService = new Mock<IPathService>();
             moqPathService.Setup(x => x.GetThumbnailDirectory())
                 .Returns(() => @"D:\tmp\thumbnails");

@@ -65,7 +65,7 @@ const VideosPage = () => {
             p: 2
           }}
         >
-          <VideoProperties video={selectedVideo} onSubmit={updateVideo} />
+          <VideoProperties video={selectedVideo} thumbnails={thumbnails?.filter(t=>t.videoId === selectedVideo.id)} onSubmit={updateVideo} />
         </Paper>
       ) : (
         <></>

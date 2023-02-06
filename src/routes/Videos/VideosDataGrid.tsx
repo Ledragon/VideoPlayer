@@ -112,7 +112,7 @@ const VideosDataGrid = (props: {
   const rows = videos.map((v, i) => {
     const videoThumbs = thumbnails.filter((t) => t.videoId === v.id);
     return Object.assign({}, v, {
-      id: v.fileName,
+      id: v.id,
       hasTags: !!v.tags?.length,
       serializedImage: videoThumbs.length ? videoThumbs[0].image : null,
       thumbnails: videoThumbs,
@@ -140,9 +140,10 @@ const VideosDataGrid = (props: {
         checkboxSelection
         onSelectionModelChange={(newSelectionModel) => {
           setSelectedRows(newSelectionModel);
+          console.log(newSelectionModel);
         }}
         selectionModel={selectedRows}
-        disableSelectionOnClick
+        disableSelectionOnClick={true}
       ></DataGrid>
       <ThumbnailDialog
         tuple={selectedVideo}

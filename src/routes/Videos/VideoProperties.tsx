@@ -6,16 +6,17 @@ import {
   ImageListItem,
   TextField
 } from '@mui/material';
-import { Box } from '@mui/system';
 import { useFormik } from 'formik';
+import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
 import getBase64Url from './getBase64Url';
 
 const VideoProperties = (props: {
   video: Video;
   onSubmit: (updatedVideo: Video) => void;
+  thumbnails?: Thumbnail[];
 }) => {
-  const { onSubmit, video } = props;
+  const { onSubmit, video, thumbnails } = props;
   const formik = useFormik({
     initialValues: {
       title: video.title,
@@ -76,10 +77,12 @@ const VideoProperties = (props: {
           />
         )}
       ></Autocomplete>
-      <ImageList cols={1}>
-        <ImageListItem>
-          <img src={getBase64Url(video.serializedImage)}></img>
-        </ImageListItem>
+      <ImageList cols={2}>
+        {(thumbnails || []).map((t) => (
+          <ImageListItem key={t.id}>
+            <img src={getBase64Url(t.image)}></img>
+          </ImageListItem>
+        ))}
       </ImageList>
       <ButtonGroup>
         <Button variant="text" onClick={() => formik.resetForm()}>

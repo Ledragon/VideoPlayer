@@ -14,7 +14,9 @@ namespace VideoPlayer.Database.Repository.SQLite
 
         public Thumbnail Add(Thumbnail thumbnail)
         {
-            return this._context.Add(thumbnail).Entity;
+            var entityEntry = this._context.Add(thumbnail);
+            this._context.SaveChanges();
+            return entityEntry.Entity;
         }
         
         public List<Thumbnail> Add(List<Thumbnail> thumbnails)
@@ -30,6 +32,7 @@ namespace VideoPlayer.Database.Repository.SQLite
             if (toRemove != null)
             {
                 this._context.Remove(toRemove);
+                this._context.SaveChanges();
             }
             return toRemove;
         }

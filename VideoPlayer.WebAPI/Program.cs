@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddTransient<ILibraryRepository, FileLibraryRepository>()
-    .AddSingleton<IFfprobeInfoExtractor,FfprobeInfoExtractor>()
+    .AddSingleton<IFfprobeInfoExtractor, FfprobeInfoExtractor>()
     .AddSingleton<IFfmpegThumbnailGenerator, FfmpegThumbnailGenerator>()
     .AddSingleton<IPathService, PathService>()
     .AddTransient<IThumbnailsRepository, SqliteThumbnailsRepository>()
@@ -25,7 +25,9 @@ builder.Services
 //services cors
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>
-        policy.WithOrigins("*").AllowAnyHeader().AllowAnyHeader())
+        policy.WithOrigins("*")
+        .AllowAnyHeader()
+        .AllowAnyMethod())
 );
 
 builder.Services.AddDbContext<VideoPlayerContext>(options => options.UseSqlite(builder.Configuration.GetConnectionString("Database")));

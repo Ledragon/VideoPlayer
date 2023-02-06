@@ -42,5 +42,11 @@ namespace VideoPlayer.WebAPI.Controllers
         {
             return this._thumbnailsRepository.Add(thumbnails);
         }
+
+        [HttpDelete]
+        public Thumbnail Delete([FromQuery] Int32 id)
+        {
+            return this._thumbnailsRepository.Delete(id);
+        }
     }
 }

@@ -42,6 +42,7 @@ namespace VideoPlayer.Database.Repository.SQLite
         public Video Update(Video video)
         {
             var entity = this._context.Update(video);
+            this._context.SaveChanges();
             return entity.Entity;
         }
 

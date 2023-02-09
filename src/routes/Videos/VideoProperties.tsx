@@ -21,7 +21,8 @@ const VideoProperties = (props: {
     initialValues: {
       title: video.title,
       rating: video.rating || 0,
-      category: video.category || ''
+      category: video.category || '',
+      
     },
     onSubmit: (value) => {
       const update = Object.assign({}, video, value);
@@ -52,7 +53,7 @@ const VideoProperties = (props: {
         id="rating"
         variant="standard"
       />
-      <TextField
+      {/* <TextField
         value={formik.values.category}
         onChange={formik.handleChange}
         label="Category"
@@ -62,7 +63,7 @@ const VideoProperties = (props: {
         type="string"
         id="category"
         variant="standard"
-      />
+      /> */}
       <Autocomplete
         multiple
         id="tags"
@@ -77,7 +78,7 @@ const VideoProperties = (props: {
           />
         )}
       ></Autocomplete>
-      <ImageList cols={2}>
+      <ImageList cols={3}>
         {(thumbnails || []).map((t) => (
           <ImageListItem key={t.id}>
             <img src={getBase64Url(t.image)}></img>

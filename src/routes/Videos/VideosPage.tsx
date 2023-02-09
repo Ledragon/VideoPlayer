@@ -40,7 +40,7 @@ const VideosPage = () => {
     >
       <Paper
         sx={{
-          flexBasis: !!selectedVideo ? '75%' : '100%',
+          flexBasis: !!selectedVideo ? '50%' : '100%',
           flexShrink: 1,
           m: 1
         }}
@@ -58,7 +58,7 @@ const VideosPage = () => {
       {!!selectedVideo ? (
         <Paper
           sx={{
-            flexBasis: '25%',
+            flexBasis: '50%',
             m: 1,
             display: 'flex',
             flexDirection: 'column',

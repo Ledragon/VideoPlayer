@@ -10,10 +10,18 @@ const Shell = () => {
         display: 'flex',
         flexGrow: 1,
         height: '100%',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        backgroundImage: `url('/TheaterCurtains.jpg')`
       }}
     >
-      <Box sx={{ flexGrow: 1, flexDirection: 'column', display: 'flex', overflow: 'auto'}}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          flexDirection: 'column',
+          display: 'flex',
+          overflow: 'auto'
+        }}
+      >
         <Outlet />
       </Box>
       <BottomNavigation value={location.pathname} />

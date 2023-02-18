@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 
 namespace VideoPlayer.Entities
@@ -7,7 +8,11 @@ namespace VideoPlayer.Entities
     public class Tag
     {
         public Int32 Id { get; set; }
+
         [XmlAttribute]
         public String Value { get; set; }
+
+        [XmlIgnore]
+        public ICollection<Video> Videos { get; set; }
     }
 }

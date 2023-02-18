@@ -21,6 +21,7 @@ builder.Services
     .AddSingleton<IPathService, PathService>()
     .AddTransient<IThumbnailsRepository, SqliteThumbnailsRepository>()
     .AddTransient<IVideoRepository, SqliteVideoRepository>()
+    .AddTransient<ITagsRepository, SqliteTagsRepository>()
     ;
 //services cors
 builder.Services.AddCors(policyBuilder =>

@@ -128,5 +128,8 @@ namespace VideoPlayer.Entities
         public Directory Directory { get; set; }
         [ForeignKey(nameof(Directory))]
         public Int32 DirectoryId { get; set; }
+
+        [XmlIgnore]
+        public List<TagVideo> TagVideos { get; set; }
     }
 }

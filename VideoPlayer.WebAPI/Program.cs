@@ -22,6 +22,7 @@ builder.Services
     .AddTransient<IThumbnailsRepository, SqliteThumbnailsRepository>()
     .AddTransient<IVideoRepository, SqliteVideoRepository>()
     .AddTransient<ITagsRepository, SqliteTagsRepository>()
+    .AddTransient<ITagVideoRepository, SqliteTagVideoRepository>()
     ;
 //services cors
 builder.Services.AddCors(policyBuilder =>

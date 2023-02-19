@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Database.Repository.SQLite;
+using VideoPlayer.Entities;
 using VideoPlayer.Services;
 
 var xmlRepo = new FileLibraryRepository();
@@ -8,7 +9,13 @@ var xmlRepo = new FileLibraryRepository();
 var pathService = new PathService();
 var libraryFile = pathService.GetLibraryFile();
 var objects = xmlRepo.Load(libraryFile);
-using (var context = new VideoPlayerContext(Path.Combine(Path.GetDirectoryName(libraryFile), "Library.db")))
+var disneyTags = new List<Tag>
+{
+    new Tag{Value="Disney"},
+    new Tag{Value="Dessing animé"}
+};
+var moviesTags = new List<Tag> { new Tag { Value = "Film" } };
+using (var context = new VideoPlayerContext(Path.Combine(Path.GetDirectoryName(libraryFile), "Library1.db")))
 {
     context.Database.EnsureCreated();
 
@@ -16,7 +23,7 @@ using (var context = new VideoPlayerContext(Path.Combine(Path.GetDirectoryName(l
     foreach (var directory in objects.Directories)
     {
         var entity = context.Directories.Add(directory);
-        if (Directory.Exists(directory.DirectoryPath))
+        if (System.IO.Directory.Exists(directory.DirectoryPath))
         {
             var di = new DirectoryInfo(directory.DirectoryPath);
             var fileInfos = di.GetFiles("*", SearchOption.AllDirectories);
@@ -35,7 +42,7 @@ using (var context = new VideoPlayerContext(Path.Combine(Path.GetDirectoryName(l
         }
         if (v.Thumbnails.All(t => t.Image != v.SerializedImage))
         {
-            v.Thumbnails.Add(new VideoPlayer.Entities.Thumbnail { Image = v.SerializedImage });
+            v.Thumbnails.Add(new Thumbnail { Image = v.SerializedImage });
         }
         if (v.Tags == null)
         {
@@ -51,6 +58,14 @@ using (var context = new VideoPlayerContext(Path.Combine(Path.GetDirectoryName(l
         {
             entity.Entity.Videos.Add(v);
             v.Directory = entity.Entity;
+        }
+        if (v.Directory.DirectoryPath.Contains("Disney"))
+        {
+            v.Tags.AddRange(disneyTags);
+        }
+        else
+        {
+            v.Tags.AddRange(moviesTags);
         }
     });
     context.Videos.AddRange(objects.Videos);

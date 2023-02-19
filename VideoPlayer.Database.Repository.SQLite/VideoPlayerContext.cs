@@ -30,6 +30,27 @@ namespace VideoPlayer.Database.Repository.SQLite
             }
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Video>()
+                 .HasMany(v => v.Tags)
+                 .WithMany(t => t.Videos)
+                 .UsingEntity<TagVideo>(
+                eb => eb.HasOne(tv => tv.Tag)
+                    .WithMany(t => t.TagVideos)
+                    .HasForeignKey(tv => tv.TagId),
+                eb => eb.HasOne(tv => tv.Video)
+                    .WithMany(t => t.TagVideos)
+                    .HasForeignKey(tv => tv.VideoId),
+                eb =>
+                {
+                    eb.HasKey(tv => new { tv.TagId, tv.VideoId });
+                });
+
+        }
+
+
         public DbSet<Video> Videos { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Thumbnail> Thumbnails { get; set; }

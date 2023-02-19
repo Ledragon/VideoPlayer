@@ -14,5 +14,8 @@ namespace VideoPlayer.Entities
 
         [XmlIgnore]
         public ICollection<Video> Videos { get; set; }
+
+        [XmlIgnore]
+        public List<TagVideo> TagVideos { get; set; }
     }
 }

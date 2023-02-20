@@ -10,11 +10,11 @@ const linksDefinition = [
     icon: <VideoLibraryIcon />,
     name: 'videos'
   },
-  {
-    label: 'Pictures',
-    icon: <CollectionsIcon />,
-    name: 'pictures'
-  },
+  // {
+  //   label: 'Pictures',
+  //   icon: <CollectionsIcon />,
+  //   name: 'pictures'
+  // },
   { label: 'Settings', icon: <TuneIcon />, name: 'settings' }
   // { label: 'Manage', route: '../manage' },
 ];

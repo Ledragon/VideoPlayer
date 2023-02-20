@@ -10,3 +10,7 @@ body {
   flex-direction: row;
   overflow: hidden;
 }
+
+#root{
+  overflow: hidden;
+}

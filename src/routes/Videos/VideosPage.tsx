@@ -33,6 +33,7 @@ const VideosPage = () => {
   const handleSave = (thumbnails: Thumbnail[]) => {
     addThumbnails(thumbnails);
   };
+  
   return (
     <Box
       sx={{

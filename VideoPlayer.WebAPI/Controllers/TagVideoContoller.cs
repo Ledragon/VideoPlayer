@@ -15,16 +15,10 @@ namespace VideoPlayer.WebAPI.Controllers
             this._tagVideoRepository = tagVideoRepository;
         }
 
-        //[HttpGet]
-        //public async Task<List<TagVideo>> Get()
-        //{
-        //    return await this._tagVideoRepository.GetAsync();
-        //} 
-        
         [HttpGet]
-        public List<TagVideo> Get()
+        public async Task<List<TagVideo>> Get()
         {
-            return this._tagVideoRepository.Get();
+            return await this._tagVideoRepository.GetAsync();
         }
     }
 }

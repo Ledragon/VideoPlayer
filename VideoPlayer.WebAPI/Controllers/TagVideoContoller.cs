@@ -6,11 +6,11 @@ namespace VideoPlayer.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TagVideoContoller : ControllerBase
+    public class TagVideoController : ControllerBase
     {
         private readonly ITagVideoRepository _tagVideoRepository;
 
-        public TagVideoContoller(ITagVideoRepository tagVideoRepository)
+        public TagVideoController(ITagVideoRepository tagVideoRepository)
         {
             this._tagVideoRepository = tagVideoRepository;
         }

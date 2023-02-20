@@ -37,5 +37,12 @@ namespace VideoPlayer.WebAPI.Controllers
             var videos = this._videoRepository.Get();
             return videos.ToDictionary(d => d.FileName, d => new VideoMetaData { Codec = "", HasContactSheet = System.IO.File.Exists(d.FileName + ".png") });
         }
+
+        [HttpPut]
+        public Video UpdateVideo([FromBody] Video video)
+        {
+            this._logger.LogDebug(video.ToString());
+            return video;
+        }
     }
 }

@@ -1,12 +1,15 @@
-import { Chip, IconButton, SxProps } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import VideoSettingsIcon from '@mui/icons-material/VideoSettings';
+import { Chip, IconButton, SxProps } from '@mui/material';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useState } from 'react';
-import { Video } from '../../models/Video';
-import getBase64Url from './getBase64Url';
+
 import ThumbnailDialog from './Thumbnails';
+import getBase64Url from './getBase64Url';
+import { Tag } from '../../models/Tag';
 import { Thumbnail } from '../../models/Thumbnail';
+import { Video } from '../../models/Video';
+import { TagVideo } from '../../models/TagVideo';
 
 const rowHeight = 64;
 
@@ -37,11 +40,10 @@ const columns: GridColDef[] = [
       return new Date(params.value).toLocaleString();
     }
   },
-  { field: 'category', headerName: 'Category', flex: 1 },
   {
     field: 'tags',
     headerName: 'Tags',
-    flex: 2,
+    flex: 4,
     renderCell: (params: GridRenderCellParams<{ value: string }[]>) => {
       if (!params.value?.length) {
         return <></>;
@@ -96,26 +98,39 @@ const columns: GridColDef[] = [
 const VideosDataGrid = (props: {
   videos: Video[];
   onClick?: (v: Video) => void;
+  tags?: Tag[];
+  tagVideos?: TagVideo[];
   thumbnails: Thumbnail[];
   sx?: SxProps;
   onSave: (thumbnails: Thumbnail[]) => void;
 }) => {
-  const { videos, sx, onClick, thumbnails, onSave } = props;
-  const [selectedVideo, setSelectedVideo] = useState<{
-    video: Video;
-    thumbnails: Thumbnail[];
-  } | undefined>(undefined);
+  const { videos, onClick, tags, tagVideos, thumbnails, onSave } = props;
+  const [selectedVideo, setSelectedVideo] = useState<
+    | {
+        video: Video;
+        thumbnails: Thumbnail[];
+      }
+    | undefined
+  >(undefined);
   const [selectedRows, setSelectedRows] = useState<any[] | undefined>(
     undefined
   );
   const [open, setOpen] = useState<boolean>(false);
   const rows = videos.map((v, i) => {
     const videoThumbs = thumbnails.filter((t) => t.videoId === v.id);
+    const currentTags =
+      tagVideos && tags
+        ? tagVideos
+            .filter((tv) => tv.videoId == v.id)
+            .map((tv) => tags.find((t) => t.id === tv.tagId))
+        : [];
+
     return Object.assign({}, v, {
       id: v.id,
       hasTags: !!v.tags?.length,
       serializedImage: videoThumbs.length ? videoThumbs[0].image : null,
       thumbnails: videoThumbs,
+      tags: currentTags,
       generateThumbnails: () => {
         setSelectedVideo({ video: v, thumbnails: videoThumbs });
         setOpen(true);

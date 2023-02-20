@@ -11,15 +11,20 @@ import {
 } from '../../redux';
 import VideoProperties from './VideoProperties';
 import { Thumbnail } from '../../models/Thumbnail';
+import { useGetTagsQuery } from '../../redux/tag.api';
+import { useGetTagVideosQuery } from '../../redux/tagVideo.api';
 
 const VideosPage = () => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [open, setOpen] = useState(false);
   const { data: videos, isLoading } = useGetVideosQuery();
   const { data: thumbnails, isLoading: isLoadingThumbnails } = useGetThumbnailsQuery();
+  const { data: tags, isLoading: isLoadingTags } = useGetTagsQuery();
+  const { data: tagVideos, isLoading: isLoadingTagVideos } = useGetTagVideosQuery();
+  
   const [updateVideo, result] = useUpdateVideoMutation();
   const [addThumbnails] = useAddThumbnailsMutation();
-
+  
   const handleClick = (v: Video) => {
     setSelectedVideo(v);
     setOpen(true);
@@ -50,6 +55,8 @@ const VideosPage = () => {
         </Backdrop>
         <VideosDataGrid
           videos={videos || []}
+          tags={tags}
+          tagVideos={tagVideos}
           thumbnails={thumbnails || []}
           onClick={handleClick}
           onSave = {handleSave}

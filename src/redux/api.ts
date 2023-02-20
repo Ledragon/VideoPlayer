@@ -5,7 +5,7 @@ import { VideoMetadata } from '../models/VideoMetadata';
 const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
-  tagTypes: ['Videos', 'Thumbnails'],
+  tagTypes: ['Videos', 'Thumbnails', 'Tags', 'TagVideos'],
   endpoints: (builder) => ({
     getMetadata: builder.query<VideoMetadata[], void>({
       query: () => 'metadata'

@@ -1,3 +1,4 @@
+import { Tag } from './Tag';
 import { Thumbnail } from './Thumbnail';
 
 export interface Video {
@@ -13,7 +14,7 @@ export interface Video {
   preview: string;
   rating: number;
   serializedImage: string;
-  tags: { value: string }[];
+  tags?: Tag[];
   thumbnails?: Thumbnail[];
   title: string;
 }

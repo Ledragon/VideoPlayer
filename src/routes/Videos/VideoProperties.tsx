@@ -1,4 +1,10 @@
-import { Autocomplete, Button, ButtonGroup, Rating, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Button,
+  ButtonGroup,
+  Rating,
+  TextField
+} from '@mui/material';
 import { FormikProps } from 'formik';
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
@@ -11,10 +17,13 @@ const VideoProperties = (props: {
   tags: Tag[];
   tagVideos?: TagVideo[];
   thumbnails?: Thumbnail[];
-  formik: FormikProps<{ title: string; rating: number }>;
+  formik: FormikProps<{
+    title: string;
+    rating: number;
+    // tags: (Tag | undefined)[];
+  }>;
 }) => {
   const { tags, formik } = props;
-
   return (
     <>
       <TextField
@@ -26,6 +35,8 @@ const VideoProperties = (props: {
         label="Title"
         value={formik.values.title}
         variant="standard"
+        error={!!formik.errors.title}
+        helperText={formik.errors.title}
       />
       <Rating
         value={formik.values.rating}

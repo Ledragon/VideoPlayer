@@ -5,7 +5,8 @@ import {
   Button,
   DialogTitle,
   Box,
-  CircularProgress
+  CircularProgress,
+  Typography
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { Tag } from '../../models/Tag';
@@ -33,10 +34,15 @@ const VideoDialog = (props: PropType) => {
   const [_, status] = useGenerateThumbnailsMutation({
     fixedCacheKey: video.fileName
   });
+
   const formik = useFormik({
     initialValues: {
       title: video.title,
       rating: video.rating || 0
+      // tags: tagVideos
+      //   ?.filter((tv) => tv.videoId === video.id)
+      //   .map((tv) => tags.find((t) => t.id === tv.tagId))
+      //   .filter((d) => !!d)
     },
     onSubmit: (value) => {
       const update = Object.assign({}, video, value);
@@ -45,12 +51,6 @@ const VideoDialog = (props: PropType) => {
     enableReinitialize: true
   });
 
-  const handleSave = () => {
-    if (onSave && video) {
-      onSave(video);
-    }
-  };
-
   const handleCancel = () => {
     formik.resetForm();
     onCancel();
@@ -58,12 +58,12 @@ const VideoDialog = (props: PropType) => {
 
   if (video != null) {
     return (
-      <form onSubmit={formik.handleSubmit}>
-        <Dialog
-          fullScreen
-          open={open}
-        >
-          <DialogTitle>{video.title}</DialogTitle>
+      <Dialog
+        fullScreen
+        open={open}
+      >
+        <DialogTitle>{video.title}</DialogTitle>
+        <form onSubmit={formik.handleSubmit}>
           <DialogContent>
             <VideoProperties
               formik={formik}
@@ -97,12 +97,13 @@ const VideoDialog = (props: PropType) => {
             <Button
               variant="text"
               type="submit"
+              disabled={!formik.dirty || !formik.isValid}
             >
               Save
             </Button>
           </DialogActions>
-        </Dialog>
-      </form>
+        </form>
+      </Dialog>
     );
   } else {
     return <></>;

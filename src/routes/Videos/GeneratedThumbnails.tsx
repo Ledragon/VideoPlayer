@@ -1,5 +1,4 @@
-import { Box, CircularProgress, ImageList, ImageListItem } from '@mui/material';
-import { useGenerateThumbnailsMutation } from '../../redux';
+import { ImageList, ImageListItem } from '@mui/material';
 import getBase64Url from './getBase64Url';
 
 interface PropType {

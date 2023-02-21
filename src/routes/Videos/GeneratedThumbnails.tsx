@@ -3,10 +3,16 @@ import getBase64Url from './getBase64Url';
 
 interface PropType {
   data: string[];
+  selected: string[];
+  onSelect: (v: string) => void;
 }
 
 const GeneratedThumbnails = (props: PropType) => {
-  const { data } = props;
+  const { data, selected, onSelect } = props;
+  const handleClick = (v: string) => {
+    onSelect(v);
+  };
+
   return (
     <ImageList
       cols={4}
@@ -16,7 +22,10 @@ const GeneratedThumbnails = (props: PropType) => {
       {data.map((v, i) => (
         <ImageListItem
           key={i}
-          sx={{}}
+          sx={{
+            border: selected.indexOf(v) >= 0 ? '1px solid red' : null
+          }}
+          onClick={() => handleClick(v)}
         >
           <img src={getBase64Url(v)}></img>
         </ImageListItem>

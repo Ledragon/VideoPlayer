@@ -9,6 +9,7 @@ import {
   Typography
 } from '@mui/material';
 import { useFormik } from 'formik';
+import { useState } from 'react';
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Thumbnail } from '../../models/Thumbnail';
@@ -34,6 +35,7 @@ const VideoDialog = (props: PropType) => {
   const [_, status] = useGenerateThumbnailsMutation({
     fixedCacheKey: video.fileName
   });
+  const [selectedThumbnails, setSelectedThumbnails] = useState<string[]>([]);
 
   const formik = useFormik({
     initialValues: {
@@ -54,6 +56,16 @@ const VideoDialog = (props: PropType) => {
   const handleCancel = () => {
     formik.resetForm();
     onCancel();
+  };
+
+  const handleSelectThumdbnail = (v: string) => {
+    const index = selectedThumbnails.indexOf(v);
+    if (index >= 0) {
+      selectedThumbnails.splice(index, 1);
+    } else {
+      selectedThumbnails.push(v);
+    }
+    setSelectedThumbnails(selectedThumbnails.map(d => d));
   };
 
   if (video != null) {
@@ -81,7 +93,9 @@ const VideoDialog = (props: PropType) => {
                   <CircularProgress />
                 ) : (
                   <GeneratedThumbnails
-                    data={status?.data || []}
+                      data={status?.data || []}
+                      selected={selectedThumbnails}
+                      onSelect={handleSelectThumdbnail}
                   ></GeneratedThumbnails>
                 )}
               </Box>

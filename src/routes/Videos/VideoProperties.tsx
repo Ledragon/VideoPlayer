@@ -1,37 +1,22 @@
-import {
-  Autocomplete,
-  Button,
-  ButtonGroup,
-  ImageList,
-  ImageListItem,
-  TextField
-} from '@mui/material';
-import { useFormik } from 'formik';
+import { Autocomplete, Button, ButtonGroup, Rating, TextField } from '@mui/material';
+import { FormikProps } from 'formik';
+import { Tag } from '../../models/Tag';
+import { TagVideo } from '../../models/TagVideo';
 import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
-import getBase64Url from './getBase64Url';
 
 const VideoProperties = (props: {
   video: Video;
   onSubmit: (updatedVideo: Video) => void;
+  tags: Tag[];
+  tagVideos?: TagVideo[];
   thumbnails?: Thumbnail[];
+  formik: FormikProps<{ title: string; rating: number }>;
 }) => {
-  const { onSubmit, video, thumbnails } = props;
-  const formik = useFormik({
-    initialValues: {
-      title: video.title,
-      rating: video.rating || 0,
-      category: video.category || '',
-      
-    },
-    onSubmit: (value) => {
-      const update = Object.assign({}, video, value);
-      onSubmit(update);
-    },
-    enableReinitialize: true
-  });
+  const { tags, formik } = props;
+
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <>
       <TextField
         fullWidth
         margin="dense"
@@ -42,32 +27,22 @@ const VideoProperties = (props: {
         value={formik.values.title}
         variant="standard"
       />
-      <TextField
+      <Rating
         value={formik.values.rating}
-        label="Rating"
+        // label="Rating"
         name="rating"
         onChange={formik.handleChange}
-        fullWidth
-        margin="dense"
-        type="number"
+        // fullWidth
+        // margin="dense"
+        // type="number"
         id="rating"
-        variant="standard"
+        // variant="standard"
       />
-      {/* <TextField
-        value={formik.values.category}
-        onChange={formik.handleChange}
-        label="Category"
-        name="category"
-        fullWidth
-        margin="dense"
-        type="string"
-        id="category"
-        variant="standard"
-      /> */}
       <Autocomplete
         multiple
         id="tags"
-        options={['Disney', 'Pixar', 'Dessin animé', 'Film']}
+        options={tags || []}
+        getOptionLabel={(o) => o.value}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -78,22 +53,7 @@ const VideoProperties = (props: {
           />
         )}
       ></Autocomplete>
-      <ImageList cols={3}>
-        {(thumbnails || []).map((t) => (
-          <ImageListItem key={t.id}>
-            <img src={getBase64Url(t.image)}></img>
-          </ImageListItem>
-        ))}
-      </ImageList>
-      <ButtonGroup>
-        <Button variant="text" onClick={() => formik.resetForm()}>
-          Cancel
-        </Button>
-        <Button variant="text" type="submit">
-          Save
-        </Button>
-      </ButtonGroup>
-    </form>
+    </>
   );
 };
 

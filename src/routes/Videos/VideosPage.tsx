@@ -18,13 +18,15 @@ const VideosPage = () => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [open, setOpen] = useState(false);
   const { data: videos, isLoading } = useGetVideosQuery();
-  const { data: thumbnails, isLoading: isLoadingThumbnails } = useGetThumbnailsQuery();
+  const { data: thumbnails, isLoading: isLoadingThumbnails } =
+    useGetThumbnailsQuery();
   const { data: tags, isLoading: isLoadingTags } = useGetTagsQuery();
-  const { data: tagVideos, isLoading: isLoadingTagVideos } = useGetTagVideosQuery();
-  
+  const { data: tagVideos, isLoading: isLoadingTagVideos } =
+    useGetTagVideosQuery();
+
   const [updateVideo, result] = useUpdateVideoMutation();
   const [addThumbnails] = useAddThumbnailsMutation();
-  
+
   const handleClick = (v: Video) => {
     setSelectedVideo(v);
     setOpen(true);
@@ -33,7 +35,7 @@ const VideosPage = () => {
   const handleSave = (thumbnails: Thumbnail[]) => {
     addThumbnails(thumbnails);
   };
-  
+
   return (
     <Box
       sx={{
@@ -60,7 +62,7 @@ const VideosPage = () => {
           tagVideos={tagVideos}
           thumbnails={thumbnails || []}
           onClick={handleClick}
-          onSave = {handleSave}
+          onSave={handleSave}
         ></VideosDataGrid>
       </Paper>
       {!!selectedVideo ? (
@@ -73,7 +75,14 @@ const VideosPage = () => {
             p: 2
           }}
         >
-          <VideoProperties video={selectedVideo} thumbnails={thumbnails?.filter(t=>t.videoId === selectedVideo.id)} onSubmit={updateVideo} />
+          <VideoProperties
+            video={selectedVideo}
+            tags={tags || []}
+            thumbnails={thumbnails?.filter(
+              (t) => t.videoId === selectedVideo.id
+            )}
+            onSubmit={updateVideo}
+          />
         </Paper>
       ) : (
         <></>

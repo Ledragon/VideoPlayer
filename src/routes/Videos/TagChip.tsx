@@ -3,10 +3,11 @@ import { Tag } from '../../models/Tag';
 
 interface PropType {
   tag: Tag;
+  selected?: boolean;
   onClick?: (tag: Tag) => void;
 }
 
-const TagChip = ({ onClick, tag }: PropType) => {
+const TagChip = ({ onClick, selected, tag }: PropType) => {
   const handleClick = () => {
     if (onClick) {
       onClick(tag);
@@ -15,7 +16,7 @@ const TagChip = ({ onClick, tag }: PropType) => {
   return (
     <Chip
       label={tag.value}
-      variant="outlined"
+      variant={selected ? 'filled' : 'outlined'}
       sx={{ m: 1 }}
       onClick={handleClick}
     ></Chip>

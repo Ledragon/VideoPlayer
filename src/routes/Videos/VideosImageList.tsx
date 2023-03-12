@@ -1,13 +1,7 @@
-import {
-  IconButton,
-  ImageList,
-  ImageListItem,
-  ImageListItemBar
-} from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
+import { ImageList } from '@mui/material';
 import { Video } from '../../models/Video';
-import getBase64Url from './getBase64Url';
 import { Thumbnail } from '../../models/Thumbnail';
+import VideoImageItem from './VideoImageItem';
 
 interface PropType {
   thumbnails: Thumbnail[];
@@ -27,29 +21,12 @@ const VideosImageList = (props: PropType) => {
         const currentThumbs =
           thumbnails?.filter((t) => t.videoId === v.id) || [];
         return (
-          <ImageListItem key={i}>
-            <img
-              src={
-                currentThumbs.length ? getBase64Url(currentThumbs[0].image) : ''
-              }
-              style={{ height: '240px' }}
-            ></img>
-            <ImageListItemBar
-              title={v.title}
-              subtitle={v.length}
-              actionIcon={
-                <IconButton
-                  onClick={() => {
-                    if (onClick) {
-                      onClick(v);
-                    }
-                  }}
-                >
-                  <InfoIcon />
-                </IconButton>
-              }
-            ></ImageListItemBar>
-          </ImageListItem>
+          <VideoImageItem
+            key={i}
+            video={v}
+            image={currentThumbs.length ? currentThumbs[0].image : undefined}
+            onInfoClick={onClick}
+          />
         );
       })}
     </ImageList>

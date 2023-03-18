@@ -1,5 +1,6 @@
 import { Box, LinearProgress, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
 import {
@@ -7,8 +8,10 @@ import {
   useGetThumbnailsQuery,
   useGetTagsQuery,
   useGetTagVideosQuery,
-  useUpdateVideoMutation
+  useUpdateVideoMutation,
+  getVideoList
 } from '../../redux';
+import { RootState } from '../../redux/configureStore';
 import Playlist from './Playlist';
 import TagChips from './TagChips';
 import VideoDialog from './VideoDialog';
@@ -20,13 +23,15 @@ const VideosNewPage = (props: PropType) => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
 
-  const { data: videos, isLoading } = useGetVideosQuery();
+  const { isLoading, isFetching } = useGetVideosQuery();
   const { data: thumbnails, isLoading: isLoadingThumbnails } =
     useGetThumbnailsQuery();
   const { data: tags, isLoading: isLoadingTags } = useGetTagsQuery();
   const { data: tagVideos, isLoading: isLoadingTagVideos } =
     useGetTagVideosQuery();
   const [updateVideo, result] = useUpdateVideoMutation();
+
+  const videos = useSelector((state: RootState) => getVideoList(state));
 
   useEffect(() => {
     setFilteredVideos(videos || []);
@@ -71,7 +76,11 @@ const VideosNewPage = (props: PropType) => {
   };
 
   const isLoadingAny =
-    isLoading || isLoadingTagVideos || isLoadingTags || isLoadingThumbnails;
+    isLoading ||
+    isFetching ||
+    isLoadingTagVideos ||
+    isLoadingTags ||
+    isLoadingThumbnails;
   return (
     <Box
       sx={{ display: 'flex', flexDirection: 'column', p: 1, height: '100%' }}
@@ -91,7 +100,7 @@ const VideosNewPage = (props: PropType) => {
         ></TagChips>
       </Box>
       <Box sx={{ display: 'flex' }}>
-        <Box sx={{ flexBasis: '80%', overflowY: 'auto' }}>
+        <Box sx={{ flexBasis: '80%' }}>
           <VideosImageList
             videos={filteredVideos}
             thumbnails={thumbnails || []}
@@ -99,7 +108,7 @@ const VideosNewPage = (props: PropType) => {
           />
         </Box>
         <Box sx={{ flexBasis: '20%' }}>
-          <Paper sx={{ height: '100%', m:1}}>
+          <Paper sx={{ height: '100%', m: 1 }}>
             <Playlist />
           </Paper>
         </Box>

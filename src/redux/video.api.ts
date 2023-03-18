@@ -1,10 +1,25 @@
+import {
+  createEntityAdapter,
+  createSelector,
+  EntityState
+} from '@reduxjs/toolkit';
 import { Video } from '../models/Video';
 import api from './api';
+import { RootState } from './configureStore';
+
+const entityAdapter = createEntityAdapter<Video>({
+  sortComparer: (a, b) => (a.title < b.title ? -1 : 1)
+});
+
+const initialState = entityAdapter.getInitialState();
 
 const videoApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getVideos: builder.query<Video[], void>({
+    getVideos: builder.query<EntityState<Video>, void>({
       query: () => 'videos',
+      transformResponse: (response: Video[]) => {
+        return entityAdapter.setAll(initialState, response);
+      },
       providesTags: (result) => {
         return ['Videos'];
       }
@@ -19,5 +34,15 @@ const videoApi = api.injectEndpoints({
     })
   })
 });
+
+const selector = videoApi.endpoints.getVideos.select();
+const videoSelectors = createSelector(selector, (videos) => videos.data);
+export const {
+  selectAll: getVideoList,
+  selectById: getVideo,
+  selectEntities: getVideoDictionary
+} = entityAdapter.getSelectors<RootState>(
+  (state) => videoSelectors(state) ?? initialState
+);
 
 export const { useGetVideosQuery, useUpdateVideoMutation } = videoApi;

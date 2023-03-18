@@ -25,7 +25,7 @@ const VideosImageList = (props: PropType) => {
       gap={12}
       sx={{ m: 1 }}
     >
-      {videos.map((v, i) => {
+      {videos?.map((v, i) => {
         const currentThumbs =
           thumbnails?.filter((t) => t.videoId === v.id) || [];
         return (

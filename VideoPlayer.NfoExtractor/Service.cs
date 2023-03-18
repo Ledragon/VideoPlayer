@@ -1,8 +1,8 @@
 ﻿using LeDragon.Log.Standard;
 using VideoPlayer.Database.Repository;
-using VideoPlayer.Entities;
 using VideoPlayer.ImageExtractor;
 using VideoPlayer.Nfo;
+using VideoPlayer.Services;
 
 namespace VideoPlayer.NfoExtractor
 {
@@ -10,11 +10,13 @@ namespace VideoPlayer.NfoExtractor
     {
         private readonly ILogger _logger;
         private readonly IImageExtractionService _imageExtractionService;
+        private readonly PathReplacer _pathReplacer;
 
         public Service()
         {
             this._logger = this.Logger();
             this._imageExtractionService = new ImageExtractionService();
+            this._pathReplacer = new PathReplacer();
         }
 
         public void GenerateNfo(String filePath, String sourceDir, String targetDir)
@@ -30,7 +32,7 @@ namespace VideoPlayer.NfoExtractor
                 try
                 {
                     this._logger.DebugFormat("Creating nfo file for '{0}'.", v.FileName);
-                    ReplaceDirectory(sourceDir, targetDir, v);
+                    this._pathReplacer.ReplaceDirectory(sourceDir, targetDir, v);
                     if (!String.IsNullOrEmpty(v.SerializedImage))
                     {
                         var cacheFile = v.GetThumbPath(cacheDirectory);
@@ -46,19 +48,6 @@ namespace VideoPlayer.NfoExtractor
         }
 
 
-        private static void ReplaceDirectory(String sourceDir, String targetDir, Video v)
-        {
-            if (!String.IsNullOrEmpty(sourceDir)
-            && !String.IsNullOrEmpty(targetDir)
-            && sourceDir != targetDir)
-            {
-                v.DirectoryPath = v.DirectoryPath
-                    .Replace(sourceDir, targetDir)
-                    .Replace("\\", "/");
-                v.FileName = v.FileName
-                    .Replace(sourceDir, targetDir)
-                    .Replace("\\", "/");
-            }
-        }
+        
     }
 }

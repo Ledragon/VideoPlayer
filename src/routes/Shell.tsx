@@ -13,18 +13,23 @@ const Shell = () => {
         flexDirection: 'column',
         backgroundImage: `url('/TheaterCurtains.jpg')`
       }}
+      id="shell"
     >
       <Box
         sx={{
           flexGrow: 1,
           flexDirection: 'column',
           display: 'flex',
+          flexShrink: 1,
           overflow: 'auto'
         }}
+        id="router-outlet"
       >
         <Outlet />
       </Box>
-      <BottomNavigation value={location.pathname} />
+      <Box sx={{ flexBasis: 'auto', flexShrink: 0, flexGrow: 0 }}>
+        <BottomNavigation value={location.pathname} />
+      </Box>
     </Box>
   );
 };

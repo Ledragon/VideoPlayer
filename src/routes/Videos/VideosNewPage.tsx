@@ -83,7 +83,14 @@ const VideosNewPage = (props: PropType) => {
     isLoadingThumbnails;
   return (
     <Box
-      sx={{ display: 'flex', flexDirection: 'column', p: 1, height: '100%' }}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        p: 1,
+        flexGrow: 1,
+        flexShrink: 1,
+        height: '100%'
+      }}
     >
       {isLoadingAny ? (
         <Box>
@@ -92,24 +99,50 @@ const VideosNewPage = (props: PropType) => {
       ) : (
         <></>
       )}
-      <Box id="tags-chips">
+      <Box
+        id="tags-chips"
+        sx={{ flex: '0 0 auto' }}
+      >
         <TagChips
           selectedTags={selectedTags}
           tags={tags || []}
           onTagClick={handleTagClick}
         ></TagChips>
       </Box>
-      <Box sx={{ display: 'flex' }}>
-        <Box sx={{ flexBasis: '80%' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          height: '100%',
+          flex: '1 1 auto',
+          overflow: 'hidden'
+        }}
+        id="central-part"
+      >
+        <Box
+          sx={{
+            flexBasis: '80%',
+            overflowY: 'auto',
+            flexGrow: 0,
+            flexShrink: 0,
+          }}
+          id="videos-images-box"
+        >
           <VideosImageList
             videos={filteredVideos}
             thumbnails={thumbnails || []}
             onClick={handleVideoClick}
           />
+          {/* <Paper sx={{ height: '2000px' }}></Paper> */}
         </Box>
-        <Box sx={{ flexBasis: '20%' }}>
-          <Paper sx={{ height: '100%', m: 1 }}>
+        <Box
+          sx={{
+            flexBasis: '20%',
+            p: 1
+          }}
+        >
+          <Paper sx={{ height: '100%' }}>
             <Playlist />
+            {/* <Paper sx={{ height: '2000px' }}></Paper> */}
           </Paper>
         </Box>
       </Box>

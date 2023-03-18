@@ -1,4 +1,4 @@
-import { Box, LinearProgress } from '@mui/material';
+import { Box, LinearProgress, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
@@ -9,6 +9,7 @@ import {
   useGetTagVideosQuery,
   useUpdateVideoMutation
 } from '../../redux';
+import Playlist from './Playlist';
 import TagChips from './TagChips';
 import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
@@ -89,12 +90,19 @@ const VideosNewPage = (props: PropType) => {
           onTagClick={handleTagClick}
         ></TagChips>
       </Box>
-      <Box>
-        <VideosImageList
-          videos={filteredVideos}
-          thumbnails={thumbnails || []}
-          onClick={handleVideoClick}
-        />
+      <Box sx={{ display: 'flex' }}>
+        <Box sx={{ flexBasis: '80%', overflowY: 'auto' }}>
+          <VideosImageList
+            videos={filteredVideos}
+            thumbnails={thumbnails || []}
+            onClick={handleVideoClick}
+          />
+        </Box>
+        <Box sx={{ flexBasis: '20%' }}>
+          <Paper sx={{ height: '100%', m:1}}>
+            <Playlist />
+          </Paper>
+        </Box>
       </Box>
       {!!selectedVideo ? (
         <VideoDialog

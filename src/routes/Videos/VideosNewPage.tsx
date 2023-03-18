@@ -9,7 +9,8 @@ import {
   useGetTagsQuery,
   useGetTagVideosQuery,
   useUpdateVideoMutation,
-  getVideoList
+  getVideoList,
+  useAddThumbnailsMutation
 } from '../../redux';
 import { RootState } from '../../redux/configureStore';
 import Playlist from './Playlist';
@@ -30,6 +31,7 @@ const VideosNewPage = (props: PropType) => {
   const { data: tagVideos, isLoading: isLoadingTagVideos } =
     useGetTagVideosQuery();
   const [updateVideo, result] = useUpdateVideoMutation();
+  const [addThumbnails] = useAddThumbnailsMutation();
 
   const videos = useSelector((state: RootState) => getVideoList(state));
 
@@ -65,9 +67,8 @@ const VideosNewPage = (props: PropType) => {
     }
   };
 
-  const handleSave = (video: Video) => {
-    updateVideo(video)
-      .unwrap()
+  const handleSave = (video: Video, thumbnails: string[]) => {
+    Promise.all([updateVideo(video).unwrap(), addThumbnails(thumbnails.map(t => ({ videoId: video.id, image: t, id: 0 }))).unwrap()])
       .then(() => setSelectedVideo(null));
   };
 
@@ -124,6 +125,7 @@ const VideosNewPage = (props: PropType) => {
             overflowY: 'auto',
             flexGrow: 0,
             flexShrink: 0,
+            p: 1
           }}
           id="videos-images-box"
         >
@@ -132,7 +134,6 @@ const VideosNewPage = (props: PropType) => {
             thumbnails={thumbnails || []}
             onClick={handleVideoClick}
           />
-          {/* <Paper sx={{ height: '2000px' }}></Paper> */}
         </Box>
         <Box
           sx={{
@@ -142,7 +143,6 @@ const VideosNewPage = (props: PropType) => {
         >
           <Paper sx={{ height: '100%' }}>
             <Playlist />
-            {/* <Paper sx={{ height: '2000px' }}></Paper> */}
           </Paper>
         </Box>
       </Box>

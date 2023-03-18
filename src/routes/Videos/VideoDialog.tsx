@@ -27,7 +27,7 @@ interface PropType {
   thumbnails: Thumbnail[];
   video: Video;
   onCancel: () => void;
-  onSave: (v: Video) => void;
+  onSave: (v: Video, thumbnails: string[]) => void;
 }
 
 const VideoDialog = (props: PropType) => {
@@ -48,7 +48,7 @@ const VideoDialog = (props: PropType) => {
     },
     onSubmit: (value) => {
       const update = Object.assign({}, video, value);
-      onSave(update);
+      handleSave(update);
     },
     enableReinitialize: true
   });
@@ -65,7 +65,11 @@ const VideoDialog = (props: PropType) => {
     } else {
       selectedThumbnails.push(v);
     }
-    setSelectedThumbnails(selectedThumbnails.map(d => d));
+    setSelectedThumbnails(selectedThumbnails.map((d) => d));
+  };
+
+  const handleSave = (v: Video) => {
+    onSave(v, selectedThumbnails);
   };
 
   if (video != null) {
@@ -81,7 +85,7 @@ const VideoDialog = (props: PropType) => {
               formik={formik}
               tags={tags}
               video={video}
-              onSubmit={onSave}
+              onSubmit={handleSave}
             />
             <Box sx={{ display: 'flex' }}>
               <Box sx={{ flexBasis: '50%' }}>
@@ -93,9 +97,9 @@ const VideoDialog = (props: PropType) => {
                   <CircularProgress />
                 ) : (
                   <GeneratedThumbnails
-                      data={status?.data || []}
-                      selected={selectedThumbnails}
-                      onSelect={handleSelectThumdbnail}
+                    data={status?.data || []}
+                    selected={selectedThumbnails}
+                    onSelect={handleSelectThumdbnail}
                   ></GeneratedThumbnails>
                 )}
               </Box>

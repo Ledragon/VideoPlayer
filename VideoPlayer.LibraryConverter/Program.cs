@@ -2,26 +2,27 @@
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Database.Repository.SQLite;
 using VideoPlayer.Entities;
+using VideoPlayer.LibraryConverter;
 using VideoPlayer.Services;
 
-var xmlRepo = new FileLibraryRepository();
+var settings = new JsonFileManager().Deserialize("./settings.json");
+var libraryFile = settings.SourceFile;
+var replacer = new PathReplacer();
 
-var pathService = new PathService();
-var libraryFile = pathService.GetLibraryFile();
+var xmlRepo = new FileLibraryRepository();
 var objects = xmlRepo.Load(libraryFile);
-var disneyTags = new List<Tag>
-{
-    new Tag{Value="Disney"},
-    new Tag{Value="Dessing animé"}
-};
-var moviesTags = new List<Tag> { new Tag { Value = "Film" } };
-using (var context = new VideoPlayerContext(Path.Combine(Path.GetDirectoryName(libraryFile), "Library1.db")))
+using (var context = new VideoPlayerContext(settings.TargetFile))
 {
     context.Database.EnsureCreated();
 
     var dic = new Dictionary<String, EntityEntry<VideoPlayer.Entities.Directory>>();
     foreach (var directory in objects.Directories)
     {
+        var originalPath = directory.DirectoryPath;
+        if (settings.Remap.ContainsKey(originalPath))
+        {
+            directory.DirectoryPath = settings.Remap[originalPath];
+        }
         var entity = context.Directories.Add(directory);
         if (System.IO.Directory.Exists(directory.DirectoryPath))
         {
@@ -38,7 +39,7 @@ using (var context = new VideoPlayerContext(Path.Combine(Path.GetDirectoryName(l
     {
         if ((v.Thumbnails == null))
         {
-            v.Thumbnails = new List<VideoPlayer.Entities.Thumbnail>();
+            v.Thumbnails = new List<Thumbnail>();
         }
         if (v.Thumbnails.All(t => t.Image != v.SerializedImage))
         {
@@ -46,26 +47,20 @@ using (var context = new VideoPlayerContext(Path.Combine(Path.GetDirectoryName(l
         }
         if (v.Tags == null)
         {
-            v.Tags = new List<VideoPlayer.Entities.Tag> { };
+            v.Tags = new List<Tag> { };
         }
-        if (!String.IsNullOrEmpty(v.Category))
+        var category = !String.IsNullOrEmpty(v.Category) ? v.Category : "(empty)";
+        var tag = context.Tags.FirstOrDefault(t => t.Value == category) ?? context.Tags.Add(new Tag { Value = category }).Entity;
+        v.Tags.Add(tag);
+        var firstMatch = settings.Remap.Keys.FirstOrDefault(d => v.FileName.StartsWith(d));
+        if (!String.IsNullOrEmpty(firstMatch))
         {
-            var tag = context.Tags.FirstOrDefault(t => t.Value == v.Category)
-            ?? context.Tags.Add(new VideoPlayer.Entities.Tag { Value = v.Category }).Entity;
-            v.Tags.Add(tag);
+            replacer.ReplaceDirectory(firstMatch, settings.Remap[firstMatch], v);
         }
         if (dic.TryGetValue(v.FileName, out var entity))
         {
             entity.Entity.Videos.Add(v);
             v.Directory = entity.Entity;
-        }
-        if (v.Directory.DirectoryPath.Contains("Disney"))
-        {
-            v.Tags.AddRange(disneyTags);
-        }
-        else
-        {
-            v.Tags.AddRange(moviesTags);
         }
     });
     context.Videos.AddRange(objects.Videos);

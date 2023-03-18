@@ -12,6 +12,7 @@ namespace VideoPlayer.Database.Repository.SQLite
         {
 
         }
+
         public VideoPlayerContext(DbContextOptions<VideoPlayerContext> options) : base(options)
         {
 

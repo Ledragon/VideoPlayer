@@ -18,9 +18,15 @@ const playlistSlice = createSlice({
       if (state.videos.indexOf(action.payload) < 0) {
         state.videos.push(action.payload);
       }
+    },
+    removeVideo: (state, action: PayloadAction<number>) => {
+      const index = state.videos.indexOf(action.payload);
+      if (index >= 0) {
+        state.videos.splice(index, 1);
+      }
     }
   }
 });
 
-export const { addVideo } = playlistSlice.actions;
+export const { addVideo, removeVideo } = playlistSlice.actions;
 export default playlistSlice.reducer;

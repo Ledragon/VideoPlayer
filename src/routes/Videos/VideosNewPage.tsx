@@ -1,4 +1,4 @@
-import { Box, LinearProgress, Paper } from '@mui/material';
+import { Box, LinearProgress, Paper, alpha } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Tag } from '../../models/Tag';
@@ -68,8 +68,12 @@ const VideosNewPage = (props: PropType) => {
   };
 
   const handleSave = (video: Video, thumbnails: string[]) => {
-    Promise.all([updateVideo(video).unwrap(), addThumbnails(thumbnails.map(t => ({ videoId: video.id, image: t, id: 0 }))).unwrap()])
-      .then(() => setSelectedVideo(null));
+    Promise.all([
+      updateVideo(video).unwrap(),
+      addThumbnails(
+        thumbnails.map((t) => ({ videoId: video.id, image: t, id: 0 }))
+      ).unwrap()
+    ]).then(() => setSelectedVideo(null));
   };
 
   const handleCancel = () => {
@@ -141,7 +145,13 @@ const VideosNewPage = (props: PropType) => {
             p: 1
           }}
         >
-          <Paper sx={{ height: '100%' }}>
+          <Paper
+            sx={{
+              height: '100%',
+              backgroundColor: (theme) =>
+                alpha(theme.palette.background.paper, 0.6)
+            }}
+          >
             <Playlist />
           </Paper>
         </Box>

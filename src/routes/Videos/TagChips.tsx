@@ -1,4 +1,4 @@
-import { Paper } from '@mui/material';
+import { Paper, alpha } from '@mui/material';
 import { Tag } from '../../models/Tag';
 import TagChip from './TagChip';
 
@@ -12,7 +12,14 @@ const TagChips = ({
   onTagClick?: (tag: Tag) => void;
 }) => {
   return (
-    <Paper sx={{ p: 1, m: 1, flexGrow: 1 }}>
+    <Paper
+      sx={{
+        p: 1,
+        m: 1,
+        flexGrow: 1,
+        backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.6)
+      }}
+    >
       {tags?.map((d) => (
         <TagChip
           key={d.id}

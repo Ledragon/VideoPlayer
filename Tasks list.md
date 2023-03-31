@@ -4,3 +4,4 @@
 [x] Video list scrollbars
 [ ] Settings management
 [ ] Load videos
+[ ] Convert and store contact sheets

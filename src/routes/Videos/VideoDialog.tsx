@@ -75,52 +75,55 @@ const VideoDialog = (props: PropType) => {
   if (video != null) {
     return (
       <Dialog
-        fullScreen
+        fullScreen={true}
         open={open}
       >
         <DialogTitle>{video.title}</DialogTitle>
-        <form onSubmit={formik.handleSubmit}>
-          <DialogContent>
-            <VideoProperties
-              formik={formik}
-              tags={tags}
-              video={video}
-              onSubmit={handleSave}
-            />
-            <Box sx={{ display: 'flex' }}>
-              <Box sx={{ flexBasis: '50%' }}>
-                <ThumbsImageList thumbs={thumbnails} />
-              </Box>
-              <Box sx={{ flexBasis: '50%' }}>
-                <ThumbnailsGenerator video={video} />
-                {status.isLoading ? (
-                  <CircularProgress />
-                ) : (
-                  <GeneratedThumbnails
-                    data={status?.data || []}
-                    selected={selectedThumbnails}
-                    onSelect={handleSelectThumdbnail}
-                  ></GeneratedThumbnails>
-                )}
-              </Box>
+        {/* <form onSubmit={formik.handleSubmit}> */}
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
+          <VideoProperties
+            formik={formik}
+            tags={tags}
+            video={video}
+            onSubmit={handleSave}
+          />
+          <Box sx={{ display: 'flex', flexGrow: 1 }}>
+            <Box sx={{ flexBasis: '50%' }}>
+              <ThumbsImageList thumbs={thumbnails} />
             </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              variant="text"
-              onClick={handleCancel}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="text"
-              type="submit"
-              disabled={!formik.dirty || !formik.isValid}
-            >
-              Save
-            </Button>
-          </DialogActions>
-        </form>
+            <Box sx={{ flexBasis: '50%' }}>
+              <ThumbnailsGenerator video={video} />
+              {status.isLoading ? (
+                <CircularProgress />
+              ) : (
+                <GeneratedThumbnails
+                  data={status?.data || []}
+                  selected={selectedThumbnails}
+                  onSelect={handleSelectThumdbnail}
+                ></GeneratedThumbnails>
+              )}
+            </Box>
+          </Box>
+          <Box>
+            <Typography variant="caption">{video.fileName}</Typography>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="text"
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="text"
+            disabled={(!formik.dirty && !selectedThumbnails.length) || !formik.isValid}
+            onClick={formik.submitForm}
+          >
+            Save
+          </Button>
+        </DialogActions>
+        {/* </form> */}
       </Dialog>
     );
   } else {

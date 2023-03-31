@@ -3,7 +3,8 @@ import {
   Button,
   ButtonGroup,
   Rating,
-  TextField
+  TextField,
+  Typography
 } from '@mui/material';
 import { FormikProps } from 'formik';
 import { Tag } from '../../models/Tag';
@@ -23,7 +24,7 @@ const VideoProperties = (props: {
     // tags: (Tag | undefined)[];
   }>;
 }) => {
-  const { tags, formik } = props;
+  const { tags, formik, video } = props;
   return (
     <>
       <TextField

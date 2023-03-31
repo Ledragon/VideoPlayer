@@ -43,7 +43,7 @@ const VideoImageItem = ({
         actionIcon={
           <IconButton
             onClick={onAddToPlaylistButtonClick}
-                hidden={!onAddToPlaylist}
+            hidden={!onAddToPlaylist}
           >
             <PlaylistAddIcon />
           </IconButton>

@@ -1,11 +1,10 @@
 import { createBrowserRouter, redirect } from 'react-router-dom';
 import Home from './Home/Home';
 import Pictures from './Pictures';
-import Settings from './Settings';
+import SettingsPage from './Settings/SettingsPage';
 import Shell from './Shell';
 import VideoPage from './Video/VideoPage';
 import VideosNewPage from './Videos/VideosNewPage';
-import VideosPage from './Videos/VideosPage';
 
 const router = createBrowserRouter([
   {
@@ -31,7 +30,7 @@ const router = createBrowserRouter([
       {
         path: '/settings',
         id: 'settings',
-        element: <Settings />
+        element: <SettingsPage />
       },
       {
         path: '/pictures',

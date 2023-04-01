@@ -2,7 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace VideoPlayer.Services
+namespace VideoPlayer.Helpers
 {
     public class PathService : IPathService
     {
@@ -13,7 +13,7 @@ namespace VideoPlayer.Services
 
         public String GetLibraryFile()
         {
-            
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return @"E:\Hugues Stefanski\Documents\Development\GitHub\VideoPlayer\VideoPlayer\bin\Debug\Files\Library.xml";

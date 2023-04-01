@@ -1,6 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
-using VideoPlayer.Services;
+using VideoPlayer.Helpers;
 
 namespace VideoPlayer.Ffmpeg.Test
 {

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <OutputType>Library</OutputType>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -10,6 +10,7 @@
     <ProjectReference Include="..\LeDragon.Log.Standard\LeDragon.Log.Standard.csproj" />
     <ProjectReference Include="..\VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj" />
     <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj" />
+    <ProjectReference Include="..\VideoPlayer.Ffmpeg\VideoPlayer.Ffmpeg.csproj" />
     <ProjectReference Include="..\VideoPlayer.Helpers\VideoPlayer.Helpers.csproj" />
   </ItemGroup>
   <ItemGroup>

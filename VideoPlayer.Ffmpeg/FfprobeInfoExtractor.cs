@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 
 namespace VideoPlayer.Ffmpeg
 {
@@ -14,6 +15,7 @@ namespace VideoPlayer.Ffmpeg
         {
             this._logger = this.Logger();
         }
+
         public FfprobeVideoInfo GetVideoInfo(String filePath)
         {
             if (!File.Exists(filePath))

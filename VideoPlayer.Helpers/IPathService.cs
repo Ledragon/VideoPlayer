@@ -1,4 +1,4 @@
-﻿namespace VideoPlayer.Services
+﻿namespace VideoPlayer.Helpers
 {
     public interface IPathService
     {

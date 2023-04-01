@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Entities;
+using VideoPlayer.Ffmpeg;
 using VideoPlayer.Helpers;
 
 namespace VideoPlayer.Services
@@ -12,11 +13,14 @@ namespace VideoPlayer.Services
     {
         private readonly IVideoRepository _videoRepository;
         private readonly ITagsRepository _tagsRepository;
+        private readonly IFfprobeInfoExtractor _ffprobeInfoExtractor;
 
-        public RefreshService(IVideoRepository videoRepository, ITagsRepository tagsRepository)
+        public RefreshService(IVideoRepository videoRepository, ITagsRepository tagsRepository,
+            IFfprobeInfoExtractor ffprobeInfoExtractor)
         {
             this._videoRepository = videoRepository;
             this._tagsRepository = tagsRepository;
+            this._ffprobeInfoExtractor = ffprobeInfoExtractor;
         }
 
         public List<Video> Load(Directory directory)
@@ -36,6 +40,7 @@ namespace VideoPlayer.Services
                 {
                     Directory = directory
                 };
+                //TODO get metadata and first thumbnail
                 if (directory.Videos != null)
                 {
                     directory.Videos.Add(newVideo);

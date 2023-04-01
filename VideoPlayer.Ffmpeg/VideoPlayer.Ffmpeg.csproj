@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LeDragon.Log.Standard\LeDragon.Log.Standard.csproj" />
-    <ProjectReference Include="..\VideoPlayer.Services\VideoPlayer.Services.csproj" />
+    <ProjectReference Include="..\VideoPlayer.Helpers\VideoPlayer.Helpers.csproj" />
   </ItemGroup>
 
 </Project>

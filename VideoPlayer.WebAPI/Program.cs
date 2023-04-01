@@ -3,6 +3,7 @@ using VideoPlayer.Database.Repository;
 using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Database.Repository.SQLite;
 using VideoPlayer.Ffmpeg;
+using VideoPlayer.Helpers;
 using VideoPlayer.Services;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -23,6 +23,19 @@ namespace VideoPlayer.WebAPI.Controllers
             return this._directoryRepository.Get();
         }
 
+        [HttpPost("addDirectory")]
+        public void AddDirectory(Entities.Directory directory, [FromQuery] Boolean loadContent)
+        {
+            if (Directory.Exists(directory.DirectoryPath))
+            {
+                directory = this._directoryRepository.Add(directory);
+                if (loadContent)
+                {
+                    this._refreshService.Load(directory);
+                }
+            }
+        }
+
         [HttpPost("updateVideos")]
         public void UpdateVideos()
         {

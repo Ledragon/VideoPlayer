@@ -12,6 +12,13 @@ namespace VideoPlayer.Database.Repository.SQLite
             this._context = context;
         }
 
+        public Directory Add(Directory directory)
+        {
+            var entity = this._context.Directories.Add(directory);
+            this._context.SaveChanges();
+            return entity.Entity;
+        }
+
         public List<Directory> Get()
         {
             return this._context.Directories.ToList();

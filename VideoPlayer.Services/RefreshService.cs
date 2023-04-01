@@ -36,7 +36,10 @@ namespace VideoPlayer.Services
                 {
                     Directory = directory
                 };
-                directory.Videos.Add(newVideo);
+                if (directory.Videos != null)
+                {
+                    directory.Videos.Add(newVideo);
+                }
                 foreach (var t in tags.Where(t => newVideo.Title.ToLower().Contains(t.Value)))
                 {
                     newVideo.Tags.Add(t);
@@ -52,7 +55,7 @@ namespace VideoPlayer.Services
             }
             return newVideos;
         }
-        
+
         public List<Video> Clean(Directory directory)
         {
             var existing = this._videoRepository.Get()
@@ -61,8 +64,8 @@ namespace VideoPlayer.Services
             var tags = this._tagsRepository.Get();
             var files = DirectoryHelper.GetVideoFiles(directory.DirectoryPath, directory.IsIncludeSubdirectories)
                             .ToList();
-            var notFound = existing.Where(d=>!files.Contains(d.FileName)).ToList();
-            
+            var notFound = existing.Where(d => !files.Contains(d.FileName)).ToList();
+
             if (notFound.Any())
             {
                 this._videoRepository.Delete(notFound);

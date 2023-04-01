@@ -32,5 +32,15 @@ namespace VideoPlayer.WebAPI.Controllers
                     this._refreshService.Load(directory);
                 });
         }
+
+        [HttpDelete("cleanVideos")]
+        public void CleanVideos()
+        {
+            this._directoryRepository.Get()
+                .ForEach(directory =>
+                {
+                    this._refreshService.Clean(directory);
+                });
+        }
     }
 }

@@ -26,6 +26,12 @@ namespace VideoPlayer.Database.Repository.SQLite
             return videos;
         }
 
+        public void Delete(List<Video> notFound)
+        {
+            this._context.Videos.RemoveRange(notFound);
+            this._context.SaveChanges();
+        }
+
         public List<Video> Get()
         {
             return this._context.Videos.ToList();

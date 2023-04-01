@@ -42,18 +42,32 @@ namespace VideoPlayer.Services
                     newVideo.Tags.Add(t);
                     t.Videos.Add(newVideo);
                 }
-
-                //var firstCategory = categories.FirstOrDefault(c => newVideo.Title.ToLower().Contains(c));
-                //if (firstCategory != null)
-                //{
-                //    newVideo.Category = firstCategory;
-                //}
                 newVideo.DateAdded = DateTime.Now;
                 newVideos.Add(newVideo);
                 this.Logger().DebugFormat("File '{0}' added.", newVideo.FileName);
             }
-            this._videoRepository.Add(newVideos);
+            if (newVideos.Any())
+            {
+                this._videoRepository.Add(newVideos);
+            }
             return newVideos;
+        }
+        
+        public List<Video> Clean(Directory directory)
+        {
+            var existing = this._videoRepository.Get()
+                .Where(v => v.DirectoryId == directory.Id)
+                .ToList();
+            var tags = this._tagsRepository.Get();
+            var files = DirectoryHelper.GetVideoFiles(directory.DirectoryPath, directory.IsIncludeSubdirectories)
+                            .ToList();
+            var notFound = existing.Where(d=>!files.Contains(d.FileName)).ToList();
+            
+            if (notFound.Any())
+            {
+                this._videoRepository.Delete(notFound);
+            }
+            return notFound;
         }
     }
 }

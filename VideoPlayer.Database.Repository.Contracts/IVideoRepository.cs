@@ -13,5 +13,6 @@ namespace VideoPlayer.Database.Repository.Contracts
         List<Video> Add(List<Video> videos);
         Video Update(Video video);
         List<Video> Update(List<Video> video);
+        void Delete(List<Video> notFound);
     }
 }

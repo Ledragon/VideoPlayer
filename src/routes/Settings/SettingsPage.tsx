@@ -19,6 +19,7 @@ import {
 import SettingsButtons from './SettingsButtons';
 import { useState } from 'react';
 import { useFormik } from 'formik';
+import NewDirectoryDialog from './NewDirectoryDialog';
 
 interface PropType {}
 const cols: GridColDef[] = [
@@ -40,32 +41,12 @@ const cols: GridColDef[] = [
 
 const SettingsPage = (props: PropType) => {
   const { isFetching, data } = useGetDirectoriesQuery();
-  const [addDirectory, addDirectoryStatus] = useAddDirectoryMutation();
 
   const [open, setOpen] = useState<boolean>(false);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   const handleAddDirectoryClick = () => {
     setOpen(true);
   };
-
-  const formik = useFormik({
-    initialValues: {
-      directoryPath: '',
-      directoryName: '',
-      isIncludeSubdirectories: true,
-      loadContent: true
-    },
-    onSubmit: (values) => {
-      addDirectory({
-        directory: Object.assign({}, values, { mediaType: MediaType.Video }),
-        loadContent: values.loadContent
-      });
-    }
-  });
 
   return (
     <>
@@ -96,47 +77,10 @@ const SettingsPage = (props: PropType) => {
           <SettingsButtons onAddDirectory={handleAddDirectoryClick} />
         </Paper>
       </Box>
-      <Dialog
-        maxWidth="lg"
+      <NewDirectoryDialog
         open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle>Add new directory</DialogTitle>
-        <DialogContent>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <TextField
-              fullWidth={true}
-              name="directoryName"
-              value={formik.values.directoryName}
-              error={!!formik.errors.directoryName}
-              label="Name"
-              size="small"
-              margin="dense"
-              onChange={formik.handleChange}
-            />
-            <TextField
-              fullWidth={true}
-              name="directoryPath"
-              value={formik.values.directoryPath}
-              error={!!formik.errors.directoryPath}
-              label="Path"
-              size="small"
-              margin="dense"
-              onChange={formik.handleChange}
-            />
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button
-            onClick={() => {
-              formik.submitForm();
-            }}
-          >
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
+        setOpen={setOpen}
+      />
     </>
   );
 };

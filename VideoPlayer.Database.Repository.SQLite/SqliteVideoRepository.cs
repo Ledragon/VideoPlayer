@@ -15,12 +15,14 @@ namespace VideoPlayer.Database.Repository.SQLite
         public Video Add(Video video)
         {
             var entity = this._context.Videos.Add(video);
+            this._context.SaveChanges();
             return entity.Entity;
         }
 
         public List<Video> Add(List<Video> videos)
         {
             this._context.Videos.AddRange(videos);
+            this._context.SaveChanges();
             return videos;
         }
 
@@ -49,6 +51,7 @@ namespace VideoPlayer.Database.Repository.SQLite
         public List<Video> Update(List<Video> video)
         {
             this._context.UpdateRange(video);
+            this._context.SaveChanges();
             return video;
         }
     }

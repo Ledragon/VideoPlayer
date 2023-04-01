@@ -19,6 +19,7 @@ builder.Services
     .AddSingleton<IFfprobeInfoExtractor, FfprobeInfoExtractor>()
     .AddSingleton<IFfmpegThumbnailGenerator, FfmpegThumbnailGenerator>()
     .AddSingleton<IPathService, PathService>()
+    .AddTransient<IRefreshService, RefreshService>()
     .AddTransient<IDirectoryRepository, SqliteDirectoryRepository>()
     .AddTransient<IThumbnailsRepository, SqliteThumbnailsRepository>()
     .AddTransient<IVideoRepository, SqliteVideoRepository>()

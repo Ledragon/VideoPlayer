@@ -8,7 +8,7 @@ using VideoPlayer.Helpers;
 
 namespace VideoPlayer.Services
 {
-    public class RefreshService
+    public class RefreshService : IRefreshService
     {
         private readonly IVideoRepository _videoRepository;
         private readonly ITagsRepository _tagsRepository;

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VideoPlayer.Database.Repository.Contracts;
+using VideoPlayer.Services;
 
 namespace VideoPlayer.WebAPI.Controllers
 {
@@ -8,16 +9,28 @@ namespace VideoPlayer.WebAPI.Controllers
     public class SettingsController : ControllerBase
     {
         private readonly IDirectoryRepository _directoryRepository;
+        private readonly IRefreshService _refreshService;
 
-        public SettingsController(IDirectoryRepository directoryRepository)
+        public SettingsController(IDirectoryRepository directoryRepository, IRefreshService refreshService)
         {
             this._directoryRepository = directoryRepository;
+            this._refreshService = refreshService;
         }
 
         [HttpGet("directories")]
         public List<Entities.Directory> GetDirectories()
         {
             return this._directoryRepository.Get();
+        }
+
+        [HttpPost("updateVideos")]
+        public void UpdateVideos()
+        {
+            this._directoryRepository.Get()
+                .ForEach(directory =>
+                {
+                    this._refreshService.Load(directory);
+                });
         }
     }
 }

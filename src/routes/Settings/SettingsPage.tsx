@@ -1,24 +1,14 @@
-import {
-  alpha,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Paper,
-  TextField
-} from '@mui/material';
+import { alpha, Box, LinearProgress, Paper } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 import { MediaType } from '../../models/Directory';
 import {
-  useAddDirectoryMutation,
-  useGetDirectoriesQuery
+  useCleanVideosMutation,
+  useGetDirectoriesQuery,
+  useLoadVideosMutation
 } from '../../redux/settings.api';
 import SettingsButtons from './SettingsButtons';
 import { useState } from 'react';
-import { useFormik } from 'formik';
 import NewDirectoryDialog from './NewDirectoryDialog';
 
 interface PropType {}
@@ -41,11 +31,20 @@ const cols: GridColDef[] = [
 
 const SettingsPage = (props: PropType) => {
   const { isFetching, data } = useGetDirectoriesQuery();
+  const [loadVideos, loadVideosStatus] = useLoadVideosMutation({});
+  const [cleanVideos, cleanVideosStatus] = useCleanVideosMutation();
 
   const [open, setOpen] = useState<boolean>(false);
 
   const handleAddDirectoryClick = () => {
     setOpen(true);
+  };
+  const handleLoadVideos = () => {
+    loadVideos();
+  };
+
+  const handleCleanVideos = () => {
+    cleanVideos();
   };
 
   return (
@@ -74,7 +73,14 @@ const SettingsPage = (props: PropType) => {
             hideFooter
             loading={isFetching}
           />
-          <SettingsButtons onAddDirectory={handleAddDirectoryClick} />
+          <SettingsButtons
+            onAddDirectory={handleAddDirectoryClick}
+            onCleanVideos={handleCleanVideos}
+            onLoadVideos={handleLoadVideos}
+          />
+          {cleanVideosStatus.isLoading || loadVideosStatus.isLoading ? (
+            <LinearProgress />
+          ) : null}
         </Paper>
       </Box>
       <NewDirectoryDialog

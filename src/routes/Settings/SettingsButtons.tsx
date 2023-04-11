@@ -12,18 +12,19 @@ import {
 
 interface PropType {
   onAddDirectory: () => void;
+  onLoadVideos: () => void;
+  onCleanVideos: () => void;
 }
 
 const SettingsButtons = (props: PropType) => {
-  const [loadVideos, loadVideosStatus] = useLoadVideosMutation();
-  const [cleanVideos, cleanVideosStatus] = useCleanVideosMutation();
+  const { onLoadVideos, onCleanVideos } = props;
 
   const handleLoadVideos = () => {
-    loadVideos();
+    onLoadVideos();
   };
 
   const handleCleanVideos = () => {
-    cleanVideos();
+    onCleanVideos();
   };
 
   const handleAddDirectory = () => {

@@ -1,6 +1,7 @@
 ﻿using LeDragon.Log.Standard;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Entities;
@@ -40,7 +41,9 @@ namespace VideoPlayer.Services
                 {
                     Directory = directory
                 };
-                //TODO get metadata and first thumbnail
+                //TODO first thumbnail
+                var info = this._ffprobeInfoExtractor.GetVideoInfo(videoFile);
+                newVideo.Length = TimeSpan.FromSeconds(Math.Round(Double.Parse(info.format.duration, CultureInfo.InvariantCulture)));
                 if (directory.Videos != null)
                 {
                     directory.Videos.Add(newVideo);

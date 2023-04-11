@@ -26,6 +26,7 @@ namespace VideoPlayer.Ffmpeg
             {
                 this._logger.DebugFormat("Getting video info for '{0}'.", filePath);
                 var process = new Process();
+                //process.EnableRaisingEvents = true;
                 process.StartInfo.FileName = "ffprobe";
                 process.StartInfo.ArgumentList.Add("-v");
                 process.StartInfo.ArgumentList.Add("error");
@@ -35,11 +36,21 @@ namespace VideoPlayer.Ffmpeg
                 process.StartInfo.ArgumentList.Add("json");
                 process.StartInfo.ArgumentList.Add(filePath);
                 process.StartInfo.RedirectStandardOutput = true;
-                process.Start();
-                process.WaitForExit();
-                var text = process.StandardOutput.ReadToEnd();
-                var result = JsonConvert.DeserializeObject<FfprobeVideoInfo>(text);
-                return result;
+                process.StartInfo.UseShellExecute = false;
+                var isStarted = process.Start();
+                if (isStarted)
+                {
+                    // Wait for 500ms for work to be complete; Deadlock problem if using WaitForExit
+                    Thread.Sleep(500);
+                    //process.WaitForExit();
+                    var text = process.StandardOutput.ReadToEnd();
+                    var result = JsonConvert.DeserializeObject<FfprobeVideoInfo>(text);
+                    return result;
+                }
+                else
+                {
+                    throw new Exception("Process failed to start");
+                }
 
             }
             catch (Exception e)

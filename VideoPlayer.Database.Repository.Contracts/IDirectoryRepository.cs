@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using VideoPlayer.Entities;
 
 namespace VideoPlayer.Database.Repository.Contracts
 {
     public interface IDirectoryRepository
     {
-        Entities.Directory Add(Entities.Directory directory);
-        List<Entities.Directory> Get();
+        Directory Add(Directory directory);
+        List<Directory> Get();
+        Directory Remove(Int32 id);
     }
 }

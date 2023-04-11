@@ -23,5 +23,16 @@ namespace VideoPlayer.Database.Repository.SQLite
         {
             return this._context.Directories.ToList();
         }
+
+        public Directory? Remove(Int32 id)
+        {
+           var directory = this._context.Directories.SingleOrDefault(d => d.Id == id);
+            if (directory != null)
+            {
+                this._context.Directories.Remove(directory);
+                this._context.SaveChanges();
+            }
+            return directory;
+        }
     }
 }

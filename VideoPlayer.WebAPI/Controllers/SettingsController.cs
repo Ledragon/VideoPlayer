@@ -55,5 +55,11 @@ namespace VideoPlayer.WebAPI.Controllers
                     this._refreshService.Clean(directory);
                 });
         }
+
+        [HttpDelete("removeDirectory")]
+        public void RemoveDirectory([FromQuery] Int32 id)
+        {
+            var directory = this._directoryRepository.Remove(id);
+        }
     }
 }

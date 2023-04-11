@@ -15,13 +15,15 @@ namespace VideoPlayer.Services
         private readonly IVideoRepository _videoRepository;
         private readonly ITagsRepository _tagsRepository;
         private readonly IFfprobeInfoExtractor _ffprobeInfoExtractor;
+        private readonly IFfmpegThumbnailGenerator _ffmpegThumbnailGenerator;
 
         public RefreshService(IVideoRepository videoRepository, ITagsRepository tagsRepository,
-            IFfprobeInfoExtractor ffprobeInfoExtractor)
+            IFfprobeInfoExtractor ffprobeInfoExtractor, IFfmpegThumbnailGenerator ffmpegThumbnailGenerator)
         {
             this._videoRepository = videoRepository;
             this._tagsRepository = tagsRepository;
             this._ffprobeInfoExtractor = ffprobeInfoExtractor;
+            this._ffmpegThumbnailGenerator = ffmpegThumbnailGenerator;
         }
 
         public List<Video> Load(Directory directory)
@@ -44,6 +46,12 @@ namespace VideoPlayer.Services
                 //TODO first thumbnail
                 var info = this._ffprobeInfoExtractor.GetVideoInfo(videoFile);
                 newVideo.Length = TimeSpan.FromSeconds(Math.Round(Double.Parse(info.format.duration, CultureInfo.InvariantCulture)));
+                newVideo.Thumbnails = new List<Thumbnail>();
+                //var thumbs = this._ffmpegThumbnailGenerator.GenerateThumbnails(videoFile, 1);
+                //thumbs.ForEach(t =>
+                //{
+                //    newVideo.Thumbnails.Add(new Thumbnail { Image = t });
+                //});
                 if (directory.Videos != null)
                 {
                     directory.Videos.Add(newVideo);

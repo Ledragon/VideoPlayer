@@ -1,11 +1,12 @@
 import { alpha, Box, LinearProgress, Paper } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
 
 import { MediaType } from '../../models/Directory';
 import {
   useCleanVideosMutation,
   useGetDirectoriesQuery,
-  useLoadVideosMutation
+  useLoadVideosMutation,
+  useRemoveDirectoryMutation
 } from '../../redux/settings.api';
 import SettingsButtons from './SettingsButtons';
 import { useState } from 'react';
@@ -30,9 +31,12 @@ const cols: GridColDef[] = [
 ];
 
 const SettingsPage = (props: PropType) => {
+  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+
   const { isFetching, data } = useGetDirectoriesQuery();
   const [loadVideos, loadVideosStatus] = useLoadVideosMutation({});
   const [cleanVideos, cleanVideosStatus] = useCleanVideosMutation();
+  const [removeDirectory, removeDirectoryStatus] = useRemoveDirectoryMutation();
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -45,6 +49,16 @@ const SettingsPage = (props: PropType) => {
 
   const handleCleanVideos = () => {
     cleanVideos();
+  };
+
+  const handleRemoveDirectory = () => {
+    selectedRows.forEach((r) => {
+      removeDirectory(r);
+    });
+  };
+
+  const handleSelectChange = (selectionModel: GridSelectionModel) => {
+    setSelectedRows(selectionModel.map((d) => d as number));
   };
 
   return (
@@ -70,15 +84,17 @@ const SettingsPage = (props: PropType) => {
           <DataGrid
             columns={cols}
             rows={data || []}
-            hideFooter
             loading={isFetching}
+            onSelectionModelChange={handleSelectChange}
+            hideFooter
           />
           <SettingsButtons
             onAddDirectory={handleAddDirectoryClick}
             onCleanVideos={handleCleanVideos}
             onLoadVideos={handleLoadVideos}
+            onRemoveDirectory={handleRemoveDirectory}
           />
-          {cleanVideosStatus.isLoading || loadVideosStatus.isLoading ? (
+          {cleanVideosStatus.isLoading || loadVideosStatus.isLoading || removeDirectoryStatus.isLoading ? (
             <LinearProgress />
           ) : null}
         </Paper>

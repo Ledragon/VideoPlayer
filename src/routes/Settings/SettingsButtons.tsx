@@ -4,20 +4,16 @@ import AddIcon from '@mui/icons-material/Add';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import UpdateIcon from '@mui/icons-material/Update';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
-
-import {
-  useCleanVideosMutation,
-  useLoadVideosMutation
-} from '../../redux/settings.api';
-
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 interface PropType {
   onAddDirectory: () => void;
   onLoadVideos: () => void;
   onCleanVideos: () => void;
+  onRemoveDirectory: () => void;
 }
 
 const SettingsButtons = (props: PropType) => {
-  const { onLoadVideos, onCleanVideos } = props;
+  const { onLoadVideos, onCleanVideos, onRemoveDirectory } = props;
 
   const handleLoadVideos = () => {
     onLoadVideos();
@@ -29,6 +25,10 @@ const SettingsButtons = (props: PropType) => {
 
   const handleAddDirectory = () => {
     props.onAddDirectory();
+  };
+
+  const handleRemoveDirectory = () => {
+    onRemoveDirectory();
   };
 
   return (
@@ -57,6 +57,11 @@ const SettingsButtons = (props: PropType) => {
         icon={<AddIcon />}
         tooltipTitle="Add new directory"
         onClick={handleAddDirectory}
+      ></SpeedDialAction>
+      <SpeedDialAction
+        icon={<DeleteOutlineIcon />}
+        tooltipTitle="Remove selected directory"
+        onClick={handleRemoveDirectory}
       ></SpeedDialAction>
     </SpeedDial>
   );

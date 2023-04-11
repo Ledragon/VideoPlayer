@@ -30,8 +30,8 @@ const settingsApi = api.injectEndpoints({
           directoryPath: string;
           isIncludeSubdirectories: boolean;
           mediaType: MediaType;
-        },
-        loadContent: boolean
+        };
+        loadContent: boolean;
       }
     >({
       query: (params) => ({
@@ -41,6 +41,14 @@ const settingsApi = api.injectEndpoints({
         body: params.directory
       }),
       invalidatesTags: ['Videos', 'Directories']
+    }),
+    removeDirectory: builder.mutation<void, number>({
+      query: (id) => ({
+        url: 'settings/removeDirectory',
+        method: 'DELETE',
+        params: { id }
+      }),
+      invalidatesTags: ['Videos']
     })
   })
 });
@@ -49,5 +57,6 @@ export const {
   useGetDirectoriesQuery,
   useLoadVideosMutation,
   useCleanVideosMutation,
-  useAddDirectoryMutation
+  useAddDirectoryMutation,
+  useRemoveDirectoryMutation
 } = settingsApi;

@@ -11,6 +11,7 @@ import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
+import { useEffect, useState } from 'react';
 
 const VideoProperties = (props: {
   video: Video;
@@ -24,9 +25,24 @@ const VideoProperties = (props: {
     // tags: (Tag | undefined)[];
   }>;
 }) => {
-  const { tags, formik, video } = props;
+  const { tags, tagVideos, formik, video } = props;
+
+  const [usedTags, setUsedTags] = useState<Tag[]>([]);
+  useEffect(() => {
+    setUsedTags(
+      tagVideos
+        ?.filter((tv) => tv.videoId === video.id)
+        .map((tv) => tags.find((t) => t.id === tv.tagId))
+        .filter((t) => t !== undefined) || []
+    );
+  }, [tags, tagVideos, video]);
+
+  const handleTagsChange = (_event: React.ChangeEvent<any>, value: any[]) => {
+    setUsedTags(value);
+  };
+
   return (
-    <>
+    <form>
       <TextField
         fullWidth
         margin="dense"
@@ -55,6 +71,8 @@ const VideoProperties = (props: {
         id="tags"
         options={tags || []}
         getOptionLabel={(o) => o.value}
+        onChange={handleTagsChange}
+        value={usedTags}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -65,7 +83,7 @@ const VideoProperties = (props: {
           />
         )}
       ></Autocomplete>
-    </>
+    </form>
   );
 };
 

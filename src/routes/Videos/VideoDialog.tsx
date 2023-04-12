@@ -84,6 +84,7 @@ const VideoDialog = (props: PropType) => {
           <VideoProperties
             formik={formik}
             tags={tags}
+            tagVideos={tagVideos}
             video={video}
             onSubmit={handleSave}
           />

@@ -118,19 +118,6 @@ namespace VideoPlayer.Services
             return video;
         }
 
-        private static String ToBase64(String t)
-        {
-            if (File.Exists(t))
-            {
-                var bytes = File.ReadAllBytes(t);
-                var converted = Convert.ToBase64String(bytes);
-                return converted;
-            }
-            else
-            {
-                return String.Empty;
-            }
-        }
 
         private List<Video> GetVideosToUpdate(List<Video> existing)
         {

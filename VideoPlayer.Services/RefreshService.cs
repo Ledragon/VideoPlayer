@@ -97,10 +97,8 @@ namespace VideoPlayer.Services
                 {
                     video.Length = TimeSpan.FromSeconds(Math.Round(Double.Parse(info.format.duration, CultureInfo.InvariantCulture)));
                 }
-                if (video.Thumbnails == null)
-                {
-                    video.Thumbnails = new List<Thumbnail>();
-                }
+
+                video.Thumbnails = this._thumbnailsRepository.GetForVideo(video.Id);
                 if (!video.Thumbnails.Any())
                 {
                     var thumbs = this._ffmpegThumbnailGenerator.GenerateThumbnails(video.FileName, 1);

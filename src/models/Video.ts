@@ -3,6 +3,7 @@ import { Thumbnail } from './Thumbnail';
 
 export interface Video {
   category: string;
+  contactSheet?: string;
   dateAdded: string;
   directory: string;
   fileName: string;

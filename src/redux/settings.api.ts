@@ -48,7 +48,7 @@ const settingsApi = api.injectEndpoints({
         method: 'DELETE',
         params: { id }
       }),
-      invalidatesTags: ['Videos']
+      invalidatesTags: ['Videos', 'Directories']
     })
   })
 });

@@ -20,6 +20,8 @@ import GeneratedThumbnails from './GeneratedThumbnails';
 import ThumbnailsGenerator from './ThumbnailsGenerator';
 import ThumbsImageList from './ThumbsImageList';
 import VideoProperties from './VideoProperties';
+import getBase64Url from './getBase64Url';
+import ContactSheetForm from './ContactSheetForm';
 
 interface PropType {
   open: boolean;
@@ -84,32 +86,58 @@ const VideoDialog = (props: PropType) => {
         <DialogTitle>{video.title}</DialogTitle>
         {/* <form onSubmit={formik.handleSubmit}> */}
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-          <VideoProperties
-            formik={formik}
-            tags={tags}
-            tagVideos={tagVideos}
-            video={video}
-            onSubmit={handleSave}
-          />
-          <Box sx={{ display: 'flex', flexGrow: 1 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
             <Box sx={{ flexBasis: '50%' }}>
-              <ThumbsImageList thumbs={thumbnails} />
+              <VideoProperties
+                formik={formik}
+                tags={tags}
+                tagVideos={tagVideos}
+                video={video}
+                onSubmit={handleSave}
+              />
+
+              <img
+                src={video.contactSheet ? getBase64Url(video.contactSheet) : ''}
+                style={{
+                  flexGrow: 1,
+                  width: '100%'
+                }}
+              ></img>
+              <Box sx={{ display: 'flex' }}>
+                <ContactSheetForm video={video} />
+              </Box>
             </Box>
-            <Box sx={{ flexBasis: '50%' }}>
-              <ThumbnailsGenerator video={video} />
-              {status.isLoading ? (
-                <CircularProgress />
-              ) : (
-                <GeneratedThumbnails
-                  data={status?.data || []}
-                  selected={selectedThumbnails}
-                  onSelect={handleSelectThumdbnail}
-                ></GeneratedThumbnails>
-              )}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                flexBasis: '50%'
+              }}
+            >
+              <Box sx={{ flexBasis: '50%' }}>
+                <ThumbsImageList thumbs={thumbnails} />
+              </Box>
+              <Box sx={{ flexBasis: '50%' }}>
+                <ThumbnailsGenerator video={video} />
+                {status.isLoading ? (
+                  <CircularProgress />
+                ) : (
+                  <GeneratedThumbnails
+                    data={status?.data || []}
+                    selected={selectedThumbnails}
+                    onSelect={handleSelectThumdbnail}
+                  ></GeneratedThumbnails>
+                )}
+              </Box>
             </Box>
           </Box>
+
           <Box>
-            {!!error ? <Alert severity="error">An error occured. Check console for more information.</Alert> : null}
+            {!!error ? (
+              <Alert severity="error">
+                An error occured. Check console for more information.
+              </Alert>
+            ) : null}
           </Box>
           <Box>
             <Typography variant="caption">{video.fileName}</Typography>

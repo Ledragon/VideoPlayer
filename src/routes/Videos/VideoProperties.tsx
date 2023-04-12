@@ -1,10 +1,11 @@
-import { Autocomplete, Rating, TextField } from '@mui/material';
+import { Autocomplete, ImageList, ImageListItem, Rating, TextField } from '@mui/material';
 import { FormikProps } from 'formik';
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
 import { useEffect, useState } from 'react';
+import getBase64Url from './getBase64Url';
 
 const VideoProperties = (props: {
   video: Video;

@@ -17,13 +17,14 @@ const VideosImageList = (props: PropType) => {
 
   const handleaAddToPlaylist = (v: Video) => {
     dispatch(addVideo(v.id));
-  }
+  };
 
   return (
     <ImageList
-      cols={5}
+      cols={4}
       gap={12}
-      sx={{ }}
+      sx={{}}
+      rowHeight={240}
     >
       {videos?.map((v, i) => {
         const currentThumbs =
@@ -32,7 +33,11 @@ const VideosImageList = (props: PropType) => {
           <VideoImageItem
             key={i}
             video={v}
-            image={currentThumbs.length ? currentThumbs[0].image : undefined}
+            image={
+              currentThumbs.length
+                ? currentThumbs[0].image
+                : v.contactSheet || undefined
+            }
             onInfoClick={onClick}
             onAddToPlaylist={handleaAddToPlaylist}
           />

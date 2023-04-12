@@ -49,7 +49,6 @@ const VideoImageItem = ({
     >
       <img
         src={image ? getBase64Url(image) : ''}
-        style={{ height: '240px' }}
       ></img>
       {hovered ? (
         <ImageListItemBar

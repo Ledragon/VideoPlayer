@@ -9,6 +9,7 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import { Thumbnail } from '../../models/Thumbnail';
 import getBase64Url from './getBase64Url';
 import { useDeleteThumbnailMutation } from '../../redux';
+import { useState } from 'react';
 
 interface PropType {
   thumbs: Thumbnail[];
@@ -16,7 +17,17 @@ interface PropType {
 
 const ThumbsImageList = (props: PropType) => {
   const { thumbs } = props;
+  const [hovered, setHovered] = useState<number | undefined>(undefined);
   const [deleteThumbnail, deleteStatus] = useDeleteThumbnailMutation();
+
+  const handleMouseEnter = (i: number) => {
+    setHovered(i);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(undefined);
+  };
+
   return (
     <ImageList
       cols={4}
@@ -27,20 +38,24 @@ const ThumbsImageList = (props: PropType) => {
         <ImageListItem
           key={i}
           sx={{}}
+          onMouseEnter={() => handleMouseEnter(i)}
+          onMouseLeave={handleMouseLeave}
         >
           <img src={getBase64Url(v.image)}></img>
-          <ImageListItemBar
-            position="top"
-            actionIcon={
-              <IconButton
-                onClick={() => {
-                  deleteThumbnail(v.id);
-                }}
-              >
-                <DeleteForeverOutlinedIcon />
-              </IconButton>
-            }
-          ></ImageListItemBar>
+          {hovered === i ? (
+            <ImageListItemBar
+              position="top"
+              actionIcon={
+                <IconButton
+                  onClick={() => {
+                    deleteThumbnail(v.id);
+                  }}
+                >
+                  <DeleteForeverOutlinedIcon />
+                </IconButton>
+              }
+            ></ImageListItemBar>
+          ) : null}
         </ImageListItem>
       ))}
     </ImageList>

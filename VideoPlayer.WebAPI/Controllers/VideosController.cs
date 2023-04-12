@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VideoPlayer.Database.Repository.Contracts;
+using VideoPlayer.Database.UnitOfWork;
 using VideoPlayer.Entities;
 using VideoPlayer.Services;
 
@@ -11,11 +12,13 @@ namespace VideoPlayer.WebAPI.Controllers
     {
         private readonly ILogger<VideosController> _logger;
         private readonly IVideoRepository _videoRepository;
+        private readonly ITagVideoUnitOfWork _tagVideoUnitOfWork;
 
-        public VideosController(ILogger<VideosController> logger, IVideoRepository videoRepository)
+        public VideosController(ILogger<VideosController> logger, IVideoRepository videoRepository, ITagVideoUnitOfWork tagVideoUnitOfWork)
         {
             this._logger = logger;
             this._videoRepository = videoRepository;
+            this._tagVideoUnitOfWork = tagVideoUnitOfWork;
         }
 
         [HttpGet]
@@ -26,9 +29,9 @@ namespace VideoPlayer.WebAPI.Controllers
         }
 
         [HttpPut]
-        public Video Update(Video video)
+        public async Task<Video> Update(Video video)
         {
-            return this._videoRepository.Update(video);
+            return await this._tagVideoUnitOfWork.UpdateVideo(video);
         }
 
         [HttpGet("/api/videos/metadata")]

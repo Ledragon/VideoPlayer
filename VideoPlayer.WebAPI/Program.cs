@@ -6,6 +6,7 @@ using VideoPlayer.Database.Repository.SQLite;
 using VideoPlayer.Ffmpeg;
 using VideoPlayer.Helpers;
 using VideoPlayer.Services;
+using VideoPlayer.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 LoggingSystemManager.SetPath(Path.Combine("./", "VideoPlayer.WebAPI.log"));
@@ -17,18 +18,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services
-    .AddTransient<ILibraryRepository, FileLibraryRepository>()
-    .AddSingleton<IFfprobeInfoExtractor, FfprobeInfoExtractor>()
-    .AddSingleton<IFfmpegThumbnailGenerator, FfmpegThumbnailGenerator>()
-    .AddSingleton<IPathService, PathService>()
-    .AddTransient<IRefreshService, RefreshService>()
-    .AddTransient<IDirectoryRepository, SqliteDirectoryRepository>()
-    .AddTransient<IThumbnailsRepository, SqliteThumbnailsRepository>()
-    .AddTransient<IVideoRepository, SqliteVideoRepository>()
-    .AddTransient<ITagsRepository, SqliteTagsRepository>()
-    .AddTransient<ITagVideoRepository, SqliteTagVideoRepository>()
-    ;
+builder.Services.RegisterDependencies();
+
 //services cors
 builder.Services.AddCors(policyBuilder =>
     policyBuilder.AddDefaultPolicy(policy =>

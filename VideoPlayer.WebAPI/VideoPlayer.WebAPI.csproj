@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\VideoPlayer.Database.Repository.SQLite\VideoPlayer.Database.Repository.SQLite.csproj" />
     <ProjectReference Include="..\VideoPlayer.Database.Repository\VideoPlayer.Database.Repository.csproj" />
+    <ProjectReference Include="..\VideoPlayer.Database.UnitOfWork\VideoPlayer.Database.UnitOfWork.csproj" />
     <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj" />
     <ProjectReference Include="..\VideoPlayer.Ffmpeg\VideoPlayer.Ffmpeg.csproj" />
     <ProjectReference Include="..\VideoPlayer.Services\VideoPlayer.Services.csproj" />

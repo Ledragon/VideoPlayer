@@ -6,8 +6,8 @@
 [x] Retirer un répertoire de la liste
 [x] Settings management
 [x] Faire un fichier logs
-[ ] Changer la méthode pour générer les thumbs pour être plus efficace
-[ ] Host react app in API (+API url handling)
+[ ] ~~Changer la méthode pour générer les thumbs pour être plus efficace~~
+[x] Host react app in API (+API url handling)
 [ ] Sauver et ajouter des tags
 [ ] Convert and store contact sheets
 [ ] Repérer les vidéos qui n'ont pas de thumb/CS

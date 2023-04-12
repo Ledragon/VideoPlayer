@@ -22,5 +22,18 @@ namespace VideoPlayer.Database.Repository.SQLite
         {
             return await this._context.Videos.SelectMany(v => v.TagVideos).ToListAsync();
         }
+
+        public void Remove(IEnumerable<TagVideo> toRemove)
+        {
+
+            this._context.RemoveRange(toRemove);
+            this._context.SaveChanges();
+        }
+
+        public async Task RemoveAsync(IEnumerable<TagVideo> toRemove)
+        {
+            this._context.RemoveRange(toRemove);
+            await this._context.SaveChangesAsync();
+        }
     }
 }

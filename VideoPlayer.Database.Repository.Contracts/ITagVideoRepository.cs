@@ -8,5 +8,7 @@ namespace VideoPlayer.Database.Repository.Contracts
     {
         List<TagVideo> Get();
         Task<List<TagVideo>> GetAsync();
+        void Remove(IEnumerable<TagVideo> toRemove);
+        Task RemoveAsync(IEnumerable<TagVideo> toRemove);
     }
 }

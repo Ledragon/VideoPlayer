@@ -1,3 +1,4 @@
+using LeDragon.Log.Standard;
 using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Entities;
 
@@ -6,10 +7,12 @@ namespace VideoPlayer.Database.Repository.SQLite
     public class SqliteVideoRepository : IVideoRepository
     {
         private readonly VideoPlayerContext _context;
+        private readonly ILogger _logger;
 
         public SqliteVideoRepository(VideoPlayerContext context)
         {
             this._context = context;
+            this._logger = this.Logger();
         }
 
         public Video Add(Video video)
@@ -49,9 +52,17 @@ namespace VideoPlayer.Database.Repository.SQLite
 
         public Video Update(Video video)
         {
-            var entity = this._context.Update(video);
-            this._context.SaveChanges();
-            return entity.Entity;
+            try
+            {
+                var entity = this._context.Update(video);
+                this._context.SaveChanges();
+                return entity.Entity;
+            }
+            catch (Exception e)
+            {
+                this._logger.Error(e);
+                throw;
+            }
         }
 
         public List<Video> Update(List<Video> video)

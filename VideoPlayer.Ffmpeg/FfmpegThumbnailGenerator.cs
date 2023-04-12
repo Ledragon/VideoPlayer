@@ -102,7 +102,7 @@ namespace VideoPlayer.Ffmpeg
                         process.StartInfo.ArgumentList.Add($"fps=1/{fps.ToString(CultureInfo.InvariantCulture)},tile={cols}x{rows}");
                         process.StartInfo.ArgumentList.Add(fileName);
                         process.StartInfo.RedirectStandardOutput = false;
-                        process.StartInfo.UseShellExecute = true;
+                        process.StartInfo.UseShellExecute = false;
                         process.Start();
                         process.WaitForExit();
                         thumbnails = Path.Combine(outputDir, fileName);
@@ -114,7 +114,7 @@ namespace VideoPlayer.Ffmpeg
             catch (Exception e)
             {
                 this._logger.Error(e);
-                throw;
+                return String.Empty;
             }
         }
     }

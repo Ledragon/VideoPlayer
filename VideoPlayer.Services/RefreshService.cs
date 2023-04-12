@@ -98,24 +98,43 @@ namespace VideoPlayer.Services
                     video.Length = TimeSpan.FromSeconds(Math.Round(Double.Parse(info.format.duration, CultureInfo.InvariantCulture)));
                 }
 
-                video.Thumbnails = this._thumbnailsRepository.GetForVideo(video.Id);
-                if (!video.Thumbnails.Any())
+                //video.Thumbnails = this._thumbnailsRepository.GetForVideo(video.Id);
+                //if (!video.Thumbnails.Any())
+                //{
+                //    //var thumbs = this._ffmpegThumbnailGenerator.GenerateThumbnails(video.FileName, 1);
+                //    //thumbs.ForEach(t =>
+                //    //{
+                //    //    var converted = ToBase64(t);
+                //    //    video.Thumbnails.Add(new Thumbnail { Image = converted });
+                //    //});
+                //}
+
+                if (String.IsNullOrEmpty(video.ContactSheet))
                 {
-                    var thumbs = this._ffmpegThumbnailGenerator.GenerateThumbnails(video.FileName, 1);
-                    thumbs.ForEach(t =>
-                    {
-                        var bytes = File.ReadAllBytes(t);
-                        var converted = Convert.ToBase64String(bytes);
-                        video.Thumbnails.Add(new Thumbnail { Image = converted });
-                    });
+                    var file = File.Exists(video.FileName + ".png") ? video.FileName + ".png" : this._ffmpegThumbnailGenerator.GenerateContactSheet(video.FileName, 3, 4);
+                    video.ContactSheet = ToBase64(file);
                 }
             }
             return video;
         }
 
+        private static String ToBase64(String t)
+        {
+            if (File.Exists(t))
+            {
+                var bytes = File.ReadAllBytes(t);
+                var converted = Convert.ToBase64String(bytes);
+                return converted;
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
         private List<Video> GetVideosToUpdate(List<Video> existing)
         {
-            return existing.Where(v => v.Length == TimeSpan.Zero || !this._thumbnailsRepository.GetForVideo(v.Id).Any()).ToList();
+            return existing.Where(v => v.Length == TimeSpan.Zero || !this._thumbnailsRepository.GetForVideo(v.Id).Any() || String.IsNullOrEmpty(v.ContactSheet)).ToList();
         }
 
         public List<Video> Clean(Directory directory)

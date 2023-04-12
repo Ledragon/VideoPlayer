@@ -1,11 +1,7 @@
 using LeDragon.Log.Standard;
 using Microsoft.EntityFrameworkCore;
-using VideoPlayer.Database.Repository;
-using VideoPlayer.Database.Repository.Contracts;
+using System;
 using VideoPlayer.Database.Repository.SQLite;
-using VideoPlayer.Ffmpeg;
-using VideoPlayer.Helpers;
-using VideoPlayer.Services;
 using VideoPlayer.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,5 +42,17 @@ app.MapDefaultControllerRoute();
 
 app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
+
+
+// Migrate latest database changes during startup
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider
+        .GetRequiredService<VideoPlayerContext>();
+
+    // Here is the migration executed
+    dbContext.Database.Migrate();
+}
+
 
 app.Run();

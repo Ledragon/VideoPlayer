@@ -131,5 +131,7 @@ namespace VideoPlayer.Entities
 
         [XmlIgnore]
         public List<TagVideo> TagVideos { get; set; }
+
+        public String ContactSheet { get; set; }
     }
 }

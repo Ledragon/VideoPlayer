@@ -12,3 +12,4 @@
 [x] Retirer un répertoire de la liste
 [ ] Faire un fichier logs
 [ ] Changer la méthode pour générer les thumbs pour être plus efficace
+[ ] Repérer les vidéos qui n'ont pas de thumb/CS

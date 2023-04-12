@@ -36,6 +36,7 @@ namespace VideoPlayer.Ffmpeg
                 process.StartInfo.ArgumentList.Add("json");
                 process.StartInfo.ArgumentList.Add(filePath);
                 process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.UseShellExecute = false;
                 var isStarted = process.Start();
                 if (isStarted)

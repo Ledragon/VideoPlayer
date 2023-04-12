@@ -37,7 +37,7 @@ namespace VideoPlayer
             try
             {
                 base.OnStartup(e);
-                new LoggingSystemManager().SetPath(Path.Combine(FileSystemHelper.GetDefaultFolder(), "VideoPlayer.log"));
+                LoggingSystemManager.SetPath(Path.Combine(FileSystemHelper.GetDefaultFolder(), "VideoPlayer.log"));
                 var bootstrapper = new Bootstrapper();
                 bootstrapper.Run();
             }

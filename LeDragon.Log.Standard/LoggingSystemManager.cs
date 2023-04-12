@@ -11,7 +11,7 @@ namespace LeDragon.Log.Standard
 {
     public class LoggingSystemManager
     {
-        public void SetPath(String path)
+        public static void SetPath(String path)
         {
             //_writer = new StreamWriter(path);
 

@@ -16,6 +16,7 @@ namespace VideoPlayer.Services
         private readonly ITagsRepository _tagsRepository;
         private readonly IFfprobeInfoExtractor _ffprobeInfoExtractor;
         private readonly IFfmpegThumbnailGenerator _ffmpegThumbnailGenerator;
+        private readonly ILogger _logger;
 
         public RefreshService(IVideoRepository videoRepository, ITagsRepository tagsRepository,
             IFfprobeInfoExtractor ffprobeInfoExtractor, IFfmpegThumbnailGenerator ffmpegThumbnailGenerator)
@@ -24,6 +25,7 @@ namespace VideoPlayer.Services
             this._tagsRepository = tagsRepository;
             this._ffprobeInfoExtractor = ffprobeInfoExtractor;
             this._ffmpegThumbnailGenerator = ffmpegThumbnailGenerator;
+            this._logger = this.Logger();
         }
 
         public List<Video> Load(Directory directory)
@@ -36,7 +38,7 @@ namespace VideoPlayer.Services
             var files = DirectoryHelper.GetVideoFiles(directory.DirectoryPath, directory.IsIncludeSubdirectories)
                             .Where(videoFile => !existing.Contains(videoFile))
                             .ToList();
-            this.Logger().DebugFormat("'{0}' new files found.", files.Count());
+            this._logger.DebugFormat("'{0}' new files found.", files.Count());
             foreach (var videoFile in files)
             {
                 var newVideo = new Video(videoFile)

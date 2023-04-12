@@ -1,3 +1,4 @@
+using LeDragon.Log.Standard;
 using Microsoft.EntityFrameworkCore;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Database.Repository.Contracts;
@@ -7,6 +8,7 @@ using VideoPlayer.Helpers;
 using VideoPlayer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+LoggingSystemManager.SetPath(Path.Combine("./", "VideoPlayer.WebAPI.log"));
 
 // Add services to the container.
 

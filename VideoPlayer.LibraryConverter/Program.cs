@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using VideoPlayer.Database.Repository;
 using VideoPlayer.Database.Repository.SQLite;
 using VideoPlayer.Entities;
@@ -61,6 +62,14 @@ using (var context = new VideoPlayerContext(settings.TargetFile))
         {
             entity.Entity.Videos.Add(v);
             v.Directory = entity.Entity;
+        }
+
+        var cs = v.FileName + ".png";
+        if (File.Exists(cs))
+        {
+            var bytes = File.ReadAllBytes(cs);
+            var converted = Convert.ToBase64String(bytes);
+            v.ContactSheet = converted;
         }
     });
     context.Videos.AddRange(objects.Videos);

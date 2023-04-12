@@ -109,11 +109,11 @@ namespace VideoPlayer.Services
                 //    //});
                 //}
 
-                if (String.IsNullOrEmpty(video.ContactSheet))
-                {
-                    var file = File.Exists(video.FileName + ".png") ? video.FileName + ".png" : this._ffmpegThumbnailGenerator.GenerateContactSheet(video.FileName, 3, 4);
-                    video.ContactSheet = ToBase64(file);
-                }
+                //if (String.IsNullOrEmpty(video.ContactSheet))
+                //{
+                //    var file = File.Exists(video.FileName + ".png") ? video.FileName + ".png" : this._ffmpegThumbnailGenerator.GenerateContactSheet(video.FileName, 3, 4);
+                //    video.ContactSheet = ToBase64(file);
+                //}
             }
             return video;
         }

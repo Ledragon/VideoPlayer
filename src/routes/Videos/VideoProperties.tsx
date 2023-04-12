@@ -1,11 +1,4 @@
-import {
-  Autocomplete,
-  Button,
-  ButtonGroup,
-  Rating,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Autocomplete, Rating, TextField } from '@mui/material';
 import { FormikProps } from 'formik';
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
@@ -27,7 +20,7 @@ const VideoProperties = (props: {
 }) => {
   const { tags, tagVideos, formik, video } = props;
 
-  const [usedTags, setUsedTags] = useState<Tag[]>([]);
+  const [usedTags, setUsedTags] = useState<(Tag | undefined)[]>([]);
   useEffect(() => {
     setUsedTags(
       tagVideos
@@ -37,7 +30,10 @@ const VideoProperties = (props: {
     );
   }, [tags, tagVideos, video]);
 
-  const handleTagsChange = (_event: React.ChangeEvent<any>, value: any[]) => {
+  const handleTagsChange = (
+    _event: React.ChangeEvent<any>,
+    value: any[]
+  ) => {
     setUsedTags(value);
   };
 
@@ -57,20 +53,15 @@ const VideoProperties = (props: {
       />
       <Rating
         value={formik.values.rating}
-        // label="Rating"
         name="rating"
         onChange={formik.handleChange}
-        // fullWidth
-        // margin="dense"
-        // type="number"
         id="rating"
-        // variant="standard"
       />
       <Autocomplete
         multiple
         id="tags"
         options={tags || []}
-        getOptionLabel={(o) => o.value}
+        getOptionLabel={(o) => o?.value || ''}
         onChange={handleTagsChange}
         value={usedTags}
         renderInput={(params) => (

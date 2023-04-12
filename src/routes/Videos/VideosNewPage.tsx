@@ -10,7 +10,8 @@ import {
   useGetTagVideosQuery,
   useUpdateVideoMutation,
   getVideoList,
-  useAddThumbnailsMutation
+  useAddThumbnailsMutation,
+  getTagList
 } from '../../redux';
 import { RootState } from '../../redux/configureStore';
 import Playlist from './Playlist';
@@ -27,13 +28,14 @@ const VideosNewPage = (props: PropType) => {
   const { isLoading, isFetching } = useGetVideosQuery();
   const { data: thumbnails, isLoading: isLoadingThumbnails } =
     useGetThumbnailsQuery();
-  const { data: tags, isLoading: isLoadingTags } = useGetTagsQuery();
+  const { isLoading: isLoadingTags } = useGetTagsQuery();
   const { data: tagVideos, isLoading: isLoadingTagVideos } =
     useGetTagVideosQuery();
   const [updateVideo, result] = useUpdateVideoMutation();
   const [addThumbnails] = useAddThumbnailsMutation();
 
   const videos = useSelector((state: RootState) => getVideoList(state));
+  const tags = useSelector((state: RootState) => getTagList(state));
 
   useEffect(() => {
     setFilteredVideos(videos || []);

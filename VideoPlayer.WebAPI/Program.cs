@@ -53,4 +53,7 @@ app.UseCors();
 app.MapControllers();
 app.MapDefaultControllerRoute();
 
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
+
 app.Run();

@@ -1,1 +1,1 @@
-export const apiUrl = 'http://localhost:5165/api/';
+export const apiUrl = (window as any).config.apiUrl;

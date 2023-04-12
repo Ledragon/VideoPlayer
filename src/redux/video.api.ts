@@ -30,7 +30,7 @@ const videoApi = api.injectEndpoints({
         method: 'PUT',
         body: video
       }),
-      invalidatesTags: ['Videos']
+      invalidatesTags: ['Videos', 'TagVideos']
     })
   })
 });

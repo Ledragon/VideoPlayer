@@ -29,13 +29,17 @@ const VideosNewPage = (props: PropType) => {
   const { data: thumbnails, isLoading: isLoadingThumbnails } =
     useGetThumbnailsQuery();
   const { isLoading: isLoadingTags } = useGetTagsQuery();
-  const { data: tagVideos, isLoading: isLoadingTagVideos } =
+  const { data: tagVideos, isFetching: isLoadingTagVideos } =
     useGetTagVideosQuery();
   const [updateVideo, result] = useUpdateVideoMutation();
   const [addThumbnails] = useAddThumbnailsMutation();
 
   const videos = useSelector((state: RootState) => getVideoList(state));
   const tags = useSelector((state: RootState) => getTagList(state));
+
+  useEffect(() => {
+    console.error(result.error);
+  }, [result.error]);
 
   useEffect(() => {
     setFilteredVideos(videos || []);
@@ -171,6 +175,7 @@ const VideosNewPage = (props: PropType) => {
           video={selectedVideo}
           onSave={handleSave}
           onCancel={handleCancel}
+          error={result.isError ? { message: result.error } : undefined}
         />
       ) : (
         <></>

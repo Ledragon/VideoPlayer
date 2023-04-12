@@ -6,7 +6,8 @@ import {
   DialogTitle,
   Box,
   CircularProgress,
-  Typography
+  Typography,
+  Alert
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
@@ -28,10 +29,12 @@ interface PropType {
   video: Video;
   onCancel: () => void;
   onSave: (v: Video, thumbnails: string[]) => void;
+  error?: { message: any };
 }
 
 const VideoDialog = (props: PropType) => {
-  const { open, video, onSave, onCancel, tags, tagVideos, thumbnails } = props;
+  const { open, video, onSave, onCancel, tags, tagVideos, thumbnails, error } =
+    props;
   const [_, status] = useGenerateThumbnailsMutation({
     fixedCacheKey: video.fileName
   });
@@ -40,11 +43,11 @@ const VideoDialog = (props: PropType) => {
   const formik = useFormik({
     initialValues: {
       title: video.title,
-      rating: video.rating || 0
-      // tags: tagVideos
-      //   ?.filter((tv) => tv.videoId === video.id)
-      //   .map((tv) => tags.find((t) => t.id === tv.tagId))
-      //   .filter((d) => !!d)
+      rating: video.rating || 0,
+      tags: tagVideos
+        ?.filter((tv) => tv.videoId === video.id)
+        .map((tv) => tags.find((t) => t.id === tv.tagId))
+        .filter((d) => !!d)
     },
     onSubmit: (value) => {
       const update = Object.assign({}, video, value);
@@ -106,6 +109,9 @@ const VideoDialog = (props: PropType) => {
             </Box>
           </Box>
           <Box>
+            {!!error ? <Alert severity="error">An error occured. Check console for more information.</Alert> : null}
+          </Box>
+          <Box>
             <Typography variant="caption">{video.fileName}</Typography>
           </Box>
         </DialogContent>
@@ -118,7 +124,9 @@ const VideoDialog = (props: PropType) => {
           </Button>
           <Button
             variant="text"
-            disabled={(!formik.dirty && !selectedThumbnails.length) || !formik.isValid}
+            disabled={
+              (!formik.dirty && !selectedThumbnails.length) || !formik.isValid
+            }
             onClick={formik.submitForm}
           >
             Save

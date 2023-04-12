@@ -15,7 +15,7 @@ const VideoProperties = (props: {
   formik: FormikProps<{
     title: string;
     rating: number;
-    // tags: (Tag | undefined)[];
+    tags: (Tag | undefined)[];
   }>;
 }) => {
   const { tags, tagVideos, formik, video } = props;
@@ -34,7 +34,7 @@ const VideoProperties = (props: {
     _event: React.ChangeEvent<any>,
     value: any[]
   ) => {
-    setUsedTags(value);
+    formik.setFieldValue('tags', value);
   };
 
   return (
@@ -63,7 +63,7 @@ const VideoProperties = (props: {
         options={tags || []}
         getOptionLabel={(o) => o?.value || ''}
         onChange={handleTagsChange}
-        value={usedTags}
+        value={formik.values.tags}
         renderInput={(params) => (
           <TextField
             {...params}

@@ -103,11 +103,12 @@ namespace VideoPlayer.Services
                 }
                 if (!video.Thumbnails.Any())
                 {
-                    //TODO first thumbnail
                     var thumbs = this._ffmpegThumbnailGenerator.GenerateThumbnails(video.FileName, 1);
                     thumbs.ForEach(t =>
                     {
-                        video.Thumbnails.Add(new Thumbnail { Image = t });
+                        var bytes = File.ReadAllBytes(t);
+                        var converted = Convert.ToBase64String(bytes);
+                        video.Thumbnails.Add(new Thumbnail { Image = converted });
                     });
                 }
             }

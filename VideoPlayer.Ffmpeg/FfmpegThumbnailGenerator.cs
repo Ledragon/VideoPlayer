@@ -51,7 +51,7 @@ namespace VideoPlayer.Ffmpeg
                         process.StartInfo.ArgumentList.Add("-vf");
                         
                         Double fps = (Double.Parse(info.format.duration, CultureInfo.InvariantCulture) / count);
-                        process.StartInfo.ArgumentList.Add($"fps=1/{fps.ToString(CultureInfo.InvariantCulture)}");
+                        process.StartInfo.ArgumentList.Add($"fps=1/{fps.ToString(CultureInfo.InvariantCulture)},scale=\"640:-1\"");
 
                         process.StartInfo.ArgumentList.Add($"thumb_{Path.GetFileNameWithoutExtension(videoFilePath)}_%03d.png");
                         process.StartInfo.RedirectStandardOutput = false;
@@ -99,7 +99,7 @@ namespace VideoPlayer.Ffmpeg
                         process.StartInfo.ArgumentList.Add("-i");
                         process.StartInfo.ArgumentList.Add(videoFilePath);
                         process.StartInfo.ArgumentList.Add("-vf");
-                        process.StartInfo.ArgumentList.Add($"fps=1/{fps.ToString(CultureInfo.InvariantCulture)},tile={cols}x{rows}");
+                        process.StartInfo.ArgumentList.Add($"fps=1/{fps.ToString(CultureInfo.InvariantCulture)},tile={cols}x{rows},scale=640:-1");
                         process.StartInfo.ArgumentList.Add(fileName);
                         process.StartInfo.RedirectStandardOutput = false;
                         process.StartInfo.UseShellExecute = false;

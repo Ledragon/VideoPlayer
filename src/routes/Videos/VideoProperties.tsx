@@ -5,7 +5,6 @@ import { TagVideo } from '../../models/TagVideo';
 import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
 import { useEffect, useState } from 'react';
-import getBase64Url from './getBase64Url';
 
 const VideoProperties = (props: {
   video: Video;

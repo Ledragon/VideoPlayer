@@ -38,11 +38,16 @@ const VideosNewPage = (props: PropType) => {
   const tags = useSelector((state: RootState) => getTagList(state));
 
   useEffect(() => {
-    console.error(result.error);
+    if (result?.error) {
+      console.error(result.error);
+    }
   }, [result.error]);
 
   useEffect(() => {
     setFilteredVideos(videos || []);
+    if (selectedVideo) {
+      setSelectedVideo(videos?.find((v) => v.id === selectedVideo.id) || null);
+    }
   }, [videos]);
 
   const handleVideoClick = (video: Video) => {

@@ -7,7 +7,8 @@ import {
   Box,
   CircularProgress,
   Typography,
-  Alert
+  Alert,
+  TextField
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
@@ -22,6 +23,7 @@ import ThumbsImageList from './ThumbsImageList';
 import VideoProperties from './VideoProperties';
 import getBase64Url from './getBase64Url';
 import ContactSheetForm from './ContactSheetForm';
+import CreateTag from './CreateTag';
 
 interface PropType {
   open: boolean;
@@ -114,6 +116,9 @@ const VideoDialog = (props: PropType) => {
                 flexBasis: '50%'
               }}
             >
+              <Box>
+                <CreateTag />
+              </Box>
               <Box sx={{ flexBasis: '50%' }}>
                 <ThumbsImageList thumbs={thumbnails} />
               </Box>
@@ -139,7 +144,10 @@ const VideoDialog = (props: PropType) => {
               </Alert>
             ) : null}
           </Box>
-          <Box>
+          <Box
+            id="info-bar"
+            sx={{ display: 'flex' }}
+          >
             <Typography variant="caption">{video.fileName}</Typography>
           </Box>
         </DialogContent>

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Entities;
 
@@ -20,6 +19,12 @@ namespace VideoPlayer.WebAPI.Controllers
         public List<Tag> Get()
         {
             return this._tagsRepository.Get();
+        }
+
+        [HttpPost]
+        public Tag Add([FromBody] Tag tag)
+        {
+            return this._tagsRepository.Add(tag);
         }
 
     }

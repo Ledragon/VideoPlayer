@@ -20,6 +20,11 @@ try
     var xmlRepo = new FileLibraryRepository();
     var objects = xmlRepo.Load(libraryFile);
     logger.Info($"Converting file {{{libraryFile}}}");
+    if (File.Exists(settings.TargetFile))
+    {
+        logger.Info($"Deleting file {{{settings.TargetFile}}}");
+        File.Delete(settings.TargetFile);
+    }
     using (var context = new VideoPlayerContext(settings.TargetFile))
     {
         context.Database.EnsureCreated();
@@ -34,60 +39,54 @@ try
         var categories = videos
             .GroupBy(v => !String.IsNullOrEmpty(v.Category) ? v.Category : "(empty)")
             .ToDictionary(d => d.Key, d => d.ToList());
-        foreach (var category in categories)
-        {
-            tags.Add(new Tag
-            {
-                Value = category.Key,
-                Videos = category.Value
-            });
-        }
         var byTagDic = videos
             .Where(v => v.Tags != null && v.Tags.Any())
             .SelectMany(v => v.Tags.Where(t => !String.IsNullOrEmpty(t.Value)).Select(t => t.Value))
             .Distinct()
             .ToDictionary(t => t, t => videos.Where(v => v.Tags != null && v.Tags.Any(tag => tag.Value == t)).ToList());
+        videos.ForEach(v =>
+        {
+            if (v.Tags?.Any() != null)
+            {
+                v.Tags.Clear();
+            }
+        });
+        foreach (var category in categories)
+        {
+            var tag = new Tag
+            {
+                Value = category.Key,
+                Videos = category.Value
+            };
+            category.Value.ForEach(v => v.Tags.Add(tag));
+            tags.Add(tag);
+        }
         foreach (var btd in byTagDic)
         {
-            var existing = tags.FirstOrDefault(t => t.Value == btd.Key);
-            if (existing != null)
+            var tag = tags.FirstOrDefault(t => t.Value == btd.Key);
+            if (tag != null)
             {
-                existing.Videos = existing.Videos.Concat(btd.Value).ToList();
+                tag.Videos = tag.Videos.Concat(btd.Value).ToList();
             }
             else
             {
-                tags.Add(new Tag
+                tag = new Tag
                 {
                     Value = btd.Key,
                     Videos = btd.Value
-                });
+                };
+                tags.Add(tag);
             }
+            btd.Value.ForEach(v => v.Tags.Add(tag));
         }
-        //var category = !String.IsNullOrEmpty(v.Category) ? v.Category : "(empty)";
-        //var tag = context.Tags.FirstOrDefault(t => t.Value == category);
-        //if (tag == null)
-        //{
-        //    logger.Info($"Creating tag {{{category}}}");
-        //    tag = new Tag { Value = category, Videos = new List<Video>() };
-        //    tags.Add(tag);
-        //}
-        //if (v.Tags == null)
-        //{
-        //    v.Tags = new List<Tag> { };
-        //}
-        //else
-        //{
-        //    tags.AddRange(v.Tags);
-        //}
-        //v.Tags.Add(tag);
-        //tag.Videos.Add(v);
-        context.Videos.AddRange(objects.Videos);
         if (objects.Videos.Any(v => v.Directory == null))
         {
             logger.Warn($"Some videos could not be mapped to new directory. Aborting");
         }
         else
         {
+            context.Tags.AddRange(tags);
+            context.Videos.AddRange(objects.Videos);
             context.SaveChanges();
         }
     }
@@ -133,13 +132,13 @@ static void CreateVideo(Video v, JsonSettingsFile settings, PathReplacer replace
         logger.Warn($"No directory found for {{{v.FileName}}}");
     }
 
-    //var cs = v.FileName + ".png";
-    //if (File.Exists(cs))
-    //{
-    //    var bytes = File.ReadAllBytes(cs);
-    //    var converted = Convert.ToBase64String(bytes);
-    //    v.ContactSheet = converted;
-    //}
+    var cs = v.FileName + ".png";
+    if (File.Exists(cs))
+    {
+        var bytes = File.ReadAllBytes(cs);
+        var converted = Convert.ToBase64String(bytes);
+        v.ContactSheet = converted;
+    }
 }
 
 static Dictionary<String, EntityEntry<VideoPlayer.Entities.Directory>> CreateDirectories(JsonSettingsFile settings, ObjectsWrapper objects, VideoPlayerContext context, ILogger logger)

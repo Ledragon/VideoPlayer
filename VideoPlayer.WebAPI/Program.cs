@@ -45,14 +45,14 @@ app.MapFallbackToFile("index.html");
 
 
 // Migrate latest database changes during startup
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider
-        .GetRequiredService<VideoPlayerContext>();
+//using (var scope = app.Services.CreateScope())
+//{
+//    var dbContext = scope.ServiceProvider
+//        .GetRequiredService<VideoPlayerContext>();
 
-    // Here is the migration executed
-    dbContext.Database.Migrate();
-}
+//    // Here is the migration executed
+//    dbContext.Database.Migrate();
+//}
 
 
 app.Run();

@@ -5,7 +5,7 @@ namespace VideoPlayer.Services
 {
     public class PathReplacer
     {
-        public void ReplaceDirectory(String sourceDir, String targetDir, Video v)
+        public void ReplaceDirectory(String sourceDir, String targetDir, Video v, String sourceSep = "\\", String targetSep = "/")
         {
             if (!String.IsNullOrEmpty(sourceDir)
             && !String.IsNullOrEmpty(targetDir)
@@ -13,10 +13,10 @@ namespace VideoPlayer.Services
             {
                 v.DirectoryPath = v.DirectoryPath?
                     .Replace(sourceDir, targetDir)
-                    .Replace("\\", "/");
+                    .Replace(sourceSep, targetSep);
                 v.FileName = v.FileName
                     .Replace(sourceDir, targetDir)
-                    .Replace("\\", "/");
+                    .Replace(sourceSep, targetSep);
             }
         }
     }

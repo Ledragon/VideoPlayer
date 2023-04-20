@@ -56,5 +56,6 @@ namespace VideoPlayer.Database.Repository.SQLite
         public DbSet<Thumbnail> Thumbnails { get; set; }
         public DbSet<Directory> Directories { get; set; }
         public DbSet<Playlist> Playlists { get; set; }
+        public DbSet<ContactSheet> ContactSheets { get; set; }
     }
 }

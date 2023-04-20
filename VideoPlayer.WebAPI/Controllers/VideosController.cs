@@ -15,13 +15,16 @@ namespace VideoPlayer.WebAPI.Controllers
         private readonly IVideoRepository _videoRepository;
         private readonly ITagVideoUnitOfWork _tagVideoUnitOfWork;
         private readonly IFfmpegThumbnailGenerator _ffmpegThumbnailGenerator;
+        private readonly IContactSheetsRepository _contactSheetsRepository;
 
-        public VideosController(ILogger<VideosController> logger, IVideoRepository videoRepository, ITagVideoUnitOfWork tagVideoUnitOfWork, IFfmpegThumbnailGenerator ffmpegThumbnailGenerator)
+        public VideosController(ILogger<VideosController> logger, IVideoRepository videoRepository, ITagVideoUnitOfWork tagVideoUnitOfWork, IFfmpegThumbnailGenerator ffmpegThumbnailGenerator,
+            IContactSheetsRepository contactSheetsRepository)
         {
             this._logger = logger;
             this._videoRepository = videoRepository;
             this._tagVideoUnitOfWork = tagVideoUnitOfWork;
             this._ffmpegThumbnailGenerator = ffmpegThumbnailGenerator;
+            this._contactSheetsRepository = contactSheetsRepository;
         }
 
         [HttpGet]
@@ -38,13 +41,25 @@ namespace VideoPlayer.WebAPI.Controllers
         }
 
         [HttpPut("contactSheet")]
-        public Video CreateContactSheet(Params toto)
+        public async Task<ContactSheet> CreateContactSheet(Params toto)
         {
             var video = this._videoRepository.Get(toto.VideoId);
             var cs = this._ffmpegThumbnailGenerator.GenerateContactSheet(video.FileName, toto.NRows, toto.NCols);
             var b64 = ToBase64(cs);
-            video.ContactSheet = b64;
-            return this._videoRepository.Update(video);
+            var contactSheet = await this._contactSheetsRepository.GetForVideo(toto.VideoId);
+            if (contactSheet != null)
+            {
+                contactSheet.Image = b64;
+                contactSheet = await this._contactSheetsRepository.Update(contactSheet);
+            }
+            else
+            {
+                contactSheet = new ContactSheet { Image = b64, Video = video, VideoId = video.Id }; ;
+                contactSheet = await this._contactSheetsRepository.Add(contactSheet);
+            }
+            return contactSheet;
+            //video.ContactSheet = b64;
+            //return this._videoRepository.Update(video);
         }
 
         [HttpGet("/api/videos/metadata")]

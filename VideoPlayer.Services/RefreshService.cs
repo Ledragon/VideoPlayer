@@ -121,7 +121,10 @@ namespace VideoPlayer.Services
 
         private List<Video> GetVideosToUpdate(List<Video> existing)
         {
-            return existing.Where(v => v.Length == TimeSpan.Zero || !this._thumbnailsRepository.GetForVideo(v.Id).Any() || String.IsNullOrEmpty(v.ContactSheet)).ToList();
+            return existing.Where(v => v.Length == TimeSpan.Zero 
+            || !this._thumbnailsRepository.GetForVideo(v.Id).Any() 
+            //|| String.IsNullOrEmpty(v.ContactSheet)
+            ).ToList();
         }
 
         public List<Video> Clean(Directory directory)

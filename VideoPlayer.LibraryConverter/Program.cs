@@ -137,7 +137,7 @@ static void CreateVideo(Video v, JsonSettingsFile settings, PathReplacer replace
     {
         var bytes = File.ReadAllBytes(cs);
         var converted = Convert.ToBase64String(bytes);
-        v.ContactSheet = converted;
+        v.ContactSheet = new ContactSheet { Image = converted };
     }
 }
 

@@ -22,6 +22,7 @@ namespace VideoPlayer.WebAPI
                             .AddTransient<IVideoRepository, SqliteVideoRepository>()
                             .AddTransient<ITagsRepository, SqliteTagsRepository>()
                             .AddTransient<ITagVideoRepository, SqliteTagVideoRepository>()
+                            .AddTransient<IContactSheetsRepository, SqliteContactSheetsRepository>()
                             .AddTransient<ITagVideoUnitOfWork, TagVideoUnitOfWork>();
         }
     }

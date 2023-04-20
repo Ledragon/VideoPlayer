@@ -1,5 +1,6 @@
 using LeDragon.Log.Standard;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using System;
 using VideoPlayer.Database.Repository.SQLite;
 using VideoPlayer.WebAPI;
@@ -40,19 +41,34 @@ app.UseCors();
 app.MapControllers();
 app.MapDefaultControllerRoute();
 
-app.UseStaticFiles();
+//var cachePath = Path.Combine(builder.Environment.ContentRootPath, "cache");
+//if (!Directory.Exists(cachePath))
+//{
+//    Directory.CreateDirectory(cachePath);
+//    Directory.CreateDirectory(Path.Combine(cachePath, "Thumbnails"));
+//    Directory.CreateDirectory(Path.Combine(cachePath, "ContactSheets"));
+//}
+
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    FileProvider = new PhysicalFileProvider(cachePath),
+//    RequestPath = "/cache"
+//});
 app.MapFallbackToFile("index.html");
 
 
 // Migrate latest database changes during startup
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dbContext = scope.ServiceProvider
-//        .GetRequiredService<VideoPlayerContext>();
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider
+        .GetRequiredService<VideoPlayerContext>();
 
-//    // Here is the migration executed
-//    dbContext.Database.Migrate();
-//}
+    // Here is the migration executed
+    if (dbContext.Database.GetPendingMigrations().Any())
+    {
+        dbContext.Database.Migrate();
+    }
+}
 
 
 app.Run();

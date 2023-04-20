@@ -1,5 +1,5 @@
-import { Box, LinearProgress, Paper, alpha } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Box, LinearProgress, Pagination, Paper, alpha } from '@mui/material';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
@@ -19,11 +19,15 @@ import TagChips from './TagChips';
 import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
 
+const pageSize = 24;
+
 interface PropType {}
 const VideosNewPage = (props: PropType) => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
+  const [currentVideos, setCurrentVideos] = useState<Video[]>([]);
+  const [page, setPage] = useState<number>(1);
 
   const { isLoading, isFetching } = useGetVideosQuery();
   const { data: thumbnails, isLoading: isLoadingThumbnails } =
@@ -36,6 +40,13 @@ const VideosNewPage = (props: PropType) => {
 
   const videos = useSelector((state: RootState) => getVideoList(state));
   const tags = useSelector((state: RootState) => getTagList(state));
+
+  const pageCount = useMemo(() => {
+    const pc = Math.ceil(filteredVideos?.length / pageSize);
+    setCurrentVideos(filteredVideos.slice(0, pageSize));
+    setPage(1);
+    return pc;
+  }, [filteredVideos]);
 
   useEffect(() => {
     if (result?.error) {
@@ -90,6 +101,13 @@ const VideosNewPage = (props: PropType) => {
   const handleCancel = () => {
     setSelectedVideo(null);
   };
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setPage(page);
+    setCurrentVideos(videos.slice((page - 1) * pageSize, pageSize * page));
+  };
 
   const isLoadingAny =
     isLoading ||
@@ -120,7 +138,9 @@ const VideosNewPage = (props: PropType) => {
         sx={{ flex: '0 0 auto' }}
       >
         <TagChips
-          selectedTags={selectedTags}
+          selectedTags={selectedTags.filter((t) =>
+            tagVideos?.filter((tv) => tv.tagId === t.id)?.length
+          )}
           tags={tags || []}
           onTagClick={handleTagClick}
         ></TagChips>
@@ -137,18 +157,34 @@ const VideosNewPage = (props: PropType) => {
         <Box
           sx={{
             flexBasis: '80%',
-            overflowY: 'auto',
             flexGrow: 0,
             flexShrink: 0,
-            p: 1
+            flexDirection: 'column',
+            display: 'flex'
           }}
-          id="videos-images-box"
         >
-          <VideosImageList
-            videos={filteredVideos}
-            thumbnails={thumbnails || []}
-            onClick={handleVideoClick}
-          />
+          <Box
+            sx={{
+              overflowY: 'auto',
+              flexGrow: 1,
+              flexShrink: 1,
+              p: 1
+            }}
+            id="videos-images-box"
+          >
+            <VideosImageList
+              videos={currentVideos}
+              thumbnails={thumbnails || []}
+              onClick={handleVideoClick}
+            />
+          </Box>
+          <Box sx={{ flexBasis: 'auto' }}>
+            <Pagination
+              count={pageCount}
+              page={page}
+              onChange={handlePageChange}
+            />
+          </Box>
         </Box>
         <Box
           sx={{

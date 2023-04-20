@@ -54,6 +54,7 @@ app.MapDefaultControllerRoute();
 //    FileProvider = new PhysicalFileProvider(cachePath),
 //    RequestPath = "/cache"
 //});
+app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
 
 

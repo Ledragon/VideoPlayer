@@ -138,10 +138,12 @@ const VideosNewPage = (props: PropType) => {
         sx={{ flex: '0 0 auto' }}
       >
         <TagChips
-          selectedTags={selectedTags.filter((t) =>
-            tagVideos?.filter((tv) => tv.tagId === t.id)?.length
-          )}
-          tags={tags || []}
+          selectedTags={selectedTags}
+          tags={
+            tags.filter(
+              (t) => tagVideos?.filter((tv) => tv.tagId === t.id)?.length
+            ) || []
+          }
           onTagClick={handleTagClick}
         ></TagChips>
       </Box>

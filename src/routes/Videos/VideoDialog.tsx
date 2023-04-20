@@ -8,7 +8,8 @@ import {
   CircularProgress,
   Typography,
   Alert,
-  TextField
+  TextField,
+  Skeleton
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
@@ -16,7 +17,10 @@ import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
-import { useGenerateThumbnailsMutation } from '../../redux';
+import {
+  useGenerateThumbnailsMutation,
+  useGetContactSheetForVideoQuery
+} from '../../redux';
 import GeneratedThumbnails from './GeneratedThumbnails';
 import ThumbnailsGenerator from './ThumbnailsGenerator';
 import ThumbsImageList from './ThumbsImageList';
@@ -43,6 +47,9 @@ const VideoDialog = (props: PropType) => {
     fixedCacheKey: video.fileName
   });
   const [selectedThumbnails, setSelectedThumbnails] = useState<string[]>([]);
+  const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(
+    video.id
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -89,7 +96,13 @@ const VideoDialog = (props: PropType) => {
         {/* <form onSubmit={formik.handleSubmit}> */}
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
-            <Box sx={{ flexBasis: '50%' }}>
+            <Box
+              sx={{
+                flexBasis: '50%',
+                display: 'flex',
+                flexDirection: 'column'
+              }}
+            >
               <VideoProperties
                 formik={formik}
                 tags={tags}
@@ -97,14 +110,26 @@ const VideoDialog = (props: PropType) => {
                 video={video}
                 onSubmit={handleSave}
               />
-
-              <img
-                src={video.contactSheet ? getBase64Url(video.contactSheet) : ''}
-                style={{
-                  flexGrow: 1,
-                  width: '100%'
-                }}
-              ></img>
+              {isLoading ? (
+                <Skeleton
+                  variant="rounded"
+                  sx={{
+                    flexGrow: 1,
+                    width: '100%'
+                  }}
+                />
+              ) : null}
+              {contactSheet && !(isLoading) ? (
+                <img
+                  src={getBase64Url(contactSheet.image)}
+                  style={{
+                    flexGrow: 1,
+                    width: '100%'
+                  }}
+                ></img>
+              ) : (
+                <></>
+              )}
               <Box sx={{ display: 'flex' }}>
                 <ContactSheetForm video={video} />
               </Box>

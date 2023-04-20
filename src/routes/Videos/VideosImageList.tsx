@@ -36,7 +36,7 @@ const VideosImageList = (props: PropType) => {
             image={
               currentThumbs.length
                 ? currentThumbs[0].image
-                : v.contactSheet || undefined
+                : undefined
             }
             onInfoClick={onClick}
             onAddToPlaylist={handleaAddToPlaylist}

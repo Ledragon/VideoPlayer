@@ -41,7 +41,10 @@ const videoApi = api.injectEndpoints({
         method: 'PUT',
         body: params
       }),
-      invalidatesTags: ['Videos']
+      invalidatesTags: (a, b, c, d) => [
+        'Videos',
+        { type: 'ContactSheets', id: c.videoId }
+      ]
     })
   })
 });
@@ -56,4 +59,8 @@ export const {
   (state) => videoSelectors(state) ?? initialState
 );
 
-export const { useGetVideosQuery, useUpdateVideoMutation, useCreateContactSheetMutation } = videoApi;
+export const {
+  useGetVideosQuery,
+  useUpdateVideoMutation,
+  useCreateContactSheetMutation
+} = videoApi;

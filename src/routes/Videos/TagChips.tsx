@@ -17,8 +17,11 @@ const TagChips = ({
         p: 1,
         m: 1,
         flexGrow: 1,
-        backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.6)
+        backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.6),
+        overflow: 'auto',
+        display: 'flex'
       }}
+
     >
       {tags?.map((d) => (
         <TagChip

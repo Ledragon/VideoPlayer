@@ -19,7 +19,7 @@ import TagChips from './TagChips';
 import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
 
-const pageSize = 24;
+const pageSize = 8;
 
 interface PropType {}
 const VideosNewPage = (props: PropType) => {
@@ -106,7 +106,9 @@ const VideosNewPage = (props: PropType) => {
     page: number
   ) => {
     setPage(page);
-    setCurrentVideos(videos.slice((page - 1) * pageSize, pageSize * page));
+    setCurrentVideos(
+      filteredVideos.slice((page - 1) * pageSize, pageSize * page)
+    );
   };
 
   const isLoadingAny =
@@ -170,7 +172,7 @@ const VideosNewPage = (props: PropType) => {
               overflowY: 'auto',
               flexGrow: 1,
               flexShrink: 1,
-              p: 1
+              mx: 1
             }}
             id="videos-images-box"
           >

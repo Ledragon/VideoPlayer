@@ -50,7 +50,7 @@ const VideoImageItem = ({
       <img
         src={image ? getBase64Url(image) : ''}
         style={{
-          maxHeight: '240px'
+          maxHeight: '200px'
         }}
       ></img>
       {hovered ? (

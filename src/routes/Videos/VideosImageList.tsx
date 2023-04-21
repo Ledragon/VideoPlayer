@@ -24,7 +24,7 @@ const VideosImageList = (props: PropType) => {
       cols={4}
       gap={12}
       sx={{}}
-      rowHeight={240}
+      rowHeight={200}
     >
       {videos?.map((v, i) => {
         const currentThumbs =

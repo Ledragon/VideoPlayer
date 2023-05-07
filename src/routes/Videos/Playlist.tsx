@@ -1,10 +1,8 @@
 import {
   Box,
-  Button,
   IconButton,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemText,
   TextField
 } from '@mui/material';
@@ -20,7 +18,12 @@ interface PropType {}
 
 const Playlist = (props: PropType) => {
   const [objectUrl, setObjectUrl] = useState<string>('');
-  const [fileName, setFileName] = useState<string>('playlist');
+  const date = new Date();
+  const [fileName, setFileName] = useState<string>(
+    `${date.getFullYear().toFixed(0)}-${date.getMonth().toFixed(0)}-${date
+      .getDate()
+      .toFixed(0)}`
+  );
   const dispatch = useDispatch();
   const playlistVideos = useSelector(
     (state: RootState) => state.playlist.videos

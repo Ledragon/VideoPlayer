@@ -4,6 +4,7 @@ import {
   IconButton,
   List,
   ListItem,
+  ListItemAvatar,
   ListItemText,
   TextField
 } from '@mui/material';
@@ -61,7 +62,7 @@ const Playlist = (props: PropType) => {
           <DownloadForOfflineOutlinedIcon />
         </IconButton>
       </Box>
-      <List>
+      <List dense>
         {playlistVideos.map((d: number) => (
           <ListItem
             key={d}

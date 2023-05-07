@@ -1,4 +1,12 @@
-import { Box, LinearProgress, Pagination, Paper, alpha } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  LinearProgress,
+  Pagination,
+  Paper,
+  TextField,
+  alpha
+} from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Tag } from '../../models/Tag';
@@ -67,17 +75,39 @@ const VideosNewPage = (props: PropType) => {
     }
   };
 
-  const handleTagClick = (tag: Tag) => {
-    let newSelectedTags: Tag[];
-    if (selectedTags.indexOf(tag) < 0) {
-      newSelectedTags = selectedTags.concat([tag]);
-    } else {
-      newSelectedTags = selectedTags.map((d) => d);
-      newSelectedTags.splice(selectedTags.indexOf(tag), 1);
-    }
-    setSelectedTags(newSelectedTags);
-    if (newSelectedTags.length) {
-      const st = newSelectedTags.map((d) => d.id);
+  // const handleTagClick = (tag: Tag) => {
+  //   let newSelectedTags: Tag[];
+  //   if (selectedTags.indexOf(tag) < 0) {
+  //     newSelectedTags = selectedTags.concat([tag]);
+  //   } else {
+  //     newSelectedTags = selectedTags.map((d) => d);
+  //     newSelectedTags.splice(selectedTags.indexOf(tag), 1);
+  //   }
+  //   setSelectedTags(newSelectedTags);
+  //   if (newSelectedTags.length) {
+  //     const st = newSelectedTags.map((d) => d.id);
+  //     const ftv =
+  //       tagVideos
+  //         ?.filter((d) => st.indexOf(d.tagId) >= 0)
+  //         .map((d) => d.videoId) || [];
+  //     const fv = videos?.filter((v) => ftv.indexOf(v.id) >= 0);
+  //     setFilteredVideos(fv || []);
+  //   } else {
+  //     setFilteredVideos(videos || []);
+  //   }
+  // };
+
+  const handleTagsChange = (_e: any, values: Tag[]) => {
+    // let newSelectedTags: Tag[];
+    // if (selectedTags.indexOf(tag) < 0) {
+    //   newSelectedTags = selectedTags.concat([tag]);
+    // } else {
+    //   newSelectedTags = selectedTags.map((d) => d);
+    //   newSelectedTags.splice(selectedTags.indexOf(tag), 1);
+    // }
+    setSelectedTags(values);
+    if (values.length) {
+      const st = values.map((d) => d.id);
       const ftv =
         tagVideos
           ?.filter((d) => st.indexOf(d.tagId) >= 0)
@@ -139,7 +169,24 @@ const VideosNewPage = (props: PropType) => {
         id="tags-chips"
         sx={{ flex: '0 0 auto' }}
       >
-        <TagChips
+        <Autocomplete
+          multiple
+          id="tags"
+          options={tags || []}
+          getOptionLabel={(o) => o?.value || ''}
+          onChange={handleTagsChange}
+          value={selectedTags}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              variant="standard"
+              label="Tags"
+              placeholder="Tags"
+              margin="dense"
+            />
+          )}
+        ></Autocomplete>
+        {/* <TagChips
           selectedTags={selectedTags}
           tags={
             tags.filter(
@@ -147,7 +194,7 @@ const VideosNewPage = (props: PropType) => {
             ) || []
           }
           onTagClick={handleTagClick}
-        ></TagChips>
+        ></TagChips> */}
       </Box>
       <Box
         sx={{

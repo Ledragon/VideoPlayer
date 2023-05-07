@@ -27,7 +27,7 @@ import TagChips from './TagChips';
 import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
 
-const pageSize = 8;
+// const pageSize = 8;
 
 interface PropType {}
 const VideosNewPage = (props: PropType) => {
@@ -36,6 +36,7 @@ const VideosNewPage = (props: PropType) => {
   const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
   const [currentVideos, setCurrentVideos] = useState<Video[]>([]);
   const [page, setPage] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(8);
 
   const { isLoading, isFetching } = useGetVideosQuery();
   const { data: thumbnails, isLoading: isLoadingThumbnails } =
@@ -229,12 +230,19 @@ const VideosNewPage = (props: PropType) => {
               onClick={handleVideoClick}
             />
           </Box>
-          <Box sx={{ flexBasis: 'auto' }}>
+          <Box sx={{ flexBasis: 'auto', display: 'flex' }}>
             <Pagination
               count={pageCount}
               page={page}
               onChange={handlePageChange}
+              sx={{ flexGrow: 1 }}
             />
+            {/* <TextField
+              type="number"
+              margin="dense"
+              value={pageSize}
+              onChange={(e) => setPageSize(parseInt(e.target.value))}
+            /> */}
           </Box>
         </Box>
         <Box

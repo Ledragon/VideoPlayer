@@ -39,8 +39,8 @@ const VideosNewPage = (props: PropType) => {
   const [pageSize, setPageSize] = useState<number>(8);
 
   const { isLoading, isFetching } = useGetVideosQuery();
-  const { data: thumbnails, isLoading: isLoadingThumbnails } =
-    useGetThumbnailsQuery();
+  // const { data: thumbnails, isLoading: isLoadingThumbnails } =
+  //   useGetThumbnailsQuery();
   const { isLoading: isLoadingTags } = useGetTagsQuery();
   const { data: tagVideos, isFetching: isLoadingTagVideos } =
     useGetTagVideosQuery();
@@ -146,8 +146,8 @@ const VideosNewPage = (props: PropType) => {
     isLoading ||
     isFetching ||
     isLoadingTagVideos ||
-    isLoadingTags ||
-    isLoadingThumbnails;
+    isLoadingTags;
+    // ||isLoadingThumbnails;
   return (
     <Box
       sx={{
@@ -226,7 +226,7 @@ const VideosNewPage = (props: PropType) => {
           >
             <VideosImageList
               videos={currentVideos}
-              thumbnails={thumbnails || []}
+              // thumbnails={thumbnails || []}
               onClick={handleVideoClick}
             />
           </Box>
@@ -269,9 +269,9 @@ const VideosNewPage = (props: PropType) => {
           tagVideos={(tagVideos || []).filter(
             (v) => v.videoId === selectedVideo?.id
           )}
-          thumbnails={(thumbnails || []).filter(
-            (t) => t.videoId === selectedVideo?.id
-          )}
+          // thumbnails={(thumbnails || []).filter(
+          //   (t) => t.videoId === selectedVideo?.id
+          // )}
           video={selectedVideo}
           onSave={handleSave}
           onCancel={handleCancel}

@@ -9,20 +9,22 @@ import {
 import { Video } from '../../models/Video';
 import getBase64Url from './getBase64Url';
 import { useState } from 'react';
+import { useGetThumbnailsForVideoQuery } from '../../redux';
 
 interface PropType {
   video: Video;
-  image?: string;
+  // image?: string;
   onInfoClick?: (video: Video) => void;
   onAddToPlaylist?: (video: Video) => void;
 }
 
 const VideoImageItem = ({
   video,
-  image,
+  // image,
   onInfoClick,
   onAddToPlaylist
 }: PropType) => {
+  const { data: thumbs } = useGetThumbnailsForVideoQuery(video.id);
   const [hovered, setHovered] = useState<boolean>(false);
 
   const onAddToPlaylistButtonClick = () => {
@@ -42,6 +44,7 @@ const VideoImageItem = ({
   const handleMouseLeave = () => {
     setHovered(false);
   };
+  const image = thumbs?.length ? thumbs[0].image: undefined;
   return (
     <ImageListItem
       onMouseEnter={handleMouseEnter}

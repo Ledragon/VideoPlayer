@@ -19,7 +19,8 @@ import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
 import {
   useGenerateThumbnailsMutation,
-  useGetContactSheetForVideoQuery
+  useGetContactSheetForVideoQuery,
+  useGetThumbnailsForVideoQuery
 } from '../../redux';
 import GeneratedThumbnails from './GeneratedThumbnails';
 import ThumbnailsGenerator from './ThumbnailsGenerator';
@@ -33,7 +34,7 @@ interface PropType {
   open: boolean;
   tags: Tag[];
   tagVideos: TagVideo[];
-  thumbnails: Thumbnail[];
+  // thumbnails: Thumbnail[];
   video: Video;
   onCancel: () => void;
   onSave: (v: Video, thumbnails: string[]) => void;
@@ -41,8 +42,7 @@ interface PropType {
 }
 
 const VideoDialog = (props: PropType) => {
-  const { open, video, onSave, onCancel, tags, tagVideos, thumbnails, error } =
-    props;
+  const { open, video, onSave, onCancel, tags, tagVideos, error } = props;
   const [_, status] = useGenerateThumbnailsMutation({
     fixedCacheKey: video.fileName
   });
@@ -50,6 +50,7 @@ const VideoDialog = (props: PropType) => {
   const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(
     video.id
   );
+  const { data: thumbnails } = useGetThumbnailsForVideoQuery(video.id);
 
   const formik = useFormik({
     initialValues: {
@@ -119,7 +120,7 @@ const VideoDialog = (props: PropType) => {
                   }}
                 />
               ) : null}
-              {contactSheet && !(isLoading) ? (
+              {contactSheet && !isLoading ? (
                 <img
                   src={getBase64Url(contactSheet.image)}
                   style={{
@@ -145,7 +146,7 @@ const VideoDialog = (props: PropType) => {
                 <CreateTag />
               </Box>
               <Box sx={{ flexBasis: '50%' }}>
-                <ThumbsImageList thumbs={thumbnails} />
+                <ThumbsImageList thumbs={thumbnails || []} />
               </Box>
               <Box sx={{ flexBasis: '50%' }}>
                 <ThumbnailsGenerator video={video} />

@@ -6,13 +6,13 @@ import { useDispatch } from 'react-redux';
 import { addVideo } from '../../redux/playlist.slice';
 
 interface PropType {
-  thumbnails: Thumbnail[];
+  // thumbnails: Thumbnail[];
   videos: Video[];
   onClick?: (v: Video) => void;
 }
 
 const VideosImageList = (props: PropType) => {
-  const { thumbnails, videos, onClick } = props;
+  const { videos, onClick } = props;
   const dispatch = useDispatch();
 
   const handleaAddToPlaylist = (v: Video) => {
@@ -27,17 +27,12 @@ const VideosImageList = (props: PropType) => {
       rowHeight={200}
     >
       {videos?.map((v, i) => {
-        const currentThumbs =
-          thumbnails?.filter((t) => t.videoId === v.id) || [];
+        // const currentThumbs =
+        //   thumbnails?.filter((t) => t.videoId === v.id) || [];
         return (
           <VideoImageItem
             key={i}
             video={v}
-            image={
-              currentThumbs.length
-                ? currentThumbs[0].image
-                : undefined
-            }
             onInfoClick={onClick}
             onAddToPlaylist={handleaAddToPlaylist}
           />

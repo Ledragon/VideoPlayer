@@ -9,6 +9,12 @@ const thumbnailApi = api.injectEndpoints({
         return [{ type: 'Thumbnails', id: 'LIST' }];
       }
     }),
+    getThumbnailsForVideo: builder.query<Thumbnail[], number>({
+      query: (videoId) => ({ url: 'thumbnails/forVideo', params: { videoId } }),
+      providesTags: () => {
+        return [{ type: 'Thumbnails', id: 'LIST' }];
+      }
+    }),
     generateThumbnails: builder.mutation<
       string[],
       { filePath: string; count: number }
@@ -45,6 +51,7 @@ const thumbnailApi = api.injectEndpoints({
 export const {
   useGenerateThumbnailsMutation,
   useGetThumbnailsQuery,
+  useGetThumbnailsForVideoQuery,
   useAddThumbnailsMutation,
   useDeleteThumbnailMutation
 } = thumbnailApi;

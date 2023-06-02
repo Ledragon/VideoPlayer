@@ -65,10 +65,10 @@ using (var scope = app.Services.CreateScope())
         .GetRequiredService<VideoPlayerContext>();
 
     // Here is the migration executed
-    if (dbContext.Database.GetPendingMigrations().Any())
-    {
-        dbContext.Database.Migrate();
-    }
+    //if (dbContext.Database.GetPendingMigrations().Any())
+    //{
+    //    dbContext.Database.Migrate();
+    //}
 }
 
 

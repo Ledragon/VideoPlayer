@@ -36,7 +36,7 @@ const VideosNewPage = (props: PropType) => {
   const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
   const [currentVideos, setCurrentVideos] = useState<Video[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(8);
+  const [pageSize, setPageSize] = useState<number>(1e6);
 
   const { isLoading, isFetching } = useGetVideosQuery();
   // const { data: thumbnails, isLoading: isLoadingThumbnails } =
@@ -132,6 +132,7 @@ const VideosNewPage = (props: PropType) => {
   const handleCancel = () => {
     setSelectedVideo(null);
   };
+  
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     page: number
@@ -147,7 +148,6 @@ const VideosNewPage = (props: PropType) => {
     isFetching ||
     isLoadingTagVideos ||
     isLoadingTags;
-    // ||isLoadingThumbnails;
   return (
     <Box
       sx={{
@@ -230,20 +230,14 @@ const VideosNewPage = (props: PropType) => {
               onClick={handleVideoClick}
             />
           </Box>
-          <Box sx={{ flexBasis: 'auto', display: 'flex' }}>
+          {/* <Box sx={{ flexBasis: 'auto', display: 'flex' }}>
             <Pagination
               count={pageCount}
               page={page}
               onChange={handlePageChange}
               sx={{ flexGrow: 1 }}
             />
-            {/* <TextField
-              type="number"
-              margin="dense"
-              value={pageSize}
-              onChange={(e) => setPageSize(parseInt(e.target.value))}
-            /> */}
-          </Box>
+          </Box> */}
         </Box>
         <Box
           sx={{

@@ -1,29 +1,23 @@
 import InfoIcon from '@mui/icons-material/Info';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import {
-  Box,
+  Chip,
   IconButton,
   ImageListItem,
   ImageListItemBar
 } from '@mui/material';
 import { Video } from '../../models/Video';
 import getBase64Url from './getBase64Url';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useGetThumbnailsForVideoQuery } from '../../redux';
 
 interface PropType {
   video: Video;
-  // image?: string;
   onInfoClick?: (video: Video) => void;
   onAddToPlaylist?: (video: Video) => void;
 }
 
-const VideoImageItem = ({
-  video,
-  // image,
-  onInfoClick,
-  onAddToPlaylist
-}: PropType) => {
+const VideoImageItem = ({ video, onInfoClick, onAddToPlaylist }: PropType) => {
   const { data: thumbs } = useGetThumbnailsForVideoQuery(video.id);
   const [hovered, setHovered] = useState<boolean>(false);
 
@@ -32,6 +26,7 @@ const VideoImageItem = ({
       onAddToPlaylist(video);
     }
   };
+
   const onInfoButtonClick = () => {
     if (onInfoClick) {
       onInfoClick(video);
@@ -41,10 +36,20 @@ const VideoImageItem = ({
   const handleMouseEnter = () => {
     setHovered(true);
   };
+
   const handleMouseLeave = () => {
     setHovered(false);
   };
-  const image = thumbs?.length ? thumbs[0].image: undefined;
+
+  const image = thumbs?.length ? thumbs[0].image : undefined;
+
+  const formattedDate = useMemo(() => {
+    const date = new Date(video.dateAdded);
+    return `${
+      video.numberOfViews
+    } views - added on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  }, [video]);
+
   return (
     <ImageListItem
       onMouseEnter={handleMouseEnter}
@@ -53,9 +58,13 @@ const VideoImageItem = ({
       <img
         src={image ? getBase64Url(image) : ''}
         style={{
-          maxHeight: '200px'
+          maxHeight: '250px'
         }}
       ></img>
+      <Chip
+        label={video.length}
+        sx={{ position: 'absolute', right: 0, bottom: 70 }}
+      ></Chip>
       {hovered ? (
         <ImageListItemBar
           position="top"
@@ -72,7 +81,7 @@ const VideoImageItem = ({
       ) : null}
       <ImageListItemBar
         title={video.title}
-        subtitle={video.length}
+        subtitle={formattedDate}
         actionIcon={
           <>
             {hovered ? (

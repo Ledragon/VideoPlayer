@@ -3,6 +3,8 @@ import { Video } from '../../models/Video';
 import VideoImageItem from './VideoImageItem';
 import { useDispatch } from 'react-redux';
 import { addVideo } from '../../redux/playlist.slice';
+import { Virtuoso } from 'react-virtuoso';
+import { forwardRef } from 'react';
 
 interface PropType {
   videos: Video[];
@@ -18,23 +20,35 @@ const VideosImageList = (props: PropType) => {
   };
 
   return (
-    <ImageList
-      cols={3}
-      gap={12}
-      sx={{}}
-      rowHeight={250}
-    >
-      {videos?.map((v, i) => {
+    <Virtuoso
+      // data={videos}
+      totalCount={videos.length}
+      components={{
+        List: forwardRef(({ style, children }, ref) => {
+          return (
+            <ImageList
+              cols={3}
+              gap={12}
+              rowHeight={250}
+              style={{ ...style }}
+              ref={ref}
+            >
+              {children}
+            </ImageList>
+          );
+        })
+      }}
+      itemContent={(index, data) => {
         return (
           <VideoImageItem
-            key={i}
-            video={v}
+            key={index}
+            video={videos[index]}
             onInfoClick={onClick}
             onAddToPlaylist={handleaAddToPlaylist}
           />
         );
-      })}
-    </ImageList>
+      }}
+    ></Virtuoso>
   );
 };
 

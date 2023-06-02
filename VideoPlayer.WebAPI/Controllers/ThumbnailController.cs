@@ -23,6 +23,12 @@ namespace VideoPlayer.WebAPI.Controllers
             return this._thumbnailsRepository.Get();
         }
 
+        [HttpGet("forVideo")]
+        public List<Thumbnail> Get([FromQuery] Int32 videoId)
+        {
+            return this._thumbnailsRepository.GetForVideo(videoId);
+        }
+
         [HttpGet("generate")]
         public List<String> Generate([FromQuery] String filePath, [FromQuery] Int32 count)
         {

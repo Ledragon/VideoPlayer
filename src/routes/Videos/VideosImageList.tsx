@@ -3,7 +3,7 @@ import { Video } from '../../models/Video';
 import VideoImageItem from './VideoImageItem';
 import { useDispatch } from 'react-redux';
 import { addVideo } from '../../redux/playlist.slice';
-import { Virtuoso } from 'react-virtuoso';
+import { Virtuoso, VirtuosoGrid } from 'react-virtuoso';
 import { forwardRef } from 'react';
 
 interface PropType {
@@ -20,14 +20,14 @@ const VideosImageList = (props: PropType) => {
   };
 
   return (
-    <Virtuoso
+    <VirtuosoGrid
       // data={videos}
       totalCount={videos.length}
       components={{
         List: forwardRef(({ style, children }, ref) => {
           return (
             <ImageList
-              cols={3}
+              cols={4}
               gap={12}
               rowHeight={250}
               style={{ ...style }}
@@ -48,7 +48,7 @@ const VideosImageList = (props: PropType) => {
           />
         );
       }}
-    ></Virtuoso>
+    ></VirtuosoGrid>
   );
 };
 

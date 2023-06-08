@@ -8,7 +8,6 @@ import {
   CircularProgress,
   Typography,
   Alert,
-  TextField,
   Skeleton,
   IconButton
 } from '@mui/material';
@@ -38,7 +37,6 @@ interface PropType {
   open: boolean;
   tags: Tag[];
   tagVideos: TagVideo[];
-  // thumbnails: Thumbnail[];
   video: Video;
   onCancel: () => void;
   onSave: (v: Video, thumbnails: string[]) => void;

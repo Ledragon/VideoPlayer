@@ -1,20 +1,76 @@
 import {
+  Avatar,
   Box,
   IconButton,
   List,
   ListItem,
+  ListItemAvatar,
   ListItemText,
   TextField
 } from '@mui/material';
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch, useSelector } from 'react-redux';
-import { getVideoDictionary } from '../../redux';
+import {
+  getVideoDictionary,
+  useGetContactSheetForVideoQuery
+} from '../../redux';
 import { RootState } from '../../redux/configureStore';
 import { useEffect, useState } from 'react';
 import { removeVideo } from '../../redux/playlist.slice';
+import { Video } from '../../models/Video';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
+import getBase64Url from './getBase64Url';
 
 interface PropType {}
+
+const PlayListItem = ({
+  video,
+  handleRemoveFromPlaylist
+}: {
+  video?: Video;
+  handleRemoveFromPlaylist: () => void;
+}) => {
+  const { data: contactSheet } = useGetContactSheetForVideoQuery(
+    video?.id || skipToken
+  );
+  const src = contactSheet ? getBase64Url(contactSheet.image) : undefined;
+  return (
+    <ListItem
+      secondaryAction={
+        <IconButton
+          edge="end"
+          aria-label="delete"
+          onClick={() => handleRemoveFromPlaylist()}
+        >
+          <DeleteIcon />
+        </IconButton>
+      }
+    >
+      <ListItemAvatar sx={{ pr: 2 }}>
+        {src ? (
+          <img
+            src={src}
+            width={'60px'}
+          />
+        ) : (
+          <Avatar
+            variant="square"
+            alt={video?.title}
+            src={src}
+          />
+        )}
+      </ListItemAvatar>
+      <ListItemText
+        primaryTypographyProps={{
+          variant: 'caption'
+        }}
+      >
+        {video?.title}
+      </ListItemText>
+    </ListItem>
+  );
+};
 
 const Playlist = (props: PropType) => {
   const [objectUrl, setObjectUrl] = useState<string>('');
@@ -66,22 +122,15 @@ const Playlist = (props: PropType) => {
         </IconButton>
       </Box>
       <List dense>
-        {playlistVideos.map((d: number) => (
-          <ListItem
-            key={d}
-            secondaryAction={
-              <IconButton
-                edge="end"
-                aria-label="delete"
-                onClick={() => handleRemoveFromPlaylist(d)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            }
-          >
-            <ListItemText>{videos[d]?.title}</ListItemText>
-          </ListItem>
-        ))}
+        {playlistVideos.map(
+          (d: number) =>
+            videos[d] && (
+              <PlayListItem
+                handleRemoveFromPlaylist={() => handleRemoveFromPlaylist(d)}
+                video={videos[d]}
+              />
+            )
+        )}
       </List>
     </>
   );

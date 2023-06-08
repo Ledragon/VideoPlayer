@@ -2,18 +2,16 @@ import {
   Autocomplete,
   Box,
   LinearProgress,
-  Pagination,
   Paper,
   TextField,
   alpha
 } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
 import {
   useGetVideosQuery,
-  useGetThumbnailsQuery,
   useGetTagsQuery,
   useGetTagVideosQuery,
   useUpdateVideoMutation,
@@ -23,24 +21,16 @@ import {
 } from '../../redux';
 import { RootState } from '../../redux/configureStore';
 import Playlist from './Playlist';
-import TagChips from './TagChips';
 import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
-
-// const pageSize = 8;
 
 interface PropType {}
 const VideosNewPage = (props: PropType) => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
-  // const [currentVideos, setCurrentVideos] = useState<Video[]>([]);
-  // const [page, setPage] = useState<number>(1);
-  // const [pageSize, setPageSize] = useState<number>(1e6);
 
   const { isLoading, isFetching } = useGetVideosQuery();
-  // const { data: thumbnails, isLoading: isLoadingThumbnails } =
-  //   useGetThumbnailsQuery();
   const { isLoading: isLoadingTags } = useGetTagsQuery();
   const { data: tagVideos, isFetching: isLoadingTagVideos } =
     useGetTagVideosQuery();
@@ -68,28 +58,6 @@ const VideosNewPage = (props: PropType) => {
       setSelectedVideo(video);
     }
   };
-
-  // const handleTagClick = (tag: Tag) => {
-  //   let newSelectedTags: Tag[];
-  //   if (selectedTags.indexOf(tag) < 0) {
-  //     newSelectedTags = selectedTags.concat([tag]);
-  //   } else {
-  //     newSelectedTags = selectedTags.map((d) => d);
-  //     newSelectedTags.splice(selectedTags.indexOf(tag), 1);
-  //   }
-  //   setSelectedTags(newSelectedTags);
-  //   if (newSelectedTags.length) {
-  //     const st = newSelectedTags.map((d) => d.id);
-  //     const ftv =
-  //       tagVideos
-  //         ?.filter((d) => st.indexOf(d.tagId) >= 0)
-  //         .map((d) => d.videoId) || [];
-  //     const fv = videos?.filter((v) => ftv.indexOf(v.id) >= 0);
-  //     setFilteredVideos(fv || []);
-  //   } else {
-  //     setFilteredVideos(videos || []);
-  //   }
-  // };
 
   const handleTagsChange = (_e: any, values: Tag[]) => {
     // let newSelectedTags: Tag[];
@@ -125,16 +93,6 @@ const VideosNewPage = (props: PropType) => {
   const handleCancel = () => {
     setSelectedVideo(null);
   };
-
-  // const handlePageChange = (
-  //   event: React.ChangeEvent<unknown>,
-  //   page: number
-  // ) => {
-  //   setPage(page);
-  //   setCurrentVideos(
-  //     filteredVideos.slice((page - 1) * pageSize, pageSize * page)
-  //   );
-  // };
 
   const handlePreviousClick = () => {
     if (selectedVideo) {
@@ -194,15 +152,6 @@ const VideosNewPage = (props: PropType) => {
             />
           )}
         ></Autocomplete>
-        {/* <TagChips
-          selectedTags={selectedTags}
-          tags={
-            tags.filter(
-              (t) => tagVideos?.filter((tv) => tv.tagId === t.id)?.length
-            ) || []
-          }
-          onTagClick={handleTagClick}
-        ></TagChips> */}
       </Box>
       <Box
         sx={{
@@ -233,18 +182,9 @@ const VideosNewPage = (props: PropType) => {
           >
             <VideosImageList
               videos={filteredVideos}
-              // thumbnails={thumbnails || []}
               onClick={handleVideoClick}
             />
           </Box>
-          {/* <Box sx={{ flexBasis: 'auto', display: 'flex' }}>
-            <Pagination
-              count={pageCount}
-              page={page}
-              onChange={handlePageChange}
-              sx={{ flexGrow: 1 }}
-            />
-          </Box> */}
         </Box>
         <Box
           sx={{
@@ -270,9 +210,6 @@ const VideosNewPage = (props: PropType) => {
           tagVideos={(tagVideos || []).filter(
             (v) => v.videoId === selectedVideo?.id
           )}
-          // thumbnails={(thumbnails || []).filter(
-          //   (t) => t.videoId === selectedVideo?.id
-          // )}
           video={selectedVideo}
           onSave={handleSave}
           onCancel={handleCancel}

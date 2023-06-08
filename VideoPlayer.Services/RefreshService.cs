@@ -79,9 +79,13 @@ namespace VideoPlayer.Services
             {
                 directory.Videos.Add(newVideo);
             }
-            foreach (var t in tags.Where(t => newVideo.Title.ToLower().Contains(t.Value)))
+            foreach (var t in tags.Where(t => newVideo.Title.ToLower().Contains(t.Value.ToLower())))
             {
                 newVideo.Tags.Add(t);
+                if (t.Videos == null)
+                {
+                    t.Videos = new List<Video>();
+                }
                 t.Videos.Add(newVideo);
             }
             newVideo.DateAdded = DateTime.Now;
@@ -121,8 +125,8 @@ namespace VideoPlayer.Services
 
         private List<Video> GetVideosToUpdate(List<Video> existing)
         {
-            return existing.Where(v => v.Length == TimeSpan.Zero 
-            || !this._thumbnailsRepository.GetForVideo(v.Id).Any() 
+            return existing.Where(v => v.Length == TimeSpan.Zero
+            || !this._thumbnailsRepository.GetForVideo(v.Id).Any()
             //|| String.IsNullOrEmpty(v.ContactSheet)
             ).ToList();
         }

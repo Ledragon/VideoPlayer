@@ -1,6 +1,8 @@
 import InfoIcon from '@mui/icons-material/Info';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {
+  Box,
   Chip,
   IconButton,
   ImageListItem,
@@ -9,7 +11,10 @@ import {
 import { Video } from '../../models/Video';
 import getBase64Url from './getBase64Url';
 import { useMemo, useState } from 'react';
-import { useGetThumbnailsForVideoQuery } from '../../redux';
+import {
+  useGetContactSheetForVideoQuery,
+  useGetThumbnailsForVideoQuery
+} from '../../redux';
 
 interface PropType {
   video: Video;
@@ -20,6 +25,7 @@ interface PropType {
 const VideoImageItem = ({ video, onInfoClick, onAddToPlaylist }: PropType) => {
   const { data: thumbs } = useGetThumbnailsForVideoQuery(video.id);
   const [hovered, setHovered] = useState<boolean>(false);
+  const { data: contactSheet } = useGetContactSheetForVideoQuery(video.id);
 
   const onAddToPlaylistButtonClick = () => {
     if (onAddToPlaylist) {
@@ -84,7 +90,7 @@ const VideoImageItem = ({ video, onInfoClick, onAddToPlaylist }: PropType) => {
         title={video.title}
         subtitle={formattedDate}
         actionIcon={
-          <>
+          <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
             {hovered ? (
               <IconButton
                 onClick={onInfoButtonClick}
@@ -93,7 +99,8 @@ const VideoImageItem = ({ video, onInfoClick, onAddToPlaylist }: PropType) => {
                 <InfoIcon />
               </IconButton>
             ) : null}
-          </>
+            {!contactSheet && <VisibilityOffOutlinedIcon fontSize="small" />}
+          </Box>
         }
       ></ImageListItemBar>
     </ImageListItem>

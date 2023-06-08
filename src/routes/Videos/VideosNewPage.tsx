@@ -145,7 +145,7 @@ const VideosNewPage = (props: PropType) => {
                 tagVideos.filter((d) => d.tagId === t.id).length > 0
             ) || []
           }
-          getOptionLabel={(o) => o?.value || ''}
+          getOptionLabel={(o) => o?`${o.value} (${(tagVideos||[]).filter((d) => d.tagId === o.id).length})` : ''}
           onChange={handleTagsChange}
           value={selectedTags}
           renderInput={(params) => (

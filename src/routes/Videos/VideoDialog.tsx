@@ -9,10 +9,14 @@ import {
   Typography,
   Alert,
   TextField,
-  Skeleton
+  Skeleton,
+  IconButton
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useState } from 'react';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
+
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Thumbnail } from '../../models/Thumbnail';
@@ -39,10 +43,22 @@ interface PropType {
   onCancel: () => void;
   onSave: (v: Video, thumbnails: string[]) => void;
   error?: { message: any };
+  onPrevious?: () => void;
+  onNext?: () => void;
 }
 
 const VideoDialog = (props: PropType) => {
-  const { open, video, onSave, onCancel, tags, tagVideos, error } = props;
+  const {
+    open,
+    video,
+    onSave,
+    onCancel,
+    tags,
+    tagVideos,
+    error,
+    onPrevious,
+    onNext
+  } = props;
   const [_, status] = useGenerateThumbnailsMutation({
     fixedCacheKey: video.fileName
   });
@@ -87,14 +103,37 @@ const VideoDialog = (props: PropType) => {
     onSave(v, selectedThumbnails);
   };
 
+  const handleBeforeClick = () => {
+    if (onPrevious) {
+      onPrevious();
+    }
+  };
+
+  const handleNextClick = () => {
+    if (onNext) {
+      onNext();
+    }
+  };
+
   if (video != null) {
     return (
       <Dialog
         fullScreen={true}
         open={open}
       >
-        <DialogTitle>{video.title}</DialogTitle>
-        {/* <form onSubmit={formik.handleSubmit}> */}
+        <DialogTitle>
+          <Box sx={{ display: 'flex' }}>
+            <Box sx={{ flexGrow: 1 }}>{video.title}</Box>
+            <Box>
+              <IconButton onClick={handleBeforeClick}>
+                <NavigateBeforeIcon></NavigateBeforeIcon>
+              </IconButton>
+              <IconButton onClick={handleNextClick}>
+                <NavigateAfterIcon></NavigateAfterIcon>
+              </IconButton>
+            </Box>
+          </Box>
+        </DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
             <Box

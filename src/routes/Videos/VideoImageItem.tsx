@@ -54,6 +54,7 @@ const VideoImageItem = ({ video, onInfoClick, onAddToPlaylist }: PropType) => {
     <ImageListItem
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      id={'video-' + video.id}
     >
       <img
         src={image ? getBase64Url(image) : ''}

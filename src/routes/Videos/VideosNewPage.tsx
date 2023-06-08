@@ -34,9 +34,9 @@ const VideosNewPage = (props: PropType) => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
-  const [currentVideos, setCurrentVideos] = useState<Video[]>([]);
-  const [page, setPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(1e6);
+  // const [currentVideos, setCurrentVideos] = useState<Video[]>([]);
+  // const [page, setPage] = useState<number>(1);
+  // const [pageSize, setPageSize] = useState<number>(1e6);
 
   const { isLoading, isFetching } = useGetVideosQuery();
   // const { data: thumbnails, isLoading: isLoadingThumbnails } =
@@ -49,13 +49,6 @@ const VideosNewPage = (props: PropType) => {
 
   const videos = useSelector((state: RootState) => getVideoList(state));
   const tags = useSelector((state: RootState) => getTagList(state));
-
-  const pageCount = useMemo(() => {
-    const pc = Math.ceil(filteredVideos?.length / pageSize);
-    setCurrentVideos(filteredVideos.slice(0, pageSize));
-    setPage(1);
-    return pc;
-  }, [filteredVideos]);
 
   useEffect(() => {
     if (result?.error) {
@@ -132,22 +125,36 @@ const VideosNewPage = (props: PropType) => {
   const handleCancel = () => {
     setSelectedVideo(null);
   };
-  
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
-    setPage(page);
-    setCurrentVideos(
-      filteredVideos.slice((page - 1) * pageSize, pageSize * page)
-    );
+
+  // const handlePageChange = (
+  //   event: React.ChangeEvent<unknown>,
+  //   page: number
+  // ) => {
+  //   setPage(page);
+  //   setCurrentVideos(
+  //     filteredVideos.slice((page - 1) * pageSize, pageSize * page)
+  //   );
+  // };
+
+  const handlePreviousClick = () => {
+    if (selectedVideo) {
+      const index = filteredVideos.indexOf(selectedVideo);
+      if (index > 0) {
+        setSelectedVideo(filteredVideos[index - 1]);
+      }
+    }
+  };
+  const handleNextClick = () => {
+    if (selectedVideo) {
+      const index = filteredVideos.indexOf(selectedVideo);
+      if (index < filteredVideos.length - 1) {
+        setSelectedVideo(filteredVideos[index + 1]);
+      }
+    }
   };
 
   const isLoadingAny =
-    isLoading ||
-    isFetching ||
-    isLoadingTagVideos ||
-    isLoadingTags;
+    isLoading || isFetching || isLoadingTagVideos || isLoadingTags;
   return (
     <Box
       sx={{
@@ -225,7 +232,7 @@ const VideosNewPage = (props: PropType) => {
             id="videos-images-box"
           >
             <VideosImageList
-              videos={currentVideos}
+              videos={filteredVideos}
               // thumbnails={thumbnails || []}
               onClick={handleVideoClick}
             />
@@ -270,6 +277,8 @@ const VideosNewPage = (props: PropType) => {
           onSave={handleSave}
           onCancel={handleCancel}
           error={result.isError ? { message: result.error } : undefined}
+          onPrevious={handlePreviousClick}
+          onNext={handleNextClick}
         />
       ) : (
         <></>

@@ -138,7 +138,13 @@ const VideosNewPage = (props: PropType) => {
         <Autocomplete
           multiple
           id="tags"
-          options={tags || []}
+          options={
+            tags.filter(
+              (t) =>
+                !tagVideos ||
+                tagVideos.filter((d) => d.tagId === t.id).length > 0
+            ) || []
+          }
           getOptionLabel={(o) => o?.value || ''}
           onChange={handleTagsChange}
           value={selectedTags}

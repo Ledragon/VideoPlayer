@@ -1,12 +1,15 @@
 import {
   Autocomplete,
   Box,
+  IconButton,
   LinearProgress,
   Paper,
   TextField,
   alpha
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
+import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
@@ -25,10 +28,19 @@ import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
 
 interface PropType {}
+
+enum SortOrder {
+  AlphaAsc,
+  AlphaDesc,
+  DateAsc,
+  DateDesc
+}
+
 const VideosNewPage = (props: PropType) => {
   const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.AlphaAsc);
 
   const { isLoading, isFetching } = useGetVideosQuery();
   const { isLoading: isLoadingTags } = useGetTagsQuery();
@@ -102,6 +114,7 @@ const VideosNewPage = (props: PropType) => {
       }
     }
   };
+
   const handleNextClick = () => {
     if (selectedVideo) {
       const index = filteredVideos.indexOf(selectedVideo);
@@ -110,6 +123,37 @@ const VideosNewPage = (props: PropType) => {
       }
     }
   };
+
+  const handleAlphaSort = () => {
+    setSortOrder(
+      sortOrder === SortOrder.AlphaAsc
+        ? SortOrder.AlphaDesc
+        : SortOrder.AlphaAsc
+    );
+  };
+
+  const handleDateSort = () => {
+    setSortOrder(
+      sortOrder === SortOrder.DateDesc ? SortOrder.DateAsc : SortOrder.DateDesc
+    );
+  };
+
+  const displayedVideos = useMemo(() => {
+    return filteredVideos
+      .map((d) => d)
+      .sort((a, b) => {
+        switch (sortOrder) {
+          case SortOrder.AlphaAsc:
+            return a.title > b.title ? 1 : -1;
+          case SortOrder.AlphaDesc:
+            return a.title < b.title ? 1 : -1;
+          case SortOrder.DateAsc:
+            return a.dateAdded > b.dateAdded ? 1 : -1;
+          case SortOrder.DateDesc:
+            return a.dateAdded < b.dateAdded ? 1 : -1;
+        }
+      });
+  }, [sortOrder, filteredVideos]);
 
   const isLoadingAny =
     isLoading || isFetching || isLoadingTagVideos || isLoadingTags;
@@ -133,9 +177,10 @@ const VideosNewPage = (props: PropType) => {
       )}
       <Box
         id="tags-chips"
-        sx={{ flex: '0 0 auto' }}
+        sx={{ flex: '1 0 auto', m: 1, display: 'flex' }}
       >
         <Autocomplete
+          sx={{ flexGrow: 1 }}
           multiple
           id="tags"
           options={
@@ -145,7 +190,13 @@ const VideosNewPage = (props: PropType) => {
                 tagVideos.filter((d) => d.tagId === t.id).length > 0
             ) || []
           }
-          getOptionLabel={(o) => o?`${o.value} (${(tagVideos||[]).filter((d) => d.tagId === o.id).length})` : ''}
+          getOptionLabel={(o) =>
+            o
+              ? `${o.value} (${
+                  (tagVideos || []).filter((d) => d.tagId === o.id).length
+                })`
+              : ''
+          }
           onChange={handleTagsChange}
           value={selectedTags}
           renderInput={(params) => (
@@ -158,6 +209,26 @@ const VideosNewPage = (props: PropType) => {
             />
           )}
         ></Autocomplete>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          <IconButton
+            size="small"
+            onClick={handleAlphaSort}
+          >
+            <SortByAlphaOutlinedIcon fontSize="small" />
+          </IconButton>
+          <IconButton
+            size="small"
+            onClick={handleDateSort}
+          >
+            <AccessTimeOutlinedIcon fontSize="small" />
+          </IconButton>
+        </Box>
       </Box>
       <Box
         sx={{
@@ -187,7 +258,7 @@ const VideosNewPage = (props: PropType) => {
             id="videos-images-box"
           >
             <VideosImageList
-              videos={filteredVideos}
+              videos={displayedVideos}
               onClick={handleVideoClick}
             />
           </Box>

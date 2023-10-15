@@ -50,4 +50,4 @@ const contactSheetApi = api.injectEndpoints({
 //   (state) => tagsSelector(state) ?? initialState
 // );
 
-export const { useGetContactSheetForVideoQuery } = contactSheetApi;
+export const { useGetContactSheetForVideoQuery, useLazyGetContactSheetForVideoQuery } = contactSheetApi;

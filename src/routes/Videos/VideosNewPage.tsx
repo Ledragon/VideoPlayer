@@ -5,7 +5,9 @@ import {
   LinearProgress,
   Paper,
   TextField,
-  alpha
+  alpha,
+  FormControlLabel,
+  Switch
 } from '@mui/material';
 import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
@@ -41,6 +43,8 @@ const VideosNewPage = (props: PropType) => {
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [filteredVideos, setFilteredVideos] = useState<Video[]>([]);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.AlphaAsc);
+  const [showMissingThumb, setShowMissingThumb] = useState(false);
+  const [showMissingCS, setShowMissingCS] = useState(false);
 
   const { isLoading, isFetching } = useGetVideosQuery();
   const { isLoading: isLoadingTags } = useGetTagsQuery();
@@ -138,9 +142,17 @@ const VideosNewPage = (props: PropType) => {
     );
   };
 
+  const handleThumbChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setShowMissingThumb(e.target.checked);
+  };
+
+  const handleCSChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setShowMissingCS(e.target.checked);
+  };
+
   const displayedVideos = useMemo(() => {
-    return filteredVideos
-      .map((d) => d)
+    const toSort = filteredVideos.map(d => d);
+    return toSort
       .sort((a, b) => {
         switch (sortOrder) {
           case SortOrder.AlphaAsc:
@@ -153,7 +165,7 @@ const VideosNewPage = (props: PropType) => {
             return a.dateAdded < b.dateAdded ? 1 : -1;
         }
       });
-  }, [sortOrder, filteredVideos]);
+  }, [sortOrder, filteredVideos, showMissingCS, showMissingThumb]);
 
   const isLoadingAny =
     isLoading || isFetching || isLoadingTagVideos || isLoadingTags;
@@ -228,6 +240,28 @@ const VideosNewPage = (props: PropType) => {
           >
             <AccessTimeOutlinedIcon fontSize="small" />
           </IconButton>
+          {/* <FormControlLabel
+            control={
+              <Switch
+                size="small"
+                checked={showMissingThumb}
+                onChange={handleThumbChange}
+              />
+            }
+            label="Thumb"
+            sx={{ mx: 1 }}
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                size="small"
+                checked={showMissingCS}
+                onChange={handleCSChange}
+              />
+            }
+            label="CS"
+            sx={{ mx: 1 }}
+          /> */}
         </Box>
       </Box>
       <Box

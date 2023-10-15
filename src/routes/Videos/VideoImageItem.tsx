@@ -1,5 +1,4 @@
 import InfoIcon from '@mui/icons-material/Info';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import {
   Box,
@@ -15,23 +14,17 @@ import {
   useGetContactSheetForVideoQuery,
   useGetThumbnailsForVideoQuery
 } from '../../redux';
+import AddToPlaylist from './AddToPlaylist';
 
 interface PropType {
   video: Video;
   onInfoClick?: (video: Video) => void;
-  onAddToPlaylist?: (video: Video) => void;
 }
 
-const VideoImageItem = ({ video, onInfoClick, onAddToPlaylist }: PropType) => {
+const VideoImageItem = ({ video, onInfoClick }: PropType) => {
   const { data: thumbs } = useGetThumbnailsForVideoQuery(video.id);
   const [hovered, setHovered] = useState<boolean>(false);
   const { data: contactSheet } = useGetContactSheetForVideoQuery(video.id);
-
-  const onAddToPlaylistButtonClick = () => {
-    if (onAddToPlaylist) {
-      onAddToPlaylist(video);
-    }
-  };
 
   const onInfoButtonClick = () => {
     if (onInfoClick) {
@@ -75,14 +68,7 @@ const VideoImageItem = ({ video, onInfoClick, onAddToPlaylist }: PropType) => {
       {hovered ? (
         <ImageListItemBar
           position="top"
-          actionIcon={
-            <IconButton
-              onClick={onAddToPlaylistButtonClick}
-              hidden={!onAddToPlaylist}
-            >
-              <PlaylistAddIcon />
-            </IconButton>
-          }
+          actionIcon={<AddToPlaylist video={video} />}
           actionPosition="left"
         ></ImageListItemBar>
       ) : null}
@@ -90,7 +76,13 @@ const VideoImageItem = ({ video, onInfoClick, onAddToPlaylist }: PropType) => {
         title={video.title}
         subtitle={formattedDate}
         actionIcon={
-          <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}
+          >
             {hovered ? (
               <IconButton
                 onClick={onInfoButtonClick}

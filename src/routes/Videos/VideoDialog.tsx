@@ -35,6 +35,7 @@ import ContactSheetForm from './ContactSheetForm';
 import CreateTag from './CreateTag';
 import { useDispatch } from 'react-redux';
 import { addVideo } from '../../redux/playlist.slice';
+import AddToPlaylist from './AddToPlaylist';
 
 interface PropType {
   open: boolean;
@@ -114,12 +115,6 @@ const VideoDialog = (props: PropType) => {
   const handleNextClick = () => {
     if (onNext) {
       onNext();
-    }
-  };
-
-  const onAddToPlaylistButtonClick = () => {
-    if (!!video) {
-      dispatch(addVideo(video.id));
     }
   };
 
@@ -228,9 +223,7 @@ const VideoDialog = (props: PropType) => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <IconButton onClick={onAddToPlaylistButtonClick}>
-            <PlaylistAddIcon />
-          </IconButton>
+          <AddToPlaylist video={video} />
           <Button
             variant="text"
             onClick={handleCancel}

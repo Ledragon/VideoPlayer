@@ -24,6 +24,7 @@ const AddToPlaylist = (props: PropType) => {
       onClick={onAddToPlaylistButtonClick}
       hidden={hidden}
       title="Add to playlist"
+      color="secondary"
     >
       <PlaylistAddIcon />
     </IconButton>

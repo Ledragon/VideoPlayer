@@ -1,8 +1,6 @@
 import { ImageList } from '@mui/material';
 import { Video } from '../../models/Video';
 import VideoImageItem from './VideoImageItem';
-import { useDispatch } from 'react-redux';
-import { addVideo } from '../../redux/playlist.slice';
 import { VirtuosoGrid } from 'react-virtuoso';
 import { forwardRef } from 'react';
 
@@ -13,11 +11,6 @@ interface PropType {
 
 const VideosImageList = (props: PropType) => {
   const { videos, onClick } = props;
-  const dispatch = useDispatch();
-
-  const handleaAddToPlaylist = (v: Video) => {
-    dispatch(addVideo(v.id));
-  };
 
   return (
     <VirtuosoGrid
@@ -44,7 +37,6 @@ const VideosImageList = (props: PropType) => {
             key={index}
             video={videos[index]}
             onInfoClick={onClick}
-            onAddToPlaylist={handleaAddToPlaylist}
           />
         );
       }}

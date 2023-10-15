@@ -15,6 +15,7 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
@@ -32,6 +33,8 @@ import VideoProperties from './VideoProperties';
 import getBase64Url from './getBase64Url';
 import ContactSheetForm from './ContactSheetForm';
 import CreateTag from './CreateTag';
+import { useDispatch } from 'react-redux';
+import { addVideo } from '../../redux/playlist.slice';
 
 interface PropType {
   open: boolean;
@@ -65,6 +68,7 @@ const VideoDialog = (props: PropType) => {
     video.id
   );
   const { data: thumbnails } = useGetThumbnailsForVideoQuery(video.id);
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -113,6 +117,12 @@ const VideoDialog = (props: PropType) => {
     }
   };
 
+  const onAddToPlaylistButtonClick = () => {
+    if (!!video) {
+      dispatch(addVideo(video.id));
+    }
+  };
+
   if (video != null) {
     return (
       <Dialog
@@ -158,13 +168,16 @@ const VideoDialog = (props: PropType) => {
                 />
               ) : null}
               {contactSheet && !isLoading ? (
-                <img
-                  src={getBase64Url(contactSheet.image)}
-                  style={{
-                    flexGrow: 1,
-                    width: '100%'
+                <Box
+                  sx={{
+                    flexGrow: 1
                   }}
-                ></img>
+                >
+                  <img
+                    src={getBase64Url(contactSheet.image)}
+                    style={{}}
+                  ></img>
+                </Box>
               ) : (
                 <></>
               )}
@@ -215,6 +228,9 @@ const VideoDialog = (props: PropType) => {
           </Box>
         </DialogContent>
         <DialogActions>
+          <IconButton onClick={onAddToPlaylistButtonClick}>
+            <PlaylistAddIcon />
+          </IconButton>
           <Button
             variant="text"
             onClick={handleCancel}

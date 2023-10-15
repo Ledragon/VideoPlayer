@@ -300,14 +300,16 @@ const VideosNewPage = (props: PropType) => {
         <Box
           sx={{
             flexBasis: '20%',
-            p: 1
+            p: 0,
+            overflow: 'hidden'
           }}
         >
           <Paper
             sx={{
               height: '100%',
               backgroundColor: (theme) =>
-                alpha(theme.palette.background.paper, 0.6)
+                alpha(theme.palette.background.paper, 0.6),
+              overflowY: 'auto'
             }}
           >
             <Playlist />

@@ -37,13 +37,15 @@ const PlayListItem = ({
   const src = contactSheet ? getBase64Url(contactSheet.image) : undefined;
   return (
     <ListItem
+      title={video?.title}
       secondaryAction={
         <IconButton
           edge="end"
           aria-label="delete"
           onClick={() => handleRemoveFromPlaylist()}
+          size="small"
         >
-          <DeleteIcon />
+          <DeleteIcon fontSize="small" />
         </IconButton>
       }
     >
@@ -63,7 +65,8 @@ const PlayListItem = ({
       </ListItemAvatar>
       <ListItemText
         primaryTypographyProps={{
-          variant: 'caption'
+          variant: 'caption',
+          noWrap: true
         }}
       >
         {video?.title}
@@ -121,7 +124,7 @@ const Playlist = (props: PropType) => {
           <DownloadForOfflineOutlinedIcon />
         </IconButton>
       </Box>
-      <List dense>
+      <List dense sx={{overflowY: 'auto'}}>
         {playlistVideos.map(
           (d: number) =>
             videos[d] && (

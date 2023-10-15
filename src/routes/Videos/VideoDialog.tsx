@@ -15,11 +15,9 @@ import { useFormik } from 'formik';
 import { useState } from 'react';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
-import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
 import {
   useGenerateThumbnailsMutation,
@@ -33,8 +31,6 @@ import VideoProperties from './VideoProperties';
 import getBase64Url from './getBase64Url';
 import ContactSheetForm from './ContactSheetForm';
 import CreateTag from './CreateTag';
-import { useDispatch } from 'react-redux';
-import { addVideo } from '../../redux/playlist.slice';
 import AddToPlaylist from './AddToPlaylist';
 
 interface PropType {
@@ -69,7 +65,6 @@ const VideoDialog = (props: PropType) => {
     video.id
   );
   const { data: thumbnails } = useGetThumbnailsForVideoQuery(video.id);
-  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {

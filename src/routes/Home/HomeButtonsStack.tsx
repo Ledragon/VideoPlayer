@@ -11,7 +11,7 @@ const HomeButtonsStack = (props: { buttons: any[] }) => {
         flexDirection: 'column'
       }}
     >
-      <Box sx={{ flexBasis: '70%' }}></Box>
+      <Box sx={{ flexBasis: '80%' }}></Box>
       <Stack
         alignItems="center"
         direction="row"

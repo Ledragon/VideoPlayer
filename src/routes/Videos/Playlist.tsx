@@ -21,6 +21,9 @@ import { removeVideo } from '../../redux/playlist.slice';
 import { Video } from '../../models/Video';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import getBase64Url from './getBase64Url';
+import { timeFormat } from 'd3-time-format';
+
+const tf = timeFormat('%Y-%m-%d');
 
 interface PropType {}
 
@@ -78,11 +81,7 @@ const PlayListItem = ({
 const Playlist = (props: PropType) => {
   const [objectUrl, setObjectUrl] = useState<string>('');
   const date = new Date();
-  const [fileName, setFileName] = useState<string>(
-    `${date.getFullYear().toFixed(0)}-${(date.getMonth() + 1).toFixed(0)}-${date
-      .getDate()
-      .toFixed(0)}`
-  );
+  const [fileName, setFileName] = useState<string>(`${tf(date)}`);
   const dispatch = useDispatch();
   const playlistVideos = useSelector(
     (state: RootState) => state.playlist.videos

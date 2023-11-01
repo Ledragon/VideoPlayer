@@ -15,6 +15,9 @@ import {
   useGetThumbnailsForVideoQuery
 } from '../../redux';
 import AddToPlaylist from './AddToPlaylist';
+import { timeFormat } from 'd3-time-format';
+
+const tf = timeFormat('%Y-%m-%d');
 
 interface PropType {
   video: Video;
@@ -46,7 +49,7 @@ const VideoImageItem = ({ video, onInfoClick }: PropType) => {
     const date = new Date(video.dateAdded);
     return `${
       video.numberOfViews
-    } views - added on ${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    } views - added on ${tf(date)}`;
   }, [video]);
 
   return (

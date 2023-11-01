@@ -79,7 +79,7 @@ const Playlist = (props: PropType) => {
   const [objectUrl, setObjectUrl] = useState<string>('');
   const date = new Date();
   const [fileName, setFileName] = useState<string>(
-    `${date.getFullYear().toFixed(0)}-${date.getMonth().toFixed(0)}-${date
+    `${date.getFullYear().toFixed(0)}-${(date.getMonth() + 1).toFixed(0)}-${date
       .getDate()
       .toFixed(0)}`
   );
@@ -124,7 +124,10 @@ const Playlist = (props: PropType) => {
           <DownloadForOfflineOutlinedIcon />
         </IconButton>
       </Box>
-      <List dense sx={{overflowY: 'auto'}}>
+      <List
+        dense
+        sx={{ overflowY: 'auto' }}
+      >
         {playlistVideos.map(
           (d: number) =>
             videos[d] && (

@@ -11,6 +11,7 @@ import {
 import SettingsButtons from './SettingsButtons';
 import { useState } from 'react';
 import NewDirectoryDialog from './NewDirectoryDialog';
+import { useAutoCompleteLibraryMutation } from '../../redux';
 
 interface PropType {}
 const cols: GridColDef[] = [
@@ -37,6 +38,7 @@ const SettingsPage = (props: PropType) => {
   const [loadVideos, loadVideosStatus] = useLoadVideosMutation({});
   const [cleanVideos, cleanVideosStatus] = useCleanVideosMutation();
   const [removeDirectory, removeDirectoryStatus] = useRemoveDirectoryMutation();
+  const [autoComplete, autoCompleteStatus] = useAutoCompleteLibraryMutation();
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -49,6 +51,10 @@ const SettingsPage = (props: PropType) => {
 
   const handleCleanVideos = () => {
     cleanVideos();
+  };
+
+  const handleAutoComplete = () => {
+    autoComplete();
   };
 
   const handleRemoveDirectory = () => {
@@ -90,11 +96,15 @@ const SettingsPage = (props: PropType) => {
           />
           <SettingsButtons
             onAddDirectory={handleAddDirectoryClick}
+            onAutoComplete={handleAutoComplete}
             onCleanVideos={handleCleanVideos}
             onLoadVideos={handleLoadVideos}
             onRemoveDirectory={handleRemoveDirectory}
           />
-          {cleanVideosStatus.isLoading || loadVideosStatus.isLoading || removeDirectoryStatus.isLoading ? (
+          {cleanVideosStatus.isLoading ||
+          loadVideosStatus.isLoading ||
+          removeDirectoryStatus.isLoading ||
+          autoCompleteStatus.isLoading ? (
             <LinearProgress />
           ) : null}
         </Paper>

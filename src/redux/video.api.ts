@@ -32,6 +32,13 @@ const videoApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Videos', 'TagVideos']
     }),
+    autoCompleteLibrary: builder.mutation<string, void>({
+      query: () => ({
+        url: 'videos/autoComplete',
+        method: 'PUT'
+      }),
+      invalidatesTags: ['Videos', 'ContactSheets', 'Thumbnails']
+    }),
     createContactSheet: builder.mutation<
       void,
       { videoId: number; nRows: number; nCols: number }
@@ -62,5 +69,6 @@ export const {
 export const {
   useGetVideosQuery,
   useUpdateVideoMutation,
-  useCreateContactSheetMutation
+  useCreateContactSheetMutation,
+  useAutoCompleteLibraryMutation
 } = videoApi;

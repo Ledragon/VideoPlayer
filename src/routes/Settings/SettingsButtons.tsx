@@ -5,15 +5,20 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import UpdateIcon from '@mui/icons-material/Update';
 import CleaningServicesIcon from '@mui/icons-material/CleaningServices';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import PublishedWithChangesIcon from '@mui/icons-material/PublishedWithChanges';
+import { useAutoCompleteLibraryMutation } from '../../redux';
+
 interface PropType {
   onAddDirectory: () => void;
+  onAutoComplete: () => void;
   onLoadVideos: () => void;
   onCleanVideos: () => void;
   onRemoveDirectory: () => void;
 }
 
 const SettingsButtons = (props: PropType) => {
-  const { onLoadVideos, onCleanVideos, onRemoveDirectory } = props;
+  const { onLoadVideos, onCleanVideos, onRemoveDirectory, onAutoComplete } = props;
+
 
   const handleLoadVideos = () => {
     onLoadVideos();
@@ -29,6 +34,10 @@ const SettingsButtons = (props: PropType) => {
 
   const handleRemoveDirectory = () => {
     onRemoveDirectory();
+  };
+
+  const handleAutoComplete = () => {
+    onAutoComplete();
   };
 
   return (
@@ -62,6 +71,11 @@ const SettingsButtons = (props: PropType) => {
         icon={<DeleteOutlineIcon />}
         tooltipTitle="Remove selected directory"
         onClick={handleRemoveDirectory}
+      ></SpeedDialAction>
+      <SpeedDialAction
+        icon={<PublishedWithChangesIcon />}
+        tooltipTitle="Auto-complete library"
+        onClick={handleAutoComplete}
       ></SpeedDialAction>
     </SpeedDial>
   );

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using VideoPlayer.Entities;
 
 namespace VideoPlayer.Database.Repository.Contracts
@@ -13,6 +14,10 @@ namespace VideoPlayer.Database.Repository.Contracts
         List<Video> Add(List<Video> videos);
         Video Update(Video video);
         List<Video> Update(List<Video> video);
+        Task<List<Video>> UpdateAsync(List<Video> video);
         void Delete(List<Video> notFound);
+        Task<List<Video>> GetVideosWithoutThumbnailsAsync();
+        Task<List<Video>> GetVideosWithoutCsAsync();
+
     }
 }

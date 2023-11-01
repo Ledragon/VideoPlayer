@@ -71,7 +71,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoPlayer.Database.Reposi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoPlayer.LibraryConverter", "VideoPlayer.LibraryConverter\VideoPlayer.LibraryConverter.csproj", "{70FB1182-977B-4320-AEB2-31ABD6C43721}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Database.UnitOfWork", "VideoPlayer.Database.UnitOfWork\VideoPlayer.Database.UnitOfWork.csproj", "{982AA8C4-5A38-45FF-88B6-070AABFFB02F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VideoPlayer.Database.UnitOfWork", "VideoPlayer.Database.UnitOfWork\VideoPlayer.Database.UnitOfWork.csproj", "{982AA8C4-5A38-45FF-88B6-070AABFFB02F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoPlayer.Database.Repository.SQLite.Test", "VideoPlayer.Database.Repository.SQLite.Test\VideoPlayer.Database.Repository.SQLite.Test.csproj", "{2ABDE648-560F-4A50-ABC0-CAB74356CF59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -199,6 +201,10 @@ Global
 		{982AA8C4-5A38-45FF-88B6-070AABFFB02F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{982AA8C4-5A38-45FF-88B6-070AABFFB02F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{982AA8C4-5A38-45FF-88B6-070AABFFB02F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ABDE648-560F-4A50-ABC0-CAB74356CF59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ABDE648-560F-4A50-ABC0-CAB74356CF59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ABDE648-560F-4A50-ABC0-CAB74356CF59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ABDE648-560F-4A50-ABC0-CAB74356CF59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -233,6 +239,7 @@ Global
 		{5C882A85-BB32-4D0A-A2D3-3635ADACD310} = {AB865795-450F-4980-B7C9-238E49C2D5E0}
 		{169144A2-B558-449B-ABB5-92B4C3FDDBB3} = {AB865795-450F-4980-B7C9-238E49C2D5E0}
 		{982AA8C4-5A38-45FF-88B6-070AABFFB02F} = {AB865795-450F-4980-B7C9-238E49C2D5E0}
+		{2ABDE648-560F-4A50-ABC0-CAB74356CF59} = {8C06431A-4DBC-4E1B-8EAD-B925CD72A3EC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31FA2FE4-54F2-4EFB-8CD9-2430DB8D4FB1}

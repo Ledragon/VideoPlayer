@@ -11,9 +11,9 @@ namespace VideoPlayer.Ffmpeg
 {
     public class FfmpegThumbnailGenerator : IFfmpegThumbnailGenerator
     {
-        private IFfprobeInfoExtractor _ffprobeInfoExtractor;
+        private readonly IFfprobeInfoExtractor _ffprobeInfoExtractor;
         private readonly IPathService _pathService;
-        private ILogger _logger;
+        private readonly ILogger _logger;
 
         public FfmpegThumbnailGenerator(IFfprobeInfoExtractor ffprobeInfoExtractor, IPathService pathService)
         {
@@ -49,7 +49,7 @@ namespace VideoPlayer.Ffmpeg
                         process.StartInfo.ArgumentList.Add("-i");
                         process.StartInfo.ArgumentList.Add(videoFilePath);
                         process.StartInfo.ArgumentList.Add("-vf");
-                        
+
                         Double fps = (Double.Parse(info.format.duration, CultureInfo.InvariantCulture) / count);
                         process.StartInfo.ArgumentList.Add($"fps=1/{fps.ToString(CultureInfo.InvariantCulture)},scale=640:-1");
 
@@ -58,7 +58,7 @@ namespace VideoPlayer.Ffmpeg
                         process.StartInfo.UseShellExecute = false;
                         process.Start();
                         process.WaitForExit();
-                        thumbnails = Directory.GetFiles(outputDir).ToList();
+                        thumbnails = Directory.GetFiles(outputDir).OrderBy(d => d).ToList();
                     }
                 }
                 return thumbnails;

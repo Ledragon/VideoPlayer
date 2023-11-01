@@ -2,6 +2,7 @@
 using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Entities;
 using VideoPlayer.Ffmpeg;
+using VideoPlayer.Helpers;
 
 namespace VideoPlayer.WebAPI.Controllers
 {
@@ -34,12 +35,7 @@ namespace VideoPlayer.WebAPI.Controllers
         {
             var files = this._thumbnailGenerator.GenerateThumbnails(filePath, count);
             return files
-                .Select(f =>
-                {
-                    var bytes = System.IO.File.ReadAllBytes(f);
-                    var converted = Convert.ToBase64String(bytes);
-                    return converted;
-                })
+                .Select(f => ImageBase64Converter.ToBase64(f))
                 .ToList();
         }
 

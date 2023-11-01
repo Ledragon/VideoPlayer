@@ -1,4 +1,5 @@
 using LeDragon.Log.Standard;
+using Microsoft.EntityFrameworkCore;
 using VideoPlayer.Database.Repository.Contracts;
 using VideoPlayer.Entities;
 
@@ -50,6 +51,17 @@ namespace VideoPlayer.Database.Repository.SQLite
             return this._context.Videos.SingleOrDefault(v => v.FileName == filePath);
         }
 
+        public async Task<List<Video>> GetVideosWithoutThumbnailsAsync()
+        {
+            return await this._context.Videos.Where(v => v.Thumbnails == null || !v.Thumbnails.Any())
+                .Include(v => v.Thumbnails)
+                .ToListAsync();
+        }
+        public async Task<List<Video>> GetVideosWithoutCsAsync()
+        {
+            return await this._context.Videos.Where(v => v.ContactSheet == null || String.IsNullOrEmpty(v.ContactSheet.Image)).ToListAsync();
+        }
+
         public Video Update(Video video)
         {
             try
@@ -69,6 +81,13 @@ namespace VideoPlayer.Database.Repository.SQLite
         {
             this._context.UpdateRange(video);
             this._context.SaveChanges();
+            return video;
+        }
+
+        public async Task<List<Video>> UpdateAsync(List<Video> video)
+        {
+            this._context.UpdateRange(video);
+            await this._context.SaveChangesAsync();
             return video;
         }
     }

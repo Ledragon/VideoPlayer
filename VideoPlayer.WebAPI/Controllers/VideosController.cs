@@ -14,17 +14,20 @@ namespace VideoPlayer.WebAPI.Controllers
         private readonly ILogger<VideosController> _logger;
         private readonly IVideoRepository _videoRepository;
         private readonly ITagVideoUnitOfWork _tagVideoUnitOfWork;
-        private readonly IFfmpegThumbnailGenerator _ffmpegThumbnailGenerator;
-        private readonly IContactSheetsRepository _contactSheetsRepository;
+        private readonly IContactSheetService _contactSheetService;
+        private readonly IAutoCompleteLibraryService _autoCompleteLibraryService;
 
-        public VideosController(ILogger<VideosController> logger, IVideoRepository videoRepository, ITagVideoUnitOfWork tagVideoUnitOfWork, IFfmpegThumbnailGenerator ffmpegThumbnailGenerator,
-            IContactSheetsRepository contactSheetsRepository)
+        public VideosController(ILogger<VideosController> logger,
+            IVideoRepository videoRepository,
+            ITagVideoUnitOfWork tagVideoUnitOfWork,
+            IContactSheetService contactSheetService,
+            IAutoCompleteLibraryService autoCompleteLibraryService)
         {
             this._logger = logger;
             this._videoRepository = videoRepository;
             this._tagVideoUnitOfWork = tagVideoUnitOfWork;
-            this._ffmpegThumbnailGenerator = ffmpegThumbnailGenerator;
-            this._contactSheetsRepository = contactSheetsRepository;
+            this._contactSheetService = contactSheetService;
+            this._autoCompleteLibraryService = autoCompleteLibraryService;
         }
 
         [HttpGet]
@@ -43,23 +46,19 @@ namespace VideoPlayer.WebAPI.Controllers
         [HttpPut("contactSheet")]
         public async Task<ContactSheet> CreateContactSheet(Params toto)
         {
-            var video = this._videoRepository.Get(toto.VideoId);
-            var cs = this._ffmpegThumbnailGenerator.GenerateContactSheet(video.FileName, toto.NRows, toto.NCols);
-            var b64 = ToBase64(cs);
-            var contactSheet = await this._contactSheetsRepository.GetForVideo(toto.VideoId);
-            if (contactSheet != null)
-            {
-                contactSheet.Image = b64;
-                contactSheet = await this._contactSheetsRepository.Update(contactSheet);
-            }
-            else
-            {
-                contactSheet = new ContactSheet { Image = b64, Video = video, VideoId = video.Id }; ;
-                contactSheet = await this._contactSheetsRepository.Add(contactSheet);
-            }
-            return contactSheet;
-            //video.ContactSheet = b64;
-            //return this._videoRepository.Update(video);
+            return await this._contactSheetService.CreateContactSheet(toto.VideoId, toto.NRows, toto.NCols);
+        }
+        [HttpPut("autoComplete")]
+        public async Task AutoComplete()
+        {
+            var p = new Progress<String>();
+            p.ProgressChanged += this.P_ProgressChanged;
+            await this._autoCompleteLibraryService.AutoCompleteLibrary(p);
+        }
+
+        private void P_ProgressChanged(Object? sender, String e)
+        {
+            this._logger.LogDebug(e);
         }
 
         [HttpGet("/api/videos/metadata")]
@@ -68,25 +67,5 @@ namespace VideoPlayer.WebAPI.Controllers
             var videos = this._videoRepository.Get();
             return videos.ToDictionary(d => d.FileName, d => new VideoMetaData { Codec = "", HasContactSheet = System.IO.File.Exists(d.FileName + ".png") });
         }
-        private static String ToBase64(String t)
-        {
-            if (System.IO.File.Exists(t))
-            {
-                var bytes = System.IO.File.ReadAllBytes(t);
-                var converted = Convert.ToBase64String(bytes);
-                return converted;
-            }
-            else
-            {
-                return String.Empty;
-            }
-        }
-    }
-
-    public class Params
-    {
-        public Int32 VideoId { get; set; }
-        public Int32 NRows { get; set; }
-        public Int32 NCols { get; set; }
     }
 }

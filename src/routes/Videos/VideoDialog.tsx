@@ -5,10 +5,6 @@ import {
   Button,
   DialogTitle,
   Box,
-  CircularProgress,
-  Typography,
-  Alert,
-  Skeleton,
   IconButton,
   Tab,
   Tabs
@@ -17,22 +13,12 @@ import { useFormik } from 'formik';
 import { useMemo, useState } from 'react';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
+import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutlined';
+import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
 
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
-import {
-  useGenerateThumbnailsMutation,
-  useGetContactSheetForVideoQuery,
-  useGetThumbnailsForVideoQuery
-} from '../../redux';
-import GeneratedThumbnails from './GeneratedThumbnails';
-import ThumbnailsGenerator from './ThumbnailsGenerator';
-import ThumbsImageList from './ThumbsImageList';
-import VideoProperties from './VideoProperties';
-import getBase64Url from './getBase64Url';
-import ContactSheetForm from './ContactSheetForm';
-import CreateTag from './CreateTag';
 import AddToPlaylist from './AddToPlaylist';
 import VideoInfos from './VideoInfos';
 import VideoEdtion from './VideoEdition';
@@ -63,6 +49,7 @@ const VideoDialog = (props: PropType) => {
   } = props;
   const [selectedThumbnails, setSelectedThumbnails] = useState<string[]>([]);
   const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const tagsForVideo = useMemo(() => {
     return tagVideos
@@ -108,13 +95,17 @@ const VideoDialog = (props: PropType) => {
   if (video != null) {
     return (
       <Dialog
-        fullScreen={true}
+        fullScreen={isFullScreen}
         open={open}
       >
         <DialogTitle>
           <Box sx={{ display: 'flex' }}>
             <Box sx={{ flexGrow: 1 }}>{video.title}</Box>
             <Box>
+              <IconButton onClick={() => setIsFullScreen(!isFullScreen)}>
+                {isFullScreen && <CloseFullscreenOutlinedIcon/>}
+                {!isFullScreen && <OpenInFullOutlinedIcon/>}
+              </IconButton>
               <IconButton onClick={handleBeforeClick}>
                 <NavigateBeforeIcon></NavigateBeforeIcon>
               </IconButton>

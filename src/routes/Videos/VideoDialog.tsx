@@ -9,7 +9,9 @@ import {
   Typography,
   Alert,
   Skeleton,
-  IconButton
+  IconButton,
+  Tab,
+  Tabs
 } from '@mui/material';
 import { useFormik } from 'formik';
 import { useMemo, useState } from 'react';
@@ -33,6 +35,7 @@ import ContactSheetForm from './ContactSheetForm';
 import CreateTag from './CreateTag';
 import AddToPlaylist from './AddToPlaylist';
 import VideoInfos from './VideoInfos';
+import VideoEdtion from './VideoEdition';
 
 interface PropType {
   open: boolean;
@@ -58,14 +61,8 @@ const VideoDialog = (props: PropType) => {
     onPrevious,
     onNext
   } = props;
-  const [_, status] = useGenerateThumbnailsMutation({
-    fixedCacheKey: video.fileName
-  });
   const [selectedThumbnails, setSelectedThumbnails] = useState<string[]>([]);
-  const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(
-    video.id
-  );
-  const { data: thumbnails } = useGetThumbnailsForVideoQuery(video.id);
+  const [selectedTab, setSelectedTab] = useState<number>(0);
 
   const tagsForVideo = useMemo(() => {
     return tagVideos
@@ -90,16 +87,6 @@ const VideoDialog = (props: PropType) => {
   const handleCancel = () => {
     formik.resetForm();
     onCancel();
-  };
-
-  const handleSelectThumdbnail = (v: string) => {
-    const index = selectedThumbnails.indexOf(v);
-    if (index >= 0) {
-      selectedThumbnails.splice(index, 1);
-    } else {
-      selectedThumbnails.push(v);
-    }
-    setSelectedThumbnails(selectedThumbnails.map((d) => d));
   };
 
   const handleSave = (v: Video) => {
@@ -138,93 +125,35 @@ const VideoDialog = (props: PropType) => {
           </Box>
         </DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-          <VideoInfos
-            tags={tagsForVideo}
-            video={video}
-          />
-          {/* <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
-            <Box
-              sx={{
-                flexBasis: '50%',
-                display: 'flex',
-                flexDirection: 'column'
-              }}
-            >
-              <VideoProperties
+          <Tabs
+            value={selectedTab}
+            onChange={(e, v) => setSelectedTab(v)}
+          >
+            <Tab label="Properties" />
+            <Tab label="Edition" />
+          </Tabs>
+          <Box
+            sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1 }}
+          >
+            {selectedTab === 1 && (
+              <VideoEdtion
+                error={error}
                 formik={formik}
                 tags={tags}
                 tagVideos={tagVideos}
                 video={video}
-                onSubmit={handleSave}
+                onSave={handleSave}
+                selectedThumbnails={selectedThumbnails}
+                setSelectedThumbnails={setSelectedThumbnails}
               />
-              {isLoading ? (
-                <Skeleton
-                  variant="rounded"
-                  sx={{
-                    flexGrow: 1,
-                    width: '100%'
-                  }}
-                />
-              ) : null}
-              {contactSheet && !isLoading ? (
-                <Box
-                  sx={{
-                    flexGrow: 1
-                  }}
-                >
-                  <img
-                    src={getBase64Url(contactSheet.image)}
-                    style={{}}
-                  ></img>
-                </Box>
-              ) : (
-                <></>
-              )}
-              <Box sx={{ display: 'flex' }}>
-                <ContactSheetForm video={video} />
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                flexBasis: '50%'
-              }}
-            >
-              <Box>
-                <CreateTag />
-              </Box>
-              <Box sx={{ flexBasis: '50%' }}>
-                <ThumbsImageList thumbs={thumbnails || []} />
-              </Box>
-              <Box sx={{ flexBasis: '50%' }}>
-                <ThumbnailsGenerator video={video} />
-                {status.isLoading ? (
-                  <CircularProgress />
-                ) : (
-                  <GeneratedThumbnails
-                    data={status?.data || []}
-                    selected={selectedThumbnails}
-                    onSelect={handleSelectThumdbnail}
-                  ></GeneratedThumbnails>
-                )}
-              </Box>
-            </Box>
+            )}
+            {selectedTab === 0 && (
+              <VideoInfos
+                tags={tagsForVideo}
+                video={video}
+              />
+            )}
           </Box>
-
-          <Box>
-            {!!error ? (
-              <Alert severity="error">
-                An error occured. Check console for more information.
-              </Alert>
-            ) : null}
-          </Box>
-          <Box
-            id="info-bar"
-            sx={{ display: 'flex' }}
-          >
-            <Typography variant="caption">{video.fileName}</Typography>
-          </Box> */}
         </DialogContent>
         <DialogActions>
           <AddToPlaylist video={video} />
@@ -244,7 +173,6 @@ const VideoDialog = (props: PropType) => {
             Save
           </Button>
         </DialogActions>
-        {/* </form> */}
       </Dialog>
     );
   } else {

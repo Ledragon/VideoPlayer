@@ -1,0 +1,167 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogActions,
+  Button,
+  DialogTitle,
+  Box,
+  CircularProgress,
+  Typography,
+  Alert,
+  Skeleton,
+  IconButton
+} from '@mui/material';
+import { FormikConfig, FormikProps, useFormik } from 'formik';
+import { useMemo, useState } from 'react';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
+
+import { Tag } from '../../models/Tag';
+import { TagVideo } from '../../models/TagVideo';
+import { Video } from '../../models/Video';
+import {
+  useGenerateThumbnailsMutation,
+  useGetContactSheetForVideoQuery,
+  useGetThumbnailsForVideoQuery
+} from '../../redux';
+import GeneratedThumbnails from './GeneratedThumbnails';
+import ThumbnailsGenerator from './ThumbnailsGenerator';
+import ThumbsImageList from './ThumbsImageList';
+import VideoProperties from './VideoProperties';
+import getBase64Url from './getBase64Url';
+import ContactSheetForm from './ContactSheetForm';
+import CreateTag from './CreateTag';
+import AddToPlaylist from './AddToPlaylist';
+import VideoInfos from './VideoInfos';
+
+interface PropType {
+  error: any;
+  formik: FormikProps<any>;
+  tags: Tag[];
+  tagVideos: TagVideo[];
+  video: Video;
+  onSave: (video: Video) => void;
+  selectedThumbnails: string[];
+  setSelectedThumbnails: (newValue: string[]) => void;
+}
+
+const VideoEdtion = (props: PropType) => {
+  const {
+    tagVideos,
+    error,
+    formik,
+    onSave,
+    selectedThumbnails,
+    setSelectedThumbnails,
+    tags,
+    video
+  } = props;
+
+  const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(
+    video.id
+  );
+  const [_, status] = useGenerateThumbnailsMutation({
+    fixedCacheKey: video.fileName
+  });
+  const { data: thumbnails } = useGetThumbnailsForVideoQuery(video.id);
+
+  const handleSelectThumdbnail = (v: string) => {
+    const index = selectedThumbnails.indexOf(v);
+    if (index >= 0) {
+      selectedThumbnails.splice(index, 1);
+    } else {
+      selectedThumbnails.push(v);
+    }
+    setSelectedThumbnails(selectedThumbnails.map((d) => d));
+  };
+
+  return (
+    <>
+      <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
+        <Box
+          sx={{
+            flexBasis: '50%',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          <VideoProperties
+            formik={formik}
+            tags={tags}
+            tagVideos={tagVideos}
+            video={video}
+            onSubmit={onSave}
+          />
+          {isLoading ? (
+            <Skeleton
+              variant="rounded"
+              sx={{
+                flexGrow: 1,
+                width: '100%'
+              }}
+            />
+          ) : null}
+          {contactSheet && !isLoading ? (
+            <Box
+              sx={{
+                flexGrow: 1
+              }}
+            >
+              <img
+                src={getBase64Url(contactSheet.image)}
+                style={{}}
+              ></img>
+            </Box>
+          ) : (
+            <></>
+          )}
+          <Box sx={{ display: 'flex' }}>
+            <ContactSheetForm video={video} />
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexBasis: '50%'
+          }}
+        >
+          <Box>
+            <CreateTag />
+          </Box>
+          <Box sx={{ flexBasis: '50%' }}>
+            <ThumbsImageList thumbs={thumbnails || []} />
+          </Box>
+          <Box sx={{ flexBasis: '50%' }}>
+            <ThumbnailsGenerator video={video} />
+            {status.isLoading ? (
+              <CircularProgress />
+            ) : (
+              <GeneratedThumbnails
+                data={status?.data || []}
+                selected={selectedThumbnails}
+                onSelect={handleSelectThumdbnail}
+              ></GeneratedThumbnails>
+            )}
+          </Box>
+        </Box>
+      </Box>
+
+      <Box>
+        {!!error ? (
+          <Alert severity="error">
+            An error occured. Check console for more information.
+          </Alert>
+        ) : null}
+      </Box>
+      <Box
+        id="info-bar"
+        sx={{ display: 'flex' }}
+      >
+        <Typography variant="caption">{video.fileName}</Typography>
+      </Box>
+    </>
+  );
+};
+
+export default VideoEdtion;

@@ -33,7 +33,15 @@ const VideoInfos = (props: PropType) => {
           overflow: 'auto'
         }}
       >
-        <Typography>{video.title}</Typography>
+        <Box>
+          {tags?.map((tag) => (
+            <Chip
+              label={tag?.value}
+              variant={'outlined'}
+              sx={{ m: 1 }}
+            />
+          ))}
+        </Box>
         <Rating
           value={video.rating}
           readOnly
@@ -56,15 +64,6 @@ const VideoInfos = (props: PropType) => {
           )}
         </Box>
         <ThumbsImageList thumbs={thumbnails || []} />
-        <Box>
-          {tags?.map((tag) => (
-            <Chip
-              label={tag?.value}
-              variant={'outlined'}
-              sx={{ m: 1 }}
-            />
-          ))}
-        </Box>
         <Stack direction="row">
           <Typography sx={{ m: 1 }}>{video.fileName}</Typography>
           <Typography sx={{ m: 1 }}>{video.length}</Typography>

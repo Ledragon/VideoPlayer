@@ -110,24 +110,6 @@ const VideosNewPage = (props: PropType) => {
     setSelectedVideo(null);
   };
 
-  const handlePreviousClick = () => {
-    if (selectedVideo) {
-      const index = filteredVideos.indexOf(selectedVideo);
-      if (index > 0) {
-        setSelectedVideo(filteredVideos[index - 1]);
-      }
-    }
-  };
-
-  const handleNextClick = () => {
-    if (selectedVideo) {
-      const index = filteredVideos.indexOf(selectedVideo);
-      if (index < filteredVideos.length - 1) {
-        setSelectedVideo(filteredVideos[index + 1]);
-      }
-    }
-  };
-
   const handleAlphaSort = () => {
     setSortOrder(
       sortOrder === SortOrder.AlphaAsc
@@ -151,21 +133,38 @@ const VideosNewPage = (props: PropType) => {
   };
 
   const displayedVideos = useMemo(() => {
-    const toSort = filteredVideos.map(d => d);
-    return toSort
-      .sort((a, b) => {
-        switch (sortOrder) {
-          case SortOrder.AlphaAsc:
-            return a.title > b.title ? 1 : -1;
-          case SortOrder.AlphaDesc:
-            return a.title < b.title ? 1 : -1;
-          case SortOrder.DateAsc:
-            return a.dateAdded > b.dateAdded ? 1 : -1;
-          case SortOrder.DateDesc:
-            return a.dateAdded < b.dateAdded ? 1 : -1;
-        }
-      });
+    const toSort = filteredVideos.map((d) => d);
+    return toSort.sort((a, b) => {
+      switch (sortOrder) {
+        case SortOrder.AlphaAsc:
+          return a.title > b.title ? 1 : -1;
+        case SortOrder.AlphaDesc:
+          return a.title < b.title ? 1 : -1;
+        case SortOrder.DateAsc:
+          return a.dateAdded > b.dateAdded ? 1 : -1;
+        case SortOrder.DateDesc:
+          return a.dateAdded < b.dateAdded ? 1 : -1;
+      }
+    });
   }, [sortOrder, filteredVideos, showMissingCS, showMissingThumb]);
+
+  const handlePreviousClick = () => {
+    if (selectedVideo) {
+      const index = displayedVideos.indexOf(selectedVideo);
+      if (index > 0) {
+        setSelectedVideo(displayedVideos[index - 1]);
+      }
+    }
+  };
+
+  const handleNextClick = () => {
+    if (selectedVideo) {
+      const index = displayedVideos.indexOf(selectedVideo);
+      if (index < displayedVideos.length - 1) {
+        setSelectedVideo(displayedVideos[index + 1]);
+      }
+    }
+  };
 
   const isLoadingAny =
     isLoading || isFetching || isLoadingTagVideos || isLoadingTags;

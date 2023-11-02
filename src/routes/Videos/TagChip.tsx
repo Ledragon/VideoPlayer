@@ -19,7 +19,7 @@ const TagChip = ({ onClick, selected, tag }: PropType) => {
       variant={selected ? 'filled' : 'outlined'}
       sx={{ m: 1 }}
       onClick={handleClick}
-    ></Chip>
+    />
   );
 };
 

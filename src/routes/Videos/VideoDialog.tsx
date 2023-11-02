@@ -12,7 +12,7 @@ import {
   IconButton
 } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
 
@@ -32,6 +32,7 @@ import getBase64Url from './getBase64Url';
 import ContactSheetForm from './ContactSheetForm';
 import CreateTag from './CreateTag';
 import AddToPlaylist from './AddToPlaylist';
+import VideoInfos from './VideoInfos';
 
 interface PropType {
   open: boolean;
@@ -66,14 +67,18 @@ const VideoDialog = (props: PropType) => {
   );
   const { data: thumbnails } = useGetThumbnailsForVideoQuery(video.id);
 
+  const tagsForVideo = useMemo(() => {
+    return tagVideos
+      ?.filter((tv) => tv.videoId === video.id)
+      .map((tv) => tags.find((t) => t.id === tv.tagId))
+      .filter((d) => !!d);
+  }, [video, tagVideos, tags]);
+
   const formik = useFormik({
     initialValues: {
       title: video.title,
       rating: video.rating || 0,
-      tags: tagVideos
-        ?.filter((tv) => tv.videoId === video.id)
-        .map((tv) => tags.find((t) => t.id === tv.tagId))
-        .filter((d) => !!d)
+      tags: tagsForVideo
     },
     onSubmit: (value) => {
       const update = Object.assign({}, video, value);
@@ -133,7 +138,11 @@ const VideoDialog = (props: PropType) => {
           </Box>
         </DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
+          <VideoInfos
+            tags={tagsForVideo}
+            video={video}
+          />
+          {/* <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
             <Box
               sx={{
                 flexBasis: '50%',
@@ -215,7 +224,7 @@ const VideoDialog = (props: PropType) => {
             sx={{ display: 'flex' }}
           >
             <Typography variant="caption">{video.fileName}</Typography>
-          </Box>
+          </Box> */}
         </DialogContent>
         <DialogActions>
           <AddToPlaylist video={video} />

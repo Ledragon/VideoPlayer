@@ -12,11 +12,12 @@ import { useDeleteThumbnailMutation } from '../../redux';
 import { useState } from 'react';
 
 interface PropType {
+  cols?: number;
   thumbs: Thumbnail[];
 }
 
 const ThumbsImageList = (props: PropType) => {
-  const { thumbs } = props;
+  const { cols, thumbs } = props;
   const [hovered, setHovered] = useState<number | undefined>(undefined);
   const [deleteThumbnail, deleteStatus] = useDeleteThumbnailMutation();
 
@@ -30,7 +31,7 @@ const ThumbsImageList = (props: PropType) => {
 
   return (
     <ImageList
-      cols={4}
+      cols={cols ?? 4}
       gap={6}
       sx={{ m: 0.5 }}
     >

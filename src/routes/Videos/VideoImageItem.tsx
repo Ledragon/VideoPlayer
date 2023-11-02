@@ -20,11 +20,12 @@ import { timeFormat } from 'd3-time-format';
 const tf = timeFormat('%Y-%m-%d');
 
 interface PropType {
+  showContactSheet?: boolean;
   video: Video;
   onInfoClick?: (video: Video) => void;
 }
 
-const VideoImageItem = ({ video, onInfoClick }: PropType) => {
+const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
   const { data: thumbs } = useGetThumbnailsForVideoQuery(video.id);
   const [hovered, setHovered] = useState<boolean>(false);
   const { data: contactSheet } = useGetContactSheetForVideoQuery(video.id);
@@ -43,13 +44,17 @@ const VideoImageItem = ({ video, onInfoClick }: PropType) => {
     setHovered(false);
   };
 
-  const image = thumbs?.length ? thumbs[0].image : undefined;
+  const image = useMemo(() => {
+    if (!showContactSheet) {
+      return thumbs?.length ? thumbs[0].image : undefined;
+    } else {
+      return contactSheet ? contactSheet.image : undefined;
+    }
+  }, [thumbs, showContactSheet, contactSheet]);
 
   const formattedDate = useMemo(() => {
     const date = new Date(video.dateAdded);
-    return `${
-      video.numberOfViews
-    } views - added on ${tf(date)}`;
+    return `${video.numberOfViews} views - added on ${tf(date)}`;
   }, [video]);
 
   return (

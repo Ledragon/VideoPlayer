@@ -45,6 +45,7 @@ const VideosNewPage = (props: PropType) => {
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.AlphaAsc);
   const [showMissingThumb, setShowMissingThumb] = useState(false);
   const [showMissingCS, setShowMissingCS] = useState(false);
+  const [showContactSheets, setShowContactSheets] = useState(true);
 
   const { isLoading, isFetching } = useGetVideosQuery();
   const { isLoading: isLoadingTags } = useGetTagsQuery();
@@ -76,13 +77,6 @@ const VideosNewPage = (props: PropType) => {
   };
 
   const handleTagsChange = (_e: any, values: Tag[]) => {
-    // let newSelectedTags: Tag[];
-    // if (selectedTags.indexOf(tag) < 0) {
-    //   newSelectedTags = selectedTags.concat([tag]);
-    // } else {
-    //   newSelectedTags = selectedTags.map((d) => d);
-    //   newSelectedTags.splice(selectedTags.indexOf(tag), 1);
-    // }
     setSelectedTags(values);
     if (values.length) {
       const st = values.map((d) => d.id);
@@ -261,6 +255,19 @@ const VideosNewPage = (props: PropType) => {
             label="CS"
             sx={{ mx: 1 }}
           /> */}
+          <FormControlLabel
+            control={
+              <Switch
+                size="small"
+                checked={showContactSheets}
+                onChange={(e, checked) => {
+                  setShowContactSheets(checked);
+                }}
+              />
+            }
+            label="Contact sheets"
+            sx={{ mx: 1 }}
+          />
         </Box>
       </Box>
       <Box
@@ -291,6 +298,7 @@ const VideosNewPage = (props: PropType) => {
             id="videos-images-box"
           >
             <VideosImageList
+              showContactSheets={showContactSheets}
               videos={displayedVideos}
               onClick={handleVideoClick}
             />

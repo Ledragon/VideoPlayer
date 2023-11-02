@@ -5,12 +5,13 @@ import { VirtuosoGrid } from 'react-virtuoso';
 import { forwardRef } from 'react';
 
 interface PropType {
+  showContactSheets?: boolean;
   videos: Video[];
   onClick?: (v: Video) => void;
 }
 
 const VideosImageList = (props: PropType) => {
-  const { videos, onClick } = props;
+  const { videos, onClick, showContactSheets } = props;
 
   return (
     <VirtuosoGrid
@@ -36,6 +37,7 @@ const VideosImageList = (props: PropType) => {
           <VideoImageItem
             key={index}
             video={videos[index]}
+            showContactSheet={showContactSheets}
             onInfoClick={onClick}
           />
         );

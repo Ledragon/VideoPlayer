@@ -74,7 +74,7 @@ const VideoDialog = (props: PropType) => {
 
   if (video != null) {
     return (
-      <Dialog fullScreen={isFullScreen} open={open}>
+      <Dialog fullScreen={isFullScreen} open={open} fullWidth maxWidth="lg">
         <DialogTitle>
           <Box sx={{ display: 'flex' }}>
             <Box sx={{ flexGrow: 1 }}>{video.title}</Box>

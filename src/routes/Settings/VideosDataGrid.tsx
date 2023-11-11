@@ -100,7 +100,7 @@ const Toolbar = ({ rows }: { rows: GridRowSelectionModel }) => {
           Add tags
         </Button>
       </GridToolbarContainer>
-      <Dialog open={open} onClose={() => setOpen(false)} maxWidth="md">
+      <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
         <DialogContent>
           <Autocomplete
             multiple

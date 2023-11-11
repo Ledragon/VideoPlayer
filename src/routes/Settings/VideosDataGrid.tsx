@@ -1,5 +1,6 @@
 import { Box, Chip } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRenderCellParams, GridRowSelectionModel } from '@mui/x-data-grid';
+import { useState } from 'react';
 
 import useGetAllVideoInfo from '../../redux/hooks/useGetAllVideoInfo';
 
@@ -87,8 +88,19 @@ const columns: GridColDef[] = [
 
 const VideosDataGrid = (props: PropType) => {
   const videoInfos = useGetAllVideoInfo();
+  const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
   const rows = videoInfos?.map((v) => Object.assign({}, v.video, { tags: v.tags }));
-  return <DataGrid columns={columns} rows={rows} />;
+  return (
+    <DataGrid
+      checkboxSelection
+      columns={columns}
+      rows={rows}
+      onRowSelectionModelChange={(newRowSelectionModel) => {
+        setRowSelectionModel(newRowSelectionModel);
+      }}
+      rowSelectionModel={rowSelectionModel}
+    />
+  );
 };
 
 export default VideosDataGrid;

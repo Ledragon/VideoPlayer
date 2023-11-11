@@ -34,7 +34,8 @@ const SettingsPage = (props: PropType) => {
             flexGrow: 1,
             m: 1,
             backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.7),
-            position: 'relative'
+            position: 'relative',
+            overflow: 'auto'
           }}>
           {activeTab === 0 && <DirectoriesSettings />}
           {activeTab === 1 && <VideosDataGrid />}

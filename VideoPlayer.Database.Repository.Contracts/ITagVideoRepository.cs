@@ -10,5 +10,6 @@ namespace VideoPlayer.Database.Repository.Contracts
         Task<List<TagVideo>> GetAsync();
         void Remove(IEnumerable<TagVideo> toRemove);
         Task RemoveAsync(IEnumerable<TagVideo> toRemove);
+        Task AddAsync(IEnumerable<TagVideo> toAdd);
     }
 }

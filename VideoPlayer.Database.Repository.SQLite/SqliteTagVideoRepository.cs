@@ -12,7 +12,6 @@ namespace VideoPlayer.Database.Repository.SQLite
         {
             this._context = context;
         }
-
         public List<TagVideo> Get()
         {
             return this._context.Videos.SelectMany(v => v.TagVideos).ToList();
@@ -35,5 +34,12 @@ namespace VideoPlayer.Database.Repository.SQLite
             this._context.RemoveRange(toRemove);
             await this._context.SaveChangesAsync();
         }
+
+        public async Task AddAsync(IEnumerable<TagVideo> toAdd)
+        {
+            this._context.AddRange(toAdd);
+            await this._context.SaveChangesAsync();
+        }
+
     }
 }

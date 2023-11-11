@@ -50,7 +50,7 @@ namespace VideoPlayer.Entities
         public TimeSpan Length
         {
             get { return this._length; }
-            set{this._length = value;}
+            set { this._length = value; }
         }
 
         [NotMapped]
@@ -77,9 +77,10 @@ namespace VideoPlayer.Entities
             }
         }
 
+        private String _directoryPath;
         [NotMapped]
         [XmlAttribute("Directory")]
-        public String DirectoryPath { get; set; }
+        public String DirectoryPath { get => this._directoryPath ?? (this._directoryPath = Path.GetDirectoryName(this.FileName)); set => this._directoryPath = value; }
 
         [NotMapped]
         [XmlAttribute("Preview")]

@@ -20,5 +20,14 @@ namespace VideoPlayer.WebAPI.Controllers
         {
             return await this._tagVideoRepository.GetAsync();
         }
+
+        [HttpPost("add")]
+        public async Task Add(List<TagVideo> tagVideos)
+        {
+            var existing = await this._tagVideoRepository.GetAsync();
+            // Filter duplicates
+            var toAdd = tagVideos.Where(tv => !existing.Any(e => (e.VideoId == tv.VideoId && e.TagId == tv.TagId)));
+            await this._tagVideoRepository.AddAsync(toAdd);
+        }
     }
 }

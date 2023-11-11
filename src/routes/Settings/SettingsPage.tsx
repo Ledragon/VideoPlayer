@@ -1,5 +1,6 @@
 import { alpha, Box, Paper, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import DirectoriesSettings from './DirectoriesSettings';
 import VideosDataGrid from './VideosDataGrid';
@@ -7,10 +8,12 @@ import VideosDataGrid from './VideosDataGrid';
 interface PropType {}
 
 const SettingsPage = (props: PropType) => {
-  const [activeTab, setActiveTab] = useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState(Number.parseInt(searchParams.get('tab') || '0'));
 
   const handleTabChange = (_e: React.SyntheticEvent<Element, Event>, v: number) => {
     setActiveTab(v);
+    setSearchParams({ tab: v?.toString() });
   };
 
   return (

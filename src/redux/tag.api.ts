@@ -1,8 +1,5 @@
-import {
-  EntityState,
-  createEntityAdapter,
-  createSelector
-} from '@reduxjs/toolkit';
+import { createEntityAdapter, createSelector, EntityState } from '@reduxjs/toolkit';
+
 import { Tag } from '../models/Tag';
 import api from './api';
 import { RootState } from './configureStore';
@@ -21,8 +18,7 @@ const tagApi = api.injectEndpoints({
       providesTags: (result) => {
         return ['Tags'];
       },
-      transformResponse: (response: Tag[]) =>
-        entityAdapter.setAll(initialState, response)
+      transformResponse: (response: Tag[]) => entityAdapter.setAll(initialState, response)
     }),
     addTag: builder.mutation<EntityState<Tag>, Tag>({
       query: (tag) => ({
@@ -33,8 +29,7 @@ const tagApi = api.injectEndpoints({
       invalidatesTags: (result) => {
         return ['Tags'];
       },
-      transformResponse: (response: Tag) =>
-        entityAdapter.setOne(initialState, response)
+      transformResponse: (response: Tag) => entityAdapter.setOne(initialState, response)
     })
   })
 });
@@ -45,8 +40,6 @@ export const {
   selectAll: getTagList,
   selectById: getTag,
   selectEntities: getTagDictionary
-} = entityAdapter.getSelectors<RootState>(
-  (state) => tagsSelector(state) ?? initialState
-);
+} = entityAdapter.getSelectors<RootState>((state) => tagsSelector(state) ?? initialState);
 
 export const { useGetTagsQuery, useAddTagMutation } = tagApi;

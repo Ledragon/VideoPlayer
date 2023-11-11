@@ -1,27 +1,27 @@
-import { Box, Chip } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams, GridRowSelectionModel } from '@mui/x-data-grid';
+import { Autocomplete, Box, Button, Chip, Dialog, DialogActions, DialogContent, TextField } from '@mui/material';
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridRowSelectionModel,
+  GridToolbar,
+  GridToolbarContainer,
+  GridToolbarDensitySelector
+} from '@mui/x-data-grid';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
+import { Tag } from '../../models/Tag';
+import { TagVideo } from '../../models/TagVideo';
+import { getTagList, useAddTagVideosMutation } from '../../redux';
 import useGetAllVideoInfo from '../../redux/hooks/useGetAllVideoInfo';
 
 interface PropType {}
 
 const columns: GridColDef[] = [
-  // //   {
-  // //     field: 'serializedImage',
-  // //     headerName: 'Preview',
-  // //     width: (16 / 9) * rowHeight,
-  // //     align: 'center',
-  // //     renderCell: (params: GridRenderCellParams<string>) => {
-  // //       if (!params.value) {
-  // //         return <></>;
-  // //       }
-  // //       return <img src={getBase64Url(params.value)} height={rowHeight} />;
-  // //     }
-  // //   },
-  { field: 'title', headerName: 'Title', flex: 8 },
-  // { field: 'fileName', headerName: 'File', flex: 4 },
+  { field: 'title', headerName: 'Title', flex: 6 },
   { field: 'length', headerName: 'Length', flex: 1 },
+  { field: 'directoryPath', headerName: 'Directory', flex: 3 },
   {
     field: 'dateAdded',
     headerName: 'Date added',
@@ -37,54 +37,90 @@ const columns: GridColDef[] = [
     field: 'tags',
     headerName: 'Tags',
     flex: 4,
+    type: 'string',
     renderCell: (params: GridRenderCellParams<{ value: string }[]>) => {
       if (!params.value?.length) {
         return <></>;
       }
       return (
         <>
-          {params.value.map((d) => (
+          {params.value.map((d: Tag) => (
             <Chip key={d.value} label={d.value} variant="outlined"></Chip>
           ))}
         </>
       );
+    },
+    filterable: false,
+    sortComparator: (t1: Tag[], t2: Tag[]) => {
+      if (!t1.length) {
+        return -1;
+      } else if (!t2.length) {
+        return 1;
+      } else {
+        return t1[0].value > t2[0].value ? 1 : -1;
+      }
     }
   }
-  //   {
-  //     field: 'generateThumbnails',
-  //     headerName: '',
-  //     width: 40,
-  //     renderCell: (params: GridRenderCellParams<() => void>) => {
-  //       return (
-  //         <IconButton
-  //           onClick={() => {
-  //             if (params.value) {
-  //               params.value();
-  //             }
-  //           }}>
-  //           <ImageSearchIcon />
-  //         </IconButton>
-  //       );
-  //     }
-  //   },
-  //   {
-  //     field: 'details',
-  //     headerName: '',
-  //     width: 50,
-  //     renderCell: (params: GridRenderCellParams<() => void>) => {
-  //       return (
-  //         <IconButton
-  //           onClick={() => {
-  //             if (params.value) {
-  //               params.value();
-  //             }
-  //           }}>
-  //           <VideoSettingsIcon />
-  //         </IconButton>
-  //       );
-  //     }
-  //   }
 ];
+
+const Toolbar = ({ rows }: { rows: GridRowSelectionModel }) => {
+  const [open, setOpen] = useState(false);
+  const [updatedTags, setUpdatedTags] = useState<Tag[]>([]);
+
+  const [addTags] = useAddTagVideosMutation();
+
+  const tags = useSelector(getTagList);
+
+  const handleAddTags = () => {
+    setOpen(true);
+  };
+
+  const handleCancel = () => {
+    setUpdatedTags([]);
+    setOpen(false);
+  };
+
+  const handleSave = async () => {
+    const toAdd = rows.flatMap((r) => updatedTags.map((t) => ({ videoId: +r, tagId: t.id })));
+    await addTags(toAdd).unwrap();
+    setUpdatedTags([]);
+    setOpen(false);
+  };
+
+  const handleTagsChange = (_event: React.ChangeEvent<any>, value: Tag[]) => {
+    setUpdatedTags(value);
+    console.log(value);
+  };
+
+  return (
+    <>
+      <GridToolbarContainer>
+        <GridToolbarDensitySelector />
+        <Button disabled={!rows?.length} onClick={handleAddTags}>
+          Add tags
+        </Button>
+      </GridToolbarContainer>
+      <Dialog open={open} onClose={() => setOpen(false)} maxWidth="md">
+        <DialogContent>
+          <Autocomplete
+            multiple
+            id="tags"
+            options={tags || []}
+            getOptionLabel={(o) => o?.value || ''}
+            onChange={handleTagsChange}
+            value={updatedTags}
+            renderInput={(params) => <TextField {...params} variant="standard" label="Tags" placeholder="Tags" margin="dense" />}></Autocomplete>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancel}>Cancel</Button>
+          <Button variant="contained" color="primary" onClick={handleSave}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
 
 const VideosDataGrid = (props: PropType) => {
   const videoInfos = useGetAllVideoInfo();
@@ -94,7 +130,12 @@ const VideosDataGrid = (props: PropType) => {
     <DataGrid
       checkboxSelection
       columns={columns}
+      density="compact"
       rows={rows}
+      slots={{
+        toolbar: Toolbar
+      }}
+      slotProps={{ toolbar: { rows: rowSelectionModel } }}
       onRowSelectionModelChange={(newRowSelectionModel) => {
         setRowSelectionModel(newRowSelectionModel);
       }}

@@ -1,27 +1,17 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Button,
-  DialogTitle,
-  Box,
-  IconButton,
-  Tab,
-  Tabs
-} from '@mui/material';
-import { useFormik } from 'formik';
-import { useMemo, useState } from 'react';
+import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutlined';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
-import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutlined';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Tab, Tabs } from '@mui/material';
+import { useFormik } from 'formik';
+import { useMemo, useState } from 'react';
 
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
 import AddToPlaylist from './AddToPlaylist';
-import VideoInfos from './VideoInfos';
 import VideoEdtion from './VideoEdition';
+import VideoInfos from './VideoInfos';
 
 interface PropType {
   open: boolean;
@@ -36,17 +26,7 @@ interface PropType {
 }
 
 const VideoDialog = (props: PropType) => {
-  const {
-    open,
-    video,
-    onSave,
-    onCancel,
-    tags,
-    tagVideos,
-    error,
-    onPrevious,
-    onNext
-  } = props;
+  const { open, video, onSave, onCancel, tags, tagVideos, error, onPrevious, onNext } = props;
   const [selectedThumbnails, setSelectedThumbnails] = useState<string[]>([]);
   const [selectedTab, setSelectedTab] = useState<number>(0);
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -94,17 +74,14 @@ const VideoDialog = (props: PropType) => {
 
   if (video != null) {
     return (
-      <Dialog
-        fullScreen={isFullScreen}
-        open={open}
-      >
+      <Dialog fullScreen={isFullScreen} open={open}>
         <DialogTitle>
           <Box sx={{ display: 'flex' }}>
             <Box sx={{ flexGrow: 1 }}>{video.title}</Box>
             <Box>
               <IconButton onClick={() => setIsFullScreen(!isFullScreen)}>
-                {isFullScreen && <CloseFullscreenOutlinedIcon/>}
-                {!isFullScreen && <OpenInFullOutlinedIcon/>}
+                {isFullScreen && <CloseFullscreenOutlinedIcon />}
+                {!isFullScreen && <OpenInFullOutlinedIcon />}
               </IconButton>
               <IconButton onClick={handleBeforeClick}>
                 <NavigateBeforeIcon></NavigateBeforeIcon>
@@ -116,16 +93,11 @@ const VideoDialog = (props: PropType) => {
           </Box>
         </DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Tabs
-            value={selectedTab}
-            onChange={(e, v) => setSelectedTab(v)}
-          >
+          <Tabs value={selectedTab} onChange={(e, v) => setSelectedTab(v)}>
             <Tab label="Properties" />
             <Tab label="Edition" />
           </Tabs>
-          <Box
-            sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1 }}
-          >
+          <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
             {selectedTab === 1 && (
               <VideoEdtion
                 error={error}
@@ -138,29 +110,15 @@ const VideoDialog = (props: PropType) => {
                 setSelectedThumbnails={setSelectedThumbnails}
               />
             )}
-            {selectedTab === 0 && (
-              <VideoInfos
-                tags={tagsForVideo}
-                video={video}
-              />
-            )}
+            {selectedTab === 0 && <VideoInfos tags={tagsForVideo} video={video} />}
           </Box>
         </DialogContent>
         <DialogActions>
           <AddToPlaylist video={video} />
-          <Button
-            variant="text"
-            onClick={handleCancel}
-          >
+          <Button variant="text" onClick={handleCancel}>
             Cancel
           </Button>
-          <Button
-            variant="text"
-            disabled={
-              (!formik.dirty && !selectedThumbnails.length) || !formik.isValid
-            }
-            onClick={formik.submitForm}
-          >
+          <Button variant="text" disabled={(!formik.dirty && !selectedThumbnails.length) || !formik.isValid} onClick={formik.submitForm}>
             Save
           </Button>
         </DialogActions>

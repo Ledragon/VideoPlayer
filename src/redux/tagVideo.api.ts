@@ -8,8 +8,12 @@ const tagVideoApi = api.injectEndpoints({
       providesTags: (result) => {
         return ['TagVideos'];
       }
+    }),
+    addTagVideos: builder.mutation<void, TagVideo[]>({
+      query: (data) => ({ url: 'tagVideo/add', method: 'POST', body: data }),
+      invalidatesTags: ['TagVideos']
     })
   })
 });
 
-export const { useGetTagVideosQuery } = tagVideoApi;
+export const { useGetTagVideosQuery, useAddTagVideosMutation } = tagVideoApi;

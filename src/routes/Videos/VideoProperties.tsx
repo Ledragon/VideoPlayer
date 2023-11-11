@@ -1,10 +1,11 @@
 import { Autocomplete, ImageList, ImageListItem, Rating, TextField } from '@mui/material';
 import { FormikProps } from 'formik';
+import { useEffect, useState } from 'react';
+
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
-import { useEffect, useState } from 'react';
 
 const VideoProperties = (props: {
   video: Video;
@@ -30,10 +31,7 @@ const VideoProperties = (props: {
     );
   }, [tags, tagVideos, video]);
 
-  const handleTagsChange = (
-    _event: React.ChangeEvent<any>,
-    value: any[]
-  ) => {
+  const handleTagsChange = (_event: React.ChangeEvent<any>, value: any[]) => {
     formik.setFieldValue('tags', value);
   };
 
@@ -51,12 +49,7 @@ const VideoProperties = (props: {
         error={!!formik.errors.title}
         helperText={formik.errors.title}
       />
-      <Rating
-        value={formik.values.rating}
-        name="rating"
-        onChange={formik.handleChange}
-        id="rating"
-      />
+      <Rating value={formik.values.rating} name="rating" onChange={formik.handleChange} id="rating" />
       <Autocomplete
         multiple
         id="tags"
@@ -64,16 +57,7 @@ const VideoProperties = (props: {
         getOptionLabel={(o) => o?.value || ''}
         onChange={handleTagsChange}
         value={formik.values.tags}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            variant="standard"
-            label="Tags"
-            placeholder="Tags"
-            margin="dense"
-          />
-        )}
-      ></Autocomplete>
+        renderInput={(params) => <TextField {...params} variant="standard" label="Tags" placeholder="Tags" margin="dense" />}></Autocomplete>
     </form>
   );
 };

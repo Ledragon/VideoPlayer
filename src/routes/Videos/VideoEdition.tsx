@@ -1,38 +1,22 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Button,
-  DialogTitle,
-  Box,
-  CircularProgress,
-  Typography,
-  Alert,
-  Skeleton,
-  IconButton
-} from '@mui/material';
-import { FormikConfig, FormikProps, useFormik } from 'formik';
-import { useMemo, useState } from 'react';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
+import { Alert, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Skeleton, Typography } from '@mui/material';
+import { FormikConfig, FormikProps, useFormik } from 'formik';
+import { useMemo, useState } from 'react';
 
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
-import {
-  useGenerateThumbnailsMutation,
-  useGetContactSheetForVideoQuery,
-  useGetThumbnailsForVideoQuery
-} from '../../redux';
-import GeneratedThumbnails from './GeneratedThumbnails';
-import ThumbnailsGenerator from './ThumbnailsGenerator';
-import ThumbsImageList from './ThumbsImageList';
-import VideoProperties from './VideoProperties';
-import getBase64Url from './getBase64Url';
+import { useGenerateThumbnailsMutation, useGetContactSheetForVideoQuery, useGetThumbnailsForVideoQuery } from '../../redux';
+import AddToPlaylist from './AddToPlaylist';
 import ContactSheetForm from './ContactSheetForm';
 import CreateTag from './CreateTag';
-import AddToPlaylist from './AddToPlaylist';
+import GeneratedThumbnails from './GeneratedThumbnails';
+import getBase64Url from './getBase64Url';
+import ThumbnailsGenerator from './ThumbnailsGenerator';
+import ThumbsImageList from './ThumbsImageList';
 import VideoInfos from './VideoInfos';
+import VideoProperties from './VideoProperties';
 
 interface PropType {
   error: any;
@@ -46,20 +30,9 @@ interface PropType {
 }
 
 const VideoEdtion = (props: PropType) => {
-  const {
-    tagVideos,
-    error,
-    formik,
-    onSave,
-    selectedThumbnails,
-    setSelectedThumbnails,
-    tags,
-    video
-  } = props;
+  const { tagVideos, error, formik, onSave, selectedThumbnails, setSelectedThumbnails, tags, video } = props;
 
-  const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(
-    video.id
-  );
+  const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(video.id);
   const [_, status] = useGenerateThumbnailsMutation({
     fixedCacheKey: video.fileName
   });
@@ -83,15 +56,8 @@ const VideoEdtion = (props: PropType) => {
             flexBasis: '50%',
             display: 'flex',
             flexDirection: 'column'
-          }}
-        >
-          <VideoProperties
-            formik={formik}
-            tags={tags}
-            tagVideos={tagVideos}
-            video={video}
-            onSubmit={onSave}
-          />
+          }}>
+          <VideoProperties formik={formik} tags={tags} tagVideos={tagVideos} video={video} onSubmit={onSave} />
           {isLoading ? (
             <Skeleton
               variant="rounded"
@@ -105,12 +71,8 @@ const VideoEdtion = (props: PropType) => {
             <Box
               sx={{
                 flexGrow: 1
-              }}
-            >
-              <img
-                src={getBase64Url(contactSheet.image)}
-                style={{}}
-              ></img>
+              }}>
+              <img src={getBase64Url(contactSheet.image)} style={{}}></img>
             </Box>
           ) : (
             <></>
@@ -124,8 +86,7 @@ const VideoEdtion = (props: PropType) => {
             display: 'flex',
             flexDirection: 'column',
             flexBasis: '50%'
-          }}
-        >
+          }}>
           <Box>
             <CreateTag />
           </Box>
@@ -137,27 +98,14 @@ const VideoEdtion = (props: PropType) => {
             {status.isLoading ? (
               <CircularProgress />
             ) : (
-              <GeneratedThumbnails
-                data={status?.data || []}
-                selected={selectedThumbnails}
-                onSelect={handleSelectThumdbnail}
-              ></GeneratedThumbnails>
+              <GeneratedThumbnails data={status?.data || []} selected={selectedThumbnails} onSelect={handleSelectThumdbnail}></GeneratedThumbnails>
             )}
           </Box>
         </Box>
       </Box>
 
-      <Box>
-        {!!error ? (
-          <Alert severity="error">
-            An error occured. Check console for more information.
-          </Alert>
-        ) : null}
-      </Box>
-      <Box
-        id="info-bar"
-        sx={{ display: 'flex' }}
-      >
+      <Box>{error ? <Alert severity="error">An error occured. Check console for more information.</Alert> : null}</Box>
+      <Box id="info-bar" sx={{ display: 'flex' }}>
         <Typography variant="caption">{video.fileName}</Typography>
       </Box>
     </>

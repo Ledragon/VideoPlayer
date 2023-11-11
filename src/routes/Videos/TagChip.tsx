@@ -1,4 +1,5 @@
 import { Chip, Paper } from '@mui/material';
+
 import { Tag } from '../../models/Tag';
 
 interface PropType {
@@ -13,14 +14,7 @@ const TagChip = ({ onClick, selected, tag }: PropType) => {
       onClick(tag);
     }
   };
-  return (
-    <Chip
-      label={tag.value}
-      variant={selected ? 'filled' : 'outlined'}
-      sx={{ m: 1 }}
-      onClick={handleClick}
-    />
-  );
+  return <Chip label={tag.value} variant={selected ? 'filled' : 'outlined'} sx={{ m: 1 }} onClick={handleClick} />;
 };
 
 export default TagChip;

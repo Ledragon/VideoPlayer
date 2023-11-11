@@ -1,16 +1,9 @@
-import { Paper, alpha } from '@mui/material';
+import { alpha, Paper } from '@mui/material';
+
 import { Tag } from '../../models/Tag';
 import TagChip from './TagChip';
 
-const TagChips = ({
-  selectedTags,
-  tags,
-  onTagClick
-}: {
-  selectedTags: Tag[];
-  tags: Tag[];
-  onTagClick?: (tag: Tag) => void;
-}) => {
+const TagChips = ({ selectedTags, tags, onTagClick }: { selectedTags: Tag[]; tags: Tag[]; onTagClick?: (tag: Tag) => void }) => {
   return (
     <Paper
       sx={{
@@ -20,17 +13,8 @@ const TagChips = ({
         backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.6),
         overflow: 'auto',
         display: 'flex'
-      }}
-
-    >
-      {tags?.map((d) => (
-        <TagChip
-          key={d.id}
-          selected={selectedTags.indexOf(d) >= 0}
-          tag={d}
-          onClick={onTagClick}
-        ></TagChip>
-      ))}
+      }}>
+      {tags?.map((d) => <TagChip key={d.id} selected={selectedTags.indexOf(d) >= 0} tag={d} onClick={onTagClick}></TagChip>)}
     </Paper>
   );
 };

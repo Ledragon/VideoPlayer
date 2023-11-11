@@ -1,5 +1,5 @@
 import { LinearProgress } from '@mui/material';
-import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 import { useState } from 'react';
 
 import { MediaType } from '../../models/Directory';
@@ -57,12 +57,12 @@ const DirectoriesSettings = (props: PropType) => {
     });
   };
 
-  const handleSelectChange = (selectionModel: GridSelectionModel) => {
+  const handleSelectChange = (selectionModel: GridRowSelectionModel) => {
     setSelectedRows(selectionModel.map((d) => d as number));
   };
   return (
     <>
-      <DataGrid columns={cols} rows={data || []} loading={isFetching} onSelectionModelChange={handleSelectChange} hideFooter />
+      <DataGrid columns={cols} rows={data || []} loading={isFetching} onRowSelectionModelChange={handleSelectChange} hideFooter />
       <SettingsButtons
         onAddDirectory={handleAddDirectoryClick}
         onAutoComplete={handleAutoComplete}

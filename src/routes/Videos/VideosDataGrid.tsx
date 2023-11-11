@@ -19,7 +19,7 @@ const columns: GridColDef[] = [
     headerName: 'Preview',
     width: (16 / 9) * rowHeight,
     align: 'center',
-    renderCell: (params: GridRenderCellParams<string>) => {
+    renderCell: (params: GridRenderCellParams) => {
       if (!params.value) {
         return <></>;
       }
@@ -50,7 +50,7 @@ const columns: GridColDef[] = [
       }
       return (
         <>
-          {params.value.map((d) => (
+          {params.value.map((d: Tag) => (
             <Chip key={d.value} label={d.value} variant="outlined"></Chip>
           ))}
         </>
@@ -144,12 +144,12 @@ const VideosDataGrid = (props: {
         rows={rows}
         rowHeight={rowHeight}
         checkboxSelection
-        onSelectionModelChange={(newSelectionModel) => {
+        onRowSelectionModelChange={(newSelectionModel) => {
           setSelectedRows(newSelectionModel);
           console.log(newSelectionModel);
         }}
-        selectionModel={selectedRows}
-        disableSelectionOnClick={true}></DataGrid>
+        rowSelectionModel={selectedRows}
+        disableRowSelectionOnClick={true}></DataGrid>
       <ThumbnailDialog tuple={selectedVideo} onCancel={() => setOpen(false)} onSave={handleSave} open={open}></ThumbnailDialog>
     </>
   );

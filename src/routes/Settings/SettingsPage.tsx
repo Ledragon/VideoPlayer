@@ -1,70 +1,16 @@
-import { alpha, Box, LinearProgress, Paper } from '@mui/material';
-import { DataGrid, GridColDef, GridSelectionModel } from '@mui/x-data-grid';
-
-import { MediaType } from '../../models/Directory';
-import {
-  useCleanVideosMutation,
-  useGetDirectoriesQuery,
-  useLoadVideosMutation,
-  useRemoveDirectoryMutation
-} from '../../redux/settings.api';
-import SettingsButtons from './SettingsButtons';
+import { alpha, Box, Paper, Tab, Tabs } from '@mui/material';
 import { useState } from 'react';
-import NewDirectoryDialog from './NewDirectoryDialog';
-import { useAutoCompleteLibraryMutation } from '../../redux';
+
+import DirectoriesSettings from './DirectoriesSettings';
+import VideosDataGrid from './VideosDataGrid';
 
 interface PropType {}
-const cols: GridColDef[] = [
-  {
-    field: 'directoryPath',
-    headerName: 'Directory',
-    flex: 1
-  },
-  {
-    headerName: 'Include sub directories',
-    field: 'isIncludeSubdirectories'
-  },
-  {
-    headerName: 'Type',
-    field: 'mediaType',
-    valueFormatter: (d) => MediaType[d.value]
-  }
-];
 
 const SettingsPage = (props: PropType) => {
-  const [selectedRows, setSelectedRows] = useState<number[]>([]);
+  const [activeTab, setActiveTab] = useState(0);
 
-  const { isFetching, data } = useGetDirectoriesQuery();
-  const [loadVideos, loadVideosStatus] = useLoadVideosMutation({});
-  const [cleanVideos, cleanVideosStatus] = useCleanVideosMutation();
-  const [removeDirectory, removeDirectoryStatus] = useRemoveDirectoryMutation();
-  const [autoComplete, autoCompleteStatus] = useAutoCompleteLibraryMutation();
-
-  const [open, setOpen] = useState<boolean>(false);
-
-  const handleAddDirectoryClick = () => {
-    setOpen(true);
-  };
-  const handleLoadVideos = () => {
-    loadVideos();
-  };
-
-  const handleCleanVideos = () => {
-    cleanVideos();
-  };
-
-  const handleAutoComplete = () => {
-    autoComplete();
-  };
-
-  const handleRemoveDirectory = () => {
-    selectedRows.forEach((r) => {
-      removeDirectory(r);
-    });
-  };
-
-  const handleSelectChange = (selectionModel: GridSelectionModel) => {
-    setSelectedRows(selectionModel.map((d) => d as number));
+  const handleTabChange = (_e: React.SyntheticEvent<Element, Event>, v: number) => {
+    setActiveTab(v);
   };
 
   return (
@@ -72,47 +18,28 @@ const SettingsPage = (props: PropType) => {
       <Box
         sx={{
           display: 'flex',
-          flexDirection: 'row',
+          flexDirection: 'column',
           flexGrow: 1,
           overflow: 'hidden',
           p: 1
-        }}
-      >
+        }}>
+        <Box sx={{ m: 1 }}>
+          <Tabs onChange={handleTabChange} value={activeTab}>
+            <Tab label="Directories"></Tab>
+            <Tab label="Videos"></Tab>
+          </Tabs>
+        </Box>
         <Paper
           sx={{
             flexGrow: 1,
             m: 1,
-            backgroundColor: (theme) =>
-              alpha(theme.palette.background.paper, 0.7),
+            backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.7),
             position: 'relative'
-          }}
-        >
-          <DataGrid
-            columns={cols}
-            rows={data || []}
-            loading={isFetching}
-            onSelectionModelChange={handleSelectChange}
-            hideFooter
-          />
-          <SettingsButtons
-            onAddDirectory={handleAddDirectoryClick}
-            onAutoComplete={handleAutoComplete}
-            onCleanVideos={handleCleanVideos}
-            onLoadVideos={handleLoadVideos}
-            onRemoveDirectory={handleRemoveDirectory}
-          />
-          {cleanVideosStatus.isLoading ||
-          loadVideosStatus.isLoading ||
-          removeDirectoryStatus.isLoading ||
-          autoCompleteStatus.isLoading ? (
-            <LinearProgress />
-          ) : null}
+          }}>
+          {activeTab === 0 && <DirectoriesSettings />}
+          {activeTab === 1 && <VideosDataGrid />}
         </Paper>
       </Box>
-      <NewDirectoryDialog
-        open={open}
-        setOpen={setOpen}
-      />
     </>
   );
 };

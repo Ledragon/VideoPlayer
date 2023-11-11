@@ -4,12 +4,12 @@ import { Chip, IconButton, SxProps } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { useState } from 'react';
 
-import ThumbnailDialog from './Thumbnails';
-import getBase64Url from './getBase64Url';
 import { Tag } from '../../models/Tag';
+import { TagVideo } from '../../models/TagVideo';
 import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
-import { TagVideo } from '../../models/TagVideo';
+import getBase64Url from './getBase64Url';
+import ThumbnailDialog from './Thumbnails';
 
 const rowHeight = 64;
 
@@ -68,8 +68,7 @@ const columns: GridColDef[] = [
             if (params.value) {
               params.value();
             }
-          }}
-        >
+          }}>
           <ImageSearchIcon />
         </IconButton>
       );
@@ -86,8 +85,7 @@ const columns: GridColDef[] = [
             if (params.value) {
               params.value();
             }
-          }}
-        >
+          }}>
           <VideoSettingsIcon />
         </IconButton>
       );
@@ -112,18 +110,11 @@ const VideosDataGrid = (props: {
       }
     | undefined
   >(undefined);
-  const [selectedRows, setSelectedRows] = useState<any[] | undefined>(
-    undefined
-  );
+  const [selectedRows, setSelectedRows] = useState<any[] | undefined>(undefined);
   const [open, setOpen] = useState<boolean>(false);
   const rows = videos.map((v, i) => {
     const videoThumbs = thumbnails.filter((t) => t.videoId === v.id);
-    const currentTags =
-      tagVideos && tags
-        ? tagVideos
-            .filter((tv) => tv.videoId == v.id)
-            .map((tv) => tags.find((t) => t.id === tv.tagId))
-        : [];
+    const currentTags = tagVideos && tags ? tagVideos.filter((tv) => tv.videoId == v.id).map((tv) => tags.find((t) => t.id === tv.tagId)) : [];
 
     return Object.assign({}, v, {
       id: v.id,
@@ -158,14 +149,8 @@ const VideosDataGrid = (props: {
           console.log(newSelectionModel);
         }}
         selectionModel={selectedRows}
-        disableSelectionOnClick={true}
-      ></DataGrid>
-      <ThumbnailDialog
-        tuple={selectedVideo}
-        onCancel={() => setOpen(false)}
-        onSave={handleSave}
-        open={open}
-      ></ThumbnailDialog>
+        disableSelectionOnClick={true}></DataGrid>
+      <ThumbnailDialog tuple={selectedVideo} onCancel={() => setOpen(false)} onSave={handleSave} open={open}></ThumbnailDialog>
     </>
   );
 };

@@ -1,28 +1,19 @@
-import {
-  Autocomplete,
-  Box,
-  IconButton,
-  LinearProgress,
-  Paper,
-  TextField,
-  alpha,
-  FormControlLabel,
-  Switch
-} from '@mui/material';
-import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
+import { alpha, Autocomplete, Box, FormControlLabel, IconButton, LinearProgress, Paper, Switch, TextField } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
 import {
-  useGetVideosQuery,
-  useGetTagsQuery,
-  useGetTagVideosQuery,
-  useUpdateVideoMutation,
+  getTagList,
   getVideoList,
   useAddThumbnailsMutation,
-  getTagList
+  useGetTagsQuery,
+  useGetTagVideosQuery,
+  useGetVideosQuery,
+  useUpdateVideoMutation
 } from '../../redux';
 import { RootState } from '../../redux/configureStore';
 import Playlist from './Playlist';
@@ -49,8 +40,7 @@ const VideosNewPage = (props: PropType) => {
 
   const { isLoading, isFetching } = useGetVideosQuery();
   const { isLoading: isLoadingTags } = useGetTagsQuery();
-  const { data: tagVideos, isFetching: isLoadingTagVideos } =
-    useGetTagVideosQuery();
+  const { data: tagVideos, isFetching: isLoadingTagVideos } = useGetTagVideosQuery();
   const [updateVideo, result] = useUpdateVideoMutation();
   const [addThumbnails] = useAddThumbnailsMutation();
 
@@ -80,10 +70,7 @@ const VideosNewPage = (props: PropType) => {
     setSelectedTags(values);
     if (values.length) {
       const st = values.map((d) => d.id);
-      const ftv =
-        tagVideos
-          ?.filter((d) => st.indexOf(d.tagId) >= 0)
-          .map((d) => d.videoId) || [];
+      const ftv = tagVideos?.filter((d) => st.indexOf(d.tagId) >= 0).map((d) => d.videoId) || [];
       const fv = videos?.filter((v) => ftv.indexOf(v.id) >= 0);
       setFilteredVideos(fv || []);
     } else {
@@ -92,12 +79,9 @@ const VideosNewPage = (props: PropType) => {
   };
 
   const handleSave = (video: Video, thumbnails: string[]) => {
-    Promise.all([
-      updateVideo(video).unwrap(),
-      addThumbnails(
-        thumbnails.map((t) => ({ videoId: video.id, image: t, id: 0 }))
-      ).unwrap()
-    ]).then(() => setSelectedVideo(null));
+    Promise.all([updateVideo(video).unwrap(), addThumbnails(thumbnails.map((t) => ({ videoId: video.id, image: t, id: 0 }))).unwrap()]).then(() =>
+      setSelectedVideo(null)
+    );
   };
 
   const handleCancel = () => {
@@ -105,17 +89,11 @@ const VideosNewPage = (props: PropType) => {
   };
 
   const handleAlphaSort = () => {
-    setSortOrder(
-      sortOrder === SortOrder.AlphaAsc
-        ? SortOrder.AlphaDesc
-        : SortOrder.AlphaAsc
-    );
+    setSortOrder(sortOrder === SortOrder.AlphaAsc ? SortOrder.AlphaDesc : SortOrder.AlphaAsc);
   };
 
   const handleDateSort = () => {
-    setSortOrder(
-      sortOrder === SortOrder.DateDesc ? SortOrder.DateAsc : SortOrder.DateDesc
-    );
+    setSortOrder(sortOrder === SortOrder.DateDesc ? SortOrder.DateAsc : SortOrder.DateDesc);
   };
 
   const handleThumbChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -160,8 +138,7 @@ const VideosNewPage = (props: PropType) => {
     }
   };
 
-  const isLoadingAny =
-    isLoading || isFetching || isLoadingTagVideos || isLoadingTags;
+  const isLoadingAny = isLoading || isFetching || isLoadingTagVideos || isLoadingTags;
   return (
     <Box
       sx={{
@@ -171,8 +148,7 @@ const VideosNewPage = (props: PropType) => {
         flexGrow: 1,
         flexShrink: 1,
         height: '100%'
-      }}
-    >
+      }}>
       {isLoadingAny ? (
         <Box>
           <LinearProgress></LinearProgress>
@@ -180,57 +156,26 @@ const VideosNewPage = (props: PropType) => {
       ) : (
         <></>
       )}
-      <Box
-        id="tags-chips"
-        sx={{ flex: '1 0 auto', m: 1, display: 'flex' }}
-      >
+      <Box id="tags-chips" sx={{ flex: '1 0 auto', m: 1, display: 'flex' }}>
         <Autocomplete
           sx={{ flexGrow: 1 }}
           multiple
           id="tags"
-          options={
-            tags.filter(
-              (t) =>
-                !tagVideos ||
-                tagVideos.filter((d) => d.tagId === t.id).length > 0
-            ) || []
-          }
-          getOptionLabel={(o) =>
-            o
-              ? `${o.value} (${
-                  (tagVideos || []).filter((d) => d.tagId === o.id).length
-                })`
-              : ''
-          }
+          options={tags.filter((t) => !tagVideos || tagVideos.filter((d) => d.tagId === t.id).length > 0) || []}
+          getOptionLabel={(o) => (o ? `${o.value} (${(tagVideos || []).filter((d) => d.tagId === o.id).length})` : '')}
           onChange={handleTagsChange}
           value={selectedTags}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              variant="standard"
-              label="Tags"
-              placeholder="Tags"
-              margin="dense"
-            />
-          )}
-        ></Autocomplete>
+          renderInput={(params) => <TextField {...params} variant="standard" label="Tags" placeholder="Tags" margin="dense" />}></Autocomplete>
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
-          }}
-        >
-          <IconButton
-            size="small"
-            onClick={handleAlphaSort}
-          >
+          }}>
+          <IconButton size="small" onClick={handleAlphaSort}>
             <SortByAlphaOutlinedIcon fontSize="small" />
           </IconButton>
-          <IconButton
-            size="small"
-            onClick={handleDateSort}
-          >
+          <IconButton size="small" onClick={handleDateSort}>
             <AccessTimeOutlinedIcon fontSize="small" />
           </IconButton>
           {/* <FormControlLabel
@@ -277,8 +222,7 @@ const VideosNewPage = (props: PropType) => {
           flex: '1 1 auto',
           overflow: 'hidden'
         }}
-        id="central-part"
-      >
+        id="central-part">
         <Box
           sx={{
             flexBasis: '80%',
@@ -286,8 +230,7 @@ const VideosNewPage = (props: PropType) => {
             flexShrink: 0,
             flexDirection: 'column',
             display: 'flex'
-          }}
-        >
+          }}>
           <Box
             sx={{
               overflowY: 'auto',
@@ -295,13 +238,8 @@ const VideosNewPage = (props: PropType) => {
               flexShrink: 1,
               mx: 1
             }}
-            id="videos-images-box"
-          >
-            <VideosImageList
-              showContactSheets={showContactSheets}
-              videos={displayedVideos}
-              onClick={handleVideoClick}
-            />
+            id="videos-images-box">
+            <VideosImageList showContactSheets={showContactSheets} videos={displayedVideos} onClick={handleVideoClick} />
           </Box>
         </Box>
         <Box
@@ -309,27 +247,22 @@ const VideosNewPage = (props: PropType) => {
             flexBasis: '20%',
             p: 0,
             overflow: 'hidden'
-          }}
-        >
+          }}>
           <Paper
             sx={{
               height: '100%',
-              backgroundColor: (theme) =>
-                alpha(theme.palette.background.paper, 0.6),
+              backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.6),
               overflowY: 'auto'
-            }}
-          >
+            }}>
             <Playlist />
           </Paper>
         </Box>
       </Box>
-      {!!selectedVideo ? (
+      {selectedVideo ? (
         <VideoDialog
           open={!!selectedVideo}
           tags={tags || []}
-          tagVideos={(tagVideos || []).filter(
-            (v) => v.videoId === selectedVideo?.id
-          )}
+          tagVideos={(tagVideos || []).filter((v) => v.videoId === selectedVideo?.id)}
           video={selectedVideo}
           onSave={handleSave}
           onCancel={handleCancel}

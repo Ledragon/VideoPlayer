@@ -1,12 +1,10 @@
 import { Box, Chip, Rating, Stack, Typography } from '@mui/material';
-import { Video } from '../../models/Video';
-import getBase64Url from './getBase64Url';
-import {
-  useGetContactSheetForVideoQuery,
-  useGetThumbnailsForVideoQuery
-} from '../../redux';
-import ThumbsImageList from './ThumbsImageList';
+
 import { Tag } from '../../models/Tag';
+import { Video } from '../../models/Video';
+import { useGetContactSheetForVideoQuery, useGetThumbnailsForVideoQuery } from '../../redux';
+import getBase64Url from './getBase64Url';
+import ThumbsImageList from './ThumbsImageList';
 
 interface PropType {
   tags?: (Tag | undefined)[];
@@ -15,15 +13,10 @@ interface PropType {
 
 const VideoInfos = (props: PropType) => {
   const { tags, video } = props;
-  const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(
-    video.id
-  );
+  const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(video.id);
   const { data: thumbnails } = useGetThumbnailsForVideoQuery(video.id);
   return (
-    <Box
-      sx={{ flexGrow: 1 }}
-      id="video-infos"
-    >
+    <Box sx={{ flexGrow: 1 }} id="video-infos">
       <Box
         sx={{
           display: 'flex',
@@ -31,21 +24,9 @@ const VideoInfos = (props: PropType) => {
           flexGrow: 1,
           height: '100%',
           overflow: 'auto'
-        }}
-      >
-        <Box>
-          {tags?.map((tag) => (
-            <Chip
-              label={tag?.value}
-              variant={'outlined'}
-              sx={{ m: 1 }}
-            />
-          ))}
-        </Box>
-        <Rating
-          value={video.rating}
-          readOnly
-        />
+        }}>
+        <Box>{tags?.map((tag) => <Chip key={tag?.id} label={tag?.value} variant={'outlined'} sx={{ m: 1 }} />)}</Box>
+        <Rating value={video.rating} readOnly />
         <Box
           sx={{
             flexGrow: 1,
@@ -53,15 +34,8 @@ const VideoInfos = (props: PropType) => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
-          }}
-        >
-          {contactSheet && (
-            <img
-              src={getBase64Url(contactSheet.image)}
-              style={{}}
-              width="100%"
-            ></img>
-          )}
+          }}>
+          {contactSheet && <img src={getBase64Url(contactSheet.image)} style={{}} height="100%"></img>}
         </Box>
         <ThumbsImageList thumbs={thumbnails || []} />
         <Stack direction="row">

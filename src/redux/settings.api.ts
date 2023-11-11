@@ -53,10 +53,4 @@ const settingsApi = api.injectEndpoints({
   })
 });
 
-export const {
-  useGetDirectoriesQuery,
-  useLoadVideosMutation,
-  useCleanVideosMutation,
-  useAddDirectoryMutation,
-  useRemoveDirectoryMutation
-} = settingsApi;
+export const { useGetDirectoriesQuery, useLoadVideosMutation, useCleanVideosMutation, useAddDirectoryMutation, useRemoveDirectoryMutation } = settingsApi;

@@ -97,7 +97,7 @@ const VideoDialog = (props: PropType) => {
             <Tab label="Properties" />
             <Tab label="Edition" />
           </Tabs>
-          <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 0, flexBasis: 'auto' }}>
+          <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto', overflow: 'hidden' }} className='center'>
             {selectedTab === 1 && (
               <VideoEdtion
                 error={error}

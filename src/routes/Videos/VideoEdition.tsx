@@ -52,10 +52,14 @@ const VideoEdtion = (props: PropType) => {
     <>
       <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
         <Box
+          className='properties-container'
           sx={{
             flexBasis: '50%',
             display: 'flex',
-            flexDirection: 'column'
+            flexDirection: 'column',
+            flexGrow: 0,
+            flexShrink: 0,
+            overflow: 'hidden'
           }}>
           <VideoProperties formik={formik} tags={tags} tagVideos={tagVideos} video={video} onSubmit={onSave} />
           {isLoading ? (
@@ -70,14 +74,18 @@ const VideoEdtion = (props: PropType) => {
           {contactSheet && !isLoading ? (
             <Box
               sx={{
-                flexGrow: 1
+                flexGrow: 1,
+                overflow: 'auto',
+                flexShrink: 1,
+                flexBasis: '100%'
               }}>
-              <img src={getBase64Url(contactSheet.image)} style={{}}></img>
+                <Box sx={{flexGrow:1, backgroundImage:`url('${getBase64Url(contactSheet.image)}')`, height :'100%', backgroundRepeat: 'no-repeat', backgroundSize: 'contain', backgroundPosition: 'center' }}/>
+              {/* <img src={getBase64Url(contactSheet.image)} style={{}}></img> */}
             </Box>
           ) : (
             <></>
           )}
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', flexGrow:  0, flexShrink: 0}}>
             <ContactSheetForm video={video} />
           </Box>
         </Box>
@@ -85,7 +93,9 @@ const VideoEdtion = (props: PropType) => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            flexBasis: '50%'
+            flexBasis: '50%',
+            flexGrow: 0,
+            flexShrink: 0
           }}>
           <Box>
             <CreateTag />

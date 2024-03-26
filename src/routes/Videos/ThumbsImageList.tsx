@@ -35,17 +35,7 @@ const ThumbsImageList = (props: PropType) => {
     <ImageList cols={cols ?? 4} gap={6} sx={{ ...sx, m: 0.5 }}>
       {thumbs.map((v, i) => (
         <ImageListItem key={i} sx={{}} onMouseEnter={() => handleMouseEnter(i)} onMouseLeave={handleMouseLeave}>
-          <Box
-            sx={{
-              display: 'flex',
-              flexGrow: 1,
-              backgroundImage: v.image && `url('${getBase64Url(v.image)}')`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center'
-            }}></Box>
-
-          {/* <img src={getBase64Url(v.image)}></img> */}
+          <img src={getBase64Url(v.image)}></img>
           {hovered === i ? (
             <ImageListItemBar
               position="top"

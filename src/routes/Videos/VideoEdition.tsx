@@ -91,7 +91,7 @@ const VideoEdtion = (props: PropType) => {
           <Box>
             <CreateTag />
           </Box>
-          <Box sx={{ flexBasis: '50%' }}>
+          {/* <Box sx={{ flexBasis: '50%' }}>
             <ThumbsImageList thumbs={thumbnails || []} />
           </Box>
           <Box sx={{ flexBasis: '50%' }}>
@@ -101,7 +101,7 @@ const VideoEdtion = (props: PropType) => {
             ) : (
               <GeneratedThumbnails data={status?.data || []} selected={selectedThumbnails} onSelect={handleSelectThumdbnail}></GeneratedThumbnails>
             )}
-          </Box>
+          </Box> */}
         </Box>
       </Box>
 

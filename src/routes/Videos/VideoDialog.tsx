@@ -13,6 +13,7 @@ import AddToPlaylist from './AddToPlaylist';
 import VideoEdtion from './VideoEdition';
 import VideoInfos from './VideoInfos';
 import ContactSheet from './ContactSheet';
+import ThumbsEdition from './ThumbsEdition';
 
 interface PropType {
   open: boolean;
@@ -99,6 +100,7 @@ const VideoDialog = (props: PropType) => {
               <Tabs value={selectedTab} onChange={(e, v) => setSelectedTab(v)}>
                 <Tab label="Properties" />
                 <Tab label="Edition" />
+                <Tab label="Thumbs" />
               </Tabs>
               <Box sx={{ flexGrow: 1 }}>
                 <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
@@ -115,6 +117,7 @@ const VideoDialog = (props: PropType) => {
                       setSelectedThumbnails={setSelectedThumbnails}
                     />
                   )}
+                  {selectedTab === 2 && <ThumbsEdition video={video} selectedThumbnails={selectedThumbnails} setSelectedThumbnails={setSelectedThumbnails} />}
                 </Box>
               </Box>
             </Box>

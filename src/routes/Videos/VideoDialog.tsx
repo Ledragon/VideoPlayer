@@ -95,14 +95,14 @@ const VideoDialog = (props: PropType) => {
           </Box>
         </DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'row' }}>
-            <Box sx={{ flexBasis: '40%', flexGrow: 0, flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'row', overflow: 'auto' }}>
+            <Box sx={{ flexBasis: '30%', flexGrow: 0, flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
               <Tabs value={selectedTab} onChange={(e, v) => setSelectedTab(v)}>
                 <Tab label="Properties" />
                 <Tab label="Edition" />
                 <Tab label="Thumbs" />
               </Tabs>
-              <Box sx={{ flexGrow: 1 }}>
+              <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
                 <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
                   {selectedTab === 0 && <VideoInfos tags={tagsForVideo} video={video} />}
                   {selectedTab === 1 && (

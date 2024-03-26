@@ -41,11 +41,11 @@ const ThumbsEdition = (props: PropType) => {
     }
     setSelectedThumbnails(selectedThumbnails.map((d) => d));
   };
-  console.log(thumbnails);
+console.log(thumbnails)
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+    <Box sx={{display: 'flex', flexDirection: 'column', flexGrow:1}}>
       <Box sx={{ flexBasis: '50%', flexGrow: 0, flexShrink: 0 }}>
-        <ThumbsImageList cols={thumbnails?.length ? Math.min(thumbnails.length, 4) : undefined} thumbs={thumbnails || []} />
+        <ThumbsImageList thumbs={thumbnails || []} />
       </Box>
       <Box sx={{ flexBasis: '50%' }}>
         <ThumbnailsGenerator video={video} />

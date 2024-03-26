@@ -1,4 +1,5 @@
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
 import { alpha, Autocomplete, Box, FormControlLabel, IconButton, LinearProgress, Paper, Switch, TextField } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
@@ -19,6 +20,7 @@ import { RootState } from '../../redux/configureStore';
 import Playlist from './Playlist';
 import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
+import AddAllToPlaylist from './AddAllToPlaylist';
 
 interface PropType {}
 
@@ -138,6 +140,10 @@ const VideosNewPage = (props: PropType) => {
     }
   };
 
+  const handleAddAll=()=>{
+
+  }
+
   const isLoadingAny = isLoading || isFetching || isLoadingTagVideos || isLoadingTags;
   return (
     <Box
@@ -178,28 +184,7 @@ const VideosNewPage = (props: PropType) => {
           <IconButton size="small" onClick={handleDateSort}>
             <AccessTimeOutlinedIcon fontSize="small" />
           </IconButton>
-          {/* <FormControlLabel
-            control={
-              <Switch
-                size="small"
-                checked={showMissingThumb}
-                onChange={handleThumbChange}
-              />
-            }
-            label="Thumb"
-            sx={{ mx: 1 }}
-          />
-          <FormControlLabel
-            control={
-              <Switch
-                size="small"
-                checked={showMissingCS}
-                onChange={handleCSChange}
-              />
-            }
-            label="CS"
-            sx={{ mx: 1 }}
-          /> */}
+          <AddAllToPlaylist videos={displayedVideos}></AddAllToPlaylist>
           <FormControlLabel
             control={
               <Switch

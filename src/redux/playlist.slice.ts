@@ -19,6 +19,14 @@ const playlistSlice = createSlice({
         state.videos.push(action.payload);
       }
     },
+    addVideos: (state, action: PayloadAction<number[]>) => {
+      action.payload.filter(d=>state.videos.indexOf(d) < 0)
+        .forEach(d=>state.videos.push(d));
+      return state;
+      // if (state.videos.indexOf(action.payload) < 0) {
+      //   state.videos.push(action.payload);
+      // }
+    },
     removeVideo: (state, action: PayloadAction<number>) => {
       const index = state.videos.indexOf(action.payload);
       if (index >= 0) {
@@ -28,5 +36,5 @@ const playlistSlice = createSlice({
   }
 });
 
-export const { addVideo, removeVideo } = playlistSlice.actions;
+export const { addVideo, addVideos, removeVideo } = playlistSlice.actions;
 export default playlistSlice.reducer;

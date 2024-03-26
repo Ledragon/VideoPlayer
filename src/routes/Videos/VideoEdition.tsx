@@ -1,21 +1,13 @@
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
-import { Alert, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Skeleton, Typography } from '@mui/material';
-import { FormikConfig, FormikProps, useFormik } from 'formik';
-import { useMemo, useState } from 'react';
+import { Alert, Box, Skeleton, Typography } from '@mui/material';
+import { FormikProps } from 'formik';
 
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
-import { useGenerateThumbnailsMutation, useGetContactSheetForVideoQuery, useGetThumbnailsForVideoQuery } from '../../redux';
-import AddToPlaylist from './AddToPlaylist';
+import { useGetContactSheetForVideoQuery } from '../../redux';
 import ContactSheetForm from './ContactSheetForm';
 import CreateTag from './CreateTag';
-import GeneratedThumbnails from './GeneratedThumbnails';
 import getBase64Url from './getBase64Url';
-import ThumbnailsGenerator from './ThumbnailsGenerator';
-import ThumbsImageList from './ThumbsImageList';
-import VideoInfos from './VideoInfos';
 import VideoProperties from './VideoProperties';
 
 interface PropType {
@@ -33,20 +25,7 @@ const VideoEdtion = (props: PropType) => {
   const { tagVideos, error, formik, onSave, selectedThumbnails, setSelectedThumbnails, tags, video } = props;
 
   const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(video.id);
-  const [_, status] = useGenerateThumbnailsMutation({
-    fixedCacheKey: video.fileName
-  });
-  const { data: thumbnails } = useGetThumbnailsForVideoQuery(video.id);
 
-  const handleSelectThumdbnail = (v: string) => {
-    const index = selectedThumbnails.indexOf(v);
-    if (index >= 0) {
-      selectedThumbnails.splice(index, 1);
-    } else {
-      selectedThumbnails.push(v);
-    }
-    setSelectedThumbnails(selectedThumbnails.map((d) => d));
-  };
 
   return (
     <>
@@ -80,7 +59,6 @@ const VideoEdtion = (props: PropType) => {
                 flexBasis: '100%'
               }}>
                 <Box sx={{flexGrow:1, backgroundImage:`url('${getBase64Url(contactSheet.image)}')`, height :'100%', backgroundRepeat: 'no-repeat', backgroundSize: 'contain', backgroundPosition: 'center' }}/>
-              {/* <img src={getBase64Url(contactSheet.image)} style={{}}></img> */}
             </Box>
           ) : (
             <></>
@@ -91,17 +69,6 @@ const VideoEdtion = (props: PropType) => {
           <Box>
             <CreateTag />
           </Box>
-          {/* <Box sx={{ flexBasis: '50%' }}>
-            <ThumbsImageList thumbs={thumbnails || []} />
-          </Box>
-          <Box sx={{ flexBasis: '50%' }}>
-            <ThumbnailsGenerator video={video} />
-            {status.isLoading ? (
-              <CircularProgress />
-            ) : (
-              <GeneratedThumbnails data={status?.data || []} selected={selectedThumbnails} onSelect={handleSelectThumdbnail}></GeneratedThumbnails>
-            )}
-          </Box> */}
         </Box>
       </Box>
 

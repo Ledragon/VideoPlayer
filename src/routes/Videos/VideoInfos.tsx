@@ -26,10 +26,10 @@ const VideoInfos = (props: PropType) => {
         }}>
         <Box>{tags?.map((tag) => <Chip key={tag?.id} label={tag?.value} variant={'outlined'} sx={{ m: 1 }} />)}</Box>
         <Rating value={video.rating} readOnly />
-        <ThumbsImageList sx={{ flexGrow: 1 }} thumbs={thumbnails || []} />
+        <ThumbsImageList sx={{ flexGrow: 1 }} cols={thumbnails ? Math.min(thumbnails?.length, 4) : 0} thumbs={thumbnails || []} />
         <Stack direction="column">
-          <Typography sx={{ m: 1 }}>{video.fileName}</Typography>
-          <Typography sx={{ m: 1 }}>{video.length}</Typography>
+          <Typography variant='caption' noWrap sx={{ m: 1 }}>{video.fileName}</Typography>
+          <Typography variant='caption' sx={{ m: 1 }}>{video.length}</Typography>
         </Stack>
       </Box>
     </Box>

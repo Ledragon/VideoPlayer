@@ -54,7 +54,7 @@ const VideoEdtion = (props: PropType) => {
         <Box
           className='properties-container'
           sx={{
-            flexBasis: '50%',
+            flexBasis: '100%',
             display: 'flex',
             flexDirection: 'column',
             flexGrow: 0,
@@ -88,15 +88,6 @@ const VideoEdtion = (props: PropType) => {
           <Box sx={{ display: 'flex', flexGrow:  0, flexShrink: 0}}>
             <ContactSheetForm video={video} />
           </Box>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            flexBasis: '50%',
-            flexGrow: 0,
-            flexShrink: 0
-          }}>
           <Box>
             <CreateTag />
           </Box>

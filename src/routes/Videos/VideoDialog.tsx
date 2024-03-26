@@ -95,25 +95,27 @@ const VideoDialog = (props: PropType) => {
         </DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'row' }}>
-            <Box sx={{ flexBasis: '20%', flexGrow: 0, flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{ flexBasis: '40%', flexGrow: 0, flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
               <Tabs value={selectedTab} onChange={(e, v) => setSelectedTab(v)}>
                 <Tab label="Properties" />
                 <Tab label="Edition" />
               </Tabs>
               <Box sx={{ flexGrow: 1 }}>
-                {selectedTab === 0 && <VideoInfos tags={tagsForVideo} video={video} />}
-                {selectedTab === 1 && (
-                  <VideoEdtion
-                    error={error}
-                    formik={formik}
-                    tags={tags}
-                    tagVideos={tagVideos}
-                    video={video}
-                    onSave={handleSave}
-                    selectedThumbnails={selectedThumbnails}
-                    setSelectedThumbnails={setSelectedThumbnails}
-                  />
-                )}
+                <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
+                  {selectedTab === 0 && <VideoInfos tags={tagsForVideo} video={video} />}
+                  {selectedTab === 1 && (
+                    <VideoEdtion
+                      error={error}
+                      formik={formik}
+                      tags={tags}
+                      tagVideos={tagVideos}
+                      video={video}
+                      onSave={handleSave}
+                      selectedThumbnails={selectedThumbnails}
+                      setSelectedThumbnails={setSelectedThumbnails}
+                    />
+                  )}
+                </Box>
               </Box>
             </Box>
             <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto', overflow: 'hidden' }} className="center">

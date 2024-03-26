@@ -3,7 +3,8 @@ import {
   IconButton,
   ImageList,
   ImageListItem,
-  ImageListItemBar
+  ImageListItemBar,
+  SxProps
 } from '@mui/material';
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Thumbnail } from '../../models/Thumbnail';
@@ -13,11 +14,12 @@ import { useState } from 'react';
 
 interface PropType {
   cols?: number;
+  sx?: SxProps
   thumbs: Thumbnail[];
 }
 
 const ThumbsImageList = (props: PropType) => {
-  const { cols, thumbs } = props;
+  const { cols, sx, thumbs } = props;
   const [hovered, setHovered] = useState<number | undefined>(undefined);
   const [deleteThumbnail, deleteStatus] = useDeleteThumbnailMutation();
 
@@ -30,19 +32,20 @@ const ThumbsImageList = (props: PropType) => {
   };
 
   return (
-    <ImageList
-      cols={cols ?? 4}
-      gap={6}
-      sx={{ m: 0.5 }}
-    >
+    <ImageList cols={cols ?? 4} gap={6} sx={{ ...sx, m: 0.5 }}>
       {thumbs.map((v, i) => (
-        <ImageListItem
-          key={i}
-          sx={{}}
-          onMouseEnter={() => handleMouseEnter(i)}
-          onMouseLeave={handleMouseLeave}
-        >
-          <img src={getBase64Url(v.image)}></img>
+        <ImageListItem key={i} sx={{}} onMouseEnter={() => handleMouseEnter(i)} onMouseLeave={handleMouseLeave}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexGrow: 1,
+              backgroundImage: v.image && `url('${getBase64Url(v.image)}')`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center'
+            }}></Box>
+
+          {/* <img src={getBase64Url(v.image)}></img> */}
           {hovered === i ? (
             <ImageListItemBar
               position="top"
@@ -50,12 +53,10 @@ const ThumbsImageList = (props: PropType) => {
                 <IconButton
                   onClick={() => {
                     deleteThumbnail(v.id);
-                  }}
-                >
+                  }}>
                   <DeleteForeverOutlinedIcon />
                 </IconButton>
-              }
-            ></ImageListItemBar>
+              }></ImageListItemBar>
           ) : null}
         </ImageListItem>
       ))}

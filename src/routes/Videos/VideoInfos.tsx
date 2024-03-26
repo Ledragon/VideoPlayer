@@ -15,7 +15,7 @@ const VideoInfos = (props: PropType) => {
   const { tags, video } = props;
   const { data: thumbnails } = useGetThumbnailsForVideoQuery(video.id);
   return (
-    <Box sx={{ flexGrow: 1 }} id="video-infos">
+    <Box sx={{ flexGrow: 1, height: '100%' }} id="video-infos">
       <Box
         sx={{
           display: 'flex',
@@ -26,8 +26,8 @@ const VideoInfos = (props: PropType) => {
         }}>
         <Box>{tags?.map((tag) => <Chip key={tag?.id} label={tag?.value} variant={'outlined'} sx={{ m: 1 }} />)}</Box>
         <Rating value={video.rating} readOnly />
-        <ThumbsImageList thumbs={thumbnails || []} />
-        <Stack direction="row">
+        <ThumbsImageList sx={{ flexGrow: 1 }} thumbs={thumbnails || []} />
+        <Stack direction="column">
           <Typography sx={{ m: 1 }}>{video.fileName}</Typography>
           <Typography sx={{ m: 1 }}>{video.length}</Typography>
         </Stack>

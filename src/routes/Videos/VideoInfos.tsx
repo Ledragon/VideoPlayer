@@ -13,7 +13,6 @@ interface PropType {
 
 const VideoInfos = (props: PropType) => {
   const { tags, video } = props;
-  const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(video.id);
   const { data: thumbnails } = useGetThumbnailsForVideoQuery(video.id);
   return (
     <Box sx={{ flexGrow: 1 }} id="video-infos">
@@ -27,16 +26,6 @@ const VideoInfos = (props: PropType) => {
         }}>
         <Box>{tags?.map((tag) => <Chip key={tag?.id} label={tag?.value} variant={'outlined'} sx={{ m: 1 }} />)}</Box>
         <Rating value={video.rating} readOnly />
-        <Box
-          sx={{
-            flexGrow: 1,
-            flexShrink: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-          {contactSheet && <img src={getBase64Url(contactSheet.image)} style={{}} height="100%"></img>}
-        </Box>
         <ThumbsImageList thumbs={thumbnails || []} />
         <Stack direction="row">
           <Typography sx={{ m: 1 }}>{video.fileName}</Typography>

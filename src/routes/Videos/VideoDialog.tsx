@@ -12,6 +12,7 @@ import { Video } from '../../models/Video';
 import AddToPlaylist from './AddToPlaylist';
 import VideoEdtion from './VideoEdition';
 import VideoInfos from './VideoInfos';
+import ContactSheet from './ContactSheet';
 
 interface PropType {
   open: boolean;
@@ -29,7 +30,7 @@ const VideoDialog = (props: PropType) => {
   const { open, video, onSave, onCancel, tags, tagVideos, error, onPrevious, onNext } = props;
   const [selectedThumbnails, setSelectedThumbnails] = useState<string[]>([]);
   const [selectedTab, setSelectedTab] = useState<number>(0);
-  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(true);
 
   const tagsForVideo = useMemo(() => {
     return tagVideos
@@ -93,24 +94,31 @@ const VideoDialog = (props: PropType) => {
           </Box>
         </DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Tabs value={selectedTab} onChange={(e, v) => setSelectedTab(v)}>
-            <Tab label="Properties" />
-            <Tab label="Edition" />
-          </Tabs>
-          <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto', overflow: 'hidden' }} className='center'>
-            {selectedTab === 1 && (
-              <VideoEdtion
-                error={error}
-                formik={formik}
-                tags={tags}
-                tagVideos={tagVideos}
-                video={video}
-                onSave={handleSave}
-                selectedThumbnails={selectedThumbnails}
-                setSelectedThumbnails={setSelectedThumbnails}
-              />
-            )}
-            {selectedTab === 0 && <VideoInfos tags={tagsForVideo} video={video} />}
+          <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'row' }}>
+            <Box sx={{ flexBasis: '20%', flexGrow: 0, flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
+              <Tabs value={selectedTab} onChange={(e, v) => setSelectedTab(v)}>
+                <Tab label="Properties" />
+                <Tab label="Edition" />
+              </Tabs>
+              <Box sx={{ flexGrow: 1 }}>
+                {selectedTab === 0 && <VideoInfos tags={tagsForVideo} video={video} />}
+                {selectedTab === 1 && (
+                  <VideoEdtion
+                    error={error}
+                    formik={formik}
+                    tags={tags}
+                    tagVideos={tagVideos}
+                    video={video}
+                    onSave={handleSave}
+                    selectedThumbnails={selectedThumbnails}
+                    setSelectedThumbnails={setSelectedThumbnails}
+                  />
+                )}
+              </Box>
+            </Box>
+            <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto', overflow: 'hidden' }} className="center">
+              <ContactSheet id={video.id}></ContactSheet>
+            </Box>
           </Box>
         </DialogContent>
         <DialogActions>

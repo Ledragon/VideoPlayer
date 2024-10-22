@@ -10,6 +10,11 @@ const linksDefinition = [
     icon: <VideoLibraryIcon />,
     name: 'videos'
   },
+  {
+    label: 'Playlist',
+    icon: <VideoLibraryIcon />,
+    name: 'playlist'
+  },
   // {
   //   label: 'Pictures',
   //   icon: <CollectionsIcon />,

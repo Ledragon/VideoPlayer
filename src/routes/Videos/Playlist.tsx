@@ -1,20 +1,8 @@
-import {
-  Avatar,
-  Box,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  TextField
-} from '@mui/material';
+import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemText, TextField } from '@mui/material';
 import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getVideoDictionary,
-  useGetContactSheetForVideoQuery
-} from '../../redux';
+import { getVideoDictionary, useGetContactSheetForVideoQuery } from '../../redux';
 import { RootState } from '../../redux/configureStore';
 import { useEffect, useState } from 'react';
 import { removeVideo } from '../../redux/playlist.slice';
@@ -27,51 +15,23 @@ const tf = timeFormat('%Y-%m-%d');
 
 interface PropType {}
 
-const PlayListItem = ({
-  video,
-  handleRemoveFromPlaylist
-}: {
-  video?: Video;
-  handleRemoveFromPlaylist: () => void;
-}) => {
-  const { data: contactSheet } = useGetContactSheetForVideoQuery(
-    video?.id || skipToken
-  );
+const PlayListItem = ({ video, handleRemoveFromPlaylist }: { video?: Video; handleRemoveFromPlaylist: () => void }) => {
+  const { data: contactSheet } = useGetContactSheetForVideoQuery(video?.id || skipToken);
   const src = contactSheet ? getBase64Url(contactSheet.image) : undefined;
   return (
     <ListItem
       title={video?.title}
       secondaryAction={
-        <IconButton
-          edge="end"
-          aria-label="delete"
-          onClick={() => handleRemoveFromPlaylist()}
-          size="small"
-        >
+        <IconButton edge="end" aria-label="delete" onClick={() => handleRemoveFromPlaylist()} size="small">
           <DeleteIcon fontSize="small" />
         </IconButton>
-      }
-    >
-      <ListItemAvatar sx={{ pr: 2 }}>
-        {src ? (
-          <img
-            src={src}
-            width={'60px'}
-          />
-        ) : (
-          <Avatar
-            variant="square"
-            alt={video?.title}
-            src={src}
-          />
-        )}
-      </ListItemAvatar>
+      }>
+      <ListItemAvatar sx={{ pr: 2 }}>{src ? <img src={src} width={'60px'} /> : <Avatar variant="square" alt={video?.title} src={src} />}</ListItemAvatar>
       <ListItemText
         primaryTypographyProps={{
           variant: 'caption',
           noWrap: true
-        }}
-      >
+        }}>
         {video?.title}
       </ListItemText>
     </ListItem>
@@ -83,9 +43,7 @@ const Playlist = (props: PropType) => {
   const date = new Date();
   const [fileName, setFileName] = useState<string>(`${tf(date)}`);
   const dispatch = useDispatch();
-  const playlistVideos = useSelector(
-    (state: RootState) => state.playlist.videos
-  );
+  const playlistVideos = useSelector((state: RootState) => state.playlist.videos);
   const videos = useSelector((state: RootState) => getVideoDictionary(state));
 
   const handleRemoveFromPlaylist = (v: number) => {
@@ -105,37 +63,13 @@ const Playlist = (props: PropType) => {
   return (
     <>
       <Box sx={{ display: 'flex', p: 1 }}>
-        <TextField
-          fullWidth
-          label="Playlist name"
-          name="File name"
-          value={fileName}
-          onChange={handleFileNameChange}
-          size="small"
-          margin="dense"
-        />
-        <IconButton
-          title="Download m3u playlist"
-          download={fileName + '.m3u'}
-          href={objectUrl}
-          disabled={!objectUrl}
-        >
+        <TextField fullWidth label="Playlist name" name="File name" value={fileName} onChange={handleFileNameChange} size="small" margin="dense" />
+        <IconButton title="Download m3u playlist" download={fileName + '.m3u'} href={objectUrl} disabled={!objectUrl}>
           <DownloadForOfflineOutlinedIcon />
         </IconButton>
       </Box>
-      <List
-        dense
-        sx={{ overflowY: 'auto' }}
-      >
-        {playlistVideos.map(
-          (d: number) =>
-            videos[d] && (
-              <PlayListItem
-                handleRemoveFromPlaylist={() => handleRemoveFromPlaylist(d)}
-                video={videos[d]}
-              />
-            )
-        )}
+      <List dense sx={{ overflowY: 'auto' }}>
+        {playlistVideos.map((d: number) => videos[d] && <PlayListItem handleRemoveFromPlaylist={() => handleRemoveFromPlaylist(d)} video={videos[d]} />)}
       </List>
     </>
   );

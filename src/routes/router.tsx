@@ -5,6 +5,7 @@ import SettingsPage from './Settings/SettingsPage';
 import Shell from './Shell';
 import VideoPage from './Video/VideoPage';
 import VideosNewPage from './Videos/VideosNewPage';
+import PlaylistPage from './Playlist/PlaylistPage';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,12 @@ const router = createBrowserRouter([
         path: '/video/:id',
         id: 'video',
         element: <VideoPage />
+      },
+      {
+        path: '/playlist',
+        id: 'playlist',
+        // element: <VideosPage />
+        element: <PlaylistPage />
       }
     ]
   }

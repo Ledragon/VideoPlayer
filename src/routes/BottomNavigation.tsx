@@ -1,7 +1,4 @@
-import {
-  BottomNavigation as MuiBottomNavigation,
-  BottomNavigationAction
-} from '@mui/material';
+import { BottomNavigation as MuiBottomNavigation, BottomNavigationAction } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import linksDefinition from './linksDefinition';
 
@@ -17,8 +14,7 @@ const BottomNavigation = (props: { value: string }) => {
             value={'/' + l.name}
             icon={l.icon}
             component={RouterLink}
-            to={'../' + l.name}
-          ></BottomNavigationAction>
+            to={'../' + l.name}></BottomNavigationAction>
         );
       })}
     </MuiBottomNavigation>

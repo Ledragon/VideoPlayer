@@ -1,12 +1,5 @@
 import { createTheme, PaletteOptions } from '@mui/material';
-import {
-  blueGrey,
-  deepPurple,
-  grey,
-  lightBlue,
-  teal,
-  pink
-} from '@mui/material/colors';
+import { blueGrey, deepPurple, grey, lightBlue, pink, teal } from '@mui/material/colors';
 
 const darkPalette: PaletteOptions = {
   primary: { main: lightBlue[400] }

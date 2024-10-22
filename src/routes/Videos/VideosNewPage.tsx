@@ -17,10 +17,10 @@ import {
   useUpdateVideoMutation
 } from '../../redux';
 import { RootState } from '../../redux/configureStore';
+import AddAllToPlaylist from './AddAllToPlaylist';
 import Playlist from './Playlist';
 import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
-import AddAllToPlaylist from './AddAllToPlaylist';
 
 interface PropType {}
 
@@ -140,9 +140,7 @@ const VideosNewPage = (props: PropType) => {
     }
   };
 
-  const handleAddAll=()=>{
-
-  }
+  const handleAddAll = () => {};
 
   const isLoadingAny = isLoading || isFetching || isLoadingTagVideos || isLoadingTags;
   return (
@@ -211,7 +209,7 @@ const VideosNewPage = (props: PropType) => {
         <Box
           sx={{
             flexBasis: '80%',
-            flexGrow: 0,
+            flexGrow: 1,
             flexShrink: 0,
             flexDirection: 'column',
             display: 'flex'
@@ -227,7 +225,7 @@ const VideosNewPage = (props: PropType) => {
             <VideosImageList showContactSheets={showContactSheets} videos={displayedVideos} onClick={handleVideoClick} />
           </Box>
         </Box>
-        <Box
+        {/* <Box
           sx={{
             flexBasis: '20%',
             p: 0,
@@ -241,7 +239,7 @@ const VideosNewPage = (props: PropType) => {
             }}>
             <Playlist />
           </Paper>
-        </Box>
+        </Box> */}
       </Box>
       {selectedVideo ? (
         <VideoDialog

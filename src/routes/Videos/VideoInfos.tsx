@@ -28,8 +28,12 @@ const VideoInfos = (props: PropType) => {
         <Rating value={video.rating} readOnly />
         <ThumbsImageList sx={{ flexGrow: 1 }} cols={thumbnails ? Math.min(thumbnails?.length, 4) : 0} thumbs={thumbnails || []} />
         <Stack direction="column">
-          <Typography variant='caption' noWrap sx={{ m: 1 }}>{video.fileName}</Typography>
-          <Typography variant='caption' sx={{ m: 1 }}>{video.length}</Typography>
+          <Typography variant="caption" noWrap sx={{ m: 1 }}>
+            {video.fileName}
+          </Typography>
+          <Typography variant="caption" sx={{ m: 1 }}>
+            {video.length}
+          </Typography>
         </Stack>
       </Box>
     </Box>

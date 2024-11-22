@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -20,7 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VideoPlayer.Entities\VideoPlayer.Entities.csproj" />
-    <ProjectReference Include="..\VideoPlayer.Database.Repository.Contracts\VideoPlayer.Database.Repository.Contracts.csproj" />
+    <ProjectReference
+      Include="..\VideoPlayer.Database.Repository.Contracts\VideoPlayer.Database.Repository.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,10 +10,10 @@ import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
 import AddToPlaylist from './AddToPlaylist';
-import VideoEdtion from './VideoEdition';
-import VideoInfos from './VideoInfos';
 import ContactSheet from './ContactSheet';
 import ThumbsEdition from './ThumbsEdition';
+import VideoEdtion from './VideoEdition';
+import VideoInfos from './VideoInfos';
 
 interface PropType {
   open: boolean;

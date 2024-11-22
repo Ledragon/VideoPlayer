@@ -1,11 +1,12 @@
 import { createBrowserRouter, redirect } from 'react-router-dom';
+
 import Home from './Home/Home';
 import Pictures from './Pictures';
+import PlaylistPage from './Playlist/PlaylistPage';
 import SettingsPage from './Settings/SettingsPage';
 import Shell from './Shell';
 import VideoPage from './Video/VideoPage';
 import VideosNewPage from './Videos/VideosNewPage';
-import PlaylistPage from './Playlist/PlaylistPage';
 
 const router = createBrowserRouter([
   {

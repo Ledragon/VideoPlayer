@@ -1,15 +1,16 @@
-import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemText, TextField } from '@mui/material';
-import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
+import DownloadForOfflineOutlinedIcon from '@mui/icons-material/DownloadForOfflineOutlined';
+import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemText, TextField } from '@mui/material';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { timeFormat } from 'd3-time-format';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { Video } from '../../models/Video';
 import { getVideoDictionary, useGetContactSheetForVideoQuery } from '../../redux';
 import { RootState } from '../../redux/configureStore';
-import { useEffect, useState } from 'react';
 import { removeVideo } from '../../redux/playlist.slice';
-import { Video } from '../../models/Video';
-import { skipToken } from '@reduxjs/toolkit/dist/query';
 import getBase64Url from './getBase64Url';
-import { timeFormat } from 'd3-time-format';
 
 const tf = timeFormat('%Y-%m-%d');
 
@@ -69,7 +70,9 @@ const Playlist = (props: PropType) => {
         </IconButton>
       </Box>
       <List dense sx={{ overflowY: 'auto' }}>
-        {playlistVideos.map((d: number) => videos[d] && <PlayListItem handleRemoveFromPlaylist={() => handleRemoveFromPlaylist(d)} video={videos[d]} />)}
+        {playlistVideos.map(
+          (d: number) => videos[d] && <PlayListItem key={d} handleRemoveFromPlaylist={() => handleRemoveFromPlaylist(d)} video={videos[d]} />
+        )}
       </List>
     </>
   );

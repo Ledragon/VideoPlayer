@@ -1,8 +1,5 @@
-import {
-  createEntityAdapter,
-  createSelector,
-  EntityState
-} from '@reduxjs/toolkit';
+import { createEntityAdapter, createSelector, EntityState } from '@reduxjs/toolkit';
+
 import { Video } from '../models/Video';
 import api from './api';
 import { RootState } from './configureStore';
@@ -39,19 +36,13 @@ const videoApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Videos', 'ContactSheets', 'Thumbnails']
     }),
-    createContactSheet: builder.mutation<
-      void,
-      { videoId: number; nRows: number; nCols: number }
-    >({
+    createContactSheet: builder.mutation<void, { videoId: number; nRows: number; nCols: number }>({
       query: (params) => ({
         url: 'videos/contactSheet',
         method: 'PUT',
         body: params
       }),
-      invalidatesTags: (a, b, c, d) => [
-        'Videos',
-        { type: 'ContactSheets', id: c.videoId }
-      ]
+      invalidatesTags: (a, b, c, d) => ['Videos', { type: 'ContactSheets', id: c.videoId }]
     })
   })
 });
@@ -62,13 +53,6 @@ export const {
   selectAll: getVideoList,
   selectById: getVideo,
   selectEntities: getVideoDictionary
-} = entityAdapter.getSelectors<RootState>(
-  (state) => videoSelectors(state) ?? initialState
-);
+} = entityAdapter.getSelectors<RootState>((state) => videoSelectors(state) ?? initialState);
 
-export const {
-  useGetVideosQuery,
-  useUpdateVideoMutation,
-  useCreateContactSheetMutation,
-  useAutoCompleteLibraryMutation
-} = videoApi;
+export const { useGetVideosQuery, useUpdateVideoMutation, useCreateContactSheetMutation, useAutoCompleteLibraryMutation } = videoApi;

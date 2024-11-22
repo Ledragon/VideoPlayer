@@ -21,6 +21,7 @@ import AddAllToPlaylist from './AddAllToPlaylist';
 import Playlist from './Playlist';
 import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
+import { useNavigate } from 'react-router-dom';
 
 interface PropType {}
 
@@ -49,6 +50,8 @@ const VideosNewPage = (props: PropType) => {
   const videos = useSelector((state: RootState) => getVideoList(state));
   const tags = useSelector((state: RootState) => getTagList(state));
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (result?.error) {
       console.error(result.error);
@@ -65,6 +68,7 @@ const VideosNewPage = (props: PropType) => {
   const handleVideoClick = (video: Video) => {
     if (video) {
       setSelectedVideo(video);
+      // navigate({ pathname: '/video/' + video.id });
     }
   };
 

@@ -299,3 +299,4 @@ _dll
 .upgrade-assistant
 upgrade-assistant.clef
 *.sarif
+LibraryTest*

@@ -21,7 +21,7 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/VideoPlayer.WebAPI/bin/Debug/net6.0/VideoPlayer.WebAPI.dll",
+      "program": "${workspaceFolder}/VideoPlayer.WebAPI/bin/Debug/net8.0/VideoPlayer.WebAPI.dll",
       "args": [],
       "cwd": "${workspaceFolder}/VideoPlayer.WebAPI",
       "stopAtEntry": false,

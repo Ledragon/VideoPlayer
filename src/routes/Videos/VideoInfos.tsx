@@ -2,8 +2,7 @@ import { Box, Chip, Rating, Stack, Typography } from '@mui/material';
 
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
-import { useGetContactSheetForVideoQuery, useGetThumbnailsForVideoQuery } from '../../redux';
-import getBase64Url from './getBase64Url';
+import { useGetThumbnailsForVideoQuery } from '../../redux';
 import ThumbsImageList from './ThumbsImageList';
 
 interface PropType {

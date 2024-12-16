@@ -1,8 +1,9 @@
 import { ImageList } from '@mui/material';
+import { forwardRef } from 'react';
+import { VirtuosoGrid } from 'react-virtuoso';
+
 import { Video } from '../../models/Video';
 import VideoImageItem from './VideoImageItem';
-import { VirtuosoGrid } from 'react-virtuoso';
-import { forwardRef } from 'react';
 
 interface PropType {
   showContactSheets?: boolean;
@@ -19,30 +20,15 @@ const VideosImageList = (props: PropType) => {
       components={{
         List: forwardRef(({ style, children }, ref) => {
           return (
-            <ImageList
-              cols={4}
-              gap={12}
-              rowHeight={250}
-              style={{ ...style }}
-              ref={ref}
-              component={'div'}
-            >
+            <ImageList cols={4} gap={12} rowHeight={250} style={{ ...style }} ref={ref} component={'div'}>
               {children || <></>}
             </ImageList>
           );
         })
       }}
       itemContent={(index, data) => {
-        return (
-          <VideoImageItem
-            key={index}
-            video={videos[index]}
-            showContactSheet={showContactSheets}
-            onInfoClick={onClick}
-          />
-        );
-      }}
-    ></VirtuosoGrid>
+        return <VideoImageItem key={index} video={videos[index]} showContactSheet={showContactSheets} onInfoClick={onClick} />;
+      }}></VirtuosoGrid>
   );
 };
 

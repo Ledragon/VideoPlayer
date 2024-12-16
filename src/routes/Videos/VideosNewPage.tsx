@@ -4,6 +4,7 @@ import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
 import { alpha, Autocomplete, Box, FormControlLabel, IconButton, LinearProgress, Paper, Switch, TextField } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
@@ -21,7 +22,6 @@ import AddAllToPlaylist from './AddAllToPlaylist';
 import Playlist from './Playlist';
 import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
-import { useNavigate } from 'react-router-dom';
 
 interface PropType {}
 

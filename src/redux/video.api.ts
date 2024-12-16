@@ -43,6 +43,13 @@ const videoApi = api.injectEndpoints({
         body: params
       }),
       invalidatesTags: (a, b, c, d) => ['Videos', { type: 'ContactSheets', id: c.videoId }]
+    }),
+    metadata: builder.query<any, number>({
+      query: (id) => ({
+        url: 'videos/metadata',
+        method: 'GET',
+        params: { id }
+      })
     })
   })
 });
@@ -55,4 +62,4 @@ export const {
   selectEntities: getVideoDictionary
 } = entityAdapter.getSelectors<RootState>((state) => videoSelectors(state) ?? initialState);
 
-export const { useGetVideosQuery, useUpdateVideoMutation, useCreateContactSheetMutation, useAutoCompleteLibraryMutation } = videoApi;
+export const { useGetVideosQuery, useUpdateVideoMutation, useCreateContactSheetMutation, useAutoCompleteLibraryMutation, useMetadataQuery } = videoApi;

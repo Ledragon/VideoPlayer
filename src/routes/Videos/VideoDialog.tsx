@@ -11,6 +11,7 @@ import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
 import AddToPlaylist from './AddToPlaylist';
 import ContactSheet from './ContactSheet';
+import FileInfo from './FileInfo';
 import ThumbsEdition from './ThumbsEdition';
 import VideoEdtion from './VideoEdition';
 import VideoInfos from './VideoInfos';
@@ -101,6 +102,7 @@ const VideoDialog = (props: PropType) => {
                 <Tab label="Properties" />
                 <Tab label="Edition" />
                 <Tab label="Thumbs" />
+                <Tab label="File info" />
               </Tabs>
               <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
                 <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
@@ -118,6 +120,7 @@ const VideoDialog = (props: PropType) => {
                     />
                   )}
                   {selectedTab === 2 && <ThumbsEdition video={video} selectedThumbnails={selectedThumbnails} setSelectedThumbnails={setSelectedThumbnails} />}
+                  {selectedTab === 3 && <FileInfo video={video} />}
                 </Box>
               </Box>
             </Box>

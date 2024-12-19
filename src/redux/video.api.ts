@@ -1,5 +1,6 @@
 import { createEntityAdapter, createSelector, EntityState } from '@reduxjs/toolkit';
 
+import { FfprobeVideoInfo } from '../models/FFProbeVideoInfo/FFProbeVideoInfo';
 import { Video } from '../models/Video';
 import api from './api';
 import { RootState } from './configureStore';
@@ -44,7 +45,7 @@ const videoApi = api.injectEndpoints({
       }),
       invalidatesTags: (a, b, c, d) => ['Videos', { type: 'ContactSheets', id: c.videoId }]
     }),
-    metadata: builder.query<any, number>({
+    metadata: builder.query<FfprobeVideoInfo, number>({
       query: (id) => ({
         url: 'videos/metadata',
         method: 'GET',

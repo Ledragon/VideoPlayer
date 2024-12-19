@@ -11,14 +11,20 @@ const FileInfo = (props: PropType) => {
   const { video } = props;
   const { data } = useMetadataQuery(video.id);
   console.log(data);
+  const format = data?.format;
+
+  // create a component that displays properties from format using the typography component
+
   return (
     <Stack direction="column">
-      <Typography variant="caption" noWrap sx={{ m: 1 }}>
-        {video.fileName}
-      </Typography>
-      <Typography variant="caption" sx={{ m: 1 }}>
-        {video.length}
-      </Typography>
+      {format && (
+        <>
+          <Typography variant="h6">File Information</Typography>
+          <Typography variant="body2">Duration: {format.duration}</Typography>
+          <Typography variant="body2">Size: {format.size}</Typography>
+          <Typography variant="body2">Bitrate: {format.bit_rate}</Typography>
+        </>
+      )}
     </Stack>
   );
 };

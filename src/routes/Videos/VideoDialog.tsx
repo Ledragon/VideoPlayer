@@ -125,7 +125,7 @@ const VideoDialog = (props: PropType) => {
               </Box>
             </Box>
             <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto', overflow: 'hidden' }} className="center">
-              <ContactSheet id={video.id}></ContactSheet>
+              <ContactSheet id={video.id} />
             </Box>
           </Box>
         </DialogContent>

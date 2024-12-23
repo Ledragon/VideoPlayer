@@ -9,12 +9,12 @@ namespace VideoPlayer.WebAPI.Controllers
   [Route("api/[controller]")]
   public class StreamController : ControllerBase
   {
-        private readonly IVideoRepository _videoRepository;
+    private readonly IVideoRepository _videoRepository;
 
-        public StreamController(IVideoRepository videoRepository)
+    public StreamController(IVideoRepository videoRepository)
     {
-            this._videoRepository = videoRepository;
-        }
+      this._videoRepository = videoRepository;
+    }
 
     // [HttpGet("{id}")]
     // public async Task<IActionResult> GetVideo(string id)
@@ -81,13 +81,15 @@ namespace VideoPlayer.WebAPI.Controllers
     [HttpGet("transcode/{id}")]
     public async Task<IActionResult> TranscodeAndStreamWithRange(Int32 id)
     {
-      var videoPath = this._videoRepository.Get(id).FileName;//Path.Combine(_environment.ContentRootPath, "Videos", id);
+      var video = this._videoRepository.Get(id);
+      var videoPath = video.FileName;
 
       if (!System.IO.File.Exists(videoPath))
         return NotFound();
 
       Response.Headers.Add("Accept-Ranges", "bytes");
       Response.Headers.Add("Content-Type", "video/mp4");
+      Response.Headers.Append("X-Video-Duration", video.Length.TotalSeconds.ToString());
 
       // For range requests, we need to transcode the whole file up to the requested point
       var range = Request.Headers.Range.FirstOrDefault()?.Split('=').Last().Split('-');

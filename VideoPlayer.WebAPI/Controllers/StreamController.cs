@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.IO;
+using System.Collections.Concurrent;
+using System.Net.Http.Headers;
 using VideoPlayer.Database.Repository.Contracts;
+using VideoPlayer.Ffmpeg;
 
 namespace VideoPlayer.WebAPI.Controllers
 {
@@ -10,73 +11,21 @@ namespace VideoPlayer.WebAPI.Controllers
   public class StreamController : ControllerBase
   {
     private readonly IVideoRepository _videoRepository;
+    private readonly IFfmpegStreamer _ffmpegStreamer;
+    private readonly IFfprobeInfoExtractor _ffprobeInfoExtractor;
 
-    public StreamController(IVideoRepository videoRepository)
+    private static IDictionary<Int32, FfprobeVideoInfo> _videoInfoCache = new ConcurrentDictionary<Int32, FfprobeVideoInfo>();
+
+    public StreamController(IVideoRepository videoRepository, IFfmpegStreamer ffmpegStreamer, IFfprobeInfoExtractor ffprobeInfoExtractor)
     {
       this._videoRepository = videoRepository;
+      this._ffmpegStreamer = ffmpegStreamer;
+      this._ffprobeInfoExtractor = ffprobeInfoExtractor;
     }
 
-    // [HttpGet("{id}")]
-    // public async Task<IActionResult> GetVideo(string id)
-    // {
-    //   var videoPath = Path.Combine(_environment.ContentRootPath, "Videos", $"{id}.mp4");
+    // Create an endpoint to get video metadata. Use the videoRepository to get the video by ID. Metadata should be usable by a video html element preload="metadata"
 
-    //   if (!System.IO.File.Exists(videoPath))
-    //     return NotFound();
 
-    //   var fileStream = System.IO.File.OpenRead(videoPath);
-    //   var mimeType = "video/mp4";
-
-    //   // Support for range requests
-    //   if (Request.Headers.Range.Count > 0)
-    //   {
-    //     var range = Request.Headers.Range.First().Split('=')[1].Split('-');
-    //     var start = long.Parse(range[0]);
-    //     var length = fileStream.Length - start;
-
-    //     Response.StatusCode = 206;
-    //     Response.Headers.Add("Accept-Ranges", "bytes");
-    //     Response.Headers.Add("Content-Range", $"bytes {start}-{fileStream.Length - 1}/{fileStream.Length}");
-
-    //     fileStream.Seek(start, SeekOrigin.Begin);
-    //     return File(fileStream, mimeType, enableRangeProcessing: true);
-    //   }
-
-    //   return File(fileStream, mimeType, enableRangeProcessing: true);
-    // }
-
-    // [HttpGet("transcode/{id}")]
-    // public async Task<IActionResult> TranscodeAndStream(string id)
-    // {
-    //   var videoPath = Path.Combine(_environment.ContentRootPath, "Videos", id);
-
-    //   if (!System.IO.File.Exists(videoPath))
-    //     return NotFound();
-
-    //   Response.Headers.Add("Content-Type", "video/mp4");
-
-    //   var process = new Process
-    //   {
-    //     StartInfo = new ProcessStartInfo
-    //     {
-    //       FileName = "ffmpeg",
-    //       Arguments = $"-i \"{videoPath}\" -c:v libx264 -preset ultrafast -c:a aac -f mp4 pipe:1",
-    //       RedirectStandardOutput = true,
-    //       UseShellExecute = false,
-    //       CreateNoWindow = true
-    //     }
-    //   };
-
-    //   try
-    //   {
-    //     process.Start();
-    //     return new FileStreamResult(process.StandardOutput.BaseStream, "video/mp4");
-    //   }
-    //   catch (Exception ex)
-    //   {
-    //     return StatusCode(500, $"Transcoding failed: {ex.Message}");
-    //   }
-    // }
 
     [HttpGet("transcode/{id}")]
     public async Task<IActionResult> TranscodeAndStreamWithRange(Int32 id)
@@ -85,40 +34,39 @@ namespace VideoPlayer.WebAPI.Controllers
       var videoPath = video.FileName;
 
       if (!System.IO.File.Exists(videoPath))
-        return NotFound();
-
-      Response.Headers.Add("Accept-Ranges", "bytes");
-      Response.Headers.Add("Content-Type", "video/mp4");
-      Response.Headers.Append("X-Video-Duration", video.Length.TotalSeconds.ToString());
-
-      // For range requests, we need to transcode the whole file up to the requested point
-      var range = Request.Headers.Range.FirstOrDefault()?.Split('=').Last().Split('-');
-      var startByte = range != null ? long.Parse(range[0]) : 0;
-
-      var process = new Process
       {
-        StartInfo = new ProcessStartInfo
-        {
-          FileName = "ffmpeg",
-          Arguments = $"-i \"{videoPath}\" -c:v libx264 -preset ultrafast -c:a aac -f mp4 -movflags frag_keyframe+empty_moov pipe:1",
-          RedirectStandardOutput = true,
-          UseShellExecute = false,
-          CreateNoWindow = true
-        }
-      };
+        return this.NotFound();
+      }
 
+      this.Response.Headers.Append("Accept-Ranges", "bytes");
+      this.Response.Headers.Append("Content-Type", "video/mp4");
+
+      var range = this.Request.Headers.Range.FirstOrDefault()?.Split('=').Last().Split('-');
+      var startByte = range != null ? Int64.Parse(range[0]) : 0;
       try
       {
-        process.Start();
-        var stream = process.StandardOutput.BaseStream;
+        var stream = await this._ffmpegStreamer.Stream(videoPath, startByte);
 
         if (startByte > 0)
         {
-          Response.StatusCode = 206;
-          // Skip to the requested position
-          await stream.ReadAsync(new byte[startByte], 0, (int)startByte);
+          this.Response.StatusCode = 206;
         }
-
+        // try
+        // {
+        if(!_videoInfoCache.ContainsKey(id))
+        {
+          _videoInfoCache.Add(id, this._ffprobeInfoExtractor.GetVideoInfo(videoPath));
+        }
+        var metaData = _videoInfoCache[id];
+        Int64 length = Convert.ToInt64(metaData.format.size);
+        this.Response.Headers.Append("Content-Length", (length + 1).ToString());
+        // var contentRangeHeaderValue = new ContentRangeHeaderValue(startByte, length - startByte - 1, length);
+        // this.Response.Headers.ContentRange = contentRangeHeaderValue.ToString();
+        // }
+        // catch (Exception ex)
+        // {
+        // return StatusCode(500, $"Transcoding failed: {ex.Message}");
+        // }
         return new FileStreamResult(stream, "video/mp4")
         {
           EnableRangeProcessing = true

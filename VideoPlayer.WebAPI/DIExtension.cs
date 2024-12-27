@@ -15,6 +15,7 @@ namespace VideoPlayer.WebAPI
             return services.AddTransient<ILibraryRepository, FileLibraryRepository>()
                             .AddSingleton<IFfprobeInfoExtractor, FfprobeInfoExtractor>()
                             .AddSingleton<IFfmpegThumbnailGenerator, FfmpegThumbnailGenerator>()
+                            .AddSingleton<IFfmpegStreamer, FfmpegStreamer>()
                             .AddSingleton<IPathService, PathService>()
                             .AddTransient<IContactSheetService, ContactSheetService>()
                             .AddTransient<IRefreshService, RefreshService>()

@@ -4,7 +4,7 @@ import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
 import { alpha, Autocomplete, Box, FormControlLabel, IconButton, LinearProgress, Paper, Switch, TextField } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
@@ -40,6 +40,7 @@ const VideosNewPage = (props: PropType) => {
   const [showMissingThumb, setShowMissingThumb] = useState(false);
   const [showMissingCS, setShowMissingCS] = useState(false);
   const [showContactSheets, setShowContactSheets] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { isLoading, isFetching } = useGetVideosQuery();
   const { isLoading: isLoadingTags } = useGetTagsQuery();
@@ -49,8 +50,6 @@ const VideosNewPage = (props: PropType) => {
 
   const videos = useSelector((state: RootState) => getVideoList(state));
   const tags = useSelector((state: RootState) => getTagList(state));
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (result?.error) {
@@ -65,10 +64,17 @@ const VideosNewPage = (props: PropType) => {
     }
   }, [videos]);
 
+  useEffect(() => {
+    const urlId = searchParams.get('video');
+    if (urlId && videos) {
+      setSelectedVideo(videos.find((v) => v.id === parseInt(urlId)) || null);
+    }
+  }, [searchParams, videos]);
+
   const handleVideoClick = (video: Video) => {
     if (video) {
       setSelectedVideo(video);
-      // navigate({ pathname: '/video/' + video.id });
+      setSearchParams({ video: video.id.toString() });
     }
   };
 
@@ -92,6 +98,7 @@ const VideosNewPage = (props: PropType) => {
 
   const handleCancel = () => {
     setSelectedVideo(null);
+    setSearchParams({});
   };
 
   const handleAlphaSort = () => {

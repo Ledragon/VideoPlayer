@@ -24,14 +24,33 @@ export const VideoPlayer = ({ videoId }: VideoPlayerProps) => {
       playerRef.current = videojs(videoElement, {
         controls: true,
         fluid: true,
-        responsive: true,
+        responsive: false,
+        muted: true,
         // preload: 'none',
         sources: [
           {
             src: `http://localhost:5000/api/stream/transcode/${videoId}`,
             type: 'video/mp4'
           }
-        ]
+        ],
+        html5: {
+          dash: {
+            updateSettings: [
+              {
+                streaming: {
+                  buffer: {
+                    bufferTimeAtTopQuality: 30,
+                    bufferTimeAtTopQualityLongForm: 30
+                  },
+                  gaps: {
+                    jumpGaps: false,
+                    jumpLargeGaps: false
+                  }
+                }
+              }
+            ]
+          }
+        }
       });
     }
 

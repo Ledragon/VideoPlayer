@@ -20,7 +20,6 @@
     "@mui/material": "5.10.16",
     "@mui/x-data-grid": "6.18.1",
     "@reduxjs/toolkit": "1.9.1",
-    "@types/video.js": "^7.3.58",
     "d3-time-format": "4.1.0",
     "formik": "2.2.9",
     "react": "18.2.0",

@@ -158,6 +158,16 @@ const VideosNewPage = (props: PropType) => {
   const handleAddAll = () => {};
 
   const isLoadingAny = isLoading || isFetching || isLoadingTagVideos || isLoadingTags;
+  const handleTitleSearchChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm) {
+      const filtered = filteredVideos.filter((video) => video.title.toLowerCase().includes(searchTerm)) || [];
+      setFilteredVideos(filtered);
+    } else {
+      setFilteredVideos(videos || []);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -175,26 +185,27 @@ const VideosNewPage = (props: PropType) => {
       ) : (
         <></>
       )}
-      <Box id="tags-chips" sx={{ flex: '1 0 auto', m: 1, display: 'flex' }}>
+      <Paper id="tags-chips" sx={{ flex: '1 0 auto', p: 0.5, display: 'flex' }}>
         <Autocomplete
-          sx={{ flexGrow: 1 }}
+          sx={{ flexGrow: 1, m: 0.5, flexBasis: '60%' }}
           multiple
           id="tags"
           options={tags.filter((t) => !tagVideos || tagVideos.filter((d) => d.tagId === t.id).length > 0) || []}
           getOptionLabel={(o) => (o ? `${o.value} (${(tagVideos || []).filter((d) => d.tagId === o.id).length})` : '')}
           onChange={handleTagsChange}
           value={selectedTags}
-          renderInput={(params) => <TextField {...params} variant="standard" label="Tags" placeholder="Tags" margin="dense" />}></Autocomplete>
+          renderInput={(params) => <TextField {...params} variant="standard" label="Tags" placeholder="Tags" margin="dense" sx={{ m: 0.5 }} />}></Autocomplete>
+        <TextField sx={{ flexGrow: 1, m: 0.5, flexBasis: '20%' }} onChange={handleTitleSearchChange} placeholder="Title" />
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
           }}>
-          <IconButton size="small" onClick={handleAlphaSort}>
+          <IconButton size="small" onClick={handleAlphaSort} title="Sort by title">
             <SortByAlphaOutlinedIcon fontSize="small" />
           </IconButton>
-          <IconButton size="small" onClick={handleDateSort}>
+          <IconButton size="small" onClick={handleDateSort} title="Sort by date">
             <AccessTimeOutlinedIcon fontSize="small" />
           </IconButton>
           <AddAllToPlaylist videos={displayedVideos}></AddAllToPlaylist>
@@ -212,7 +223,7 @@ const VideosNewPage = (props: PropType) => {
             sx={{ mx: 1 }}
           />
         </Box>
-      </Box>
+      </Paper>
       <Box
         sx={{
           display: 'flex',

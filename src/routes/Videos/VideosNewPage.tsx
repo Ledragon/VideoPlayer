@@ -137,7 +137,9 @@ const VideosNewPage = (props: PropType) => {
     if (selectedVideo) {
       const index = displayedVideos.indexOf(selectedVideo);
       if (index > 0) {
-        setSelectedVideo(displayedVideos[index - 1]);
+        const video = displayedVideos[index - 1];
+        setSelectedVideo(video);
+        setSearchParams({ video: video.id.toString() });
       }
     }
   };
@@ -146,7 +148,9 @@ const VideosNewPage = (props: PropType) => {
     if (selectedVideo) {
       const index = displayedVideos.indexOf(selectedVideo);
       if (index < displayedVideos.length - 1) {
-        setSelectedVideo(displayedVideos[index + 1]);
+        const video = displayedVideos[index + 1];
+        setSelectedVideo(video);
+        setSearchParams({ video: video.id.toString() });
       }
     }
   };

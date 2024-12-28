@@ -2,7 +2,7 @@ import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutl
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Tab, Tabs } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Tab, Tabs, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { useMemo, useState } from 'react';
 
@@ -16,6 +16,7 @@ import ThumbsEdition from './ThumbsEdition';
 import VideoEdtion from './VideoEdition';
 import VideoInfos from './VideoInfos';
 import { VideoPlayer } from './VideoPlayer';
+import VideoStatusBar from './VideoStatusBar';
 
 interface PropType {
   open: boolean;
@@ -130,6 +131,7 @@ const VideoDialog = (props: PropType) => {
               {/* <VideoPlayer videoId={video.id} /> */}
             </Box>
           </Box>
+          <VideoStatusBar video={video} />
         </DialogContent>
         <DialogActions>
           <AddToPlaylist video={video} />

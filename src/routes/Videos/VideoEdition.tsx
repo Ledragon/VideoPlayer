@@ -82,9 +82,6 @@ const VideoEdtion = (props: PropType) => {
       </Box>
 
       <Box>{error ? <Alert severity="error">An error occured. Check console for more information.</Alert> : null}</Box>
-      <Box id="info-bar" sx={{ display: 'flex' }}>
-        <Typography variant="caption">{video.fileName}</Typography>
-      </Box>
     </>
   );
 };

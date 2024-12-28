@@ -57,16 +57,6 @@ namespace VideoPlayer.WebAPI.Controllers
         {
           _videoInfoCache.Add(id, this._ffprobeInfoExtractor.GetVideoInfo(videoPath));
         }
-        var metaData = _videoInfoCache[id];
-        Int64 length = Convert.ToInt64(metaData.format.size);
-        this.Response.Headers.Append("Content-Length", (length + 1).ToString());
-        // var contentRangeHeaderValue = new ContentRangeHeaderValue(startByte, length - startByte - 1, length);
-        // this.Response.Headers.ContentRange = contentRangeHeaderValue.ToString();
-        // }
-        // catch (Exception ex)
-        // {
-        // return StatusCode(500, $"Transcoding failed: {ex.Message}");
-        // }
         return new FileStreamResult(stream, "video/mp4")
         {
           EnableRangeProcessing = true

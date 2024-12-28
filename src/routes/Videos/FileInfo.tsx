@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 import { Video } from '../../models/Video';
 import { useMetadataQuery } from '../../redux';
@@ -17,12 +17,14 @@ const FileInfo = (props: PropType) => {
   const streams = data?.streams;
 
   return (
-    <Stack direction="column">
+    <Stack direction="column" sx={{ p: 0.5 }}>
       {format && (
         <>
           {format && <FormatInfo format={format} />}
-          <Typography variant="h6">Streams</Typography>
-          {streams?.map((stream, i) => <StreamInfo key={i} stream={stream} />)}
+          <Box>
+            <Typography variant="h6">Streams</Typography>
+            {streams?.map((stream, i) => <StreamInfo key={i} stream={stream} />)}
+          </Box>
         </>
       )}
     </Stack>

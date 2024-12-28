@@ -20,15 +20,22 @@ const ContactSheet = (props: PropType) => {
         flexShrink: 0,
         display: 'flex'
       }}>
-      <Box
-        sx={{
-          display: 'flex',
-          flexGrow: 1,
-          backgroundImage: contactSheet && `url('${getBase64Url(contactSheet.image)}')`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center'
-        }}></Box>
+      {!contactSheet ? (
+        <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Typography>No contact sheet</Typography>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            flexGrow: 1,
+            backgroundImage: contactSheet && `url('${getBase64Url(contactSheet.image)}')`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain',
+            backgroundPosition: 'center'
+          }}></Box>
+      )}
+
       {/* {contactSheet && <img src={getBase64Url(contactSheet.image)} style={{}} height="100%"></img>} */}
     </Box>
   );

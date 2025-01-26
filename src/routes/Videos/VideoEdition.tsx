@@ -76,7 +76,7 @@ const VideoEdtion = (props: PropType) => {
           )}
           {!contactSheet ? <Typography>No contact sheet</Typography> : <></>}
           <Box sx={{ display: 'flex', flexGrow: 0, flexShrink: 0 }}>
-            <ContactSheetForm video={video} />
+            <ContactSheetForm id={video.id} />
           </Box>
         </Box>
       </Box>

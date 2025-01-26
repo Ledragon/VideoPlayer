@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 
 import { useGetContactSheetForVideoQuery } from '../../redux';
+import ContactSheetForm from './ContactSheetForm';
 import getBase64Url from './getBase64Url';
 
 interface PropType {
@@ -19,8 +20,11 @@ const ContactSheet = (props: PropType) => {
       }}>
       {!contactSheet ? (
         <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <img src="/no-image-14600.svg" alt="No contact sheet"></img>
-          <Typography>No contact sheet</Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <img src="/no-image-14600.svg" alt="No contact sheet"></img>
+            <Typography>No contact sheet</Typography>
+          </Box>
+          <ContactSheetForm id={id} />
         </Box>
       ) : (
         <Box

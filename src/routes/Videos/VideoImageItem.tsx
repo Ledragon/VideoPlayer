@@ -55,9 +55,9 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
       onMouseLeave={handleMouseLeave}
       id={'video-' + video.id}
       onClick={onInfoButtonClick}
-      sx={{ '&:hover': { cursor: 'pointer' } }}>
+      sx={{ '&:hover': { cursor: 'pointer' }, backgroundColor: 'rgba(0,0,0,0.7)' }}>
       <img
-        src={image ? getBase64Url(image) : ''}
+        src={image ? getBase64Url(image) : '/no-image-14600.svg'}
         style={{
           maxHeight: '250px'
         }}></img>

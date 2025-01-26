@@ -74,7 +74,7 @@ const VideosNewPage = (props: PropType) => {
   const handleVideoClick = (video: Video) => {
     if (video) {
       setSelectedVideo(video);
-      setSearchParams({ video: video.id.toString() });
+      setSearchParams({ video: video.id.toString(), tab: 0 });
     }
   };
 

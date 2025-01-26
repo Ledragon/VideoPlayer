@@ -5,6 +5,7 @@ import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Tab, Tabs, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
@@ -33,7 +34,9 @@ interface PropType {
 const VideoDialog = (props: PropType) => {
   const { open, video, onSave, onCancel, tags, tagVideos, error, onPrevious, onNext } = props;
   const [selectedThumbnails, setSelectedThumbnails] = useState<string[]>([]);
-  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramsTab = searchParams.get('tab');
+  const [selectedTab, setSelectedTab] = useState<number>(paramsTab ? parseInt(paramsTab) : 0);
   const [isFullScreen, setIsFullScreen] = useState(true);
 
   const tagsForVideo = useMemo(() => {
@@ -100,7 +103,15 @@ const VideoDialog = (props: PropType) => {
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'row', overflow: 'auto' }}>
             <Box sx={{ flexBasis: '30%', flexGrow: 0, flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
-              <Tabs value={selectedTab} onChange={(e, v) => setSelectedTab(v)}>
+              <Tabs
+                value={selectedTab}
+                onChange={(e, v) => {
+                  setSearchParams((prev) => {
+                    prev.set('tab', v.toString());
+                    return prev;
+                  });
+                  return setSelectedTab(v);
+                }}>
                 <Tab label="Properties" />
                 <Tab label="Edition" />
                 <Tab label="Thumbs" />

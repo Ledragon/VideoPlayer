@@ -25,7 +25,14 @@ const VideoInfos = (props: PropType) => {
         }}>
         <Box>{tags?.map((tag) => <Chip key={tag?.id} label={tag?.value} variant={'outlined'} sx={{ m: 1 }} />)}</Box>
         <Rating value={video.rating} readOnly />
-        <ThumbsImageList sx={{ flexGrow: 1 }} cols={thumbnails ? Math.min(thumbnails?.length, 4) : 0} thumbs={thumbnails || []} />
+        {thumbnails?.length ? (
+          <ThumbsImageList sx={{ flexGrow: 1 }} cols={thumbnails ? Math.min(thumbnails?.length, 4) : 0} thumbs={thumbnails || []} />
+        ) : (
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flexGrow: 1 }}>
+            <img src={'/no-image-14600.svg'} alt="no image" />
+            <Typography variant="body1">No thumbnail for this video</Typography>
+          </Box>
+        )}
       </Box>
     </Box>
   );

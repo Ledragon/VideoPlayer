@@ -1,10 +1,7 @@
-import { Box, Chip, Rating, Stack, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
-import { Tag } from '../../models/Tag';
-import { Video } from '../../models/Video';
-import { useGetContactSheetForVideoQuery, useGetThumbnailsForVideoQuery } from '../../redux';
+import { useGetContactSheetForVideoQuery } from '../../redux';
 import getBase64Url from './getBase64Url';
-import ThumbsImageList from './ThumbsImageList';
 
 interface PropType {
   id: number;
@@ -21,7 +18,8 @@ const ContactSheet = (props: PropType) => {
         display: 'flex'
       }}>
       {!contactSheet ? (
-        <Box sx={{ display: 'flex', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <img src="/no-image-14600.svg" alt="No contact sheet"></img>
           <Typography>No contact sheet</Typography>
         </Box>
       ) : (

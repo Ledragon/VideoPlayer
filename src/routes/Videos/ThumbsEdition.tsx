@@ -44,9 +44,13 @@ const ThumbsEdition = (props: PropType) => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-      <Box sx={{ flexBasis: '50%', flexGrow: 0, flexShrink: 0 }}>
-        <ThumbsImageList cols={thumbnails ? Math.min(thumbnails?.length, 4) : 0} thumbs={thumbnails || []} />
-      </Box>
+      {thumbnails?.length ? (
+        <Box sx={{ flexBasis: '50%', flexGrow: 0, flexShrink: 0 }}>
+          <ThumbsImageList cols={thumbnails ? Math.min(thumbnails?.length, 4) : 0} thumbs={thumbnails || []} />
+        </Box>
+      ) : (
+        <></>
+      )}
       <Box sx={{ flexBasis: '50%' }}>
         <ThumbnailsGenerator video={video} />
         {status.isLoading ? (

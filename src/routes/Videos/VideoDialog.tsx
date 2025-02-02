@@ -2,7 +2,7 @@ import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutl
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
 import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Tab, Tabs } from '@mui/material';
 import { useFormik } from 'formik';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -11,12 +11,11 @@ import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
 import AddToPlaylist from './AddToPlaylist';
-import ContactSheet from './ContactSheet';
 import FileInfo from './FileInfo';
+import ThumbsDisplay from './ThumbsDisplay';
 import ThumbsEdition from './ThumbsEdition';
 import VideoEdtion from './VideoEdition';
 import VideoInfos from './VideoInfos';
-import { VideoPlayer } from './VideoPlayer';
 import VideoStatusBar from './VideoStatusBar';
 
 interface PropType {
@@ -138,8 +137,9 @@ const VideoDialog = (props: PropType) => {
               </Box>
             </Box>
             <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto', overflow: 'hidden' }} className="center">
-              <ContactSheet id={video.id} />
+              {/* <ContactSheet id={video.id} /> */}
               {/* <VideoPlayer videoId={video.id} /> */}
+              <ThumbsDisplay video={video} />
             </Box>
           </Box>
           <VideoStatusBar video={video} />

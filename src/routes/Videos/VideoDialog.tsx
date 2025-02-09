@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close';
 import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutlined';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
@@ -96,6 +97,9 @@ const VideoDialog = (props: PropType) => {
               </IconButton>
               <IconButton onClick={handleNextClick}>
                 <NavigateAfterIcon></NavigateAfterIcon>
+              </IconButton>
+              <IconButton onClick={handleCancel}>
+                <CloseIcon />
               </IconButton>
             </Box>
           </Box>

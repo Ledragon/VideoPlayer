@@ -11,6 +11,7 @@ import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
 import AddToPlaylist from './AddToPlaylist';
+import ContactSheet from './ContactSheet';
 import FileInfo from './FileInfo';
 import ThumbsDisplay from './ThumbsDisplay';
 import ThumbsEdition from './ThumbsEdition';
@@ -19,15 +20,15 @@ import VideoInfos from './VideoInfos';
 import VideoStatusBar from './VideoStatusBar';
 
 interface PropType {
-  open: boolean;
-  tags: Tag[];
-  tagVideos: TagVideo[];
-  video: Video;
-  onCancel: () => void;
-  onSave: (v: Video, thumbnails: string[]) => void;
   error?: { message: any };
-  onPrevious?: () => void;
+  onCancel: () => void;
   onNext?: () => void;
+  onPrevious?: () => void;
+  onSave: (v: Video, thumbnails: string[]) => void;
+  open: boolean;
+  tagVideos: TagVideo[];
+  tags: Tag[];
+  video: Video;
 }
 
 const VideoDialog = (props: PropType) => {
@@ -137,9 +138,9 @@ const VideoDialog = (props: PropType) => {
               </Box>
             </Box>
             <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto', overflow: 'hidden' }} className="center">
-              {/* <ContactSheet id={video.id} /> */}
+              <ContactSheet id={video.id} />
               {/* <VideoPlayer videoId={video.id} /> */}
-              <ThumbsDisplay video={video} />
+              {/* <ThumbsDisplay video={video} /> */}
             </Box>
           </Box>
           <VideoStatusBar video={video} />

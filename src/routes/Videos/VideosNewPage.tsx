@@ -91,8 +91,9 @@ const VideosNewPage = (props: PropType) => {
   };
 
   const handleSave = (video: Video, thumbnails: string[]) => {
-    Promise.all([updateVideo(video).unwrap(), addThumbnails(thumbnails.map((t) => ({ videoId: video.id, image: t, id: 0 }))).unwrap()]).then(() =>
-      setSelectedVideo(null)
+    Promise.all([updateVideo(video).unwrap(), addThumbnails(thumbnails.map((t) => ({ videoId: video.id, image: t, id: 0 }))).unwrap()]).then(
+      () => {}
+      // setSelectedVideo(null)
     );
   };
 

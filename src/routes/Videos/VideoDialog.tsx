@@ -154,7 +154,7 @@ const VideoDialog = (props: PropType) => {
           <Button variant="text" onClick={handleCancel}>
             Cancel
           </Button>
-          <Button variant="text" disabled={(!formik.dirty && !selectedThumbnails.length) || !formik.isValid} onClick={formik.submitForm}>
+          <Button variant="outlined" disabled={(!formik.dirty && !selectedThumbnails.length) || !formik.isValid} onClick={formik.submitForm}>
             Save
           </Button>
         </DialogActions>

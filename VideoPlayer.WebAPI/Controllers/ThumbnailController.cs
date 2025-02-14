@@ -31,9 +31,9 @@ namespace VideoPlayer.WebAPI.Controllers
         }
 
         [HttpGet("generate")]
-        public List<String> Generate([FromQuery] String filePath, [FromQuery] Int32 count)
+        public List<String> Generate([FromQuery] String filePath, [FromQuery] Int32 count, [FromQuery] Int32 width)
         {
-            var files = this._thumbnailGenerator.GenerateThumbnails(filePath, count);
+            var files = this._thumbnailGenerator.GenerateThumbnails(filePath, count, width);
             return files
                 .Select(f => ImageBase64Converter.ToBase64(f))
                 .ToList();

@@ -23,10 +23,6 @@ namespace VideoPlayer.WebAPI.Controllers
       this._ffprobeInfoExtractor = ffprobeInfoExtractor;
     }
 
-    // Create an endpoint to get video metadata. Use the videoRepository to get the video by ID. Metadata should be usable by a video html element preload="metadata"
-
-
-
     [HttpGet("transcode/{id}")]
     public async Task<IActionResult> TranscodeAndStreamWithRange(Int32 id)
     {

@@ -34,25 +34,61 @@ namespace VideoPlayer.WebAPI.Controllers
         return this.NotFound();
       }
 
+      // Get or cache video info
+      if (!_videoInfoCache.ContainsKey(id))
+      {
+        _videoInfoCache.Add(id, this._ffprobeInfoExtractor.GetVideoInfo(videoPath));
+      }
+      var videoInfo = _videoInfoCache[id];
+
+      // Parse file size from ffprobe output
+      var totalLength = Int64.Parse(videoInfo.format.size);
+      
       this.Response.Headers.Append("Accept-Ranges", "bytes");
       this.Response.Headers.Append("Content-Type", "video/mp4");
 
-      var range = this.Request.Headers.Range.FirstOrDefault()?.Split('=').Last().Split('-');
-      var startByte = range != null ? Int64.Parse(range[0]) : 0;
+      var range = this.Request.Headers.Range.FirstOrDefault();
+      Int64 startByte = 0;
+      Int64 endByte = totalLength - 1;
+      
+      if (!String.IsNullOrEmpty(range))
+      {
+          var parts = range.Split('=').Last().Split('-');
+          if (parts.Length > 0 && !String.IsNullOrEmpty(parts[0]))
+          {
+              startByte = Int64.Parse(parts[0]);
+              if (parts.Length > 1 && !String.IsNullOrEmpty(parts[1]))
+              {
+                  endByte = Int64.Parse(parts[1]);
+              }
+          }
+      }
+
       try
       {
         var stream = await this._ffmpegStreamer.Stream(videoPath, startByte);
-
-        if (startByte > 0)
+        if (stream == null)
         {
+            return StatusCode(500, "Failed to create video stream");
+        }
+
+        if (startByte > 0 || endByte < totalLength - 1)
+        {
+          this.Response.Headers.Append("Content-Range", $"bytes {startByte}-{endByte}/{totalLength}");
+          this.Response.Headers.Append("Content-Length", (endByte - startByte + 1).ToString());
           this.Response.StatusCode = 206;
         }
-        // try
-        // {
-        if(!_videoInfoCache.ContainsKey(id))
+        else
         {
-          _videoInfoCache.Add(id, this._ffprobeInfoExtractor.GetVideoInfo(videoPath));
+          this.Response.Headers.Append("Content-Length", totalLength.ToString());
         }
+
+        if (!String.IsNullOrEmpty(videoInfo.format.duration))
+        {
+          var durationInSeconds = Double.Parse(videoInfo.format.duration);
+          this.Response.Headers.Append("X-Content-Duration", durationInSeconds.ToString());
+        }
+
         return new FileStreamResult(stream, "video/mp4")
         {
           EnableRangeProcessing = true

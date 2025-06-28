@@ -18,8 +18,8 @@ import ThumbsDisplay from './ThumbsDisplay';
 import ThumbsEdition from './ThumbsEdition';
 import VideoEdtion from './VideoEdition';
 import VideoInfos from './VideoInfos';
-import VideoStatusBar from './VideoStatusBar';
 import { VideoPlayer } from './VideoPlayer';
+import VideoStatusBar from './VideoStatusBar';
 
 interface PropType {
   error?: { message: any };
@@ -144,8 +144,8 @@ const VideoDialog = (props: PropType) => {
             </Box>
             <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto', overflow: 'hidden' }} className="center">
               {/** place conatct sheet in a first tab and player in a second one */}
-              {/* <ContactSheet id={video.id} /> */}
-              <VideoPlayer videoId={video.id} />
+              <ContactSheet id={video.id} />
+              {/* <VideoPlayer videoId={video.id} /> */}
               {/* <ThumbsDisplay video={video} /> */}
             </Box>
           </Box>

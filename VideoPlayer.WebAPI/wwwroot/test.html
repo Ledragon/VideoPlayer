@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Player Test</title>
+    <!-- Video.js CSS -->
+    <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
+
+    <style>
+        .video-container {
+            max-width: 800px;
+            margin: 40px auto;
+        }
+        .seek-controls {
+            max-width: 800px;
+            margin: 20px auto;
+            text-align: center;
+        }
+        .seek-controls button {
+            margin: 0 10px;
+            padding: 8px 15px;
+        }
+        .seek-controls input {
+            width: 80px;
+            margin: 0 10px;
+        }
+        #seekTime {
+            display: inline-block;
+            min-width: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="my-video" class="video-js vjs-default-skin" controls preload="auto" width="800" height="450">
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a
+                web browser that supports HTML5 video
+            </p>
+        </video>
+    </div>
+
+    <div class="seek-controls">
+        <button onclick="seekRelative(-30)">-30s</button>
+        <button onclick="seekRelative(-10)">-10s</button>
+        <input type="number" id="seekInput" placeholder="Seconds" min="0">
+        <button onclick="seekToTime()">Seek to</button>
+        <button onclick="seekRelative(10)">+10s</button>
+        <button onclick="seekRelative(30)">+30s</button>
+        <span id="seekTime">Time: 0:00</span>
+    </div>
+
+    <!-- Video.js -->
+    <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
+    <script>
+        // Initialize player with a video
+        var player = videojs('my-video', {
+            controls: true,
+            fluid: true,
+            playbackRates: [0.5, 1, 1.5, 2]
+        });
+
+        // Load a video (replace 1 with your video ID)
+        player.src({
+            type: 'video/mp4',
+            src: '/api/stream/transcode/1'
+        });
+
+        // Function to seek relative to current time
+        function seekRelative(seconds) {
+            var newTime = player.currentTime() + seconds;
+            if (newTime < 0) newTime = 0;
+            if (newTime > player.duration()) newTime = player.duration();
+            player.currentTime(newTime);
+        }
+
+        // Function to seek to absolute time
+        function seekToTime() {
+            var time = document.getElementById('seekInput').value;
+            if (time !== '') {
+                var seconds = parseFloat(time);
+                if (!isNaN(seconds)) {
+                    if (seconds < 0) seconds = 0;
+                    if (seconds > player.duration()) seconds = player.duration();
+                    player.currentTime(seconds);
+                }
+            }
+        }
+
+        // Update time display
+        player.on('timeupdate', function() {
+            var time = player.currentTime();
+            var minutes = Math.floor(time / 60);
+            var seconds = Math.floor(time % 60);
+            document.getElementById('seekTime').textContent = 
+                'Time: ' + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+        });
+
+        // Example of how to handle seeking
+        player.on('seeking', function() {
+            console.log('Seeking to: ' + player.currentTime());
+        });
+
+        player.on('seeked', function() {
+            console.log('Seeked to: ' + player.currentTime());
+        });
+
+        // Handle errors
+        player.on('error', function() {
+            console.error('Video error:', player.error());
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                seekRelative(-10);
+                e.preventDefault();
+            } else if (e.key === 'ArrowRight') {
+                seekRelative(10);
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

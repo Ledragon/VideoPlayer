@@ -221,21 +221,6 @@ const VideosNewPage = (props: PropType) => {
             <VideosImageList showContactSheets={showContactSheets} videos={displayedVideos} onClick={handleVideoClick} />
           </Box>
         </Box>
-        {/* <Box
-          sx={{
-            flexBasis: '20%',
-            p: 0,
-            overflow: 'hidden'
-          }}>
-          <Paper
-            sx={{
-              height: '100%',
-              backgroundColor: (theme) => alpha(theme.palette.background.paper, 0.6),
-              overflowY: 'auto'
-            }}>
-            <Playlist />
-          </Paper>
-        </Box> */}
       </Box>
       {selectedVideo ? (
         <VideoDialog

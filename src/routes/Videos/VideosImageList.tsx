@@ -10,6 +10,22 @@ interface PropType {
   onClick?: (v: Video) => void;
 }
 
+const VideoGridList = forwardRef<HTMLDivElement, { style?: React.CSSProperties; children?: React.ReactNode }>(({ style, children }, ref) => (
+  <div
+    ref={ref}
+    style={{
+      ...style,
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+      gap: '1.5rem',
+      padding: '1rem'
+    }}>
+    {children || <></>}
+  </div>
+));
+
+VideoGridList.displayName = 'VideoGridList';
+
 const VideosImageList = (props: PropType) => {
   const { videos, onClick, showContactSheets } = props;
 
@@ -17,21 +33,7 @@ const VideosImageList = (props: PropType) => {
     <VirtuosoGrid
       totalCount={videos.length}
       components={{
-        List: forwardRef(({ style, children }, ref) => {
-          return (
-            <div
-              ref={ref}
-              style={{
-                ...style,
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-                gap: '1.5rem',
-                padding: '1rem'
-              }}>
-              {children || <></>}
-            </div>
-          );
-        })
+        List: VideoGridList
       }}
       itemContent={(index) => {
         return <VideoImageItem key={index} video={videos[index]} showContactSheet={showContactSheets} onInfoClick={onClick} />;

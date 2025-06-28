@@ -26,12 +26,11 @@ const VideoEdtion = (props: PropType) => {
 
   const { data: contactSheet, isLoading } = useGetContactSheetForVideoQuery(video.id);
 
-
   return (
     <>
       <Box sx={{ display: 'flex', flexDirection: 'row', flexGrow: 1 }}>
         <Box
-          className='properties-container'
+          className="properties-container"
           sx={{
             flexBasis: '100%',
             display: 'flex',
@@ -41,6 +40,9 @@ const VideoEdtion = (props: PropType) => {
             overflow: 'hidden'
           }}>
           <VideoProperties formik={formik} tags={tags} tagVideos={tagVideos} video={video} onSubmit={onSave} />
+          <Box>
+            <CreateTag />
+          </Box>
           {isLoading ? (
             <Skeleton
               variant="rounded"
@@ -58,24 +60,28 @@ const VideoEdtion = (props: PropType) => {
                 flexShrink: 1,
                 flexBasis: '100%'
               }}>
-                <Box sx={{flexGrow:1, backgroundImage:`url('${getBase64Url(contactSheet.image)}')`, height :'100%', backgroundRepeat: 'no-repeat', backgroundSize: 'contain', backgroundPosition: 'center' }}/>
+              <Box
+                sx={{
+                  flexGrow: 1,
+                  backgroundImage: `url('${getBase64Url(contactSheet.image)}')`,
+                  height: '100%',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundSize: 'contain',
+                  backgroundPosition: 'center'
+                }}
+              />
             </Box>
           ) : (
             <></>
           )}
-          <Box sx={{ display: 'flex', flexGrow:  0, flexShrink: 0}}>
-            <ContactSheetForm video={video} />
-          </Box>
-          <Box>
-            <CreateTag />
+          {!contactSheet ? <Typography>No contact sheet</Typography> : <></>}
+          <Box sx={{ display: 'flex', flexGrow: 0, flexShrink: 0 }}>
+            <ContactSheetForm id={video.id} />
           </Box>
         </Box>
       </Box>
 
       <Box>{error ? <Alert severity="error">An error occured. Check console for more information.</Alert> : null}</Box>
-      <Box id="info-bar" sx={{ display: 'flex' }}>
-        <Typography variant="caption">{video.fileName}</Typography>
-      </Box>
     </>
   );
 };

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "vite",
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "postbuild": "rsync -a --delete dist/ ../VideoPlayer//VideoPlayer.WebAPI/bin/Release/net8.0/wwwroot"
   },
   "keywords": [],
   "author": "",
@@ -25,7 +26,8 @@
     "react-dom": "18.2.0",
     "react-redux": "8.0.5",
     "react-router-dom": "6.6.1",
-    "react-virtuoso": "4.3.8"
+    "react-virtuoso": "4.3.8",
+    "video.js": "^8.21.0"
   },
   "devDependencies": {
     "@types/d3-time-format": "4.0.2",

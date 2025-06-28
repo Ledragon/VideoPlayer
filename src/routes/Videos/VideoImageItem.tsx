@@ -1,21 +1,13 @@
 import InfoIcon from '@mui/icons-material/Info';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import {
-  Box,
-  Chip,
-  IconButton,
-  ImageListItem,
-  ImageListItemBar
-} from '@mui/material';
-import { Video } from '../../models/Video';
-import getBase64Url from './getBase64Url';
-import { useMemo, useState } from 'react';
-import {
-  useGetContactSheetForVideoQuery,
-  useGetThumbnailsForVideoQuery
-} from '../../redux';
-import AddToPlaylist from './AddToPlaylist';
+import { Box, Chip, IconButton, ImageListItem, ImageListItemBar } from '@mui/material';
 import { timeFormat } from 'd3-time-format';
+import { useMemo, useState } from 'react';
+
+import { Video } from '../../models/Video';
+import { useGetContactSheetForVideoQuery, useGetThumbnailsForVideoQuery } from '../../redux';
+import AddToPlaylist from './AddToPlaylist';
+import getBase64Url from './getBase64Url';
 
 const tf = timeFormat('%Y-%m-%d');
 
@@ -62,24 +54,15 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       id={'video-' + video.id}
-    >
+      onClick={onInfoButtonClick}
+      sx={{ '&:hover': { cursor: 'pointer' }, backgroundColor: 'rgba(0,0,0,0.7)' }}>
       <img
-        src={image ? getBase64Url(image) : ''}
+        src={image ? getBase64Url(image) : '/no-image-14600.svg'}
         style={{
           maxHeight: '250px'
-        }}
-      ></img>
-      <Chip
-        label={video.length}
-        sx={{ position: 'absolute', right: 0, bottom: 70 }}
-      ></Chip>
-      {hovered ? (
-        <ImageListItemBar
-          position="top"
-          actionIcon={<AddToPlaylist video={video} />}
-          actionPosition="left"
-        ></ImageListItemBar>
-      ) : null}
+        }}></img>
+      <Chip label={video.length} sx={{ position: 'absolute', right: 0, bottom: 70 }}></Chip>
+      {hovered ? <ImageListItemBar position="top" actionIcon={<AddToPlaylist video={video} />} actionPosition="left"></ImageListItemBar> : null}
       <ImageListItemBar
         title={video.title}
         subtitle={formattedDate}
@@ -89,20 +72,15 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center'
-            }}
-          >
-            {hovered ? (
-              <IconButton
-                onClick={onInfoButtonClick}
-                hidden={!onInfoClick}
-              >
+            }}>
+            {/* {hovered ? (
+              <IconButton onClick={onInfoButtonClick} hidden={!onInfoClick}>
                 <InfoIcon />
               </IconButton>
-            ) : null}
+            ) : null} */}
             {!contactSheet && <VisibilityOffOutlinedIcon fontSize="small" />}
           </Box>
-        }
-      ></ImageListItemBar>
+        }></ImageListItemBar>
     </ImageListItem>
   );
 };

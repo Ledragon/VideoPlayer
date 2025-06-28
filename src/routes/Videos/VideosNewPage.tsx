@@ -4,6 +4,7 @@ import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
 import { alpha, Autocomplete, Box, FormControlLabel, IconButton, LinearProgress, Paper, Switch, TextField } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
@@ -21,7 +22,6 @@ import AddAllToPlaylist from './AddAllToPlaylist';
 import Playlist from './Playlist';
 import VideoDialog from './VideoDialog';
 import VideosImageList from './VideosImageList';
-import { useNavigate } from 'react-router-dom';
 
 interface PropType {}
 
@@ -40,6 +40,7 @@ const VideosNewPage = (props: PropType) => {
   const [showMissingThumb, setShowMissingThumb] = useState(false);
   const [showMissingCS, setShowMissingCS] = useState(false);
   const [showContactSheets, setShowContactSheets] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { isLoading, isFetching } = useGetVideosQuery();
   const { isLoading: isLoadingTags } = useGetTagsQuery();
@@ -49,8 +50,6 @@ const VideosNewPage = (props: PropType) => {
 
   const videos = useSelector((state: RootState) => getVideoList(state));
   const tags = useSelector((state: RootState) => getTagList(state));
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (result?.error) {
@@ -65,10 +64,17 @@ const VideosNewPage = (props: PropType) => {
     }
   }, [videos]);
 
+  useEffect(() => {
+    const urlId = searchParams.get('video');
+    if (urlId && videos) {
+      setSelectedVideo(videos.find((v) => v.id === parseInt(urlId)) || null);
+    }
+  }, [searchParams, videos]);
+
   const handleVideoClick = (video: Video) => {
     if (video) {
       setSelectedVideo(video);
-      // navigate({ pathname: '/video/' + video.id });
+      setSearchParams({ video: video.id.toString(), tab: '0' });
     }
   };
 
@@ -85,13 +91,15 @@ const VideosNewPage = (props: PropType) => {
   };
 
   const handleSave = (video: Video, thumbnails: string[]) => {
-    Promise.all([updateVideo(video).unwrap(), addThumbnails(thumbnails.map((t) => ({ videoId: video.id, image: t, id: 0 }))).unwrap()]).then(() =>
-      setSelectedVideo(null)
+    Promise.all([updateVideo(video).unwrap(), addThumbnails(thumbnails.map((t) => ({ videoId: video.id, image: t, id: 0 }))).unwrap()]).then(
+      () => {}
+      // setSelectedVideo(null)
     );
   };
 
   const handleCancel = () => {
     setSelectedVideo(null);
+    setSearchParams({});
   };
 
   const handleAlphaSort = () => {
@@ -130,7 +138,9 @@ const VideosNewPage = (props: PropType) => {
     if (selectedVideo) {
       const index = displayedVideos.indexOf(selectedVideo);
       if (index > 0) {
-        setSelectedVideo(displayedVideos[index - 1]);
+        const video = displayedVideos[index - 1];
+        setSelectedVideo(video);
+        setSearchParams({ video: video.id.toString() });
       }
     }
   };
@@ -139,7 +149,9 @@ const VideosNewPage = (props: PropType) => {
     if (selectedVideo) {
       const index = displayedVideos.indexOf(selectedVideo);
       if (index < displayedVideos.length - 1) {
-        setSelectedVideo(displayedVideos[index + 1]);
+        const video = displayedVideos[index + 1];
+        setSelectedVideo(video);
+        setSearchParams({ video: video.id.toString() });
       }
     }
   };
@@ -147,6 +159,16 @@ const VideosNewPage = (props: PropType) => {
   const handleAddAll = () => {};
 
   const isLoadingAny = isLoading || isFetching || isLoadingTagVideos || isLoadingTags;
+  const handleTitleSearchChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const searchTerm = event.target.value.toLowerCase();
+    if (searchTerm) {
+      const filtered = filteredVideos.filter((video) => video.title.toLowerCase().includes(searchTerm)) || [];
+      setFilteredVideos(filtered);
+    } else {
+      setFilteredVideos(videos || []);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -164,26 +186,27 @@ const VideosNewPage = (props: PropType) => {
       ) : (
         <></>
       )}
-      <Box id="tags-chips" sx={{ flex: '1 0 auto', m: 1, display: 'flex' }}>
+      <Paper id="tags-chips" sx={{ flex: '1 0 auto', p: 0.5, display: 'flex' }}>
         <Autocomplete
-          sx={{ flexGrow: 1 }}
+          sx={{ flexGrow: 1, m: 0.5, flexBasis: '60%' }}
           multiple
           id="tags"
           options={tags.filter((t) => !tagVideos || tagVideos.filter((d) => d.tagId === t.id).length > 0) || []}
           getOptionLabel={(o) => (o ? `${o.value} (${(tagVideos || []).filter((d) => d.tagId === o.id).length})` : '')}
           onChange={handleTagsChange}
           value={selectedTags}
-          renderInput={(params) => <TextField {...params} variant="standard" label="Tags" placeholder="Tags" margin="dense" />}></Autocomplete>
+          renderInput={(params) => <TextField {...params} variant="standard" label="Tags" placeholder="Tags" margin="dense" sx={{ m: 0.5 }} />}></Autocomplete>
+        <TextField sx={{ flexGrow: 1, m: 0.5, flexBasis: '20%' }} onChange={handleTitleSearchChange} placeholder="Title" />
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
           }}>
-          <IconButton size="small" onClick={handleAlphaSort}>
+          <IconButton size="small" onClick={handleAlphaSort} title="Sort by title">
             <SortByAlphaOutlinedIcon fontSize="small" />
           </IconButton>
-          <IconButton size="small" onClick={handleDateSort}>
+          <IconButton size="small" onClick={handleDateSort} title="Sort by date">
             <AccessTimeOutlinedIcon fontSize="small" />
           </IconButton>
           <AddAllToPlaylist videos={displayedVideos}></AddAllToPlaylist>
@@ -201,7 +224,7 @@ const VideosNewPage = (props: PropType) => {
             sx={{ mx: 1 }}
           />
         </Box>
-      </Box>
+      </Paper>
       <Box
         sx={{
           display: 'flex',

@@ -15,10 +15,7 @@ const thumbnailApi = api.injectEndpoints({
         return [{ type: 'Thumbnails', id: 'LIST' }];
       }
     }),
-    generateThumbnails: builder.mutation<
-      string[],
-      { filePath: string; count: number }
-    >({
+    generateThumbnails: builder.mutation<string[], { filePath: string; count: number; width: number }>({
       query: (data) => ({
         url: 'thumbnails/generate',
         params: data,
@@ -48,10 +45,5 @@ const thumbnailApi = api.injectEndpoints({
   })
 });
 
-export const {
-  useGenerateThumbnailsMutation,
-  useGetThumbnailsQuery,
-  useGetThumbnailsForVideoQuery,
-  useAddThumbnailsMutation,
-  useDeleteThumbnailMutation
-} = thumbnailApi;
+export const { useGenerateThumbnailsMutation, useGetThumbnailsQuery, useGetThumbnailsForVideoQuery, useAddThumbnailsMutation, useDeleteThumbnailMutation } =
+  thumbnailApi;

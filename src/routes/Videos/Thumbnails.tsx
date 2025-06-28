@@ -1,18 +1,9 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogActions,
-  Button,
-  DialogTitle,
-  ImageList,
-  ImageListItem,
-  CircularProgress
-} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { useState } from 'react';
+
 import { Thumbnail } from '../../models/Thumbnail';
 import { Video } from '../../models/Video';
 import { useGenerateThumbnailsMutation } from '../../redux';
-import getBase64Url from './getBase64Url';
 import ThumbnailsGenerator from './ThumbnailsGenerator';
 import ThumbsImageList from './ThumbsImageList';
 
@@ -32,10 +23,7 @@ const ThumbnailDialog = (props: PropType) => {
     thumbnails: []
   };
 
-  const thumbnails =
-    status.isSuccess && status.data
-      ? status.data.map((d, i) => ({ id: i, image: d }))
-      : [];
+  const thumbnails = status.isSuccess && status.data ? status.data.map((d, i) => ({ id: i, image: d })) : [];
 
   const handleSelect = (v: { id: number; image: string }) => {
     const current = selected.filter((s) => s.id !== v.id).concat([v]);
@@ -43,25 +31,18 @@ const ThumbnailDialog = (props: PropType) => {
   };
 
   const handleSave = () => {
-    if (!!video) {
-      onSave(
-        selected.map((d) => ({ id: 0, image: d.image, videoId: video.id }))
-      );
+    if (video) {
+      onSave(selected.map((d) => ({ id: 0, image: d.image, videoId: video.id })));
     }
   };
 
   if (video != null) {
     return (
-      <Dialog
-        open={open}
-        maxWidth="lg"
-        scroll="paper"
-      >
+      <Dialog open={open} maxWidth="lg" scroll="paper">
         <DialogTitle>Generate thumbnails</DialogTitle>
         <DialogContent>
           <ThumbsImageList thumbs={exisitingThumbs || []} />
           <ThumbnailsGenerator video={video} />
-          
         </DialogContent>
         <DialogActions>
           <Button onClick={() => onCancel()}>Cancel</Button>

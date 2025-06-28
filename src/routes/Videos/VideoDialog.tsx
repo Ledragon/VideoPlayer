@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close';
 import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutlined';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
@@ -5,32 +6,39 @@ import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Tab, Tabs } from '@mui/material';
 import { useFormik } from 'formik';
 import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
 import AddToPlaylist from './AddToPlaylist';
 import ContactSheet from './ContactSheet';
+import FileInfo from './FileInfo';
+import ThumbsDisplay from './ThumbsDisplay';
 import ThumbsEdition from './ThumbsEdition';
 import VideoEdtion from './VideoEdition';
 import VideoInfos from './VideoInfos';
+import { VideoPlayer } from './VideoPlayer';
+import VideoStatusBar from './VideoStatusBar';
 
 interface PropType {
-  open: boolean;
-  tags: Tag[];
-  tagVideos: TagVideo[];
-  video: Video;
-  onCancel: () => void;
-  onSave: (v: Video, thumbnails: string[]) => void;
   error?: { message: any };
-  onPrevious?: () => void;
+  onCancel: () => void;
   onNext?: () => void;
+  onPrevious?: () => void;
+  onSave: (v: Video, thumbnails: string[]) => void;
+  open: boolean;
+  tagVideos: TagVideo[];
+  tags: Tag[];
+  video: Video;
 }
 
 const VideoDialog = (props: PropType) => {
   const { open, video, onSave, onCancel, tags, tagVideos, error, onPrevious, onNext } = props;
   const [selectedThumbnails, setSelectedThumbnails] = useState<string[]>([]);
-  const [selectedTab, setSelectedTab] = useState<number>(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramsTab = searchParams.get('tab');
+  const [selectedTab, setSelectedTab] = useState<number>(paramsTab ? parseInt(paramsTab) : 0);
   const [isFullScreen, setIsFullScreen] = useState(true);
 
   const tagsForVideo = useMemo(() => {
@@ -91,16 +99,28 @@ const VideoDialog = (props: PropType) => {
               <IconButton onClick={handleNextClick}>
                 <NavigateAfterIcon></NavigateAfterIcon>
               </IconButton>
+              <IconButton onClick={handleCancel}>
+                <CloseIcon />
+              </IconButton>
             </Box>
           </Box>
         </DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'row', overflow: 'auto' }}>
             <Box sx={{ flexBasis: '30%', flexGrow: 0, flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
-              <Tabs value={selectedTab} onChange={(e, v) => setSelectedTab(v)}>
+              <Tabs
+                value={selectedTab}
+                onChange={(e, v) => {
+                  setSearchParams((prev) => {
+                    prev.set('tab', v.toString());
+                    return prev;
+                  });
+                  return setSelectedTab(v);
+                }}>
                 <Tab label="Properties" />
                 <Tab label="Edition" />
                 <Tab label="Thumbs" />
+                <Tab label="File info" />
               </Tabs>
               <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
                 <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
@@ -118,20 +138,25 @@ const VideoDialog = (props: PropType) => {
                     />
                   )}
                   {selectedTab === 2 && <ThumbsEdition video={video} selectedThumbnails={selectedThumbnails} setSelectedThumbnails={setSelectedThumbnails} />}
+                  {selectedTab === 3 && <FileInfo video={video} />}
                 </Box>
               </Box>
             </Box>
             <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto', overflow: 'hidden' }} className="center">
-              <ContactSheet id={video.id}></ContactSheet>
+              {/** place conatct sheet in a first tab and player in a second one */}
+              <ContactSheet id={video.id} />
+              {/* <VideoPlayer videoId={video.id} /> */}
+              {/* <ThumbsDisplay video={video} /> */}
             </Box>
           </Box>
+          <VideoStatusBar video={video} />
         </DialogContent>
         <DialogActions>
           <AddToPlaylist video={video} />
           <Button variant="text" onClick={handleCancel}>
             Cancel
           </Button>
-          <Button variant="text" disabled={(!formik.dirty && !selectedThumbnails.length) || !formik.isValid} onClick={formik.submitForm}>
+          <Button variant="outlined" disabled={(!formik.dirty && !selectedThumbnails.length) || !formik.isValid} onClick={formik.submitForm}>
             Save
           </Button>
         </DialogActions>

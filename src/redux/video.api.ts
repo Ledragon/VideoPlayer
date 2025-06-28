@@ -1,5 +1,6 @@
 import { createEntityAdapter, createSelector, EntityState } from '@reduxjs/toolkit';
 
+import { FfprobeVideoInfo } from '../models/FFProbeVideoInfo/FFProbeVideoInfo';
 import { Video } from '../models/Video';
 import api from './api';
 import { RootState } from './configureStore';
@@ -43,6 +44,13 @@ const videoApi = api.injectEndpoints({
         body: params
       }),
       invalidatesTags: (a, b, c, d) => ['Videos', { type: 'ContactSheets', id: c.videoId }]
+    }),
+    metadata: builder.query<FfprobeVideoInfo, number>({
+      query: (id) => ({
+        url: 'videos/metadata',
+        method: 'GET',
+        params: { id }
+      })
     })
   })
 });
@@ -55,4 +63,4 @@ export const {
   selectEntities: getVideoDictionary
 } = entityAdapter.getSelectors<RootState>((state) => videoSelectors(state) ?? initialState);
 
-export const { useGetVideosQuery, useUpdateVideoMutation, useCreateContactSheetMutation, useAutoCompleteLibraryMutation } = videoApi;
+export const { useGetVideosQuery, useUpdateVideoMutation, useCreateContactSheetMutation, useAutoCompleteLibraryMutation, useMetadataQuery } = videoApi;

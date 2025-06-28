@@ -1,9 +1,15 @@
 import { Box } from '@mui/material';
-import { Outlet, useLocation, useMatch } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+
+import useGetRandomThumb from '../hooks/useGetRandomThumb';
 import BottomNavigation from './BottomNavigation';
 
 const Shell = () => {
   const location = useLocation();
+
+  const background = '/TheaterCurtains.jpg';
+  // const background = useGetRandomThumb();
+
   return (
     <Box
       sx={{
@@ -11,10 +17,12 @@ const Shell = () => {
         flexGrow: 1,
         height: '100%',
         flexDirection: 'column',
-        backgroundImage: `url('/TheaterCurtains.jpg')`
+        backgroundImage: `url("${background}")`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center'
       }}
-      id="shell"
-    >
+      id="shell">
       <Box
         sx={{
           flexGrow: 1,
@@ -23,8 +31,7 @@ const Shell = () => {
           flexShrink: 1,
           overflow: 'auto'
         }}
-        id="router-outlet"
-      >
+        id="router-outlet">
         <Outlet />
       </Box>
       <Box sx={{ flexBasis: 'auto', flexShrink: 0, flexGrow: 0 }}>

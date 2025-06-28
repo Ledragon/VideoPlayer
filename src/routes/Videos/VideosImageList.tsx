@@ -1,4 +1,4 @@
-import { ImageList } from '@mui/material';
+import { SimpleGrid } from '@mantine/core';
 import { forwardRef } from 'react';
 import { VirtuosoGrid } from 'react-virtuoso';
 
@@ -20,15 +20,16 @@ const VideosImageList = (props: PropType) => {
       components={{
         List: forwardRef(({ style, children }, ref) => {
           return (
-            <ImageList cols={4} gap={24} rowHeight={180} style={{ ...style }} ref={ref} component={'div'}>
+            <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 4, xl: 5 }} spacing="lg" style={{ ...style, padding: '1rem' }} ref={ref}>
               {children || <></>}
-            </ImageList>
+            </SimpleGrid>
           );
         })
       }}
       itemContent={(index, data) => {
         return <VideoImageItem key={index} video={videos[index]} showContactSheet={showContactSheets} onInfoClick={onClick} />;
-      }}></VirtuosoGrid>
+      }}
+    />
   );
 };
 

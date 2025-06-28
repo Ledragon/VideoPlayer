@@ -1,163 +1,129 @@
 import { createTheme, MantineColorsTuple } from '@mantine/core';
 
-// Mantine blue color tuple (matching getMantineStyledTheme.ts)
-const mantineBlue: MantineColorsTuple = [
-  '#e7f5ff',
-  '#d0ebff',
-  '#a5d8ff',
-  '#74c0fc',
-  '#339af0',
-  '#228be6',
-  '#1c7ed6',
-  '#1971c2',
-  '#1864ab',
-  '#0b4d8c'
-];
+// Mantine blue color tuple - using the standard Mantine blue
+const mantineBlue: MantineColorsTuple = ['#e7f5ff', '#d0ebff', '#a5d8ff', '#74c0fc', '#339af0', '#228be6', '#1c7ed6', '#1971c2', '#1864ab', '#145aa0'];
 
 const mantineTheme = createTheme({
-  /** Primary color - using our custom blue */
+  /** Primary color - using Mantine's standard blue */
   primaryColor: 'blue',
-  
-  /** Custom colors */
+
+  /** Custom colors - override with standard Mantine blue */
   colors: {
-    blue: mantineBlue,
+    blue: mantineBlue
   },
 
-  /** Font family - matching the MUI theme */
-  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-  fontFamilyMonospace: 'ui-monospace, SFMono-Regular, "SF Mono", Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+  /** Font family - Mantine defaults */
+  fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+  fontFamilyMonospace: 'ui-monospace, SFMono-Regular, SF Mono, Monaco, Consolas, Liberation Mono, Courier New, monospace',
 
-  /** Font sizes - consistent with MUI theme */
+  /** Font sizes - Mantine defaults */
   fontSizes: {
-    xs: '0.75rem',   // 12px
-    sm: '0.875rem',  // 14px - body text
-    md: '1rem',      // 16px
-    lg: '1.125rem',  // 18px
-    xl: '1.25rem',   // 20px
+    xs: '0.75rem', // 12px
+    sm: '0.875rem', // 14px
+    md: '1rem', // 16px
+    lg: '1.125rem', // 18px
+    xl: '1.25rem' // 20px
   },
 
-  /** Headings - matching MUI theme typography */
+  /** Headings - Mantine defaults */
   headings: {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-    fontWeight: '600',
+    fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif',
+    fontWeight: '700',
     sizes: {
-      h1: { fontSize: '2.125rem', lineHeight: '1.15', fontWeight: '700' },
-      h2: { fontSize: '1.625rem', lineHeight: '1.2', fontWeight: '700' },
-      h3: { fontSize: '1.375rem', lineHeight: '1.25', fontWeight: '600' },
-      h4: { fontSize: '1.125rem', lineHeight: '1.3', fontWeight: '600' },
-      h5: { fontSize: '1rem', lineHeight: '1.4', fontWeight: '600' },
-      h6: { fontSize: '0.875rem', lineHeight: '1.45', fontWeight: '600' },
-    },
+      h1: { fontSize: '2.125rem', lineHeight: '1.3' },
+      h2: { fontSize: '1.625rem', lineHeight: '1.35' },
+      h3: { fontSize: '1.375rem', lineHeight: '1.4' },
+      h4: { fontSize: '1.125rem', lineHeight: '1.45' },
+      h5: { fontSize: '1rem', lineHeight: '1.5' },
+      h6: { fontSize: '0.875rem', lineHeight: '1.5' }
+    }
   },
 
-  /** Spacing - matching our Mantine spacing scale */
+  /** Spacing - Mantine defaults */
   spacing: {
-    xs: '10px',
-    sm: '12px',
-    md: '16px',
-    lg: '20px',
-    xl: '24px',
+    xs: '0.625rem', // 10px
+    sm: '0.75rem', // 12px
+    md: '1rem', // 16px
+    lg: '1.25rem', // 20px
+    xl: '1.5rem' // 24px
   },
 
-  /** Border radius - matching getMantineStyledTheme.ts */
+  /** Border radius - Mantine defaults */
   radius: {
-    xs: '2px',
-    sm: '4px',
-    md: '8px',
-    lg: '16px',
-    xl: '32px',
+    xs: '0.125rem', // 2px
+    sm: '0.25rem', // 4px
+    md: '0.5rem', // 8px
+    lg: '1rem', // 16px
+    xl: '2rem' // 32px
   },
 
-  /** Default radius for components */
+  /** Default radius - Mantine default */
   defaultRadius: 'sm',
 
-  /** Shadows - subtle shadows matching our MUI theme */
+  /** Shadows - Mantine defaults */
   shadows: {
-    xs: '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
-    sm: '0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.1)',
-    md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-    lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-    xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+    xs: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.1)',
+    sm: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.1)',
+    md: '0 0.25rem 0.375rem -0.0625rem rgba(0, 0, 0, 0.1), 0 0.125rem 0.25rem -0.0625rem rgba(0, 0, 0, 0.06)',
+    lg: '0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.1), 0 0.25rem 0.375rem -0.125rem rgba(0, 0, 0, 0.05)',
+    xl: '0 1.25rem 1.5625rem -0.3125rem rgba(0, 0, 0, 0.1), 0 0.625rem 0.625rem -0.3125rem rgba(0, 0, 0, 0.04)'
   },
 
-  /** Other theme properties */
+  /** Other theme properties - Mantine defaults */
   focusRing: 'auto',
   respectReducedMotion: true,
   cursorType: 'default',
 
-  /** Component-specific overrides */
+  /** Minimal component overrides - let Mantine handle most styling */
   components: {
+    Paper: {
+      defaultProps: {
+        shadow: 'sm'
+      }
+    },
+
     Button: {
       defaultProps: {
-        size: 'sm',
-      },
-      styles: {
-        root: {
-          fontWeight: 500,
-          fontSize: '0.875rem',
-          minHeight: '36px',
-          '&:hover': {
-            transform: 'none',
-          },
-        },
-      },
+        variant: 'filled'
+      }
     },
-    
-    TextInput: {
-      styles: {
-        input: {
-          fontSize: '0.875rem',
-        },
-        label: {
-          fontSize: '0.875rem',
-          fontWeight: 500,
-        },
-      },
-    },
-    
-    Paper: {
-      styles: {
-        root: {
-          border: '1px solid var(--mantine-color-gray-3)',
-        },
-      },
-    },
-    
-    Modal: {
-      styles: {
-        title: {
-          fontSize: '1.125rem',
-          fontWeight: 600,
-        },
-        body: {
-          fontSize: '0.875rem',
-        },
-      },
-    },
-    
-    Chip: {
+
+    ActionIcon: {
       defaultProps: {
-        size: 'sm',
-      },
-      styles: {
-        root: {
-          fontSize: '0.75rem',
-          fontWeight: 500,
-          height: '24px',
-        },
-      },
+        variant: 'subtle'
+      }
     },
-    
-    Tabs: {
-      styles: {
-        tab: {
-          fontSize: '0.875rem',
-          fontWeight: 500,
-          minHeight: '40px',
-        },
-      },
+
+    TextInput: {
+      defaultProps: {
+        size: 'sm'
+      }
     },
-  },
+
+    MultiSelect: {
+      defaultProps: {
+        size: 'sm'
+      }
+    },
+
+    Switch: {
+      defaultProps: {
+        size: 'sm'
+      }
+    },
+
+    Badge: {
+      defaultProps: {
+        variant: 'light'
+      }
+    },
+
+    Tooltip: {
+      defaultProps: {
+        withArrow: true
+      }
+    }
+  }
 });
 
-export default mantineTheme; 
+export default mantineTheme;

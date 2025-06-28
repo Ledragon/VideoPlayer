@@ -1,11 +1,11 @@
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
-import { Autocomplete, Box, FormControlLabel, IconButton, Paper, Switch, TextField } from '@mui/material';
+import { ActionIcon, Badge, Flex, Group, MultiSelect, Paper, Stack, Switch, Text, TextInput, Tooltip } from '@mantine/core';
+import { IconClock, IconPlaylistAdd, IconSearch, IconSortAscendingLetters } from '@tabler/icons-react';
+import { useDispatch } from 'react-redux';
 
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
-import AddAllToPlaylist from './AddAllToPlaylist';
+import { addVideos } from '../../redux/playlist.slice';
 
 interface PropType {
   displayedVideos: Video[];
@@ -34,46 +34,94 @@ const VideosFilters = (props: PropType) => {
     onShowContactSheetsChange
   } = props;
 
+  const dispatch = useDispatch();
+
+  const handleAddAllToPlaylist = () => {
+    if (displayedVideos?.length) {
+      dispatch(addVideos(displayedVideos.map((d) => d.id)));
+    }
+  };
+
+  // Prepare tags for MultiSelect
+  const tagOptions = tags
+    .filter((t) => !tagVideos || tagVideos.filter((d) => d.tagId === t.id).length > 0)
+    .map((tag) => ({
+      value: tag.id.toString(),
+      label: `${tag.value} (${(tagVideos || []).filter((d) => d.tagId === tag.id).length})`
+    }));
+
+  const selectedTagValues = selectedTags.map((tag) => tag.id.toString());
+
+  const handleTagsSelectChange = (values: string[]) => {
+    const selectedTagObjects = tags.filter((tag) => values.includes(tag.id.toString()));
+    onTagsChange(null, selectedTagObjects);
+  };
+
   return (
-    <Paper id="tags-chips" sx={{ flex: '1 0 auto', p: 0.5, display: 'flex' }}>
-      <Autocomplete
-        sx={{ flexGrow: 1, m: 0.5, flexBasis: '60%' }}
-        multiple
-        id="tags"
-        options={tags.filter((t) => !tagVideos || tagVideos.filter((d) => d.tagId === t.id).length > 0) || []}
-        getOptionLabel={(o) => (o ? `${o.value} (${(tagVideos || []).filter((d) => d.tagId === o.id).length})` : '')}
-        onChange={onTagsChange}
-        value={selectedTags}
-        renderInput={(params) => <TextField {...params} variant="standard" label="Tags" placeholder="Tags" margin="dense" sx={{ m: 0.5 }} />}
-      />
-      <TextField sx={{ flexGrow: 1, m: 0.5, flexBasis: '20%' }} onChange={onTitleSearchChange} placeholder="Title" />
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-        <IconButton size="small" onClick={onAlphaSort} title="Sort by title">
-          <SortByAlphaOutlinedIcon fontSize="small" />
-        </IconButton>
-        <IconButton size="small" onClick={onDateSort} title="Sort by date">
-          <AccessTimeOutlinedIcon fontSize="small" />
-        </IconButton>
-        <AddAllToPlaylist videos={displayedVideos} />
-        <FormControlLabel
-          control={
-            <Switch
-              size="small"
-              checked={showContactSheets}
-              onChange={(e, checked) => {
-                onShowContactSheetsChange(checked);
-              }}
-            />
-          }
-          label="Contact sheets"
-          sx={{ mx: 1 }}
-        />
-      </Box>
+    <Paper shadow="sm" p="md" mb="md" radius="md">
+      <Stack gap="md">
+        {/* Top row: Search and Tags */}
+        <Flex gap="md" wrap="wrap" align="flex-end">
+          <TextInput
+            leftSection={<IconSearch size={16} />}
+            placeholder="Search videos by title..."
+            onChange={onTitleSearchChange}
+            style={{ flexGrow: 1, minWidth: '200px' }}
+            size="sm"
+          />
+
+          <MultiSelect
+            placeholder="Filter by tags..."
+            data={tagOptions}
+            value={selectedTagValues}
+            onChange={handleTagsSelectChange}
+            searchable
+            clearable
+            style={{ flexGrow: 2, minWidth: '300px' }}
+            size="sm"
+            maxDropdownHeight={200}
+          />
+        </Flex>
+
+        {/* Bottom row: Actions and Controls */}
+        <Flex justify="space-between" align="center" wrap="wrap" gap="md">
+          <Group gap="xs">
+            <Text size="sm" c="dimmed">
+              {displayedVideos.length} video{displayedVideos.length !== 1 ? 's' : ''}
+            </Text>
+            {selectedTags.length > 0 && (
+              <Badge variant="light" size="sm">
+                {selectedTags.length} tag{selectedTags.length !== 1 ? 's' : ''} selected
+              </Badge>
+            )}
+          </Group>
+
+          <Group gap="xs">
+            <Text size="sm" c="dimmed">
+              Sort:
+            </Text>
+            <Tooltip label="Sort by title">
+              <ActionIcon variant="subtle" onClick={onAlphaSort}>
+                <IconSortAscendingLetters size={18} />
+              </ActionIcon>
+            </Tooltip>
+
+            <Tooltip label="Sort by date">
+              <ActionIcon variant="subtle" onClick={onDateSort}>
+                <IconClock size={18} />
+              </ActionIcon>
+            </Tooltip>
+
+            <Tooltip label="Add all to playlist">
+              <ActionIcon variant="subtle" onClick={handleAddAllToPlaylist} disabled={!displayedVideos?.length}>
+                <IconPlaylistAdd size={18} />
+              </ActionIcon>
+            </Tooltip>
+
+            <Switch label="Contact sheets" size="sm" checked={showContactSheets} onChange={(e) => onShowContactSheetsChange(e.currentTarget.checked)} />
+          </Group>
+        </Flex>
+      </Stack>
     </Paper>
   );
 };

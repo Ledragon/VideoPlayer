@@ -1,7 +1,9 @@
 import './App.css';
+// Import Mantine core styles
+import '@mantine/core/styles.css';
 
-import { CssBaseline, ThemeProvider } from '@mui/material';
 import { MantineProvider } from '@mantine/core';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 
@@ -10,13 +12,10 @@ import mantineTheme from './mantineTheme';
 import { store } from './redux/configureStore';
 import router from './routes/router';
 
-// Import Mantine core styles
-import '@mantine/core/styles.css';
-
 const App = () => {
   return (
     <Provider store={store}>
-      <MantineProvider theme={mantineTheme}>
+      <MantineProvider theme={mantineTheme} forceColorScheme="dark">
         <ThemeProvider theme={getMantineStyledTheme('dark')}>
           <CssBaseline />
           <RouterProvider router={router} />

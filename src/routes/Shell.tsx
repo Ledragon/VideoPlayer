@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import { Outlet, useLocation } from 'react-router-dom';
 
+import ConnectionStatus from '../components/ConnectionStatus';
 import useGetRandomThumb from '../hooks/useGetRandomThumb';
 import BottomNavigation from './BottomNavigation';
 
@@ -32,6 +33,7 @@ const Shell = () => {
           overflow: 'auto'
         }}
         id="router-outlet">
+        <ConnectionStatus className="connection-status" />
         <Outlet />
       </Box>
       <Box sx={{ flexBasis: 'auto', flexShrink: 0, flexGrow: 0 }}>

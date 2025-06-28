@@ -20,7 +20,7 @@ const VideosImageList = (props: PropType) => {
       components={{
         List: forwardRef(({ style, children }, ref) => {
           return (
-            <ImageList cols={4} gap={12} rowHeight={250} style={{ ...style }} ref={ref} component={'div'}>
+            <ImageList cols={4} gap={24} rowHeight={180} style={{ ...style }} ref={ref} component={'div'}>
               {children || <></>}
             </ImageList>
           );

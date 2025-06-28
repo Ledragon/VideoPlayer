@@ -5,8 +5,6 @@ import { useEffect, useRef } from 'react';
 import videojs from 'video.js';
 import Player from 'video.js/dist/types/player';
 
-import { useMetadataQuery } from '../../redux';
-
 interface VideoPlayerProps {
   videoId: number;
 }
@@ -34,23 +32,32 @@ export const VideoPlayer = ({ videoId }: VideoPlayerProps) => {
           }
         ],
         html5: {
-          dash: {
-            updateSettings: [
-              {
-                streaming: {
-                  buffer: {
-                    bufferTimeAtTopQuality: 30,
-                    bufferTimeAtTopQualityLongForm: 30
-                  },
-                  gaps: {
-                    jumpGaps: false,
-                    jumpLargeGaps: false
-                  }
-                }
-              }
-            ]
+          vhs: {
+            overrideNative: true
           }
+          // dash: {
+          //   updateSettings: [
+          //     {
+          //       streaming: {
+          //         buffer: {
+          //           bufferTimeAtTopQuality: 30,
+          //           bufferTimeAtTopQualityLongForm: 30
+          //         },
+          //         gaps: {
+          //           jumpGaps: false,
+          //           jumpLargeGaps: false
+          //         }
+          //       }
+          //     }
+          //   ]
+          // }
         }
+      });
+      playerRef.current.on('seeking', () => {
+        // Handle seeking event if needed
+      });
+      playerRef.current.on('seeked', () => {
+        // Handle seeked event if needed
       });
     }
 
@@ -69,7 +76,7 @@ export const VideoPlayer = ({ videoId }: VideoPlayerProps) => {
         display: 'flex',
         justifyContent: 'center'
       }}>
-      <div data-vjs-player style={{ width: '100%', height: '100%', flexGrow: 1 }}>
+      <div data-vjs-player style={{ width: '640px', height: '480px' }}>
         <div ref={videoRef} />
         {/* <video ref={videoRef} className="video-js vjs-big-play-centered" data-setup={{}} /> */}
       </div>

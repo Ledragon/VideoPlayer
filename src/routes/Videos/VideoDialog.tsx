@@ -11,7 +11,6 @@ import { useSearchParams } from 'react-router-dom';
 import { Tag } from '../../models/Tag';
 import { TagVideo } from '../../models/TagVideo';
 import { Video } from '../../models/Video';
-import AddToPlaylist from './AddToPlaylist';
 import ContactSheet from './ContactSheet';
 import FileInfo from './FileInfo';
 import ThumbsDisplay from './ThumbsDisplay';
@@ -152,7 +151,6 @@ const VideoDialog = (props: PropType) => {
           <VideoStatusBar video={video} />
         </DialogContent>
         <DialogActions>
-          <AddToPlaylist video={video} />
           <Button variant="text" onClick={handleCancel}>
             Cancel
           </Button>

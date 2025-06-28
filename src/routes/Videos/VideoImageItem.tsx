@@ -1,11 +1,14 @@
-import { ActionIcon, Badge, Card, Group, Image, Overlay, Stack, Text, Tooltip } from '@mantine/core';
-import { IconEye, IconEyeOff, IconInfoCircle } from '@tabler/icons-react';
+import { ActionIcon, Badge, Card, Group, Image, Stack, Text, Tooltip } from '@mantine/core';
+import { IconEyeOff, IconPlaylistAdd, IconPlaylistX } from '@tabler/icons-react';
 import { timeFormat } from 'd3-time-format';
 import { useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Video } from '../../models/Video';
 import { useGetContactSheetForVideoQuery, useGetThumbnailsForVideoQuery } from '../../redux';
-import AddToPlaylist from './AddToPlaylist';
+import { RootState } from '../../redux/configureStore';
+import { addVideo, removeVideo } from '../../redux/playlist.slice';
+import { notifications } from '@mantine/notifications';
 import getBase64Url from './getBase64Url';
 
 const tf = timeFormat('%Y-%m-%d');
@@ -20,11 +23,40 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
   const { data: thumbs } = useGetThumbnailsForVideoQuery(video.id);
   const [hovered, setHovered] = useState<boolean>(false);
   const { data: contactSheet } = useGetContactSheetForVideoQuery(video.id);
+  const dispatch = useDispatch();
+
+  // Check if video is in playlist
+  const playlistVideos = useSelector((state: RootState) => state.playlist.videos);
+  const isInPlaylist = playlistVideos.includes(video.id);
 
   const onInfoButtonClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (onInfoClick) {
       onInfoClick(video);
+    }
+  };
+
+  const onPlaylistToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    if (isInPlaylist) {
+      dispatch(removeVideo(video.id));
+      notifications.show({
+        title: 'Removed from playlist',
+        message: `${video.title} has been removed from your playlist`,
+        color: 'orange',
+        position: 'bottom-right',
+        autoClose: 2000
+      });
+    } else {
+      dispatch(addVideo(video.id));
+      notifications.show({
+        title: 'Added to playlist',
+        message: `${video.title} has been added to your playlist`,
+        color: 'green',
+        position: 'bottom-right',
+        autoClose: 2000
+      });
     }
   };
 
@@ -58,7 +90,7 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
       style={{
         cursor: 'pointer',
         transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+        transform: hovered ? 'translateY(-2px)' : 'translateY(0)',
         boxShadow: hovered ? 'var(--mantine-shadow-md)' : 'var(--mantine-shadow-sm)'
       }}
       onMouseEnter={handleMouseEnter}
@@ -67,6 +99,26 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
       id={`video-${video.id}`}>
       <Card.Section style={{ position: 'relative' }}>
         <Image src={image ? getBase64Url(image) : '/no-image-14600.svg'} height={200} alt={video.title} fit="cover" fallbackSrc="/no-image-14600.svg" />
+
+        {/* Playlist Toggle - Always Visible */}
+        <Tooltip label={isInPlaylist ? 'Remove from playlist' : 'Add to playlist'}>
+          <ActionIcon
+            variant="filled"
+            color={isInPlaylist ? 'blue' : 'gray'}
+            size="md"
+            radius="xl"
+            onClick={onPlaylistToggle}
+            style={{
+              position: 'absolute',
+              top: 8,
+              left: 8,
+              backgroundColor: isInPlaylist ? 'rgba(34, 139, 230, 0.9)' : 'rgba(108, 117, 125, 0.8)',
+              backdropFilter: 'blur(4px)',
+              transition: 'all 0.2s ease'
+            }}>
+            {isInPlaylist ? <IconPlaylistX size={16} /> : <IconPlaylistAdd size={16} />}
+          </ActionIcon>
+        </Tooltip>
 
         {/* Duration Badge */}
         <Badge
@@ -87,37 +139,9 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
         {!contactSheet && (
           <Tooltip label="No contact sheet available">
             <div style={{ position: 'absolute', top: 8, right: 8 }}>
-              <IconEyeOff size={20} color="rgba(255, 255, 255, 0.8)" />
+              <IconEyeOff size={18} color="rgba(255, 255, 255, 0.7)" />
             </div>
           </Tooltip>
-        )}
-
-        {/* Hover Overlay with Actions */}
-        {hovered && (
-          <Overlay opacity={0.1} color="#000">
-            <Stack h="100%" justify="space-between" p="sm">
-              <Group justify="flex-start">
-                <AddToPlaylist video={video} />
-              </Group>
-
-              {onInfoClick && (
-                <Group justify="flex-end">
-                  <ActionIcon
-                    variant="filled"
-                    color="blue"
-                    size="lg"
-                    radius="xl"
-                    onClick={onInfoButtonClick}
-                    style={{
-                      backgroundColor: 'rgba(34, 139, 230, 0.9)',
-                      backdropFilter: 'blur(4px)'
-                    }}>
-                    <IconInfoCircle size={20} />
-                  </ActionIcon>
-                </Group>
-              )}
-            </Stack>
-          </Overlay>
         )}
       </Card.Section>
 
@@ -129,12 +153,9 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
         </div>
 
         <Group justify="space-between" align="center">
-          <Group gap="xs" align="center">
-            <IconEye size={14} color="var(--mantine-color-dimmed)" />
-            <Text size="xs" c="dimmed">
-              {video.numberOfViews} views
-            </Text>
-          </Group>
+          <Text size="xs" c="dimmed">
+            {video.numberOfViews} views
+          </Text>
 
           <Text size="xs" c="dimmed">
             {formattedDate}

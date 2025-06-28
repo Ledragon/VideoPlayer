@@ -1,4 +1,3 @@
-import { SimpleGrid } from '@mantine/core';
 import { forwardRef } from 'react';
 import { VirtuosoGrid } from 'react-virtuoso';
 
@@ -20,13 +19,21 @@ const VideosImageList = (props: PropType) => {
       components={{
         List: forwardRef(({ style, children }, ref) => {
           return (
-            <SimpleGrid cols={{ base: 1, sm: 2, md: 3, lg: 4, xl: 5 }} spacing="lg" style={{ ...style, padding: '1rem' }} ref={ref}>
+            <div
+              ref={ref}
+              style={{
+                ...style,
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                gap: '1.5rem',
+                padding: '1rem'
+              }}>
               {children || <></>}
-            </SimpleGrid>
+            </div>
           );
         })
       }}
-      itemContent={(index, data) => {
+      itemContent={(index) => {
         return <VideoImageItem key={index} video={videos[index]} showContactSheet={showContactSheets} onInfoClick={onClick} />;
       }}
     />

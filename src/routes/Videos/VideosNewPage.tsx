@@ -1,10 +1,7 @@
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-import SortByAlphaOutlinedIcon from '@mui/icons-material/SortByAlphaOutlined';
-import { alpha, Autocomplete, Box, FormControlLabel, IconButton, LinearProgress, Paper, Switch, TextField } from '@mui/material';
+import { Box, LinearProgress } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { Tag } from '../../models/Tag';
 import { Video } from '../../models/Video';
@@ -18,9 +15,8 @@ import {
   useUpdateVideoMutation
 } from '../../redux';
 import { RootState } from '../../redux/configureStore';
-import AddAllToPlaylist from './AddAllToPlaylist';
-import Playlist from './Playlist';
 import VideoDialog from './VideoDialog';
+import VideosFilters from './VideosFilters';
 import VideosImageList from './VideosImageList';
 
 interface PropType {}
@@ -186,45 +182,18 @@ const VideosNewPage = (props: PropType) => {
       ) : (
         <></>
       )}
-      <Paper id="tags-chips" sx={{ flex: '1 0 auto', p: 0.5, display: 'flex' }}>
-        <Autocomplete
-          sx={{ flexGrow: 1, m: 0.5, flexBasis: '60%' }}
-          multiple
-          id="tags"
-          options={tags.filter((t) => !tagVideos || tagVideos.filter((d) => d.tagId === t.id).length > 0) || []}
-          getOptionLabel={(o) => (o ? `${o.value} (${(tagVideos || []).filter((d) => d.tagId === o.id).length})` : '')}
-          onChange={handleTagsChange}
-          value={selectedTags}
-          renderInput={(params) => <TextField {...params} variant="standard" label="Tags" placeholder="Tags" margin="dense" sx={{ m: 0.5 }} />}></Autocomplete>
-        <TextField sx={{ flexGrow: 1, m: 0.5, flexBasis: '20%' }} onChange={handleTitleSearchChange} placeholder="Title" />
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}>
-          <IconButton size="small" onClick={handleAlphaSort} title="Sort by title">
-            <SortByAlphaOutlinedIcon fontSize="small" />
-          </IconButton>
-          <IconButton size="small" onClick={handleDateSort} title="Sort by date">
-            <AccessTimeOutlinedIcon fontSize="small" />
-          </IconButton>
-          <AddAllToPlaylist videos={displayedVideos}></AddAllToPlaylist>
-          <FormControlLabel
-            control={
-              <Switch
-                size="small"
-                checked={showContactSheets}
-                onChange={(e, checked) => {
-                  setShowContactSheets(checked);
-                }}
-              />
-            }
-            label="Contact sheets"
-            sx={{ mx: 1 }}
-          />
-        </Box>
-      </Paper>
+      <VideosFilters
+        tags={tags}
+        tagVideos={tagVideos || []}
+        selectedTags={selectedTags}
+        displayedVideos={displayedVideos}
+        showContactSheets={showContactSheets}
+        onTagsChange={handleTagsChange}
+        onTitleSearchChange={handleTitleSearchChange}
+        onAlphaSort={handleAlphaSort}
+        onDateSort={handleDateSort}
+        onShowContactSheetsChange={setShowContactSheets}
+      />
       <Box
         sx={{
           display: 'flex',

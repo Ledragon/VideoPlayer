@@ -8,25 +8,26 @@ using VideoPlayer.Database.UnitOfWork;
 
 namespace VideoPlayer.WebAPI
 {
-    public static class DIExtension
+  public static class DIExtension
+  {
+    public static IServiceCollection RegisterDependencies(this IServiceCollection services)
     {
-        public static IServiceCollection RegisterDependencies(this IServiceCollection services)
-        {
-            return services.AddTransient<ILibraryRepository, FileLibraryRepository>()
-                            .AddSingleton<IFfprobeInfoExtractor, FfprobeInfoExtractor>()
-                            .AddSingleton<IFfmpegThumbnailGenerator, FfmpegThumbnailGenerator>()
-                            .AddSingleton<IFfmpegStreamer, FfmpegStreamer>()
+      return services.AddTransient<ILibraryRepository, FileLibraryRepository>()
+                      .AddSingleton<IFfprobeInfoExtractor, FfprobeInfoExtractor>()
+                      .AddSingleton<IFfmpegThumbnailGenerator, FfmpegThumbnailGenerator>()
+                                                  .AddSingleton<IFfmpegStreamer, FfmpegStreamer>()
+                            .AddSingleton<IAdvancedFfmpegStreamer, AdvancedFfmpegStreamer>()
                             .AddSingleton<IPathService, PathService>()
-                            .AddTransient<IContactSheetService, ContactSheetService>()
-                            .AddTransient<IRefreshService, RefreshService>()
-                            .AddTransient<IAutoCompleteLibraryService, AutoCompleteLibraryService>()
-                            .AddTransient<IDirectoryRepository, SqliteDirectoryRepository>()
-                            .AddTransient<IThumbnailsRepository, SqliteThumbnailsRepository>()
-                            .AddTransient<IVideoRepository, SqliteVideoRepository>()
-                            .AddTransient<ITagsRepository, SqliteTagsRepository>()
-                            .AddTransient<ITagVideoRepository, SqliteTagVideoRepository>()
-                            .AddTransient<IContactSheetsRepository, SqliteContactSheetsRepository>()
-                            .AddTransient<ITagVideoUnitOfWork, TagVideoUnitOfWork>();
-        }
+                      .AddTransient<IContactSheetService, ContactSheetService>()
+                      .AddTransient<IRefreshService, RefreshService>()
+                      .AddTransient<IAutoCompleteLibraryService, AutoCompleteLibraryService>()
+                      .AddTransient<IDirectoryRepository, SqliteDirectoryRepository>()
+                      .AddTransient<IThumbnailsRepository, SqliteThumbnailsRepository>()
+                      .AddTransient<IVideoRepository, SqliteVideoRepository>()
+                      .AddTransient<ITagsRepository, SqliteTagsRepository>()
+                      .AddTransient<ITagVideoRepository, SqliteTagVideoRepository>()
+                      .AddTransient<IContactSheetsRepository, SqliteContactSheetsRepository>()
+                      .AddTransient<ITagVideoUnitOfWork, TagVideoUnitOfWork>();
     }
+  }
 }

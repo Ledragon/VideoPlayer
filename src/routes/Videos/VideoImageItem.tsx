@@ -1,4 +1,5 @@
 import { ActionIcon, Badge, Card, Group, Image, Stack, Text, Tooltip } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { IconEyeOff, IconPlaylistAdd, IconPlaylistX } from '@tabler/icons-react';
 import { timeFormat } from 'd3-time-format';
 import { useMemo, useState } from 'react';
@@ -8,7 +9,6 @@ import { Video } from '../../models/Video';
 import { useGetContactSheetForVideoQuery, useGetThumbnailsForVideoQuery } from '../../redux';
 import { RootState } from '../../redux/configureStore';
 import { addVideo, removeVideo } from '../../redux/playlist.slice';
-import { notifications } from '@mantine/notifications';
 import getBase64Url from './getBase64Url';
 
 const tf = timeFormat('%Y-%m-%d');
@@ -76,6 +76,13 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
     }
   }, [thumbs, showContactSheet, contactSheet]);
 
+  const imageUrl = useMemo(() => {
+    if (!image) {
+      return '/no-image-14600.svg';
+    }
+    return getBase64Url(image);
+  }, [image]);
+
   const formattedDate = useMemo(() => {
     const date = new Date(video.dateAdded);
     return tf(date);
@@ -98,7 +105,7 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
       onClick={onInfoButtonClick}
       id={`video-${video.id}`}>
       <Card.Section style={{ position: 'relative' }}>
-        <Image src={image ? getBase64Url(image) : '/no-image-14600.svg'} height={200} alt={video.title} fit="cover" fallbackSrc="/no-image-14600.svg" />
+        <Image src={imageUrl} height={200} alt={video.title} fit="cover" fallbackSrc="/no-image-14600.svg" />
 
         {/* Playlist Toggle - Always Visible */}
         <Tooltip label={isInPlaylist ? 'Remove from playlist' : 'Add to playlist'}>
@@ -147,7 +154,7 @@ const VideoImageItem = ({ video, onInfoClick, showContactSheet }: PropType) => {
 
       <Stack gap="xs" p="sm">
         <div>
-          <Text size="sm" fw={600} lineClamp={2} title={video.title}>
+          <Text size="sm" fw={600} lineClamp={1} title={video.title}>
             {video.title}
           </Text>
         </div>

@@ -1,6 +1,7 @@
 import { Alert, Box, Button, Collapse, IconButton } from '@mui/material';
-import { IconWifi, IconWifiOff, IconRefresh, IconX } from '@tabler/icons-react';
+import { IconRefresh, IconWifi, IconWifiOff, IconX } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+
 import { useLazyHealthCheckQuery } from '../redux/api';
 
 interface ConnectionStatusProps {

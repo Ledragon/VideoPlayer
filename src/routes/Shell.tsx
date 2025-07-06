@@ -33,7 +33,7 @@ const Shell = () => {
           overflow: 'auto'
         }}
         id="router-outlet">
-        <ConnectionStatus className="connection-status" />
+        {/* <ConnectionStatus className="connection-status" /> */}
         <Outlet />
       </Box>
       <Box sx={{ flexBasis: 'auto', flexShrink: 0, flexGrow: 0 }}>

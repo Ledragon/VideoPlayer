@@ -1,0 +1,25 @@
+import HomeIcon from '@mui/icons-material/Home';
+import TuneIcon from '@mui/icons-material/Tune';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+
+const linksDefinition = [
+  { label: 'Home', icon: <HomeIcon />, name: 'home' },
+  {
+    label: 'Videos',
+    icon: <VideoLibraryIcon />,
+    name: 'videos'
+  },
+  {
+    label: 'Playlist',
+    icon: <VideoLibraryIcon />,
+    name: 'playlist'
+  },
+  // {
+  //   label: 'Pictures',
+  //   icon: <CollectionsIcon />,
+  //   name: 'pictures'
+  // },
+  { label: 'Settings', icon: <TuneIcon />, name: 'settings' }
+  // { label: 'Manage', route: '../manage' },
+];
+export default linksDefinition;

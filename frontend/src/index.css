@@ -1,0 +1,17 @@
+html{
+  height: 100vh;
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  height: 100%;
+  flex-direction: row;
+  overflow: hidden;
+  color-scheme: dark;
+}
+
+#root{
+  overflow: hidden;
+}

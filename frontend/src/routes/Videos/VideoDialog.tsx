@@ -1,0 +1,168 @@
+import CloseIcon from '@mui/icons-material/Close';
+import CloseFullscreenOutlinedIcon from '@mui/icons-material/CloseFullscreenOutlined';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateAfterIcon from '@mui/icons-material/NavigateNext';
+import OpenInFullOutlinedIcon from '@mui/icons-material/OpenInFullOutlined';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Tab, Tabs } from '@mui/material';
+import { useFormik } from 'formik';
+import { useMemo, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
+import { Tag } from '../../models/Tag';
+import { TagVideo } from '../../models/TagVideo';
+import { Video } from '../../models/Video';
+import ContactSheet from './ContactSheet';
+import FileInfo from './FileInfo';
+import ThumbsDisplay from './ThumbsDisplay';
+import ThumbsEdition from './ThumbsEdition';
+import VideoEdtion from './VideoEdition';
+import VideoInfos from './VideoInfos';
+import { VideoPlayer } from './VideoPlayer';
+import VideoStatusBar from './VideoStatusBar';
+
+interface PropType {
+  error?: { message: any };
+  onCancel: () => void;
+  onNext?: () => void;
+  onPrevious?: () => void;
+  onSave: (v: Video, thumbnails: string[]) => void;
+  open: boolean;
+  tagVideos: TagVideo[];
+  tags: Tag[];
+  video: Video;
+}
+
+const VideoDialog = (props: PropType) => {
+  const { open, video, onSave, onCancel, tags, tagVideos, error, onPrevious, onNext } = props;
+  const [selectedThumbnails, setSelectedThumbnails] = useState<string[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramsTab = searchParams.get('tab');
+  const [selectedTab, setSelectedTab] = useState<number>(paramsTab ? parseInt(paramsTab) : 0);
+  const [isFullScreen, setIsFullScreen] = useState(true);
+
+  const tagsForVideo = useMemo(() => {
+    return tagVideos
+      ?.filter((tv) => tv.videoId === video.id)
+      .map((tv) => tags.find((t) => t.id === tv.tagId))
+      .filter((d) => !!d);
+  }, [video, tagVideos, tags]);
+
+  const formik = useFormik({
+    initialValues: {
+      title: video.title,
+      rating: video.rating || 0,
+      tags: tagsForVideo
+    },
+    onSubmit: (value) => {
+      const update = Object.assign({}, video, value);
+      handleSave(update);
+    },
+    enableReinitialize: true
+  });
+
+  const handleCancel = () => {
+    formik.resetForm();
+    onCancel();
+  };
+
+  const handleSave = (v: Video) => {
+    onSave(v, selectedThumbnails);
+  };
+
+  const handleBeforeClick = () => {
+    if (onPrevious) {
+      onPrevious();
+    }
+  };
+
+  const handleNextClick = () => {
+    if (onNext) {
+      onNext();
+    }
+  };
+
+  if (video != null) {
+    return (
+      <Dialog fullScreen={isFullScreen} open={open} fullWidth maxWidth="lg">
+        <DialogTitle>
+          <Box sx={{ display: 'flex' }}>
+            <Box sx={{ flexGrow: 1 }}>{video.title}</Box>
+            <Box>
+              <IconButton onClick={() => setIsFullScreen(!isFullScreen)}>
+                {isFullScreen && <CloseFullscreenOutlinedIcon />}
+                {!isFullScreen && <OpenInFullOutlinedIcon />}
+              </IconButton>
+              <IconButton onClick={handleBeforeClick}>
+                <NavigateBeforeIcon></NavigateBeforeIcon>
+              </IconButton>
+              <IconButton onClick={handleNextClick}>
+                <NavigateAfterIcon></NavigateAfterIcon>
+              </IconButton>
+              <IconButton onClick={handleCancel}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+          </Box>
+        </DialogTitle>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'row', overflow: 'auto' }}>
+            <Box sx={{ flexBasis: '30%', flexGrow: 0, flexShrink: 0, display: 'flex', flexDirection: 'column' }}>
+              <Tabs
+                value={selectedTab}
+                onChange={(e, v) => {
+                  setSearchParams((prev) => {
+                    prev.set('tab', v.toString());
+                    return prev;
+                  });
+                  return setSelectedTab(v);
+                }}>
+                <Tab label="Properties" />
+                <Tab label="Edition" />
+                <Tab label="Thumbs" />
+                <Tab label="File info" />
+              </Tabs>
+              <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
+                <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
+                  {selectedTab === 0 && <VideoInfos tags={tagsForVideo} video={video} />}
+                  {selectedTab === 1 && (
+                    <VideoEdtion
+                      error={error}
+                      formik={formik}
+                      tags={tags}
+                      tagVideos={tagVideos}
+                      video={video}
+                      onSave={handleSave}
+                      selectedThumbnails={selectedThumbnails}
+                      setSelectedThumbnails={setSelectedThumbnails}
+                    />
+                  )}
+                  {selectedTab === 2 && <ThumbsEdition video={video} selectedThumbnails={selectedThumbnails} setSelectedThumbnails={setSelectedThumbnails} />}
+                  {selectedTab === 3 && <FileInfo video={video} />}
+                </Box>
+              </Box>
+            </Box>
+            <Box sx={{ p: 1, display: 'flex', flexDirection: 'column', flexGrow: 1, flexBasis: 'auto', overflow: 'hidden' }} className="center">
+              {/** place conatct sheet in a first tab and player in a second one */}
+              <ContactSheet id={video.id} />
+              {/* <VideoPlayer videoId={video.id} /> */}
+              {/* <ThumbsDisplay video={video} /> */}
+            </Box>
+          </Box>
+          <VideoStatusBar video={video} />
+        </DialogContent>
+        <DialogActions>
+          <Button variant="text" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="outlined" disabled={(!formik.dirty && !selectedThumbnails.length) || !formik.isValid} onClick={formik.submitForm}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  } else {
+    return <></>;
+  }
+};
+
+export default VideoDialog;

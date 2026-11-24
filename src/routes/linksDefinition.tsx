@@ -1,7 +1,6 @@
-import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import HomeIcon from '@mui/icons-material/Home';
-import CollectionsIcon from '@mui/icons-material/Collections';
 import TuneIcon from '@mui/icons-material/Tune';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 
 const linksDefinition = [
   { label: 'Home', icon: <HomeIcon />, name: 'home' },

@@ -9,8 +9,7 @@ const HomeButtonsStack = (props: { buttons: any[] }) => {
         display: 'flex',
         flexGrow: 1,
         flexDirection: 'column'
-      }}
-    >
+      }}>
       <Box sx={{ flexBasis: '80%' }}></Box>
       <Stack
         alignItems="center"
@@ -19,17 +18,10 @@ const HomeButtonsStack = (props: { buttons: any[] }) => {
         sx={{
           flexGrow: 0,
           flexBasis: 'auto',
-          backgroundColor: (theme) =>
-            alpha(
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[200]
-                : theme.palette.grey[700],
-              0.7
-            ),
+          backgroundColor: (theme) => alpha(theme.palette.mode === 'light' ? theme.palette.grey[200] : theme.palette.grey[700], 0.7),
           p: 2
         }}
-        spacing={2}
-      >
+        spacing={2}>
         {buttons.map((d, i) => (
           <Box
             key={i}
@@ -40,14 +32,8 @@ const HomeButtonsStack = (props: { buttons: any[] }) => {
               flexDirection: 'row',
               alignItems: 'center',
               display: 'flex'
-            }}
-          >
-            <Button
-              sx={{ flexGrow: 1 }}
-              component={RouterLink}
-              to={'../' + d.name}
-              startIcon={d.icon}
-            >
+            }}>
+            <Button sx={{ flexGrow: 1 }} component={RouterLink} to={'../' + d.name} startIcon={d.icon}>
               {d.label}
             </Button>
           </Box>

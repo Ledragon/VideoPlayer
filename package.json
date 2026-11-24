@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "vite",
     "build": "tsc && vite build",
-    "_postbuild": "rsync -a --delete dist/ ../VideoPlayer//VideoPlayer.WebAPI/bin/Release/net8.0/wwwroot"
+    "postbuild": "rsync -a --delete dist/ ../VideoPlayer//VideoPlayer.WebAPI/bin/Release/net8.0/wwwroot"
   },
   "keywords": [],
   "author": "",

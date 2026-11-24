@@ -11,8 +11,7 @@ const HomeButtonsFullScreen = (props: { buttons: any[] }) => {
         rowGap: 2,
         m: 2,
         flexGrow: 1
-      }}
-    >
+      }}>
       {buttons.map((d, i) => (
         <Box key={i} sx={{ display: 'inline-grid' }}>
           <Button variant="outlined">{d.label}</Button>
